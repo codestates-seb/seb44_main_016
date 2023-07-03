@@ -1,11 +1,16 @@
 import tw from 'twin.macro';
+import { FlexPage } from '../components/common/PageTemplate';
 
-const App = () => (
-  <div tw='flex flex-col justify-center h-full gap-y-5'>
-    <button>Submit</button>
-    <button>Submit</button>
-    <button>Submit</button>
-  </div>
-);
+const HomePageContainer = tw(FlexPage)`
+flex flex-col justify-center bg-[#F0F3F8]
+`;
 
-export default App;
+export default function HomePage() {
+  return (
+    <HomePageContainer>
+      <button>Submit</button>
+      <button>Submit</button>
+      <button>Submit</button>
+    </HomePageContainer>
+  );
+}
