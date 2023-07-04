@@ -14,7 +14,7 @@ const S = {
   LikeButtonContainer: styled.section(tw` pl-[15px]`),
 
   ProfileImgButton: styled.button(
-    tw`w-[40px] h-[40px] rounded-[50px] overflow-hidden shrink-0`
+    tw`w-[40px] h-[40px] rounded-full overflow-hidden shrink-0`
   ),
   ProfileImg: styled.img(tw`w-full h-full bg-black `),
   Texts: styled.section(tw`flex flex-col gap-[10px]`),
