@@ -17,6 +17,7 @@
     "axios": "^1.4.0",
     "next": "^13.3.0",
     "react": "^18.2.0",
+    "react-datepicker": "^4.15.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.1"
   },
@@ -28,6 +29,7 @@
     "@tanstack/eslint-plugin-query": "^4.29.9",
     "@types/node": "^18.15.11",
     "@types/react": "^18.0.33",
+    "@types/react-datepicker": "^4.11.2",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
     "babel-loader": "^9.1.2",
