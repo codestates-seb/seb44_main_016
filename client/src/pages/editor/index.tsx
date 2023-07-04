@@ -10,7 +10,7 @@ import CommonStyles from '../../styles/CommonStyles';
 
 const S = {
   ...CommonStyles,
-  EditorContainer: styled.form(tw`flex flex-col p-16 gap-5`),
+  EditorContainer: styled.form(tw`w-full flex flex-col p-[40px] gap-5`),
   Row: styled.section(tw`w-full flex justify-evenly`),
   RadioContainer: styled.section(tw`flex gap-5`),
   ImgSample: styled.img(tw`w-[153px] h-[153px]  bg-pink-500 rounded-[10px]`),
