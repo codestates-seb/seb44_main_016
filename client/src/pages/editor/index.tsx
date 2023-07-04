@@ -12,7 +12,7 @@ const S = {
 };
 
 const EditorContainer = tw.form`
-w-full flex flex-col p-16 gap-5
+flex flex-col p-16 gap-5
 `;
 
 const Row = tw.section`
