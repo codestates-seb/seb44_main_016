@@ -1,5 +1,5 @@
 import tw from 'twin.macro';
 
 export const FlexPage = tw.div`
-w-full h-full
+flex w-full h-full bg-[#F0F3F8]
 `;
