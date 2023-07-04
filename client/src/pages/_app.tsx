@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 
 const RootScreen = tw.div`
-flex justify-center w-[100vw] min-h-[100vh]
+flex justify-center w-[100%] min-h-[100vh]
 `;
 
 const AppContainer = tw.div`
@@ -14,7 +14,7 @@ max-w-[1140px] w-full
 `;
 
 const AsideFrame = tw.aside`
-w-[367px] h-full bg-pink-300
+w-[367px] h-full bg-pink-300 shrink-0
 `;
 
 const App = ({ Component, pageProps }: AppProps) => {
