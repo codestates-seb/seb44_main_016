@@ -36,6 +36,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -91,7 +92,7 @@
       <option name="presentableId" value="Default" />
       <updated>1688348691308</updated>
       <workItem from="1688348696430" duration="14302000" />
-      <workItem from="1688444710762" duration="2868000" />
+      <workItem from="1688444710762" duration="16879000" />
     </task>
     <servers />
   </component>
