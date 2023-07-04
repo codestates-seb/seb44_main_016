@@ -1,6 +1,7 @@
 package com.zerohip.server.financialRecord.service;
 
 import com.zerohip.server.financialRecord.entity.FinancialRecord;
+import java.util.List;
 
 public interface FinancialRecordService {
 
@@ -11,10 +12,10 @@ public interface FinancialRecordService {
   FinancialRecord findFaRec(Long faRecId);
 
   // 가계부 전체 조회(동적쿼리 사용 예정)
-  FinancialRecord findAllFaRecs();
+  List<FinancialRecord> findFaRecs();
 
   // 가계부 수정
-  FinancialRecord updateFaRec(FinancialRecord faRec);
+  FinancialRecord updateFaRec(Long faRecId, FinancialRecordDto.Patch patchParam);
 
   // 가계부 삭제
   void deleteFaRec(Long faRecId);
