@@ -24,7 +24,6 @@ public class FinancialRecordDto {
   @Getter
   @AllArgsConstructor
   public static class Patch extends Auditable {
-    private Long financialRecordId;
     @NotBlank
     @Size(min = 1, max = 30)
     @Column(nullable = false, unique = false, updatable = true)
