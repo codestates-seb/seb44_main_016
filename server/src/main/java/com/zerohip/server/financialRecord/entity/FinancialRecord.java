@@ -23,7 +23,10 @@ public class FinancialRecord {
   @Column(nullable = false, unique = false, updatable = true)
   private String financialRecordName;
 
-  // 유저 매핑
+  // 유저 매핑(List 형식)
 
-  // 친구? 그룹도 필요
+
+  public FinancialRecord(String financialRecordName) {
+    this.financialRecordName = financialRecordName;
+  }
 }
