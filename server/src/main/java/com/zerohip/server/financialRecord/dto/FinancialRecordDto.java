@@ -15,7 +15,6 @@ public class FinancialRecordDto {
   public static class Post {
     @NotBlank
     @Size(min = 1, max = 30)
-    @Column(nullable = false, unique = false, updatable = true)
     private String financialRecordName;
 
     // User
@@ -26,7 +25,6 @@ public class FinancialRecordDto {
   public static class Patch {
     @NotBlank
     @Size(min = 1, max = 30)
-    @Column(nullable = false, unique = false, updatable = true)
     private String financialRecordName;
 
     // User
