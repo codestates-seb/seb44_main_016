@@ -19,5 +19,8 @@ public interface FinancialRecordService {
 
   // 가계부 삭제
   void deleteFaRec(Long faRecId);
+
+  // 가계부 조회확인
+  FinancialRecord findVerifiedFaRec(Long faRecId);
 }
 
