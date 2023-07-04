@@ -1,7 +1,7 @@
 package com.zerohip.server.common.response;
 
-import JwtSample.common.exception.ExceptionCode;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.zerohip.server.common.exception.ExceptionCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

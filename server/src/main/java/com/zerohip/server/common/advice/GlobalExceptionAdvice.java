@@ -1,7 +1,7 @@
 package com.zerohip.server.common.advice;
 
-import JwtSample.common.exception.BusinessLogicException;
-import JwtSample.common.response.ErrorResponse;
+import com.zerohip.server.common.exception.BusinessLogicException;
+import com.zerohip.server.common.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 import javax.validation.ConstraintViolationException;
+
 
 @RestControllerAdvice
 @Slf4j
