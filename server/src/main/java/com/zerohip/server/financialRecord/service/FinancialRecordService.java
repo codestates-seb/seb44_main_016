@@ -1,9 +1,7 @@
 package com.zerohip.server.financialRecord.service;
 
 import com.zerohip.server.financialRecord.entity.FinancialRecord;
-
 import java.util.List;
-
 
 public interface FinancialRecordService {
 
