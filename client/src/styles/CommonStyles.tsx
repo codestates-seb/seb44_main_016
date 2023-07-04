@@ -11,7 +11,7 @@ type InputProps = InputHTMLAttributes<HTMLInputElement>;
 
 const CommonStyles = {
   SubmitBtn: styled.button<ButtonProps>((props) => [
-    tw`relative inline-block text-white p-4 rounded-full font-normal border-2 border-primary border-solid overflow-hidden bg-white z-10 hover:(text-primary bg-white duration-700 font-bold) before:(content-[''] absolute w-80 h-80 -left-16 -top-16 -z-10 rounded-full bg-primary translate-x-full translate-y-full transition-all duration-700) before:hover:( top-10 left-10 transition-all duration-700)`,
+    tw`relative inline-block [line-height: 1] text-white p-3 rounded-full font-normal border-2 border-primary border-solid overflow-hidden bg-white z-10 hover:(text-primary bg-white duration-700 font-bold) before:(content-[''] absolute w-80 h-80 -left-16 -top-16 -z-10 rounded-full bg-primary translate-x-full translate-y-full transition-all duration-700) before:hover:( top-10 left-10 transition-all duration-700)`,
     props.small
       ? tw`w-auto px-[1.125rem] py-[0.68rem] before:(w-32 h-32 -left-1/2 -top-1/2) before:hover:(top-16 left-10)`
       : props.large
@@ -20,7 +20,7 @@ const CommonStyles = {
   ]),
 
   InputText: styled.input<InputProps>`
-    ${tw`bg-white rounded-full w-full px-7 py-4 border-line-gray border border-solid text-fontColor-gray01 placeholder:text-fontColor-gray07 focus:outline-primary `}
+    ${tw`bg-white text-base [line-height:1] rounded-full w-full px-7 py-3 border-line-gray border border-solid text-fontColor-gray01 placeholder:text-fontColor-gray07 focus:outline-primary `}
   `,
 
   Textarea: styled.textarea<React.HTMLProps<HTMLTextAreaElement>>`
