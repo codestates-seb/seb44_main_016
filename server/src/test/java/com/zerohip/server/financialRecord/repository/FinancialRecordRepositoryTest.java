@@ -24,6 +24,7 @@ class FinancialRecordRepositoryTest {
     FinancialRecord faRec = new FinancialRecord("test용 가계부");
     FinancialRecord saveFaRec = financialRecordRepository.save(faRec);
     log.info("saveFaRec.getFinancialRecordName() = {}", saveFaRec.getFinancialRecordName());
+
     Optional<FinancialRecord> optionalFaRec = financialRecordRepository.findById(saveFaRec.getFinancialRecordId());
     FinancialRecord findFaRec = optionalFaRec.orElseThrow(() -> new RuntimeException("가계부가 없습니다."));
     log.info("findFaRec.getFinancialRecordName() = {}", findFaRec.getFinancialRecordName());
