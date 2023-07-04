@@ -1,33 +1,20 @@
 import React from 'react';
 
 import tw from 'twin.macro';
+import styled from '@emotion/styled';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { FlexPage } from '../../components/common/PageTemplate';
+import CommonStyles from '../../styles/CommonStyles';
 
-const EditorPageContainer = tw(FlexPage)``;
-
-const AsideFrame = tw.aside`
-w-[367px] h-full bg-pink-500
-`;
-
-const EditorContainer = tw.form`
-w-full flex flex-col p-16 gap-5
-`;
-
-const Row = tw.section`
-w-full flex justify-evenly
-`;
-
-const RadioContainer = tw.section`
-flex gap-5
-`;
-
-const ImgSample = tw.img`
-w-[153px] h-[153px]  bg-pink-500 rounded-[10px]
-`;
+const S = {
+  ...CommonStyles,
+  EditorContainer: styled.form(tw`w-full flex flex-col p-[40px] gap-5`),
+  Row: styled.section(tw`w-full flex justify-evenly`),
+  RadioContainer: styled.section(tw`flex gap-5`),
+  ImgSample: styled.img(tw`w-[153px] h-[153px]  bg-pink-500 rounded-[10px]`),
+};
 
 const articleTypeOptions: { value: number; label: string }[] = [
   { value: 1, label: '가계부' },
@@ -125,110 +112,103 @@ export default function EditorPage() {
   };
 
   return (
-    <EditorPageContainer>
-      <AsideFrame />
-      <EditorContainer onSubmit={handleSubmit}>
-        <Row>
-          {/* 가계부/절약팁/허락해줘 (라디오 버튼) */}
-          <RadioContainer>
-            {articleTypeOptions.map((option) => (
-              <label key={option.value}>
-                <input
-                  type='radio'
-                  value={option.value}
-                  checked={articleType === option.value}
-                  onChange={() => handleChangeArticleType(option.value)}
-                />
-                {option.label}
-              </label>
-            ))}
-          </RadioContainer>
-        </Row>
-        {/* ↓ 'articleType=가계부'일 경우에만 표시 ↓ */}
-        {/* 작성할 가계부 (셀렉트) */}
-        <select name='faRecs' id='faRec' onChange={handleChangeFaRecId}>
-          <option value='1'>가계부1</option>
-          <option value='2'>가계부2</option>
-          <option value='3'>가계부3</option>
+    <S.EditorContainer onSubmit={handleSubmit}>
+      <S.Row>
+        {/* 가계부/절약팁/허락해줘 (라디오 버튼) */}
+        <S.RadioContainer>
+          {articleTypeOptions.map((option) => (
+            <S.RadioBtnLabel key={option.value}>
+              <S.RadioBtn
+                type='radio'
+                value={option.value}
+                checked={articleType === option.value}
+                onChange={() => handleChangeArticleType(option.value)}
+              />
+              {option.label}
+            </S.RadioBtnLabel>
+          ))}
+        </S.RadioContainer>
+      </S.Row>
+      {/* ↓ 'articleType=가계부'일 경우에만 표시 ↓ */}
+      {/* 작성할 가계부 (셀렉트) */}
+      <select name='faRecs' id='faRec' onChange={handleChangeFaRecId}>
+        <option value='1'>가계부1</option>
+        <option value='2'>가계부2</option>
+        <option value='3'>가계부3</option>
+      </select>
+      <S.Row>
+        {/* 날짜 (시간 미포함) */}
+        <DatePicker selected={faDate} onChange={handleChangeDate} />
+        {/* 카테고리 */}
+        <select name='categories' id='category' onChange={handleChangeCategory}>
+          <option value='식비'>식비</option>
+          <option value='교통비'>교통비</option>
+          <option value='교육비'>교육비</option>
+          <option value='여가비'>여가비</option>
         </select>
-        <Row>
-          {/* 날짜 (시간 미포함) */}
-          <DatePicker selected={faDate} onChange={handleChangeDate} />
-          {/* 카테고리 */}
-          <select
-            name='categories'
-            id='category'
-            onChange={handleChangeCategory}
-          >
-            <option value='식비'>식비</option>
-            <option value='교통비'>교통비</option>
-            <option value='교육비'>교육비</option>
-            <option value='여가비'>여가비</option>
-          </select>
-        </Row>
-        <Row>
-          {/* 금액 */}
-          <input
-            type='number'
-            name='price'
-            placeholder='금액을 입력하세요'
-            min='0'
-            value={price}
-            onChange={handleChangePrice}
-          />
-          {/* 지출/수입 (라디오 버튼) */}
-          <RadioContainer>
-            {faTypeOptions.map((option) => (
-              <label key={option.value}>
-                <input
-                  type='radio'
-                  value={option.value}
-                  checked={faType === option.value}
-                  onChange={() => handleChangeFaType(option.value)}
-                />
-                {option.label}
-              </label>
-            ))}
-          </RadioContainer>
-        </Row>
-        {/* 내역(제목) */}
+      </S.Row>
+      <S.Row>
+        {/* 금액 */}
         <input
-          type='text'
-          placeholder='제목을 입력하세요'
-          value={title}
-          onChange={handleChangeTitle}
+          type='number'
+          name='price'
+          placeholder='금액을 입력하세요'
+          min='0'
+          value={price}
+          onChange={handleChangePrice}
         />
-        {/* ↓ 모든 articleType에 표시 ↓ */}
-        {/* 이미지 */}
-        <Row>
-          <ImgSample />
-          <ImgSample />
-          <ImgSample />
-          <ImgSample />
-        </Row>
-        {/* 내용(본문) */}
-        <textarea
-          placeholder='내용을 입력해주세요'
-          value={content}
-          onChange={handleChangeContent}
-        />
-        {/* 공개 범위 (라디오 버튼) */}
-        <RadioContainer>
-          {scopeOptions.map((option) => (
-            <label key={option.value}>
-              <input
+        {/* 지출/수입 (라디오 버튼) */}
+        <S.RadioContainer>
+          {faTypeOptions.map((option) => (
+            <S.RadioBtnLabel key={option.value}>
+              <S.RadioBtn
                 type='radio'
                 value={option.value}
                 checked={faType === option.value}
-                onChange={() => handleChangeScope(option.value)}
+                onChange={() => handleChangeFaType(option.value)}
               />
               {option.label}
-            </label>
+            </S.RadioBtnLabel>
           ))}
-        </RadioContainer>
-        {/* Submit 버튼 */}
-        <button type='submit'>편집 완료</button>
-      </EditorContainer>
-    </EditorPageContainer>
+        </S.RadioContainer>
+      </S.Row>
+      {/* 내역(제목) */}
+      <S.InputText
+        type='text'
+        placeholder='제목을 입력하세요'
+        value={title}
+        onChange={handleChangeTitle}
+      />
+      {/* ↓ 모든 articleType에 표시 ↓ */}
+      {/* 이미지 */}
+      <S.Row>
+        <S.ImgSample />
+        <S.ImgSample />
+        <S.ImgSample />
+        <S.ImgSample />
+      </S.Row>
+      {/* 내용(본문) */}
+      <S.Textarea
+        placeholder='내용을 입력해주세요'
+        value={content}
+        onChange={handleChangeContent}
+      />
+      {/* 공개 범위 (라디오 버튼) */}
+      <S.RadioContainer>
+        {scopeOptions.map((option) => (
+          <S.RadioBtnLabel key={option.value}>
+            <S.RadioBtn
+              type='radio'
+              value={option.value}
+              checked={faType === option.value}
+              onChange={() => handleChangeScope(option.value)}
+            />
+            {option.label}
+          </S.RadioBtnLabel>
+        ))}
+      </S.RadioContainer>
+      {/* Submit 버튼 */}
+      <S.SubmitBtn type='submit'>편집 완료</S.SubmitBtn>
+    </S.EditorContainer>
   );
 }
