@@ -15,6 +15,8 @@ const GlobalStyles = () => (
         color: #333;
         font-family: 'Pretendard';
         font-weight: 400;
+        overflow: overlay;
+        overflow-x: hidden;
       }
 
       li {
@@ -71,6 +73,22 @@ const GlobalStyles = () => (
       input {
         border: none;
       }
+
+      ::-webkit-scrollbar {
+        width: 1vw; 
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(195deg, #8A96DB, #EFF1F8);  
+        height: 20%;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background-color:#a5a5a5; 
+        height: 30%;
+      }
+
+
 
     `}
   />
