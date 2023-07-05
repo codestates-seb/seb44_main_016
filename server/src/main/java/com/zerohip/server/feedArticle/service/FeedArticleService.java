@@ -16,7 +16,7 @@ public interface FeedArticleService {
   List<FeedArticle> findFeedArticles();
   
   // 피드 게시글 수정
-  FeedArticle updateFeedArticle(Long feedArticleId, FeedArticle.Patch patchParam);
+  //FeedArticle updateFeedArticle(Long feedArticleId, FeedArticle.Patch patchParam);
 
   // 피드 게시글 삭제
   void deleteFeedArticle(Long feedArticleId);
