@@ -15,6 +15,34 @@ const GlobalStyles = () => (
         color: #333;
         font-family: 'Pretendard';
         font-weight: 400;
+
+
+        /* color */
+        --color-primary : #676FC6;
+        --color-point-red : #FF451A;
+        --color-point-blue : #537FEE;
+        --color-point-yellow : #F8AC19;
+        --color-point-lilac : #C2C5E8;
+        --color-white : #FFF;
+
+        --color-gray01 : #333;
+        --color-gray02 : #4D4D4D;
+        --color-gray03 : #666;
+        --color-gray04 : #808080;
+        --color-gray05 : #999;
+        --color-gray06 : #B3B3B3;
+        --color-gray07 : #CCC;
+        --color-gray08 : #E6E6E6;
+        --color-gray09 : #F6F6F6;
+
+        --color-border-gray : #E6E6E6
+
+        /* box-shadow */
+        --shadow-default : 0 1px 10px rgba(170,170,170,25);
+
+        /* border-radius */
+        --rounded-default: 0.625rem;
+
       }
 
       li {
@@ -72,6 +100,7 @@ const GlobalStyles = () => (
         border: none;
       }
 
+      
     `}
   />
 );
