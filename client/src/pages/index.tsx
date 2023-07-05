@@ -1,11 +1,7 @@
 import React from 'react';
+import styled from '@emotion/styled';
 
-import tw from 'twin.macro';
 import SnsArticle from '../components/common/SnsArticle';
-
-const HomePageContainer = tw.div`
-w-full flex flex-col items-center p-[30px] gap-[30px]
-`;
 
 const feedArticleDummyA = {
   feedArticleId: 1,
@@ -80,9 +76,20 @@ const TimelineArticleDummyB = {
 
 export default function HomePage() {
   return (
-    <HomePageContainer>
+    <S.HomePageContainer>
       <SnsArticle type='feed' data={feedArticleDummyA} />
       <SnsArticle type='feed' data={feedArticleDummyB} />
-    </HomePageContainer>
+    </S.HomePageContainer>
   );
 }
+
+const S = {
+  HomePageContainer: styled.div`
+    width: 100%;
+    padding: 30px;
+    gap: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `,
+};
