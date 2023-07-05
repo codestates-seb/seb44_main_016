@@ -1,5 +1,4 @@
 import React from 'react'; // useState 사용
-import tw from 'twin.macro';
 import styled from '@emotion/styled';
 
 import CommonStyles from '../../styles/CommonStyles';
@@ -43,8 +42,14 @@ export default function SnsArticle({ data }: PropsFeed) {
   const labelText = data.feedType === 1 ? '절약 팁' : '허락해줘!';
   const Label =
     data.feedType === 1
-      ? tw(S.LabelTemplate)`text-point-blue border-point-blue`
-      : tw(S.LabelTemplate)`text-point-yellow border-point-yellow`;
+      ? styled(S.LabelTemplate)`
+          color: var(--color-point-blue);
+          border-color: var(--color-point-blue);
+        `
+      : styled(S.LabelTemplate)`
+          color: var(--color-point-yellow);
+          border-color: var(--color-point-yellow);
+        `;
 
   return (
     <S.SnsArticleContainer>
@@ -85,7 +90,7 @@ const S = {
     font-weight: bold;
 
     border-radius: 5px 5px 0px 0px;
-    border-top-width: 3px;
+    border-top: solid 3px;
 
     display: flex;
     align-items: center;
