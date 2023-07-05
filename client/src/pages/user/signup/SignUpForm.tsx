@@ -3,6 +3,13 @@ import tw from 'twin.macro';
 import CommonStyles from '../../../styles/CommonStyles';
 import useInput from '../../../hooks/useInput';
 import { SIGN_UP_MESSAGES } from '../../../constants/signUp';
+import {
+  validateEmail,
+  validateLoginId,
+  validatePassword,
+  validateNickname,
+  checkPasswordMatch,
+} from '../../../utils/validationCheck';
 
 export default function SignUpForm() {
   const [IdInput, idValue] = useInput('text', '아이디', 'loginId');
@@ -25,7 +32,7 @@ export default function SignUpForm() {
       },
       guide: SIGN_UP_MESSAGES.LOGIN_ID_GUIDE,
       component: IdInput,
-      error: SIGN_UP_MESSAGES.ID_EXISTING_ERROR,
+      error: idValue ? validateLoginId(idValue || '') : '',
     },
     {
       label: {
@@ -35,7 +42,7 @@ export default function SignUpForm() {
       },
       guide: SIGN_UP_MESSAGES.PASSWORD_GUIDE,
       component: PwInput,
-      error: SIGN_UP_MESSAGES.PASSWORD_FORMAT_ERROR,
+      error: pwValue ? validatePassword(pwValue || '') : '',
     },
     {
       label: {
@@ -44,7 +51,9 @@ export default function SignUpForm() {
         required: true,
       },
       component: PwConfirmInput,
-      error: SIGN_UP_MESSAGES.PASSWORD_CONFIRM_ERROR,
+      error: pwConfirmValue
+        ? checkPasswordMatch(pwValue || '', pwConfirmValue || '')
+        : '',
     },
     {
       label: {
@@ -54,7 +63,7 @@ export default function SignUpForm() {
       },
       // guide: SIGN_UP_MESSAGES.NICKNAME_GUIDE,
       component: nickNameInput,
-      error: SIGN_UP_MESSAGES.NICKNAME_EXISTING_ERROR,
+      error: nickNameValue ? validateNickname(nickNameValue || '') : '',
     },
     {
       label: {
@@ -65,7 +74,7 @@ export default function SignUpForm() {
       // guide: SIGN_UP_MESSAGES.NICKNAME_GUIDE,
       component: emailInput,
       subComponent: domainInput,
-      error: SIGN_UP_MESSAGES.NICKNAME_EXISTING_ERROR,
+      error: domainValue ? validateEmail(domainValue || '') : '',
     },
   ];
 
@@ -107,7 +116,7 @@ export default function SignUpForm() {
           <span>*</span>
         </S.PolicyLabel>
         <S.Policy>
-          <S.RadioBtn id='policy' />
+          {/* <S.RadioBtn id='policy' /> */}
           <S.RadioBtnLabel htmlFor='policy'>전체동의</S.RadioBtnLabel>
           <S.PolicyGuide htmlFor='policy'>
             {SIGN_UP_MESSAGES.POLICY_GUIDE}
@@ -123,8 +132,7 @@ export default function SignUpForm() {
 const S = {
   ...CommonStyles,
   FormContainer: styled.div`
-    width: 45%;
-    height: 1000px;
+    width: 50%;
     padding: 8px;
     margin-top: 20px;
   `,
