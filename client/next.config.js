@@ -6,7 +6,7 @@ const withTwin = require('./withTwin.js');
 module.exports = withTwin({
   reactStrictMode: true,
   webpack: (config) => {
-    // 아래를 추가합니다.
+    // SVG 설정
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
