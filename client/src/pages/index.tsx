@@ -37,19 +37,12 @@ const TimelineArticleDummyA = {
   content: `산악회 여러분~~ 안뇽하세용~~!
   어제 깜빡하고 못 적어서 지금 적어올려용~!
 
-  소단량가슴살 300g
-  : 4,550원
-  브로콜리(2입/봉)
-  :
-  2,780원
-  파프리카(3입/봉)
-  : 5,460원
-  국산 볶음땅콩 150g
-  : 4,820원
-  적양배추 1/2
-  : 10,800원
-  양상추
-  : 1,280원
+  소단량가슴살 300g : 4,550원
+  브로콜리(2입/봉) : 2,780원
+  파프리카(3입/봉) : 5,460원
+  국산 볶음땅콩 150g : 4,820원
+  적양배추 1/2 : 10,800원
+  양상추 : 1,280원
   
   
   #닭가슴살 안 사려고 했는데 결국 사버렸네용... ㅠㅠ
@@ -66,7 +59,7 @@ const TimelineArticleDummyB = {
   category: '급여',
   financialRecordDate: new Date(),
   price: 2_761_000, // 수입
-  content: `오늘은 월급날, 후훗.`,
+  content: `오늘은 월급날, 후훗. from 아무도 안 보는 혼자만의 공☆간`,
   scope: 2, // 타임라인에도
   imageId: 0,
   userId: 0,
@@ -77,6 +70,8 @@ const TimelineArticleDummyB = {
 export default function HomePage() {
   return (
     <S.HomePageContainer>
+      <SnsArticle type='timeline' data={TimelineArticleDummyA} />
+      <SnsArticle type='timeline' data={TimelineArticleDummyB} />
       <SnsArticle type='feed' data={feedArticleDummyA} />
       <SnsArticle type='feed' data={feedArticleDummyB} />
     </S.HomePageContainer>

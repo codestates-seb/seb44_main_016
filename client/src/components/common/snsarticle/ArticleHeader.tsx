@@ -11,26 +11,78 @@ function getKoreanDate(date: Date) {
   const formattedDate = `${year}년 ${month}월 ${day}일 ${hours}:${minutes}`;
   return formattedDate;
 }
+function formatNumber(number: number): string {
+  const formattedNumber = Math.abs(number).toLocaleString();
+  const sign = number >= 0 ? '+' : '-';
+  return `${sign}${formattedNumber}`;
+}
 
-type Props = {
+/* type은 추후 다른 파일로 분리하고 Import할 예정 */
+type PropsFeed = {
+  type: 'feed';
+  profileImg?: string;
+  createdAt: Date;
+  children: string;
+};
+type PropsTimeline = {
+  type: 'timeline';
+  category: string;
+  price: number;
   profileImg?: string;
   createdAt: Date;
   children: string;
 };
 
-export default function ArticleHeaderComponent(props: Props) {
+export default function ArticleHeaderComponent(
+  props: PropsFeed | PropsTimeline
+) {
+  let PriceText;
+  if (props.type === 'feed') {
+    PriceText = styled(S.PriceText)``;
+  } else {
+    PriceText =
+      props.price < 0
+        ? styled(S.PriceText)`
+            color: var(--color-point-red);
+          `
+        : styled(S.PriceText)`
+            color: var(--color-point-blue);
+          `;
+  }
+
   return (
     <S.ArticleHeaderContainer>
-      <S.Profile>
+      <S.Left>
         <S.ProfileImgButton>
           <S.ProfileImg />
         </S.ProfileImgButton>
         <S.Nickname>{props.children}</S.Nickname>
-      </S.Profile>
-      <section>{getKoreanDate(props.createdAt)}</section>
+        {props.type === 'feed' ? (
+          <>
+            <></>
+          </>
+        ) : (
+          <>
+            <section>{getKoreanDate(props.createdAt)}</section>
+          </>
+        )}
+      </S.Left>
+      <S.Right>
+        {props.type === 'feed' ? (
+          <>
+            <section>{getKoreanDate(props.createdAt)}</section>
+          </>
+        ) : (
+          <>
+            <span>{props.category}</span>
+            <PriceText>{formatNumber(props.price)}</PriceText>
+          </>
+        )}
+      </S.Right>
     </S.ArticleHeaderContainer>
   );
 }
+// 팔로우 버튼 추가
 
 const S = {
   ArticleHeaderContainer: styled.section`
@@ -42,10 +94,15 @@ const S = {
     justify-content: space-between;
     align-items: center;
   `,
-  Profile: styled.section`
+  Left: styled.section`
     gap: 10px;
     display: flex;
-    justify-content: center;
+    align-items: center;
+  `,
+  Right: styled.section`
+    gap: 10px;
+    display: flex;
+    align-items: center;
   `,
   Nickname: styled.button`
     font-weight: bold;
@@ -61,5 +118,8 @@ const S = {
     width: 100%;
     height: 100%;
     background-color: black;
+  `,
+  PriceText: styled.span`
+    font-weight: bold;
   `,
 };

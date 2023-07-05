@@ -38,30 +38,73 @@ type PropsTimeline = {
   };
 };
 
-export default function SnsArticle({ data }: PropsFeed) {
-  const labelText = data.feedType === 1 ? '절약 팁' : '허락해줘!';
-  const Label =
-    data.feedType === 1
-      ? styled(S.LabelTemplate)`
-          color: var(--color-point-blue);
-          border-color: var(--color-point-blue);
-        `
-      : styled(S.LabelTemplate)`
-          color: var(--color-point-yellow);
-          border-color: var(--color-point-yellow);
-        `;
+export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
+  let date, labelText, Label;
+
+  if (type === 'feed') {
+    date = data.createdAt;
+    [labelText, Label] =
+      data.feedType === 1
+        ? [
+            '절약 팁',
+            styled(S.LabelTemplate)`
+              color: var(--color-point-blue);
+              border-color: var(--color-point-blue);
+            `,
+          ]
+        : [
+            '허락해줘!',
+            styled(S.LabelTemplate)`
+              color: var(--color-point-yellow);
+              border-color: var(--color-point-yellow);
+            `,
+          ];
+  } else {
+    date = data.financialRecordDate;
+    [labelText, Label] =
+      data.price <= 0
+        ? [
+            '지출',
+            styled(S.LabelTemplate)`
+              color: var(--color-point-red);
+              border-color: var(--color-point-red);
+            `,
+          ]
+        : [
+            '수입',
+            styled(S.LabelTemplate)`
+              color: var(--color-point-blue);
+              border-color: var(--color-point-blue);
+            `,
+          ];
+  }
 
   return (
     <S.SnsArticleContainer>
       <Label>{labelText}</Label>
       <S.Box>
-        <ArticleHeader profileImg='' createdAt={data.createdAt}>
-          Waypil
-        </ArticleHeader>
+        {type === 'feed' ? (
+          <ArticleHeader type={type} createdAt={date}>
+            Waypil
+          </ArticleHeader>
+        ) : (
+          <ArticleHeader
+            type={type}
+            createdAt={date}
+            category={data.category}
+            price={data.price}
+          >
+            Waypil
+          </ArticleHeader>
+        )}
         <S.ImgContainer />
         <S.ArtileMain>
-          <p>{data.content}</p>
-          <VoteForm savingRate={256} flexRate={48} />
+          <S.CommentText>{data.content}</S.CommentText>
+          {type === 'feed' ? (
+            <VoteForm savingRate={256} flexRate={48} />
+          ) : (
+            <></>
+          )}
           <S.UDForm>
             {/* CRUD의 U, D */}
             <button>수정</button>
@@ -115,6 +158,9 @@ const S = {
     display: flex;
     flex-direction: column;
     gap: 20px;
+  `,
+  CommentText: styled.p`
+    line-height: 125%;
   `,
   /* ↓ ArtileMain 내부 컴포넌트 ↓ */
   UDForm: styled.section`
