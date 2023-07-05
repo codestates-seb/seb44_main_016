@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; // useState 사용
 
 import tw from 'twin.macro';
 import styled from '@emotion/styled';
@@ -8,10 +8,22 @@ import Comment from './snsarticle/Comment';
 
 const S = {
   ...CommonStyles,
-  ArticleHeader: styled.section(
-    tw`w-full h-[58px] flex items-center justify-between px-[20px] `
+  /* 거대한 틀 */
+  SnsArticleContainer: styled.article(tw`w-[713px] flex flex-col items-end`),
+  LabelTemplate: styled.section(
+    tw`w-[116px] h-[37px] bg-white shadow-md font-bold 
+    rounded-t-[5px]  border-0 border-solid border-t-[3px] 
+    flex items-center justify-center`
   ),
-  /* ArticleHeader 내부 컴포넌트 */
+  Box: styled.section(
+    tw`w-full bg-white shadow-md
+    rounded-tl-default rounded-bl-default rounded-br-default`
+  ),
+
+  ArticleHeader: styled.section(
+    tw`w-full h-[58px] flex items-center justify-between px-[20px]`
+  ),
+  /* ↓ ArticleHeader 내부 컴포넌트 ↓ */
   Profile: styled.section(tw`flex justify-center gap-[10px]`),
   Nickname: styled.button(tw`font-bold`),
   ProfileImgButton: styled.button(
@@ -22,14 +34,25 @@ const S = {
   ImgContainer: styled.section(tw`w-full h-[328px] bg-pink-500`),
 
   ArtileMain: styled.section(tw`w-full p-[20px]  flex flex-col gap-[20px]`),
-  /* ArtileMain 내부 컴포넌트 */
+  /* ↓ ArtileMain 내부 컴포넌트 ↓ */
+  OtherButtonsContainer: styled.section(tw`w-full flex justify-end gap-[10px]`),
   VoteForm: styled.form(
     tw`w-full flex justify-center items-center gap-[10px] mt-[10px]`
   ),
-  OtherButtonsContainer: styled.section(tw`w-full flex justify-end gap-[10px]`),
+  /* ↓ VoteForm(절약 & Flex) 내부 컴포넌트 ↓ */
   SavingRateCount: styled.span(tw`text-point-blue font-bold`),
   FlexRateCount: styled.span(tw`text-point-red`),
-  /** 댓글 관련 **/
+  SavingBtn:
+    styled.button(tw`w-[90px] h-[40px] bg-point-blue rounded-full text-white
+    border-point-blue border-solid border-[3px]
+    hover:(bg-white text-point-blue font-bold)
+  `),
+  FlexBtn:
+    styled.button(tw`w-[90px] h-[40px] bg-point-red rounded-full text-white
+    border-point-red border-solid border-[3px]
+    hover:(bg-white text-point-red font-bold)
+  `),
+  /* ↓ 댓글 관련 ↓ */
   CommentsContainer: styled.section(tw``),
   CommentsDropdownButton: styled.button(
     tw`w-full h-[35px] bg-[#F6F6F6] text-left rounded-[50px] px-[20px]`
@@ -38,33 +61,7 @@ const S = {
   CommentForm: styled.form(tw`mt-[20px]`),
 };
 
-const SnsArticleContainer = tw.article`
-w-[713px]
-flex flex-col items-end
-`;
-
-const LabelTemplate = tw.section`
-w-[116px] h-[37px] bg-white shadow-md font-bold 
-rounded-t-[5px]  border-0 border-solid border-t-[3px] 
-flex items-center justify-center
-`;
-
-const Box = tw.section`
-w-full bg-white shadow-md
-rounded-tl-default rounded-bl-default rounded-br-default
-`;
-
-const SavingBtn = tw.button`
-w-[90px] h-[40px] bg-point-blue rounded-full text-white
- border-point-blue border-solid border-[3px]
-hover:(bg-white text-point-blue font-bold)
-`;
-const FlexBtn = tw.button`
-w-[90px] h-[40px] bg-point-red rounded-full text-white
- border-point-red border-solid border-[3px]
-hover:(bg-white text-point-red font-bold)
-`;
-
+/* Util 함수는 추후 다른 파일로 분리하고 Import할 예정 */
 function getKoreanDate(date: Date) {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -76,6 +73,7 @@ function getKoreanDate(date: Date) {
   return formattedDate;
 }
 
+/* type은 추후 다른 파일로 분리하고 Import할 예정 */
 type Props = {
   data: {
     feedArticleId: number;
@@ -96,17 +94,17 @@ export default function EditorPage({ data }: Props) {
   const labelText = data.feedType === 1 ? '절약 팁' : '허락해줘!';
   const Label =
     data.feedType === 1
-      ? tw(LabelTemplate)`text-point-blue border-point-blue`
-      : tw(LabelTemplate)`text-point-yellow border-point-yellow`;
+      ? tw(S.LabelTemplate)`text-point-blue border-point-blue`
+      : tw(S.LabelTemplate)`text-point-yellow border-point-yellow`;
 
   const handleChangeOpenedOrClosed = () => {
     setIsCommentsOpened((prevBool) => !prevBool);
   };
 
   return (
-    <SnsArticleContainer>
+    <S.SnsArticleContainer>
       <Label>{labelText}</Label>
-      <Box>
+      <S.Box>
         <S.ArticleHeader>
           <S.Profile>
             <S.ProfileImgButton>
@@ -121,8 +119,8 @@ export default function EditorPage({ data }: Props) {
           <p>{data.content}</p>
           <S.VoteForm>
             <S.SavingRateCount>256</S.SavingRateCount>
-            <SavingBtn>👍절약</SavingBtn>
-            <FlexBtn>💸Flex</FlexBtn>
+            <S.SavingBtn>👍절약</S.SavingBtn>
+            <S.FlexBtn>💸Flex</S.FlexBtn>
             <S.FlexRateCount>48</S.FlexRateCount>
           </S.VoteForm>
           <S.OtherButtonsContainer>
@@ -149,7 +147,7 @@ export default function EditorPage({ data }: Props) {
             </S.CommentForm>
           </S.CommentsContainer>
         </S.ArtileMain>
-      </Box>
-    </SnsArticleContainer>
+      </S.Box>
+    </S.SnsArticleContainer>
   );
 }
