@@ -40,6 +40,11 @@ const S = {
     justify-content: space-between;
     flex-basis: 50%;
     background: var(--color-white);
+    border: 2px solid transparent;
+
+    &:hover {
+      border-color: var(--color-primary);
+    }
   `,
 
   ItemTitle: styled.h3`
