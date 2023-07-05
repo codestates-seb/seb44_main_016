@@ -1,7 +1,11 @@
 import type { AppProps } from 'next/app';
 import GlobalStyles from '../styles/GlobalStyles';
 import { useRouter } from 'next/router';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import styled from '@emotion/styled';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+const queryClient = new QueryClient();
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
@@ -18,15 +22,18 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       {/*모든 ReactDOM에 margin: 0; padding: 0; box-sizing: border-box; 적용 */}
-      <GlobalStyles />
-      <S.RootScreen>
-        <S.AppContainer>
-          <S.FlexPage bgColor={bgColor}>
-            {showNav && <S.AsideFrame>sidenav 영역</S.AsideFrame>}
-            <Component {...pageProps} />
-          </S.FlexPage>
-        </S.AppContainer>
-      </S.RootScreen>
+      <QueryClientProvider client={queryClient}>
+        <GlobalStyles />
+        <S.RootScreen>
+          <S.AppContainer>
+            <S.FlexPage bgColor={bgColor}>
+              {showNav && <S.AsideFrame>sidenav 영역</S.AsideFrame>}
+              <Component {...pageProps} />
+            </S.FlexPage>
+          </S.AppContainer>
+        </S.RootScreen>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </>
   );
 };
