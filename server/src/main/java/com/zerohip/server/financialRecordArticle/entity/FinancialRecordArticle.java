@@ -9,7 +9,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
+/**
+ * faDate를 어떻게 저장할 것인가..!
+ * Date!? String!?
+ * - String으로 저장하면, 조회할 때, String을 Date로 변환해야 한다.
+ */
 @NoArgsConstructor
 @Setter
 @Getter
@@ -26,9 +32,9 @@ public class FinancialRecordArticle {
   @Size(max = 10000)
   @Column(nullable = true, unique = false, updatable = true, length = 10000)
   private String content;
-  @NotBlank
+  @NotNull
   @Column(nullable = false, unique = false, updatable = true)
-  private String faDate;
+  private Date faDate;
   @NotBlank
   @Size(min = 1, max = 10)
   @Column(nullable = false, unique = false, updatable = true, length = 10)

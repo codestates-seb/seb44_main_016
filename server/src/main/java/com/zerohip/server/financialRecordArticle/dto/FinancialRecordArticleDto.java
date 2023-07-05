@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 public class FinancialRecordArticleDto {
 
@@ -22,8 +23,8 @@ public class FinancialRecordArticleDto {
     private String title;
     @Size(max = 10000)
     private String content;
-    @NotBlank
-    private String faDate;
+    @NotNull
+    private Date faDate;
     @NotBlank
     private String category;
     @NotNull
@@ -44,8 +45,8 @@ public class FinancialRecordArticleDto {
     private String title;
     @Size(max = 10000)
     private String content;
-    @NotBlank
-    private String faDate;
+    @NotNull
+    private Date faDate;
     @NotBlank
     @Size(min = 1, max = 10)
     private String category;
@@ -68,8 +69,8 @@ public class FinancialRecordArticleDto {
     private String title;
     @Size(max = 10000)
     private String content;
-    @NotBlank
-    private String faDate;
+    @NotNull
+    private Date faDate;
     @NotBlank
     private String category;
     @NotNull
