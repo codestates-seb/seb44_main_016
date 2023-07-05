@@ -1,6 +1,7 @@
 package com.zerohip.server.financialRecordArticle.entity;
 
 import com.zerohip.server.common.scope.Scope;
+import com.zerohip.server.financialRecord.entity.FinancialRecord;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +23,17 @@ import java.util.Date;
 @Entity
 public class FinancialRecordArticle {
 
+  public FinancialRecordArticle(Long financialRecordArticleId, String title, String content, Date faDate, String category, int price, Scope scope, FinancialRecord financialRecord) {
+    this.financialRecordArticleId = financialRecordArticleId;
+    this.title = title;
+    this.content = content;
+    this.faDate = faDate;
+    this.category = category;
+    this.price = price;
+    this.scope = scope;
+    this.financialRecord = financialRecord;
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long financialRecordArticleId;
@@ -39,6 +51,9 @@ public class FinancialRecordArticle {
   @Size(min = 1, max = 10)
   @Column(nullable = false, unique = false, updatable = true, length = 10)
   private String category;
+  @NotNull
+  @Column(nullable = false, unique = false, updatable = true)
+  private int price;
 
   /**
    * 글의 공개 범위
@@ -51,6 +66,9 @@ public class FinancialRecordArticle {
   private Scope scope;
 
   // 가계부 매핑
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "financialRecordId")
+  private FinancialRecord financialRecord;
   // 유저 매핑
   // 이미지 매핑
   // 댓글 매핑

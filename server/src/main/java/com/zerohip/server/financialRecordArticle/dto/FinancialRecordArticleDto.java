@@ -28,6 +28,8 @@ public class FinancialRecordArticleDto {
     @NotBlank
     private String category;
     @NotNull
+    private int price;
+    @NotNull
     private Scope scope;
 
     // 가계부 매핑 데이터
@@ -51,6 +53,8 @@ public class FinancialRecordArticleDto {
     @Size(min = 1, max = 10)
     private String category;
     @NotNull
+    private int price;
+    @NotNull
     private Scope scope;
 
     // 가계부 매핑 데이터
@@ -73,6 +77,8 @@ public class FinancialRecordArticleDto {
     private Date faDate;
     @NotBlank
     private String category;
+    @NotNull
+    private int price;
     @NotNull
     private Scope scope;
 
