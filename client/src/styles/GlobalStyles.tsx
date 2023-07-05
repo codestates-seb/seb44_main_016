@@ -35,7 +35,7 @@ const GlobalStyles = () => (
         --color-gray08 : #E6E6E6;
         --color-gray09 : #F6F6F6;
 
-        --color-border-gray : #E6E6E6
+        --color-border-gray : #E6E6E6;
 
         /* box-shadow */
         --shadow-default : 0 1px 10px rgba(170,170,170,25);
