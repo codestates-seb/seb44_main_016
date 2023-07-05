@@ -12,6 +12,7 @@ module.exports = {
           red: '#FF451A',
           yellow: '#F8AC19',
           lilac: '#C2C5E8',
+          pink: '#E483b0',
         },
         fontColor: {
           redLabel: 'EE5353',
@@ -27,6 +28,7 @@ module.exports = {
         },
         line: {
           gray: '#E6E6E6',
+          light: '#E6E6E6',
         },
       },
       borderRadius: {
