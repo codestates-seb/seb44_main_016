@@ -10,12 +10,13 @@ const CommonStyles = {
     position: relative;
     display: inline-block;
     color: var(--color-white);
-    padding: 1rem;
+    padding: 0.75rem 1rem;
     border-radius: 100px;
     font-weight: 400;
     border: 2px solid var(--color-primary);
     overflow: hidden;
     background-color: white;
+    line-height: 1;
     z-index: 1;
 
     &:hover {
@@ -82,16 +83,16 @@ const CommonStyles = {
       `
     width: 10rem;
   `}
->>>>>>> 8ec7fd80c8e1346ad6f560fcf902db8b7e927a8b
   `,
   InputText: styled.input`
     background-color: white;
     border-radius: 100px;
     width: 100%;
-    padding: 1rem;
+    padding: 0.875rem 1rem;
     color: var(--color-gray01);
     border: 1px solid var(--color-border-gray);
-    &:placeholder {
+    line-height: 1;
+    &::placeholder {
       color: var(--color-gray07);
     }
     &:focus {
@@ -108,7 +109,7 @@ const CommonStyles = {
     resize: none;
     min-height: 120px;
 
-    &:placeholder {
+    &::placeholder {
       color: var(--color-gray07);
     }
     &:focus {
