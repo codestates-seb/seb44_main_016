@@ -32,6 +32,9 @@ module.exports = {
       borderRadius: {
         default: '0.625rem' /* 10px */,
       },
+      boxShadow: {
+        default: '0 1px 10px rgba(170,170,170,25)',
+      },
     },
   },
   plugins: [],

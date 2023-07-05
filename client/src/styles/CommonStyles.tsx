@@ -36,6 +36,10 @@ const CommonStyles = {
 
   checked:( border-primary border-4)
   `,
+
+  BlindTitle: tw.h2`
+  absolute w-[1px] h-[1px] m-[-1px] overflow-hidden
+  `,
 };
 
 export default CommonStyles;
