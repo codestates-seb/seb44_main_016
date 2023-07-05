@@ -19,7 +19,8 @@ function getKoreanDate(date: Date) {
 }
 
 /* type은 추후 다른 파일로 분리하고 Import할 예정 */
-type Props = {
+type PropsFeed = {
+  type: 'feed';
   data: {
     feedArticleId: number;
     feedType: number; // 사용
@@ -32,8 +33,23 @@ type Props = {
     feedArticleHashtagId: number;
   };
 };
+type PropsTimeline = {
+  type: 'timeline';
+  data: {
+    financialRecordId: number;
+    category: string; // 사용
+    financialRecordDate: Date; // 사용
+    price: number; // 사용
+    content: string; // 사용★
+    scope: number; // 사용
+    imageId: number;
+    userId: number;
+    voteId: number;
+    financialRecordArticleHashTagId: number;
+  };
+};
 
-export default function EditorPage({ data }: Props) {
+export default function SnsArticle({ data }: PropsFeed) {
   const [isCommentsOpened, setIsCommentsOpened] = React.useState(false);
 
   const labelText = data.feedType === 1 ? '절약 팁' : '허락해줘!';
