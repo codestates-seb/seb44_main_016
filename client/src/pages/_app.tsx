@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import styled from '@emotion/styled';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+import Aside from '../components/Aside';
+
 const queryClient = new QueryClient();
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -27,7 +29,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <S.RootScreen>
           <S.AppContainer>
             <S.FlexPage bgColor={bgColor}>
-              {showNav && <S.AsideFrame>sidenav 영역</S.AsideFrame>}
+              {showNav && <Aside isLoggedIn={true} />}
               <Component {...pageProps} />
             </S.FlexPage>
           </S.AppContainer>
@@ -52,12 +54,6 @@ const S = {
     max-width: 1140px;
     width: 100%;
     display: flex;
-  `,
-
-  AsideFrame: styled.aside`
-    width: 367px;
-    height: 100%;
-    background-color: #f6ccd9;
   `,
 
   FlexPage: styled.div<{ bgColor?: string }>`
