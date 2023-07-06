@@ -127,7 +127,8 @@ export default function SignUpForm() {
   ];
 
   async function sendPostRequest(data: PostSignUp) {
-    const url = 'https://zerohip-git-user-55-everland.vercel.app/user/signup';
+    const url =
+      'https://zerohip-git-user-55-everland.vercel.app/api/user/signup';
     try {
       const responseData = await postSignUpData(url, data);
       console.log(responseData);

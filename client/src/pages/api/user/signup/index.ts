@@ -13,7 +13,7 @@ export default function signUp(req: NextApiRequest, res: NextApiResponse) {
     nickname,
   };
 
-  userData?.unshift(newUser);
+  userData.unshift(newUser);
   const responseBody = JSON.stringify(newUser);
   res.status(201).json(responseBody);
 }
