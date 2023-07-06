@@ -1,29 +1,37 @@
-import CommonStyles from '../../../styles/CommonStyles';
+import Link from 'next/link';
+import CommonStyles from '../../styles/CommonStyles';
 import styled from '@emotion/styled';
+import { RecordData } from '.';
 
-export default function ListItem() {
+type Props = {
+  item: RecordData;
+};
+
+export default function ListItem({ item }: Props) {
+  if (!item) {
+    return null;
+  }
+  const { financialRecordId, financialRecordName, users } = item;
+
   return (
-    <S.ItemWrap>
-      <div>
-        <S.ItemShareUser>공유하는 유저</S.ItemShareUser>
-        <S.ItemUserList>
-          <li>
-            <img src='https://pbs.twimg.com/profile_images/1173873201039806464/R1lWiNES_400x400.jpg' />
-          </li>
-          <li>
-            <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlX16ekpWJwSiFBtYqm_BIzS2E8gs2Iqf_87SbY3zQx4u59Zv-mjMUGmT9K0xOsgDICn0&usqp=CAU' />
-          </li>
-          <li>
-            <img src='https://blog.kakaocdn.net/dn/bY6iW4/btrEJwN3Zrf/SqQZ605snSkSqP5U96S3AK/img.png' />
-          </li>
-        </S.ItemUserList>
-      </div>
-      <div>
-        <S.ItemTitle>가계부명</S.ItemTitle>
-        <S.ItemName>햄구님의 가계부</S.ItemName>
-      </div>
-      <S.BookmarksBtn />
-    </S.ItemWrap>
+    <Link href={`/financial-record/financial-list/${financialRecordId}`}>
+      <S.ItemWrap>
+        <div>
+          <S.ItemShareUser>공유하는 유저</S.ItemShareUser>
+          <S.ItemUserList>
+            {users?.map((el) => (
+              <li key={el.userId}>
+                <img src={el.profileImgPath} alt='user profile' />
+              </li>
+            ))}
+          </S.ItemUserList>
+        </div>
+        <div>
+          <S.ItemTitle>가계부명</S.ItemTitle>
+          <S.ItemName>{financialRecordName}</S.ItemName>
+        </div>
+      </S.ItemWrap>
+    </Link>
   );
 }
 
