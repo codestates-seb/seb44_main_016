@@ -26,7 +26,7 @@ export type RecordData = {
 };
 
 export default function FinancialListPage() {
-  const { isLoading, error, data } = useQuery<RecordData[]>(
+  const { isLoading, error, data, isSuccess } = useQuery<RecordData[]>(
     ['recordList'],
     financialRecordAPI.getRecordList
   );
@@ -49,7 +49,7 @@ export default function FinancialListPage() {
         ) : error ? (
           <p>오류가 발생했습니다</p>
         ) : (
-          data &&
+          isSuccess &&
           data.map((el) => <ListItem key={el.financialRecordId} item={el} />)
         )}
       </S.FaRecList>
