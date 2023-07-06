@@ -8,6 +8,9 @@ type Props = {
 };
 
 export default function ListItem({ item }: Props) {
+  if (!item) {
+    return null;
+  }
   const { financialRecordId, financialRecordName, users } = item;
 
   return (
@@ -16,7 +19,7 @@ export default function ListItem({ item }: Props) {
         <div>
           <S.ItemShareUser>공유하는 유저</S.ItemShareUser>
           <S.ItemUserList>
-            {users.map((el) => (
+            {users?.map((el) => (
               <li key={el.userId}>
                 <img src={el.profileImgPath} alt='user profile' />
               </li>

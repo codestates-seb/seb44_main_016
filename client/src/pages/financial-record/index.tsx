@@ -18,15 +18,15 @@ export type UserData = {
 };
 
 export type RecordData = {
-  financialRecordId: number;
-  financialRecordName: string;
+  financialRecordId: number | undefined;
+  financialRecordName: string | undefined;
   /**  후순위 기능이라 옵셔널체이닝 사용 */
-  isStar?: boolean;
-  users: UserData[];
+  isBookmark?: boolean | undefined;
+  users: UserData[] | undefined;
 };
 
 export default function FinancialListPage() {
-  const { isLoading, error, data } = useQuery<RecordData[]>(
+  const { isLoading, error, data, isSuccess } = useQuery<RecordData[]>(
     ['recordList'],
     financialRecordAPI.getRecordList
   );
@@ -49,7 +49,7 @@ export default function FinancialListPage() {
         ) : error ? (
           <p>오류가 발생했습니다</p>
         ) : (
-          data &&
+          isSuccess &&
           data.map((el) => <ListItem key={el.financialRecordId} item={el} />)
         )}
       </S.FaRecList>
