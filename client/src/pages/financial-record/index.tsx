@@ -50,9 +50,7 @@ export default function FinancialListPage() {
           <p>오류가 발생했습니다</p>
         ) : (
           isSuccess &&
-          data.map((el) =>
-            el ? <ListItem key={el.financialRecordId} item={el} /> : null
-          )
+          data.map((el) => <ListItem key={el.financialRecordId} item={el} />)
         )}
       </S.FaRecList>
     </S.ListWrap>
