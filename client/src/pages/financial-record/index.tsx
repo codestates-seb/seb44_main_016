@@ -18,17 +18,18 @@ export type UserData = {
 };
 
 export type RecordData = {
-  financialRecordId: number;
-  financialRecordName: string;
+  financialRecordId: number | undefined;
+  financialRecordName: string | undefined;
   /**  후순위 기능이라 옵셔널체이닝 사용 */
-  isBookmark?: boolean;
-  users: UserData[];
+  isBookmark?: boolean | undefined;
+  users: UserData[] | undefined;
 };
 
 export default function FinancialListPage() {
-  const { isLoading, error, data, isSuccess } = useQuery<
-    RecordData[] | undefined
-  >(['recordList'], financialRecordAPI.getRecordList);
+  const { isLoading, error, data, isSuccess } = useQuery<RecordData[]>(
+    ['recordList'],
+    financialRecordAPI.getRecordList
+  );
 
   return (
     <S.ListWrap>
