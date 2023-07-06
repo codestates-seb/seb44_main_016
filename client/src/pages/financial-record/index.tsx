@@ -5,6 +5,7 @@ import ListItem from './ListItem';
 import SearchIcon from '../../../public/images/icon/search.svg';
 import { useQuery } from '@tanstack/react-query';
 import { Metadata } from 'next';
+import { financialRecordAPI } from '../../services/financialAPI';
 
 export const metadata: Metadata = {
   title: '가계부 목록',
@@ -27,9 +28,7 @@ export type RecordData = {
 export default function FinancialListPage() {
   const { isLoading, error, data } = useQuery<RecordData[]>(
     ['recordList'],
-    async () => {
-      return fetch('/data/recordList.json').then((res) => res.json());
-    }
+    financialRecordAPI.getRecordList
   );
 
   return (
