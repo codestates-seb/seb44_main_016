@@ -108,7 +108,7 @@ export default function Aside(props: Props) {
                 </S.ProfileRightSection>
               </S.ProfileBox>
               {isTabClosed ? (
-                <S.SubmitBtn>글 쓰기</S.SubmitBtn>
+                <S.SubmitBtn>글쓰기</S.SubmitBtn>
               ) : (
                 <AsideButton leftIcon={svgs.editor} />
               )}
