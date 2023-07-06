@@ -1,9 +1,15 @@
 // 아이디 유효성 검사
 export const validateLoginId = (loginId: string) => {
   const loginIdFormat = /^[a-z0-9]{4,10}$/;
+  let errorMessage = '';
 
-  if (!loginIdFormat.test(loginId))
-    return '아이디는 영문 소문자나 숫자로 구성되어야 합니다.';
+  if (loginId.length < 4 || loginId.length > 10) {
+    return (errorMessage += '아이디는 4자 이상 10자 이하이어야 합니다.\n');
+  }
+  if (!loginIdFormat.test(loginId)) {
+    return (errorMessage +=
+      '아이디는 영문 소문자나 숫자로 구성되어야 합니다.\n');
+  }
 
   return '';
 };
