@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
-import axios from 'axios';
-import Logo from '../../../../public/logo.svg';
+import Logo from '../../../../public/image/logo.svg';
 import SignUpForm from './SignUpForm';
 
 export default function SignUp() {
