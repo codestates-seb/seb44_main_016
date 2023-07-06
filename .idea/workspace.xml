@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="479448aa-9656-4ebc-b323-4ec3e1b3838b" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
@@ -18,6 +19,9 @@
       <change afterPath="$PROJECT_DIR$/client/src/components/common/SnsArticle.tsx" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/client/src/components/common/snsarticle/Comment.tsx" afterDir="false" />
     </list>
+=======
+    <list default="true" id="479448aa-9656-4ebc-b323-4ec3e1b3838b" name="Changes" comment="" />
+>>>>>>> 68603f33eb6cb5a5aac48bea1587aebfa84412aa
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -120,7 +124,11 @@
       <updated>1688348691308</updated>
       <workItem from="1688348696430" duration="14302000" />
       <workItem from="1688444710762" duration="16879000" />
+<<<<<<< HEAD
       <workItem from="1688546281631" duration="18171000" />
+=======
+      <workItem from="1688546281631" duration="15495000" />
+>>>>>>> 68603f33eb6cb5a5aac48bea1587aebfa84412aa
     </task>
     <servers />
   </component>
