@@ -1,20 +1,79 @@
+// 'use client';
 import styled from '@emotion/styled';
-import tw from 'twin.macro';
+import { keyframes, css } from '@emotion/react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import CommonStyles from '../../../styles/CommonStyles';
-import useInput from '../../../hooks/useInput';
+import useInput, { useCheckboxInput } from '../../../hooks/useComponents';
 import { SIGN_UP_MESSAGES } from '../../../constants/signUp';
+import SelectBox from '../../../components/SelectBox';
+import {
+  validateEmail,
+  validateLoginId,
+  validatePassword,
+  validateNickname,
+  checkPasswordMatch,
+} from '../../../utils/validationCheck';
+import postSignUpData from '../../../services/apiRequest';
+import { PostSignUp } from '../../../types/SignUp';
 
 export default function SignUpForm() {
-  const [IdInput, idValue] = useInput('text', '아이디', 'loginId');
-  const [PwInput, pwValue] = useInput('password', '비밀번호', 'pw');
-  const [PwConfirmInput, pwConfirmValue] = useInput(
+  const router = useRouter();
+  const [Checkbox, isChecked, setIsChecked] = useCheckboxInput(
+    'checkbox',
+    'policy'
+  );
+  const [IdInput, loginId, setLoginId] = useInput('text', '아이디', 'loginId');
+  const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw');
+  const [PwConfirmInput, password, setPassword] = useInput(
     'password',
     '비밀번호 확인',
     'pwConfirm'
   );
-  const [nickNameInput, nickNameValue] = useInput('text', '닉네임', 'nickname');
-  const [emailInput, emailValue] = useInput('email', '이메일', 'email');
-  const [domainInput, domainValue] = useInput('email', '도메인', 'domain');
+  const [nicknameInput, nickname, setNickname] = useInput(
+    'text',
+    '닉네임',
+    'nickname'
+  );
+  const [emailInput, emailValue, setEmailValue] = useInput(
+    'text',
+    '이메일',
+    'email'
+  );
+
+  const [error, setError] = useState({
+    loginId: '',
+    password: '',
+    passwordConfirm: '',
+    nickname: '',
+    email: '',
+    policy: '',
+  });
+
+  const [isClicked, setIsClicked] = useState(false);
+  const [domainValue, setDomainValue] = useState('');
+
+  useEffect(() => {
+    const newError = {
+      loginId: loginId
+        ? validateLoginId(loginId || '')
+        : '아이디를 입력해주세요.',
+      password: pwValue
+        ? validatePassword(pwValue || '')
+        : '비밀번호를 입력해주세요.',
+      passwordConfirm: password
+        ? checkPasswordMatch(pwValue || '', password || '')
+        : '확인을 위해 비밀번호를 다시 입력해주세요.',
+      nickname: nickname
+        ? validateNickname(nickname || '')
+        : '닉네임을 입력해주세요. 마이 페이지에서 변경 가능합니다.',
+      email: domainValue
+        ? validateEmail(domainValue || '')
+        : '이메일을 입력해주세요.',
+      policy: isChecked ? '' : '필수 약관에 동의해주세요.',
+    };
+    setError(newError);
+  }, [loginId, pwValue, password, nickname, domainValue, isChecked]);
 
   const inputData = [
     {
@@ -25,7 +84,7 @@ export default function SignUpForm() {
       },
       guide: SIGN_UP_MESSAGES.LOGIN_ID_GUIDE,
       component: IdInput,
-      error: SIGN_UP_MESSAGES.ID_EXISTING_ERROR,
+      error: error.loginId,
     },
     {
       label: {
@@ -35,7 +94,7 @@ export default function SignUpForm() {
       },
       guide: SIGN_UP_MESSAGES.PASSWORD_GUIDE,
       component: PwInput,
-      error: SIGN_UP_MESSAGES.PASSWORD_FORMAT_ERROR,
+      error: error.password,
     },
     {
       label: {
@@ -44,7 +103,7 @@ export default function SignUpForm() {
         required: true,
       },
       component: PwConfirmInput,
-      error: SIGN_UP_MESSAGES.PASSWORD_CONFIRM_ERROR,
+      error: error.passwordConfirm,
     },
     {
       label: {
@@ -52,9 +111,8 @@ export default function SignUpForm() {
         text: '닉네임',
         required: true,
       },
-      // guide: SIGN_UP_MESSAGES.NICKNAME_GUIDE,
-      component: nickNameInput,
-      error: SIGN_UP_MESSAGES.NICKNAME_EXISTING_ERROR,
+      component: nicknameInput,
+      error: error.nickname,
     },
     {
       label: {
@@ -62,18 +120,61 @@ export default function SignUpForm() {
         text: '이메일',
         required: true,
       },
-      // guide: SIGN_UP_MESSAGES.NICKNAME_GUIDE,
       component: emailInput,
-      subComponent: domainInput,
-      error: SIGN_UP_MESSAGES.NICKNAME_EXISTING_ERROR,
+      subComponent: true,
+      error: error.email,
     },
   ];
 
+  async function sendPostRequest(data: PostSignUp) {
+    const url =
+      'https://zerohip-git-user-55-everland.vercel.app/api/user/signup';
+    try {
+      const responseData = await postSignUpData(url, data);
+      console.log(responseData);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (
+      !error.loginId ||
+      !error.password ||
+      !error.passwordConfirm ||
+      !error.nickname ||
+      !error.email ||
+      !error.policy
+    ) {
+      setIsClicked(true);
+      setTimeout(() => {
+        setIsClicked(false);
+      }, 1000);
+      return;
+    }
+
+    const data = {
+      email: emailValue + '@' + domainValue,
+      loginId,
+      password,
+      nickname,
+    };
+
+    sendPostRequest(data);
+    setLoginId('');
+    setPwValue('');
+    setPassword('');
+    setNickname('');
+    setEmailValue('');
+    setDomainValue('');
+    router.push('/');
+  };
   return (
     <S.FormContainer>
       <S.InputMapWrapper>
         {inputData.map((el, i) => (
-          <S.InputContainer>
+          <S.InputContainer key={i}>
             <S.LabelBox>
               <S.Label htmlFor={el.label.htmlFor}>
                 {el.label.text}
@@ -88,15 +189,16 @@ export default function SignUpForm() {
                 {el.component}
               </S.InputBox>
               {el.subComponent && (
-                <S.InputBox
-                  className={i === inputData.length - 1 ? 'email' : ''}
-                >
+                <S.DomainBox>
                   <div>@</div>
-                  {el.subComponent}
-                </S.InputBox>
+                  <SelectBox
+                    searchItem={domainValue}
+                    setSearchItem={setDomainValue}
+                  />
+                </S.DomainBox>
               )}
             </S.EmailAddress>
-            {/* <S.Error>{el.error} </S.Error> */}
+            <S.Error>{el.error} </S.Error>
           </S.InputContainer>
         ))}
       </S.InputMapWrapper>
@@ -107,24 +209,47 @@ export default function SignUpForm() {
           <span>*</span>
         </S.PolicyLabel>
         <S.Policy>
-          <S.RadioBtn id='policy' />
+          {Checkbox}
           <S.RadioBtnLabel htmlFor='policy'>전체동의</S.RadioBtnLabel>
           <S.PolicyGuide htmlFor='policy'>
             {SIGN_UP_MESSAGES.POLICY_GUIDE}
           </S.PolicyGuide>
         </S.Policy>
+        <S.Error>{error.policy}</S.Error>
       </S.PolicyContainer>
-
-      <S.SubmitBtn large>회원가입</S.SubmitBtn>
+      <S.SubmitBox isClicked={isClicked ? 'true' : undefined}>
+        <S.SubmitBtn large onClick={handleSubmit}>
+          회원가입
+        </S.SubmitBtn>
+      </S.SubmitBox>
     </S.FormContainer>
   );
 }
 
+const bounce = keyframes`
+  0% {
+    transform: translateX(0);
+  }
+  30% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  70% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+`;
+interface SubmitBoxProps {
+  isClicked?: string | undefined;
+}
 const S = {
   ...CommonStyles,
-  FormContainer: styled.div`
-    width: 45%;
-    height: 1000px;
+  FormContainer: styled.form`
+    width: 50%;
     padding: 8px;
     margin-top: 20px;
   `,
@@ -161,7 +286,9 @@ const S = {
     margin: 5rem 0 1rem 0;
   `,
   Policy: styled.div`
-    ${tw`bg-white flex items-center rounded-full w-full px-3 py-4  text-fontColor-gray01 placeholder:text-fontColor-gray07 focus:outline-primary `}
+    padding: 1rem 0.6rem 0.1rem 0.6rem;
+    display: flex;
+    align-items: center;
   `,
   PolicyLabel: styled.label`
     font-weight: 700;
@@ -182,18 +309,19 @@ const S = {
   `,
   RadioBtnLabel: styled.label`
     font-weight: 600;
-    margin-left: 0.3rem;
+    margin-left: 0.6rem;
   `,
   InputBox: styled.div`
     &.email {
       width: 44%;
     }
-    &.email:nth-child(2) {
-      width: 59%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  `,
+  DomainBox: styled.div`
+    width: 56%;
+    align-items: center;
+
+    display: flex;
+    justify-content: space-between;
     > div:first-child {
       color: #c4c4c4;
       margin: 0 1rem;
@@ -204,5 +332,14 @@ const S = {
     &.email {
       display: flex;
     }
+  `,
+
+  SubmitBox: styled.div<SubmitBoxProps>`
+    margin: 2rem 0 4rem 0;
+    ${({ isClicked }) =>
+      isClicked &&
+      css`
+        animation: ${bounce} 1s infinite;
+      `}
   `,
 };
