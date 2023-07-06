@@ -47,7 +47,7 @@ export const checkPasswordMatch = (
 
 // 닉네임 유효성 검사
 export const validateNickname = (nickname: string) => {
-  const nicknameFormat = /^[a-zA-Z0-9가-힣]{4,10}$/;
+  const nicknameFormat = /^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ]{4,10}$/;
 
   if (!nicknameFormat.test(nickname)) {
     return '닉네임은 영문 대소문자, 숫자, 한글로 구성된 4~10자리여야 합니다.';
