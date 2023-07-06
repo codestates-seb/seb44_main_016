@@ -2,10 +2,10 @@
 import styled from '@emotion/styled';
 import { keyframes, css } from '@emotion/react';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import CommonStyles from '../../../styles/CommonStyles';
-import useInput, { useCheckboxInput } from '../../../hooks/useInput';
+import useInput, { useCheckboxInput } from '../../../hooks/useComponents';
 import { SIGN_UP_MESSAGES } from '../../../constants/signUp';
-import DropDown from '../../../../public/image/dropdown.svg';
 import SelectBox from '../../../components/SelectBox';
 import {
   validateEmail,
@@ -14,10 +14,11 @@ import {
   validateNickname,
   checkPasswordMatch,
 } from '../../../utils/validationCheck';
-import postSignUpData from '../../../utils/apiRequest';
+import postSignUpData from '../../../services/apiRequest';
 import { PostSignUp } from '../../../types/SignUp';
 
 export default function SignUpForm() {
+  const router = useRouter();
   const [Checkbox, isChecked, setIsChecked] = useCheckboxInput(
     'checkbox',
     'policy'
@@ -39,11 +40,7 @@ export default function SignUpForm() {
     '이메일',
     'email'
   );
-  const [domainInput, domainValue, setDomainValue] = useInput(
-    'text',
-    '직접 입력',
-    ''
-  );
+
   const [error, setError] = useState({
     loginId: '',
     password: '',
@@ -54,7 +51,7 @@ export default function SignUpForm() {
   });
 
   const [isClicked, setIsClicked] = useState(false);
-  const [isDropDownClicked, setIsDropDownClicked] = useState(false);
+  const [domainValue, setDomainValue] = useState('');
 
   useEffect(() => {
     const newError = {
@@ -124,7 +121,7 @@ export default function SignUpForm() {
         required: true,
       },
       component: emailInput,
-      subComponent: domainInput,
+      subComponent: true,
       error: error.email,
     },
   ];
@@ -141,7 +138,20 @@ export default function SignUpForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!nickname || !domainValue) return;
+    if (
+      !loginId ||
+      !pwValue ||
+      !password ||
+      !nickname ||
+      !emailValue ||
+      !domainValue
+    ) {
+      setIsClicked(true);
+      setTimeout(() => {
+        setIsClicked(false);
+      }, 1000);
+      return;
+    }
 
     const data = {
       email: emailValue + '@' + domainValue,
@@ -157,6 +167,7 @@ export default function SignUpForm() {
     setNickname('');
     setEmailValue('');
     setDomainValue('');
+    router.push('/');
   };
   return (
     <S.FormContainer>
@@ -177,25 +188,20 @@ export default function SignUpForm() {
                 {el.component}
               </S.InputBox>
               {el.subComponent && (
-                <S.InputBox
-                  className={i === inputData.length - 1 ? 'email' : ''}
-                >
+                <S.DomainBox>
                   <div>@</div>
-                  {el.subComponent}
-                  <S.DropDownBox
-                    className={isDropDownClicked ? 'dropDownClicked' : ''}
-                    onClick={() => setIsDropDownClicked((prev) => !prev)}
-                  >
-                    <DropDown />
-                  </S.DropDownBox>
-                </S.InputBox>
+                  <SelectBox
+                    searchItem={domainValue}
+                    setSearchItem={setDomainValue}
+                  />
+                </S.DomainBox>
               )}
             </S.EmailAddress>
             <S.Error>{el.error} </S.Error>
           </S.InputContainer>
         ))}
       </S.InputMapWrapper>
-<SelectBox></SelectBox>
+
       <S.PolicyContainer>
         <S.PolicyLabel htmlFor='라벨'>
           약관동의
@@ -308,13 +314,13 @@ const S = {
     &.email {
       width: 44%;
     }
-    &.email:nth-child(2) {
-      width: 59%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
+  `,
+  DomainBox: styled.div`
+    width: 56%;
+    align-items: center;
+
+    display: flex;
+    justify-content: space-between;
     > div:first-child {
       color: #c4c4c4;
       margin: 0 1rem;
@@ -334,16 +340,5 @@ const S = {
       css`
         animation: ${bounce} 1s infinite;
       `}
-  `,
-
-  DropDownBox: styled.div`
-    position: absolute;
-    right: 1rem;
-    cursor: pointer;
-    transition: transform 0.3s;
-
-    &.dropDownClicked {
-      transform: scaleY(-1);
-    }
   `,
 };
