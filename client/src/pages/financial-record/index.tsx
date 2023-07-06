@@ -26,11 +26,9 @@ export type RecordData = {
 };
 
 export default function FinancialListPage() {
-  const { isLoading, error, data, isSuccess } = useQuery<RecordData[]>(
-    ['recordList'],
-    financialRecordAPI.getRecordList
-  );
-  console.log(data);
+  const { isLoading, error, data, isSuccess } = useQuery<
+    RecordData[] | undefined
+  >(['recordList'], financialRecordAPI.getRecordList);
 
   return (
     <S.ListWrap>
