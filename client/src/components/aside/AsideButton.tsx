@@ -5,25 +5,24 @@ import SvgBox from './SvgBox';
 /* type은 추후 다른 파일로 분리하고 Import할 예정 */
 type Props = {
   leftIcon?: JSX.Element; // <svg>
-  dropdownIcon?: JSX.Element; // <svg>
+  rightIcon?: JSX.Element; // <svg>
   isSmall?: boolean;
   isReverse?: boolean;
-  children: string;
+  children?: string | false;
   onClick?: () => void;
+  onClickRight?: () => void;
 };
 
 export default function AsideButton(props: Props) {
   return (
-    <S.AsideButtonContainer isSmall={props.isSmall} onClick={props.onClick}>
-      <S.AsideButtonLeftSection>
+    <S.AsideButtonContainer isSmall={props.isSmall}>
+      <S.AsideInnerButtonLeft onClick={props.onClick}>
         <SvgBox>{props.leftIcon || <></>}</SvgBox>
         <span>{props.children}</span>
-      </S.AsideButtonLeftSection>
-      <S.AsideButtonRightSection>
-        <SvgBox isReverse={props.isReverse}>
-          {props.dropdownIcon || <></>}
-        </SvgBox>
-      </S.AsideButtonRightSection>
+      </S.AsideInnerButtonLeft>
+      <S.AsideInnerButtonRight onClick={props.onClick || props.onClickRight}>
+        <SvgBox isReverse={props.isReverse}>{props.rightIcon || <></>}</SvgBox>
+      </S.AsideInnerButtonRight>
     </S.AsideButtonContainer>
   );
 }
@@ -33,26 +32,32 @@ type AsideButtonContainerProps = {
 };
 
 const S = {
-  AsideButtonContainer: styled.button<AsideButtonContainerProps>`
+  AsideButtonContainer: styled.section<AsideButtonContainerProps>`
     width: 100%;
     height: ${(props) => (props.isSmall ? '2.75rem' : '3.25rem')};
     background-color: white;
-    padding: 0rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 0.5rem;
     &:hover {
       filter: brightness(0.9);
     }
   `,
-  AsideButtonLeftSection: styled.section`
+  AsideInnerButtonLeft: styled.button`
+    width: 100%;
+    height: 100%;
+    padding: 0rem 1rem;
+    flex-shrink: 1;
     display: flex;
     align-items: center;
     gap: 0.5rem;
   `,
-  AsideButtonRightSection: styled.section`
+  AsideInnerButtonRight: styled.button`
+    width: ${(props) => props.onClick && '3rem'};
+    height: 100%;
+    flex-shrink: 0;
     display: flex;
+    justify-content: center;
     align-items: center;
   `,
 };

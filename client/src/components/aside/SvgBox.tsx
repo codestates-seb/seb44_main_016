@@ -22,6 +22,7 @@ type SvgContainerProps = {
 const S = {
   SvgContainer: styled.section<SvgContainerProps>`
     width: 3rem;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
