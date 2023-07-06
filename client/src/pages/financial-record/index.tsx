@@ -21,7 +21,7 @@ export type RecordData = {
   financialRecordId: number;
   financialRecordName: string;
   /**  후순위 기능이라 옵셔널체이닝 사용 */
-  isStar?: boolean;
+  isBookmark?: boolean;
   users: UserData[];
 };
 
@@ -30,6 +30,7 @@ export default function FinancialListPage() {
     ['recordList'],
     financialRecordAPI.getRecordList
   );
+  console.log(data);
 
   return (
     <S.ListWrap>
@@ -50,7 +51,9 @@ export default function FinancialListPage() {
           <p>오류가 발생했습니다</p>
         ) : (
           isSuccess &&
-          data.map((el) => <ListItem key={el.financialRecordId} item={el} />)
+          data.map((el) =>
+            el ? <ListItem key={el.financialRecordId} item={el} /> : null
+          )
         )}
       </S.FaRecList>
     </S.ListWrap>
