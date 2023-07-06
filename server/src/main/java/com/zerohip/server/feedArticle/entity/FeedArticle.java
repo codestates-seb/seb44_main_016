@@ -30,8 +30,7 @@ public class FeedArticle extends Auditable {
     @Column(nullable = false)
     private String content;
 
-    //피드게시글 작성시간
-    private LocalDateTime createdAt;
+    //피드게시글 작성시간은 Auditable 상속받기 때문에 아예 필드변수 없어도 ok.
 
     //이미지 파일
     /*
