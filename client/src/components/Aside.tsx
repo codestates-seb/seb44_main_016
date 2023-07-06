@@ -69,7 +69,7 @@ export default function Aside(props: Props) {
                     {isTabClosed && 'XXX의 가계부'}
                   </AsideButton>
                   <AsideButton isSmall={true}>
-                    {isTabClosed && '데이트 통장'}
+                    {isTabClosed && '♡ 데이트 통장 ♥'}
                   </AsideButton>
                   <AsideButton isSmall={true}>
                     {isTabClosed && '산악회 곗돈 장부'}
@@ -125,11 +125,6 @@ export default function Aside(props: Props) {
     </S.AsideContainer>
   );
 }
-
-/*
-접혔을 때: 104px (6.5rem)
-펼쳤을 때: 250px
-*/
 
 const S = {
   ...CommonStyles,
