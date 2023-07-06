@@ -140,12 +140,12 @@ export default function SignUpForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (
-      !loginId ||
-      !pwValue ||
-      !password ||
-      !nickname ||
-      !emailValue ||
-      !domainValue
+      !error.loginId ||
+      !error.password ||
+      !error.passwordConfirm ||
+      !error.nickname ||
+      !error.email ||
+      !error.policy
     ) {
       setIsClicked(true);
       setTimeout(() => {

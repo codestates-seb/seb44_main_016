@@ -5,6 +5,7 @@ import {
   ChangeEvent,
   KeyboardEvent,
   MouseEvent,
+  FocusEvent,
 } from 'react';
 import CommonStyles from '../styles/CommonStyles';
 import styled from '@emotion/styled';
@@ -30,7 +31,12 @@ export default function SelectBox({
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(0);
   const [isOnce, setIsOnce] = useState(true);
   const inputRef = useRef(null);
-
+  const handleBlur = (event: FocusEvent) => {
+    if (event.target !== inputRef.current) {
+      setIsDropDownClicked(false);
+      setIsLayoutClicked(false);
+    }
+  };
   useEffect(() => {
     if (!searchItem && !isOnce) {
       setIsDropDownClicked(false);
@@ -75,6 +81,9 @@ export default function SelectBox({
       setIsDropDownClicked(false);
       setIsLayoutClicked(false);
       setSelectedOptionIndex(0);
+    } else if (e.key === 'Tab') {
+      setIsDropDownClicked(false);
+      setIsLayoutClicked(false);
     }
   };
   let filteredItems = DOMAIN.filter((el) => {
@@ -114,6 +123,7 @@ export default function SelectBox({
           value={searchItem}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
+          onBlur={handleBlur}
         />
         <S.DropDownBox
           className={isDropDownClicked ? 'dropDownClicked' : ''}
@@ -157,7 +167,7 @@ const S = {
     cursor: pointer;
     transition: transform 0.3s;
     &.dropDownClicked {
-      transform: scaleY(-1);
+      transform: scaleY(-1) translateY(5px);
     }
   `,
   SelectContainer: styled.div`
