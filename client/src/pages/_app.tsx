@@ -5,21 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import styled from '@emotion/styled';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-<<<<<<< HEAD
 const queryClient = new QueryClient();
-=======
-const RootScreen = tw.div`
-flex justify-center w-[100%] min-h-[100vh]
-`;
-
-const AppContainer = tw.div`
-max-w-[1140px] w-full
-`;
-
-const AsideFrame = tw.aside`
-w-[367px] h-full bg-pink-300
-`;
->>>>>>> 9d6b9f45b34bd845f1ad7f2039721fcb5e3495d2
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
