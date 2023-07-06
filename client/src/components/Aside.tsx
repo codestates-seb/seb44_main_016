@@ -48,37 +48,39 @@ export default function Aside(props: Props) {
             <AsideButton leftIcon={svgs.home}>
               {isTabClosed && '홈'}
             </AsideButton>
-            <AsideButton
-              onClick={handleOpenOrCloseNoticeTab}
-              leftIcon={svgs.notice}
-            >
-              {isTabClosed && '알림'}
-            </AsideButton>
-            <section>
-              <AsideButton
-                leftIcon={svgs.faRec}
-                rightIcon={svgs.dropdown}
-                isReverse={isBookmarkedFaRecListOpened}
-                onClickRight={handleOpenOrCloseBookmarkedFaRecList}
-              >
-                {isTabClosed && '내 가계부'}
-              </AsideButton>
-              {isBookmarkedFaRecListOpened && isTabClosed ? (
-                <ol>
-                  <AsideButton isSmall={true}>
-                    {isTabClosed && 'XXX의 가계부'}
-                  </AsideButton>
-                  <AsideButton isSmall={true}>
-                    {isTabClosed && '♡ 데이트 통장 ♥'}
-                  </AsideButton>
-                  <AsideButton isSmall={true}>
-                    {isTabClosed && '산악회 곗돈 장부'}
-                  </AsideButton>
-                </ol>
-              ) : (
-                <ol></ol>
-              )}
-            </section>
+
+            {props.isLoggedIn && (
+              <>
+                <AsideButton
+                  onClick={handleOpenOrCloseNoticeTab}
+                  leftIcon={svgs.notice}
+                >
+                  {isTabClosed && '알림'}
+                </AsideButton>
+                <AsideButton
+                  leftIcon={svgs.faRec}
+                  rightIcon={svgs.dropdown}
+                  isReverse={isBookmarkedFaRecListOpened}
+                  onClickRight={handleOpenOrCloseBookmarkedFaRecList}
+                >
+                  {isTabClosed && '내 가계부'}
+                </AsideButton>
+                {isBookmarkedFaRecListOpened && isTabClosed && (
+                  <ol>
+                    <AsideButton isSmall={true}>
+                      {isTabClosed && 'XXX의 가계부'}
+                    </AsideButton>
+                    <AsideButton isSmall={true}>
+                      {isTabClosed && '♡ 데이트 통장 ♥'}
+                    </AsideButton>
+                    <AsideButton isSmall={true}>
+                      {isTabClosed && '산악회 곗돈 장부'}
+                    </AsideButton>
+                  </ol>
+                )}
+              </>
+            )}
+
             <AsideButton leftIcon={svgs.ranking}>
               {isTabClosed && '명예의 전당'}
             </AsideButton>
@@ -91,22 +93,30 @@ export default function Aside(props: Props) {
           </ol>
         </S.Upper>
         <S.Lower>
-          <S.ProfileBox>
-            <S.ProfileLeftSection>
-              <S.ProfileImg />
-              <S.ProfileTexts>
-                <S.Nickname>{isTabClosed && 'Waypil'}</S.Nickname>
-                <span>{isTabClosed && '@waypil'}</span>
-              </S.ProfileTexts>
-            </S.ProfileLeftSection>
-            <S.ProfileRightSection>
-              <span>…</span>
-            </S.ProfileRightSection>
-          </S.ProfileBox>
-          {isTabClosed ? (
-            <S.SubmitBtn>글 쓰기</S.SubmitBtn>
+          {props.isLoggedIn ? (
+            <>
+              <S.ProfileBox>
+                <S.ProfileLeftSection>
+                  <S.ProfileImg />
+                  <S.ProfileTexts>
+                    <S.Nickname>{isTabClosed && 'Waypil'}</S.Nickname>
+                    <span>{isTabClosed && '@waypil'}</span>
+                  </S.ProfileTexts>
+                </S.ProfileLeftSection>
+                <S.ProfileRightSection>
+                  <span>…</span>
+                </S.ProfileRightSection>
+              </S.ProfileBox>
+              {isTabClosed ? (
+                <S.SubmitBtn>글 쓰기</S.SubmitBtn>
+              ) : (
+                <AsideButton leftIcon={svgs.editor} />
+              )}
+            </>
+          ) : isTabClosed ? (
+            <S.SubmitBtn>로그인</S.SubmitBtn>
           ) : (
-            <AsideButton leftIcon={svgs.editor} />
+            <AsideButton leftIcon={svgs.person} />
           )}
         </S.Lower>
       </S.AsideInnerContainer>
