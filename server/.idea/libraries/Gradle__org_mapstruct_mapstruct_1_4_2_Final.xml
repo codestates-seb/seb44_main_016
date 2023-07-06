@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: org.mapstruct:mapstruct:1.4.2.Final" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.mapstruct" artifactId="mapstruct" version="1.4.2.Final" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mapstruct/mapstruct/1.4.2.Final/68d82e631f75d073b3a432cb6cc1920fec57357b/mapstruct-1.4.2.Final.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mapstruct/mapstruct/1.4.2.Final/42bbeff246019b59df70a450d6f460b2283b7759/mapstruct-1.4.2.Final-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
