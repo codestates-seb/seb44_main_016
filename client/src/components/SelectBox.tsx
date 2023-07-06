@@ -57,7 +57,7 @@ export default function SelectBox({
     setIsLayoutClicked(false);
     setSelectedOptionIndex(0);
   };
-  console.log(searchItem);
+
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'ArrowUp' && selectedOptionIndex > 0) {
       e.preventDefault();
