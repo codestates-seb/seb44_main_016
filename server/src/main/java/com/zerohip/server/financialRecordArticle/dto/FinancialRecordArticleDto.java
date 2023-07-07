@@ -29,7 +29,7 @@ public class FinancialRecordArticleDto {
     @NotBlank
     private String category;
     @NotNull
-    private int price;
+    private Integer price;
     @NotNull
     private Scope scope;
 
@@ -54,7 +54,7 @@ public class FinancialRecordArticleDto {
     @Size(min = 1, max = 10)
     private String category;
     @NotNull
-    private int price;
+    private Integer price;
     @NotNull
     private Scope scope;
 
@@ -79,7 +79,7 @@ public class FinancialRecordArticleDto {
     @NotBlank
     private String category;
     @NotNull
-    private int price;
+    private Integer price;
     @NotNull
     private Scope scope;
 

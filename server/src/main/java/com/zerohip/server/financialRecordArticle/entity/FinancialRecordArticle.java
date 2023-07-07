@@ -64,7 +64,7 @@ public class FinancialRecordArticle {
   private String category;
   @NotNull
   @Column(nullable = false, unique = false, updatable = true)
-  private int price;
+  private Integer price;
 
   /**
    * 글의 공개 범위
