@@ -5,7 +5,8 @@ import ListItem from './ListItem';
 import SearchIcon from '../../../public/images/icon/search.svg';
 import { useQuery } from '@tanstack/react-query';
 import { Metadata } from 'next';
-import { financialRecordAPI } from '../../services/financialAPI';
+import { APIfinancialRecord } from '../../services/apiFinancial';
+import useInput from '../../hooks/useComponents';
 
 export const metadata: Metadata = {
   title: '가계부 목록',
@@ -28,7 +29,13 @@ export type RecordData = {
 export default function FinancialListPage() {
   const { isLoading, error, data, isSuccess } = useQuery<RecordData[]>(
     ['recordList'],
-    financialRecordAPI.getRecordList
+    APIfinancialRecord.getRecordList
+  );
+
+  const [searchInput] = useInput(
+    'text',
+    '검색어를 입력해주세요',
+    'faRecSearch'
   );
 
   return (
@@ -36,7 +43,7 @@ export default function FinancialListPage() {
       <S.BlindTitle>{PAGE_NAMES.FINANCIAL_RECORD_LIST}</S.BlindTitle>
       <S.FormWrap>
         <S.InputWrap>
-          <S.InputText type='text' placeholder='검색어를 입력해주세요.' />
+          {searchInput}
           <S.Button>
             <SearchIcon />
           </S.Button>
