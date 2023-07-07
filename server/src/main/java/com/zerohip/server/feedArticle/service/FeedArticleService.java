@@ -9,7 +9,9 @@ public interface FeedArticleService {
   // 피드 게시글 생성
   FeedArticle createFeedArticle(FeedArticle feedArticle);
 
-  // 피드 게시글 조회(단건)
+    FeedArticle findVerifiedFeedArticle(Long feedArticleId);
+
+    // 피드 게시글 조회(단건)
   FeedArticle findFeedArticle(Long feedArticleId);
 
   // 피드 게시글 조회(전체)

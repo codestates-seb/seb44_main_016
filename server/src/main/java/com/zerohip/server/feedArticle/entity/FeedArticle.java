@@ -26,7 +26,7 @@ public class FeedArticle extends Auditable {
     @Column(nullable = false)
     private FeedType feedType;
 
-    //본문(최대 글자 수에 대해 아직 정해진 내용이 없음)
+    //@Size -> 본문 문자열 크기 정하고 나서 사용
     @Column(nullable = false)
     private String content;
 
@@ -35,7 +35,7 @@ public class FeedArticle extends Auditable {
     //이미지 파일
     /*
     @OneToMany(mappedBy = "feedArticle", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FeedArticleImage> images = new ArrayList<>();
+    private List<FeedArticleImg> images = new ArrayList<>();
      */
 
     //해시태그, 댓글, 유저, 투표(절약/플렉스) 추가적으로 작성 필요
