@@ -5,6 +5,9 @@ const withTwin = require('./withTwin.js');
  */
 module.exports = withTwin({
   reactStrictMode: true,
+  experimental: {
+    scrollRestoration: true,
+  },
   webpack: (config) => {
     // SVG 설정
     config.module.rules.push({
