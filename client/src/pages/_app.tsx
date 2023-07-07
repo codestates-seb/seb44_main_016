@@ -14,7 +14,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   let showNav = true;
   let bgColor = '#F0F3F8';
-  if (router.pathname.startsWith('/user')) {
+  if (router.pathname.startsWith('/user/signup' || 'user/login')) {
     showNav = false;
     if (router.pathname.startsWith('/user/signup')) {
       bgColor = '#FFF';

@@ -140,12 +140,12 @@ export default function SignUpForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (
-      !error.loginId ||
-      !error.password ||
-      !error.passwordConfirm ||
-      !error.nickname ||
-      !error.email ||
-      !error.policy
+      error.loginId ||
+      error.password ||
+      error.passwordConfirm ||
+      error.nickname ||
+      error.email ||
+      error.policy
     ) {
       setIsClicked(true);
       setTimeout(() => {
@@ -204,7 +204,7 @@ export default function SignUpForm() {
       </S.InputMapWrapper>
 
       <S.PolicyContainer>
-        <S.PolicyLabel htmlFor='라벨'>
+        <S.PolicyLabel>
           약관동의
           <span>*</span>
         </S.PolicyLabel>
