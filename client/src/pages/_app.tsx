@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import Aside from '../components/Aside';
+import HomeHeader from '../components/HomeHeader';
 
 const queryClient = new QueryClient();
 
@@ -13,6 +14,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
 
   let isShowNav = true;
+  const isShowHeader = true;
   let bgColor = '#F0F3F8';
   if (router.pathname.startsWith('/user')) {
     isShowNav = false;
@@ -31,6 +33,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             <S.FlexPage>
               {isShowNav && <Aside isLoggedIn={true} />}
               <S.SubPage isShowNav={isShowNav} bgColor={bgColor}>
+                {isShowHeader && <HomeHeader />}
                 <Component {...pageProps} />
               </S.SubPage>
             </S.FlexPage>
@@ -59,16 +62,17 @@ const S = {
   `,
 
   FlexPage: styled.div`
-    display: flex;
     width: 100%;
     height: 100%;
+    display: flex;
   `,
 
   SubPage: styled.div<{ isShowNav: boolean; bgColor?: string }>`
-    display: flex;
     width: 100%;
     height: 100%;
     margin-left: ${(props) => props.isShowNav && '250px'}; // <Aside> width
     background-color: ${(props) => props.bgColor || 'transparent'};
+    display: flex;
+    flex-direction: column;
   `,
 };
