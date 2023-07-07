@@ -5,15 +5,17 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import styled from '@emotion/styled';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+import Aside from '../components/Aside';
+
 const queryClient = new QueryClient();
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
 
-  let showNav = true;
+  let isShowNav = true;
   let bgColor = '#F0F3F8';
   if (router.pathname.startsWith('/user')) {
-    showNav = false;
+    isShowNav = false;
     if (router.pathname.startsWith('/user/signup')) {
       bgColor = '#FFF';
     }
@@ -26,9 +28,11 @@ const App = ({ Component, pageProps }: AppProps) => {
         <GlobalStyles />
         <S.RootScreen>
           <S.AppContainer>
-            <S.FlexPage bgColor={bgColor}>
-              {showNav && <S.AsideFrame>sidenav 영역</S.AsideFrame>}
-              <Component {...pageProps} />
+            <S.FlexPage>
+              {isShowNav && <Aside isLoggedIn={true} />}
+              <S.SubPage isShowNav={isShowNav} bgColor={bgColor}>
+                <Component {...pageProps} />
+              </S.SubPage>
             </S.FlexPage>
           </S.AppContainer>
         </S.RootScreen>
@@ -54,16 +58,17 @@ const S = {
     display: flex;
   `,
 
-  AsideFrame: styled.aside`
-    width: 367px;
-    height: 100%;
-    background-color: #f6ccd9;
-  `,
-
-  FlexPage: styled.div<{ bgColor?: string }>`
+  FlexPage: styled.div`
     display: flex;
     width: 100%;
     height: 100%;
+  `,
+
+  SubPage: styled.div<{ isShowNav: boolean; bgColor?: string }>`
+    display: flex;
+    width: 100%;
+    height: 100%;
+    margin-left: ${(props) => props.isShowNav && '250px'}; // <Aside> width
     background-color: ${(props) => props.bgColor || 'transparent'};
   `,
 };
