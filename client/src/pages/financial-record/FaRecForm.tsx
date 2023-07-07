@@ -51,11 +51,15 @@ export default function FaRecForm() {
     formData.append('userId', 'test');
 
     axios
-      .post('/api/financial-record/', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
+      .post(
+        'https://zerohip-git-user-55-everland.vercel.app/api/financial-record/',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      )
       .then((response) => {
         console.log('response-data', response.data);
       })
