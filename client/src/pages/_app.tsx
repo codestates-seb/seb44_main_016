@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import Aside from '../components/Aside';
+import HomeHeader from '../components/HomeHeader';
 
 const queryClient = new QueryClient();
 
@@ -13,7 +14,17 @@ const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
 
   let isShowNav = true;
+  let isShowHeader = false;
   let bgColor = '#F0F3F8';
+  if (router.pathname.startsWith('/')) {
+    isShowHeader = true;
+  } else if (router.pathname.startsWith('/user')) {
+    isShowNav = false;
+    if (router.pathname.startsWith('/user/signup')) {
+      bgColor = '#FFF';
+    }
+  }
+
   if (router.pathname.startsWith('/user')) {
     isShowNav = false;
     if (router.pathname.startsWith('/user/signup')) {
@@ -30,8 +41,15 @@ const App = ({ Component, pageProps }: AppProps) => {
           <S.AppContainer>
             <S.FlexPage>
               {isShowNav && <Aside isLoggedIn={true} />}
-              <S.SubPage isShowNav={isShowNav} bgColor={bgColor}>
-                <Component {...pageProps} />
+              <S.SubPage>
+                {isShowHeader && <HomeHeader />}
+                <S.Main
+                  isShowNav={isShowNav}
+                  isShowHeader={isShowHeader}
+                  bgColor={bgColor}
+                >
+                  <Component {...pageProps} />
+                </S.Main>
               </S.SubPage>
             </S.FlexPage>
           </S.AppContainer>
@@ -59,16 +77,26 @@ const S = {
   `,
 
   FlexPage: styled.div`
+    width: 100%;
+    height: 100%;
     display: flex;
+  `,
+
+  SubPage: styled.div`
     width: 100%;
     height: 100%;
   `,
 
-  SubPage: styled.div<{ isShowNav: boolean; bgColor?: string }>`
-    display: flex;
-    width: 100%;
+  Main: styled.main<{
+    isShowNav: boolean;
+    isShowHeader: boolean;
+    bgColor?: string;
+  }>`
     height: 100%;
-    margin-left: ${(props) => props.isShowNav && '250px'}; // <Aside> width
     background-color: ${(props) => props.bgColor || 'transparent'};
+    margin-top: ${(props) => props.isShowHeader && '5rem'};
+    margin-left: ${(props) => props.isShowNav && '250px'}; // <Aside> width
+    display: flex;
+    flex-direction: column;
   `,
 };
