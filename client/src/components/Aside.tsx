@@ -147,6 +147,7 @@ const S = {
     flex-shrink: 0;
     display: flex;
     align-items: flex-start;
+    z-index: 1; // HomeHeader와 겹쳐져 Aside 오른쪽 테두리의 일부가 안 보는 버그 수정
   `,
   AsideInnerContainer: styled.section`
     width: 250px;
