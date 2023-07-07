@@ -7,3 +7,6 @@ export const recordList = [
     userId: '',
   },
 ];
+export default function RecordListTest() {
+  return;
+}
