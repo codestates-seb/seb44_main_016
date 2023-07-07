@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class FinancialRecordArticleDto {
@@ -67,7 +68,7 @@ public class FinancialRecordArticleDto {
 
   @Getter
   @AllArgsConstructor
-  public static class Response extends Auditable {
+  public static class Response {
     private Long financialRecordArticleId;
     @Size(max = 30)
     private String title;
@@ -81,6 +82,9 @@ public class FinancialRecordArticleDto {
     private int price;
     @NotNull
     private Scope scope;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
 
     // 가계부 매핑 데이터
     // 유저 매핑 데이터
