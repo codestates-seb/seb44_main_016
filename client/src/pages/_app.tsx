@@ -28,9 +28,11 @@ const App = ({ Component, pageProps }: AppProps) => {
         <GlobalStyles />
         <S.RootScreen>
           <S.AppContainer>
-            <S.FlexPage bgColor={bgColor}>
+            <S.FlexPage>
               {showNav && <Aside isLoggedIn={true} />}
-              <Component {...pageProps} />
+              <S.SubPage bgColor={bgColor}>
+                <Component {...pageProps} />
+              </S.SubPage>
             </S.FlexPage>
           </S.AppContainer>
         </S.RootScreen>
@@ -56,7 +58,13 @@ const S = {
     display: flex;
   `,
 
-  FlexPage: styled.div<{ bgColor?: string }>`
+  FlexPage: styled.div`
+    display: flex;
+    width: 100%;
+    height: 100%;
+  `,
+
+  SubPage: styled.div<{ bgColor?: string }>`
     display: flex;
     width: 100%;
     height: 100%;
