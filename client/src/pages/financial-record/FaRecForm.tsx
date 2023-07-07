@@ -4,6 +4,8 @@ import useInput from '../../hooks/useComponents';
 import PlusIcon from '../../../public/images/icon/plus.svg';
 import { FormEvent, useState } from 'react';
 import axios from 'axios';
+import { Area } from 'react-easy-crop';
+import ImgCropper from '../../components/ImgCropper';
 
 export default function FaRecForm() {
   const [nameInput, faRecName, setFaRecName] = useInput(
@@ -17,6 +19,7 @@ export default function FaRecForm() {
     'faDesc'
   );
   const [img, setImg] = useState<string>('');
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     let file: File | null = null;
@@ -44,7 +47,7 @@ export default function FaRecForm() {
     const formData = new FormData();
     formData.append('financialRecordName', faRecName || '');
     formData.append('financialRecordDescription', faRecDesc || '');
-    formData.append('imgId', img);
+    formData.append('imgId', croppedAreaPixels);
     /**
      *  아직 userId 받아오지 못해 테스트 아이디 입력. 추후 수정 예정
      */
@@ -74,11 +77,12 @@ export default function FaRecForm() {
         <S.ImgBox>
           <img
             src={
-              img ||
+              croppedAreaPixels ||
               'https://blog.kakaocdn.net/dn/bY6iW4/btrEJwN3Zrf/SqQZ605snSkSqP5U96S3AK/img.png'
             }
             alt=''
           />
+
           <S.FileInput
             type='file'
             id='addFaRecImg'
@@ -89,6 +93,13 @@ export default function FaRecForm() {
             <PlusIcon />
           </S.FileLabelBtn>
         </S.ImgBox>
+        <ImgCropper
+          croppedImage={img}
+          setCroppedAreaPixels={setCroppedAreaPixels}
+          width={1}
+          height={1}
+          cropShape='round'
+        />
         <S.InputFieldWrap>
           {nameInput}
           {descInput}
