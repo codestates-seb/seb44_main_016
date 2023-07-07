@@ -1,5 +1,6 @@
 package com.zerohip.server.financialRecordArticle.service;
 
+import com.zerohip.server.common.scope.Scope;
 import com.zerohip.server.financialRecord.entity.FinancialRecord;
 import com.zerohip.server.financialRecord.repository.FinancialRecordRepository;
 import com.zerohip.server.financialRecord.service.FinancialRecordService;
@@ -81,19 +82,22 @@ public class FinancialRecordArticleServiceImpl implements FinancialRecordArticle
     if (faRecArticle == null) {
       throw new IllegalArgumentException("게시글은 null이 될 수 없습니다.");
     }
+    if (faRecArticle.getScope().equals(Scope.FEED)) {
+      throw new IllegalArgumentException("게시글의 공개 범위는 FEED가 될 수 없습니다.");
+    }
     if (faRecArticle.getTitle() == null ||
             faRecArticle.getTitle().trim().isEmpty() ||
             faRecArticle.getTitle().length() > 30) {
       throw new IllegalArgumentException("게시글의 제목은 null이 될 수 없고, 30자를 넘을 수 없습니다.");
     }
-    if (faRecArticle.getContent() == null ||
-            faRecArticle.getContent().trim().isEmpty() ||
-            faRecArticle.getContent().length() > 10000) {
+    if (faRecArticle.getContent().length() > 10000) {
       throw new IllegalArgumentException("게시글의 내용은 null이 될 수 없고, 10000자를 넘을 수 없습니다.");
     }
-    // 다른 필드들에 대한 유효성 검사를 추가 가능.
+    if (faRecArticle.getFaDate() == null ||
+      faRecArticle.getCategory() == null ||
+      faRecArticle.getPrice() == null) {
+      throw new IllegalArgumentException("해당 필드는 null또는 Blank이(가) 될 수 없습니다.");
+    }
+    // if문이 너무 많네요,, 수정의 필요성이 있어보입니다.
   }
-
-
-
 }
