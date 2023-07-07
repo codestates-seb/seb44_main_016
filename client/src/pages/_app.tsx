@@ -12,10 +12,10 @@ const queryClient = new QueryClient();
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
 
-  let showNav = true;
+  let isShowNav = true;
   let bgColor = '#F0F3F8';
   if (router.pathname.startsWith('/user')) {
-    showNav = false;
+    isShowNav = false;
     if (router.pathname.startsWith('/user/signup')) {
       bgColor = '#FFF';
     }
@@ -29,8 +29,8 @@ const App = ({ Component, pageProps }: AppProps) => {
         <S.RootScreen>
           <S.AppContainer>
             <S.FlexPage>
-              {showNav && <Aside isLoggedIn={true} />}
-              <S.SubPage bgColor={bgColor}>
+              {isShowNav && <Aside isLoggedIn={true} />}
+              <S.SubPage isShowNav={isShowNav} bgColor={bgColor}>
                 <Component {...pageProps} />
               </S.SubPage>
             </S.FlexPage>
@@ -64,10 +64,11 @@ const S = {
     height: 100%;
   `,
 
-  SubPage: styled.div<{ bgColor?: string }>`
+  SubPage: styled.div<{ isShowNav: boolean; bgColor?: string }>`
     display: flex;
     width: 100%;
     height: 100%;
+    margin-left: ${(props) => props.isShowNav && '250px'}; // <Aside> width
     background-color: ${(props) => props.bgColor || 'transparent'};
   `,
 };
