@@ -5,7 +5,7 @@ import ListItem from './ListItem';
 import SearchIcon from '../../../public/images/icon/search.svg';
 import { useQuery } from '@tanstack/react-query';
 import { Metadata } from 'next';
-import { financialRecordAPI } from '../../services/financialAPI';
+import { APIfinancialRecord } from '../../services/apiFinancial';
 import useInput from '../../hooks/useComponents';
 
 export const metadata: Metadata = {
@@ -29,7 +29,7 @@ export type RecordData = {
 export default function FinancialListPage() {
   const { isLoading, error, data, isSuccess } = useQuery<RecordData[]>(
     ['recordList'],
-    financialRecordAPI.getRecordList
+    APIfinancialRecord.getRecordList
   );
 
   const [searchInput] = useInput(
