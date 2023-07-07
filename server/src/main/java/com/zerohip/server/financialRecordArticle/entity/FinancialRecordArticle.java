@@ -34,6 +34,17 @@ public class FinancialRecordArticle {
     this.financialRecord = financialRecord;
   }
 
+  // No financialRecord
+  public FinancialRecordArticle(Long financialRecordArticleId, String title, String content, Date faDate, String category, int price, Scope scope) {
+    this.financialRecordArticleId = financialRecordArticleId;
+    this.title = title;
+    this.content = content;
+    this.faDate = faDate;
+    this.category = category;
+    this.price = price;
+    this.scope = scope;
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long financialRecordArticleId;
