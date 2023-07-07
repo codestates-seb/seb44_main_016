@@ -31,9 +31,9 @@ const App = ({ Component, pageProps }: AppProps) => {
         <S.RootScreen>
           <S.AppContainer>
             <S.FlexPage>
+              {isShowHeader && <HomeHeader />}
               {isShowNav && <Aside isLoggedIn={true} />}
               <S.SubPage isShowNav={isShowNav} bgColor={bgColor}>
-                {isShowHeader && <HomeHeader />}
                 <Component {...pageProps} />
               </S.SubPage>
             </S.FlexPage>
@@ -68,6 +68,7 @@ const S = {
   `,
 
   SubPage: styled.div<{ isShowNav: boolean; bgColor?: string }>`
+    margin-top: 5rem;
     width: 100%;
     height: 100%;
     margin-left: ${(props) => props.isShowNav && '250px'}; // <Aside> width

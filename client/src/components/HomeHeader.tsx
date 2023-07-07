@@ -39,10 +39,10 @@ const S = {
   ...CommonStyles,
   HomeHeaderContainer: styled.header`
     position: fixed;
+    margin-left: 250px;
     width: 890px;
     height: 5rem;
     background-color: white;
-    border-right: 1px solid var(--color-gray08);
     // border: 1px solid;
     display: flex;
     justify-content: center;
