@@ -52,7 +52,7 @@ export default function FaRecForm() {
 
     axios
       .post(
-        'https://zerohip-git-user-55-everland.vercel.app/api/financial-record/',
+        'https://zerohip-r7g30pp7y-everland.vercel.app/api/financial-record/',
         formData,
         {
           headers: {
