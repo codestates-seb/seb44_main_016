@@ -139,11 +139,12 @@ export default function Aside(props: Props) {
 const S = {
   ...CommonStyles,
   AsideContainer: styled.aside`
-    position: relative;
+    position: fixed;
     height: 100%;
     background-color: white;
     border-right: 1px solid var(--color-gray08);
     // border: 1px solid;
+    flex-shrink: 0;
     display: flex;
     align-items: flex-start;
   `,
@@ -160,7 +161,6 @@ const S = {
   `,
   Lower: styled.section`
     width: 100%;
-    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
