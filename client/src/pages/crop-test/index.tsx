@@ -1,4 +1,3 @@
-import React from 'react';
 import { useImgCrop } from '../../hooks/useImgCrop';
 import { handleFileChange } from '../../components/img-crop/imgCropUtils';
 import ImgCropModal from '../../components/img-crop/ImgCropModal';
@@ -36,7 +35,7 @@ export default function index() {
         />
       )}
       <S.ImgBox>
-        <img src={croppedImage} alt='' />
+        <img src={croppedImage || ''} alt='' />
       </S.ImgBox>
     </div>
   );
