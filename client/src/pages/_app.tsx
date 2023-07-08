@@ -39,15 +39,11 @@ const App = ({ Component, pageProps }: AppProps) => {
         <GlobalStyles />
         <S.RootScreen>
           <S.AppContainer>
-            <S.FlexPage>
+            <S.FlexPage bgColor={bgColor}>
               {isShowNav && <Aside isLoggedIn={true} />}
               <S.SubPage>
                 {isShowHeader && <HomeHeader />}
-                <S.Main
-                  isShowNav={isShowNav}
-                  isShowHeader={isShowHeader}
-                  bgColor={bgColor}
-                >
+                <S.Main isShowNav={isShowNav} isShowHeader={isShowHeader}>
                   <Component {...pageProps} />
                 </S.Main>
               </S.SubPage>
@@ -71,14 +67,15 @@ const S = {
   `,
 
   AppContainer: styled.div`
-    max-width: 1140px;
+    max-width: var(--app-max-w);
     width: 100%;
     display: flex;
   `,
 
-  FlexPage: styled.div`
+  FlexPage: styled.div<{ bgColor?: string }>`
     width: 100%;
     height: 100%;
+    background-color: ${(props) => props.bgColor || 'transparent'};
     display: flex;
   `,
 
@@ -87,15 +84,11 @@ const S = {
     height: 100%;
   `,
 
-  Main: styled.main<{
-    isShowNav: boolean;
-    isShowHeader: boolean;
-    bgColor?: string;
-  }>`
-    height: 100%;
-    background-color: ${(props) => props.bgColor || 'transparent'};
+  Main: styled.main<{ isShowNav: boolean; isShowHeader: boolean }>`
+    width: auto;
+    height: calc(100% - var(--header-h));
     margin-top: ${(props) => props.isShowHeader && '5rem'};
-    margin-left: ${(props) => props.isShowNav && '250px'}; // <Aside> width
+    margin-left: ${(props) => props.isShowNav && 'var(--aside-w)'};
     display: flex;
     flex-direction: column;
   `,

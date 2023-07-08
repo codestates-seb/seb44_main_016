@@ -3,7 +3,8 @@ import styled from '@emotion/styled';
 
 import CommonStyles from '../styles/CommonStyles';
 import AsideButton from '../components/aside/AsideButton';
-import SvgBox from '../components/aside/SvgBox';
+import AsideLogo from '../components/aside/AsideLogo';
+import AsideProfileBox from '../components/aside/AsideProfileBox';
 
 import svgs from '../constants/svg';
 
@@ -37,18 +38,15 @@ export default function Aside(props: Props) {
   };
 
   return (
-    <S.AsideContainer>
+    <S.AsideContainer isTabClosed={isTabClosed}>
+      <S.LeftOfAsideCover />
       <S.AsideInnerContainer>
         <S.Upper>
-          <S.Logo>
-            <SvgBox>{svgs.logoSymbol}</SvgBox>
-            {isTabClosed && svgs.logotext}
-          </S.Logo>
+          <AsideLogo isTabClosed={isTabClosed} />
           <ol>
             <AsideButton leftIcon={svgs.home}>
               {isTabClosed && '홈'}
             </AsideButton>
-
             {props.isLoggedIn && (
               <>
                 <AsideButton
@@ -80,7 +78,6 @@ export default function Aside(props: Props) {
                 )}
               </>
             )}
-
             <AsideButton leftIcon={svgs.ranking}>
               {isTabClosed && '명예의 전당'}
             </AsideButton>
@@ -95,18 +92,7 @@ export default function Aside(props: Props) {
         <S.Lower>
           {props.isLoggedIn ? (
             <>
-              <S.ProfileBox>
-                <S.ProfileLeftSection>
-                  <S.ProfileImg />
-                  <S.ProfileTexts>
-                    <S.Nickname>{isTabClosed && 'Waypil'}</S.Nickname>
-                    <span>{isTabClosed && '@waypil'}</span>
-                  </S.ProfileTexts>
-                </S.ProfileLeftSection>
-                <S.ProfileRightSection>
-                  <span>…</span>
-                </S.ProfileRightSection>
-              </S.ProfileBox>
+              <AsideProfileBox isTabClosed={isTabClosed} />
               {isTabClosed ? (
                 <S.SubmitBtn>글쓰기</S.SubmitBtn>
               ) : (
@@ -138,29 +124,43 @@ export default function Aside(props: Props) {
 
 const S = {
   ...CommonStyles,
-  AsideContainer: styled.aside`
+  AsideContainer: styled.aside<{ isTabClosed?: boolean | undefined }>`
+    width: ${(props) => (props.isTabClosed ? 'var(--aside-w)' : '5rem')};
     position: fixed;
     height: 100%;
-    background-color: white;
-    border-right: 1px solid var(--color-gray08);
-    // border: 1px solid;
     flex-shrink: 0;
     display: flex;
     align-items: flex-start;
     z-index: 1; // HomeHeader와 겹쳐져 Aside 오른쪽 테두리의 일부가 안 보는 버그 수정
   `,
-  AsideInnerContainer: styled.section`
-    width: 250px;
+  LeftOfAsideCover: styled.div`
+    position: absolute;
+    width: var(--aside-tab-w);
+    left: calc(var(--aside-tab-w) * -1);
+    background-color: white;
+    height: 100%;
+  `,
+  AsideInnerContainer: styled.div`
+    width: 100%;
+    border-right: 0.05rem solid var(--color-gray08);
+    background-color: white;
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: flex-end;
+
+    animation: fadein 0.5s;
+    @keyframes fadein {
+      from {
+        left: -10rem;
+      }
+    }
   `,
-  Upper: styled.section`
+  Upper: styled.div`
     width: 100%;
-    height: 100%;
   `,
-  Lower: styled.section`
+  Lower: styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -169,71 +169,16 @@ const S = {
     padding: 1.5rem 0rem;
   `,
 
-  Logo: styled.button`
-    width: 100%;
-    height: 3.25rem;
-    padding-left: 1rem;
-    margin: 2rem 0rem;
-    display: flex;
-    align-items: center;
-  `,
   BookmarkedFaRecButton: styled.button`
     width: 100%;
     padding: 1rem 0rem;
   `,
-  ProfileBox: styled.button`
-    width: 100%;
-    height: 3.25rem;
-    background-color: white;
-    padding-left: 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    &:hover {
-      filter: brightness(0.9);
-    }
-  `,
-  ProfileLeftSection: styled.section`
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    &:hover {
-      filter: brightness(0.9);
-    }
-  `,
-  ProfileRightSection: styled.section`
-    height: 100%;
-    padding-right: 1rem;
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
-  `,
-  ProfileTexts: styled.section`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-  `,
-  Nickname: styled.span`
-    font-weight: bold;
-  `,
-  ProfileImg: styled.img`
-    width: 40px;
-    height: 40px;
-    border-radius: 9999px;
-    overflow: hidden;
-    flex-shrink: 0;
-    background-color: black;
-  `,
 
-  TabContainer: styled.section`
-    left: 80px;
-    border-left: 1px solid var(--color-gray08);
+  TabContainer: styled.div`
+    left: 5rem;
     border-right: 1px solid var(--color-gray08);
     position: absolute;
-    width: 350px;
+    width: var(--aside-tab-w);
     height: 100%;
     background-color: white;
     font-weight: bold;
@@ -242,17 +187,26 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: -1;
+
+    animation: fadein 0.5s;
+    @keyframes fadein {
+      from {
+        left: -10rem;
+      }
+    }
   `,
   CloseTabButton: styled.button`
     position: absolute;
-    top: 0px;
-    right: 20px;
+    top: 0rem;
+    right: 1rem;
     color: var(--color-gray02);
+    font-weight: 100;
   `,
   /*
-  Backdrop: styled.section`
+  Backdrop: styled.div`
     position: absolute;
-    left: 80px;
+    left: 5rem;
     background-color: pink;
   `,
   */
