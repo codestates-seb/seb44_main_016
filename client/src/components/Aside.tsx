@@ -38,7 +38,8 @@ export default function Aside(props: Props) {
   };
 
   return (
-    <S.AsideContainer>
+    <S.AsideContainer isTabClosed={isTabClosed}>
+      <S.LeftOfAsideCover />
       <S.AsideInnerContainer>
         <S.Upper>
           <AsideLogo isTabClosed={isTabClosed} />
@@ -123,8 +124,8 @@ export default function Aside(props: Props) {
 
 const S = {
   ...CommonStyles,
-  AsideContainer: styled.aside`
-    width: var(--aside-w);
+  AsideContainer: styled.aside<{ isTabClosed?: boolean | undefined }>`
+    width: ${(props) => (props.isTabClosed ? 'var(--aside-w)' : '5rem')};
     position: fixed;
     height: 100%;
     flex-shrink: 0;
@@ -132,20 +133,34 @@ const S = {
     align-items: flex-start;
     z-index: 1; // HomeHeader와 겹쳐져 Aside 오른쪽 테두리의 일부가 안 보는 버그 수정
   `,
-  AsideInnerContainer: styled.section`
+  LeftOfAsideCover: styled.div`
+    position: absolute;
+    width: var(--aside-tab-w);
+    left: calc(var(--aside-tab-w) * -1);
+    background-color: white;
+    height: 100%;
+  `,
+  AsideInnerContainer: styled.div`
     width: 100%;
     border-right: 0.05rem solid var(--color-gray08);
     background-color: white;
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: flex-end;
+
+    animation: fadein 0.5s;
+    @keyframes fadein {
+      from {
+        left: -10rem;
+      }
+    }
   `,
-  Upper: styled.section`
+  Upper: styled.div`
     width: 100%;
-    height: 100%;
   `,
-  Lower: styled.section`
+  Lower: styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -159,12 +174,11 @@ const S = {
     padding: 1rem 0rem;
   `,
 
-  TabContainer: styled.section`
+  TabContainer: styled.div`
     left: 5rem;
-    border-left: 1px solid var(--color-gray08);
     border-right: 1px solid var(--color-gray08);
     position: absolute;
-    width: 22rem;
+    width: var(--aside-tab-w);
     height: 100%;
     background-color: white;
     font-weight: bold;
@@ -173,15 +187,24 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: -1;
+
+    animation: fadein 0.5s;
+    @keyframes fadein {
+      from {
+        left: -10rem;
+      }
+    }
   `,
   CloseTabButton: styled.button`
     position: absolute;
     top: 0rem;
     right: 1rem;
     color: var(--color-gray02);
+    font-weight: 100;
   `,
   /*
-  Backdrop: styled.section`
+  Backdrop: styled.div`
     position: absolute;
     left: 5rem;
     background-color: pink;

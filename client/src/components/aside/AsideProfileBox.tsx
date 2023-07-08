@@ -7,16 +7,16 @@ type Props = {
 export default function AsideProfileBox(props: Props) {
   return (
     <S.ProfileBoxContainer>
-      <S.ProfileLeftSection>
+      <S.ProfileLeftDiv>
         <S.ProfileImg />
         <S.ProfileTexts>
           <S.Nickname>{props.isTabClosed && 'Waypil'}</S.Nickname>
           <span>{props.isTabClosed && '@waypil'}</span>
         </S.ProfileTexts>
-      </S.ProfileLeftSection>
-      <S.ProfileRightSection>
-        <span>…</span>
-      </S.ProfileRightSection>
+      </S.ProfileLeftDiv>
+      <S.ProfileRightDiv>
+        {props.isTabClosed && <span>…</span>}
+      </S.ProfileRightDiv>
     </S.ProfileBoxContainer>
   );
 }
@@ -34,7 +34,7 @@ const S = {
       filter: brightness(0.9);
     }
   `,
-  ProfileLeftSection: styled.section`
+  ProfileLeftDiv: styled.div`
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -42,14 +42,14 @@ const S = {
       filter: brightness(0.9);
     }
   `,
-  ProfileRightSection: styled.section`
+  ProfileRightDiv: styled.div`
     height: 100%;
     padding-right: 1rem;
     display: flex;
     align-items: start;
     justify-content: space-between;
   `,
-  ProfileTexts: styled.section`
+  ProfileTexts: styled.div`
     width: 100%;
     height: 100%;
     display: flex;

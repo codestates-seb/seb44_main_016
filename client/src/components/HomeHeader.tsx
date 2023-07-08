@@ -39,9 +39,9 @@ const S = {
   ...CommonStyles,
   HomeHeaderContainer: styled.header`
     position: fixed;
-    margin-left: var(--aside-w);
-    max-width: var(--header-max-w);
-    width: var(--header-w);
+    padding-left: var(--aside-w);
+    max-width: var(--app-max-w);
+    width: 100%;
     height: var(--header-h);
     background-color: white;
     // border: 1px solid;
