@@ -283,7 +283,7 @@ const S = {
     color: var(--color-point-pink);
   `,
   PolicyContainer: styled.div`
-    margin: 5rem 0 1rem 0;
+    margin: 4rem 0 1rem 0;
   `,
   Policy: styled.div`
     padding: 1rem 0.6rem 0.1rem 0.6rem;

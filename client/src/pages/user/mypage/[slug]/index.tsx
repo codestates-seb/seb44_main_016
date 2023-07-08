@@ -51,7 +51,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 
 const S = {
   ...CommonStyles,
-  Container: styled.main`
+  Container: styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;

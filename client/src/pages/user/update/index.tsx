@@ -135,7 +135,7 @@ interface SubmitBoxProps {
 
 const S = {
   ...CommonStyles,
-  Container: styled.main`
+  Container: styled.div`
     width: 100%;
     padding: 0rem 2rem;
     position: relative;
