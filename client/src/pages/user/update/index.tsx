@@ -5,15 +5,16 @@ import { useState } from 'react';
 import CommonStyles from '../../../styles/CommonStyles';
 import useInput from '../../../hooks/useComponents';
 import Image from 'next/image';
-import { USER_UPDATE_MESSAGES } from '../../../constants/updateUser';
-import Back2 from '../../../../public/image/back2.svg';
+import { USER_UPDATE_MESSAGES } from '../../../constants/user';
+import BackBtn from '../../../../public/image/back2.svg';
 import ImageUpload from '../../../../public/image/imageUpload.svg';
+import Link from 'next/link';
 
 export default function UserUpdate() {
   const router = useRouter();
   const [nicknameInput, nickname, setNickname] = useInput(
     'text',
-    '망고 사랑',
+    '마마망',
     'nickname'
   );
   const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw');
@@ -62,8 +63,12 @@ export default function UserUpdate() {
   return (
     <S.Container>
       <S.BackBox>
-        <button type='button' onClick={() => router.back()}>
-          <Back2 width='25' fill='#b8b7c2' />
+        <button
+          type='button'
+          aria-label='뒤로 가기'
+          onClick={() => router.back()}
+        >
+          <BackBtn width='25' fill='#b8b7c2' aria-hidden={true} />
         </button>
       </S.BackBox>
       <S.FormContainer>
@@ -71,13 +76,13 @@ export default function UserUpdate() {
           <div>
             <Image
               src='/image/mango.png'
-              alt='userProfileImg'
+              alt='프로필 사진'
               width={150}
               height={150}
               style={imageStyle}
             />
           </div>
-          <S.ImageUploadBtn>
+          <S.ImageUploadBtn type='button' aria-label='이미지 업로드 버튼'>
             <ImageUpload />
           </S.ImageUploadBtn>
         </S.UserImg>
@@ -87,20 +92,20 @@ export default function UserUpdate() {
               <S.Label htmlFor={el.label.htmlFor}>{el.label.text}</S.Label>
               <S.Guide>{el.guide}</S.Guide>
             </S.LabelBox>
-            <S.InputBtn>{el.component}</S.InputBtn>
+            <S.InputField>{el.component}</S.InputField>
             <S.Error>{el.error} </S.Error>
           </S.InputBox>
         ))}
 
         <S.SubmitBox isClicked={isClicked ? 'true' : undefined}>
           <S.SubmitBtn large>
-            {/* <S.SubmitBtn large onClick={handleSubmit}> */}
+            {/* <S.SubmitBtn large onClick={handleSubmit}> 추후 사용 예정  */}
             회원 정보 수정
           </S.SubmitBtn>
         </S.SubmitBox>
-
-        {/* <S.SubmitBtn large onClick={handleSubmit}> */}
-        <S.ModifyBtn>회원 탈퇴</S.ModifyBtn>
+        <Link href='/user/delete'>
+          <S.ModifyBtn type='button'>회원 탈퇴</S.ModifyBtn>
+        </Link>
       </S.FormContainer>
     </S.Container>
   );
@@ -132,20 +137,20 @@ const S = {
   ...CommonStyles,
   Container: styled.main`
     width: 100%;
-    padding: 2rem 2rem;
+    padding: 0rem 2rem;
     position: relative;
   `,
   BackBox: styled.div`
     display: flex;
     padding-left: 1rem;
-    height: 7%;
+    height: 13%;
     position: absolute;
   `,
-  InputBtn: styled.div`
+  InputField: styled.div`
     margin: 0.5rem 0;
   `,
   UserImg: styled.div`
-    margin: 2.3rem 0 1.8rem 0;
+    margin: 2.7rem 0 1.5rem 0;
     width: 150px;
     height: 150px;
     position: relative;
@@ -157,14 +162,14 @@ const S = {
     left: 50%;
     transform: translate(-50%, -50%);
   `,
-  FormContainer: styled.div`
+  FormContainer: styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
   `,
   SubmitBox: styled.div<SubmitBoxProps>`
     width: 45%;
-    margin: 4rem 0 4rem 0;
+    margin: 2.7rem 0 4rem 0;
     ${({ isClicked }) =>
       isClicked &&
       css`
@@ -193,14 +198,14 @@ const S = {
     font-size: 0.9rem;
     color: var(--color-point-gray);
     display: inline-block;
-    margin: 2.2rem 0 0 0.7rem;
+    margin: 2rem 0 0 0.7rem;
   `,
   ModifyBtn: styled.button`
     position: relative;
     display: inline-block;
     color: var(--color-gray04);
     font-weight: 400;
-
+    margin-bottom: 2rem;
     &:hover {
       color: var(--color-primary);
       transition-duration: 0.7s;

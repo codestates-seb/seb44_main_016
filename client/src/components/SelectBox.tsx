@@ -90,7 +90,7 @@ export default function SelectBox({
     return el.startsWith(searchItem);
   });
 
-  const handleDropBoxClick = (e: MouseEvent<HTMLDivElement>) => {
+  const handleDropBoxClick = () => {
     setIsDropDownClicked((prev) => !prev);
     setIsLayoutClicked((prev) => !prev);
 
@@ -120,17 +120,20 @@ export default function SelectBox({
           className='filter'
           ref={inputRef}
           placeholder='직접 입력'
+          id='domain'
           value={searchItem}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
         />
-        <S.DropDownBox
+        <S.DropDownBtn
+          type='button'
           className={isDropDownClicked ? 'dropDownClicked' : ''}
           onClick={handleDropBoxClick}
+          aria-label='이메일 검색하기'
         >
-          <DropDown />{' '}
-        </S.DropDownBox>
+          <DropDown aria-hidden={true} />{' '}
+        </S.DropDownBtn>
         {isDropDownClicked && isLayoutClicked && (
           <>
             <S.Ul>
@@ -158,7 +161,7 @@ const S = {
     left: 0;
     cursor: auto;
   `,
-  DropDownBox: styled.div`
+  DropDownBtn: styled.button`
     z-index: 5;
     position: absolute;
     top: 50%;

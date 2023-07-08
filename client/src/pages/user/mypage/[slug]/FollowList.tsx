@@ -11,9 +11,10 @@ export default function ModalList() {
             {' '}
             <Image
               src='/image/mango2.png'
-              alt='userProfileImg'
+              alt='프로필 사진'
               width={44}
               height={44}
+              style={imageStyle}
             />
           </div>
         </S.UserPic>
@@ -21,10 +22,10 @@ export default function ModalList() {
           <div>manng35</div>
         </S.UserId>
         <S.UserFollow>
-          <div>팔로우</div>
+          <S.UserFollowBtn type='button'>구독하기</S.UserFollowBtn>
         </S.UserFollow>
       </S.UserInfo>
-      <S.UserDelete>삭제</S.UserDelete>
+      <S.UserDeleteBtn type='button'>삭제</S.UserDeleteBtn>
     </S.ModalFollowerBox>
   );
 }
@@ -34,7 +35,7 @@ const S = {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 0.6rem 0rem;
+    padding: 0.5rem 0rem;
   `,
   UserInfo: styled.div`
     display: flex;
@@ -44,24 +45,46 @@ const S = {
     height: 44px;
     display: flex;
     align-items: center;
+    background-color: #f0dab1;
+    border-radius: 50%;
   `,
   UserId: styled.div`
     display: flex;
     align-items: center;
     margin: 0 0.9rem 0 0.6rem;
     color: var(--color-gray04);
-    font-size: 0.92rem;
-    font-weight: 400;
+    font-size: 0.95rem;
+    font-weight: 500;
+    &:hover {
+      color: var(--color-gray05);
+    }
   `,
   UserFollow: styled.div`
     display: flex;
     align-items: center;
-    color: var(--color-primary);
   `,
-  UserDelete: styled.div`
+  UserFollowBtn: styled.button`
+    font-size: 0.93rem;
+    color: var(--color-primary);
+    &:hover {
+      color: var(--color-primary-hover);
+    }
+  `,
+  UserDeleteBtn: styled.button`
     display: flex;
     align-items: center;
-    font-size: 0.98rem;
-    font-weight: 500;
+    font-size: 0.93rem;
+    font-weight: 400;
+    color: var(--color-gray06);
+
+    &:hover {
+      color: var(--color-gray07);
+    }
   `,
+};
+
+const imageStyle = {
+  borderRadius: '50%',
+  left: '20%',
+  cursor: 'pointer',
 };

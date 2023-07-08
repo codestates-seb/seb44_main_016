@@ -22,7 +22,7 @@ export default function Page({ params }: { params: { slug: string } }) {
         <S.UserImg>
           <Image
             src='/image/mango.png'
-            alt='userProfileImg'
+            alt='프로필 사진'
             priority={true}
             width={150}
             height={150}
@@ -36,12 +36,14 @@ export default function Page({ params }: { params: { slug: string } }) {
           <FollowModal />
           <FollowModal />
           <Link href='/user/update'>
-            <S.ModifyBtn>설정</S.ModifyBtn>
+            <S.ModifyBtn type='button'>설정</S.ModifyBtn>
           </Link>
         </S.ModifyBtnBox>
       </S.UserProfileContainer>
       <S.UserArticleContainer>
-        <div>컴포넌트 맵</div>
+        <S.ArticleContainer>
+          {'공통 컴포넌트 trunk에 머지되면 사용 예정'}
+        </S.ArticleContainer>
       </S.UserArticleContainer>
     </S.Container>
   );
@@ -55,7 +57,7 @@ const S = {
     flex-direction: column;
     align-items: center;
   `,
-  UserProfileContainer: styled.div`
+  UserProfileContainer: styled.section`
     width: 90%;
     border-bottom: 1.5px solid var(--color-point-light-gray);
     display: flex;
@@ -67,7 +69,6 @@ const S = {
   UserImg: styled.div``,
   UserName: styled.div`
     margin: 1rem 0;
-    cursor: pointer;
   `,
   H1: styled.h1`
     font-size: 1.5rem;
@@ -142,6 +143,10 @@ const S = {
       margin-top: 25px;
       color: #4000c7;
     }
+  `,
+  ArticleContainer: styled.article`
+    /* 임시 */
+    height: 2000px;
   `,
 };
 

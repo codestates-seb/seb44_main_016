@@ -12,25 +12,35 @@ export default function FollowModal() {
   };
 
   return (
-    <S.Follower onClick={openModalHandler}>
-      <S.ButtonName>
+    <S.FollowerContainer onClick={openModalHandler}>
+      <S.ButtonNameBtn type='button'>
         구독함 <S.FollowerNum>11</S.FollowerNum>
-      </S.ButtonName>
+      </S.ButtonNameBtn>
       {isOpen === true ? (
         <S.ModalBackdrop onClick={openModalHandler}>
           <S.ModalView onClick={(e) => e.stopPropagation()}>
             <S.ModalTop>
+              <S.H1>구독함</S.H1>
               <CloseBtn onClick={openModalHandler} />
             </S.ModalTop>
-            <S.ModalFollowerList>
-              <S.ModalFollowerBox>
-                <ModalList />
-              </S.ModalFollowerBox>
-            </S.ModalFollowerList>
+            <S.ModalFollowerBox>
+              <ModalList />
+              <ModalList />
+              <ModalList />
+              <ModalList />
+              <ModalList />
+              <ModalList />
+              <ModalList />
+              <ModalList />
+              <ModalList />
+              <ModalList />
+              <ModalList />
+              <ModalList />
+            </S.ModalFollowerBox>
           </S.ModalView>
         </S.ModalBackdrop>
       ) : null}
-    </S.Follower>
+    </S.FollowerContainer>
   );
 }
 
@@ -46,22 +56,24 @@ const S = {
     display: grid;
     place-items: center;
   `,
-  ModalView: styled.div`
+  ModalView: styled.section`
     border-radius: 10px;
     background-color: #ffffff;
     width: 383px;
-    height: 348px;
+    height: 352px;
     > span.close-btn {
       margin-top: 5px;
       cursor: pointer;
     }
   `,
-  ButtonName: styled.div`
+  ButtonNameBtn: styled.button`
+    font-size: 1.1rem;
+    font-weight: 500;
     &:hover {
       color: var(--color-gray02);
     }
   `,
-  Follower: styled.div`
+  FollowerContainer: styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -72,7 +84,7 @@ const S = {
       margin: 0 1.7rem 0 1rem;
     }
   `,
-  FollowerNum: styled.span`
+  FollowerNum: styled.div`
     color: var(--color-point-purple);
     font-weight: 500;
     display: inline-block;
@@ -87,15 +99,20 @@ const S = {
     align-items: center;
     border-bottom: 1px solid var(--color-gray08);
   `,
-  ModalFollowerList: styled.div``,
+  H1: styled.div`
+    font-weight: 400;
+    color: var(--color-gray05);
+    margin-right: 8rem;
+  `,
   ModalFollowerBox: styled.div`
-    display: flex;
+    width: 100%;
+    height: 302px;
+    overflow: scroll;
+    overflow-x: hidden;
     justify-content: space-between;
-    /* border: 1px solid red; */
-    padding: 0.6rem 1.5rem;
+    padding: 0rem 1.5rem;
   `,
   UserInfo: styled.div`
-    /* border: 1px solid green; */
     display: flex;
   `,
   UserPic: styled.div`
@@ -107,7 +124,6 @@ const S = {
     overflow: hidden;
   `,
   UserId: styled.div`
-    /* border: 1px solid orange; */
     display: flex;
     align-items: center;
     margin: 0 0.9rem 0 0.6rem;
@@ -116,7 +132,6 @@ const S = {
     font-weight: 400;
   `,
   UserFollow: styled.div`
-    /* border: 1px solid blue; */
     display: flex;
     align-items: center;
     color: var(--color-primary);
