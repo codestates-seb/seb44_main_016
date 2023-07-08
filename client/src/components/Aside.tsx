@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 
 import CommonStyles from '../styles/CommonStyles';
 import AsideButton from '../components/aside/AsideButton';
+import AsideLogo from '../components/aside/AsideLogo';
 import SvgBox from '../components/aside/SvgBox';
 
 import svgs from '../constants/svg';
@@ -40,15 +41,11 @@ export default function Aside(props: Props) {
     <S.AsideContainer>
       <S.AsideInnerContainer>
         <S.Upper>
-          <S.Logo>
-            <SvgBox>{svgs.logoSymbol}</SvgBox>
-            {isTabClosed && svgs.logotext}
-          </S.Logo>
+          <AsideLogo isTabClosed={isTabClosed} />
           <ol>
             <AsideButton leftIcon={svgs.home}>
               {isTabClosed && '홈'}
             </AsideButton>
-
             {props.isLoggedIn && (
               <>
                 <AsideButton
@@ -169,14 +166,6 @@ const S = {
     padding: 1.5rem 0rem;
   `,
 
-  Logo: styled.button`
-    width: 100%;
-    height: 3.25rem;
-    padding-left: 1rem;
-    margin: 2rem 0rem;
-    display: flex;
-    align-items: center;
-  `,
   BookmarkedFaRecButton: styled.button`
     width: 100%;
     padding: 1rem 0rem;
