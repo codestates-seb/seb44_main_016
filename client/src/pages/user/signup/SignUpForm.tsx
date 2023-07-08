@@ -5,7 +5,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import CommonStyles from '../../../styles/CommonStyles';
 import useInput, { useCheckboxInput } from '../../../hooks/useComponents';
-import { SIGN_UP_MESSAGES } from '../../../constants/signUp';
+import CheckboxAgreement from '../../../components/CheckboxAgreement';
+import { SIGN_UP_MESSAGES } from '../../../constants/user';
 import SelectBox from '../../../components/SelectBox';
 import {
   validateEmail,
@@ -14,15 +15,11 @@ import {
   validateNickname,
   checkPasswordMatch,
 } from '../../../utils/validationCheck';
-import postSignUpData from '../../../services/apiRequest';
-import { PostSignUp } from '../../../types/SignUp';
+import postSignUpData from '../../../services/apiUser';
+import { PostSignUp } from '../../../types/user';
 
 export default function SignUpForm() {
   const router = useRouter();
-  const [Checkbox, isChecked, setIsChecked] = useCheckboxInput(
-    'checkbox',
-    'policy'
-  );
   const [IdInput, loginId, setLoginId] = useInput('text', '아이디', 'loginId');
   const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw');
   const [PwConfirmInput, password, setPassword] = useInput(
@@ -48,6 +45,13 @@ export default function SignUpForm() {
     nickname: '',
     email: '',
     policy: '',
+  });
+
+  const { CheckboxComponent, isChecked, setIsChecked } = CheckboxAgreement({
+    labelTitle: '전체동의',
+    checkboxAgreement: SIGN_UP_MESSAGES.POLICY_GUIDE,
+    agreementError: error.policy,
+    isBackgroundWhite: true,
   });
 
   const [isClicked, setIsClicked] = useState(false);
@@ -140,12 +144,12 @@ export default function SignUpForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (
-      !error.loginId ||
-      !error.password ||
-      !error.passwordConfirm ||
-      !error.nickname ||
-      !error.email ||
-      !error.policy
+      error.loginId ||
+      error.password ||
+      error.passwordConfirm ||
+      error.nickname ||
+      error.email ||
+      error.policy
     ) {
       setIsClicked(true);
       setTimeout(() => {
@@ -170,6 +174,7 @@ export default function SignUpForm() {
     setDomainValue('');
     router.push('/');
   };
+
   return (
     <S.FormContainer>
       <S.InputMapWrapper>
@@ -194,6 +199,7 @@ export default function SignUpForm() {
                   <SelectBox
                     searchItem={domainValue}
                     setSearchItem={setDomainValue}
+                    aria-label='이메일 도메인 입력 또는 찾기'
                   />
                 </S.DomainBox>
               )}
@@ -204,18 +210,11 @@ export default function SignUpForm() {
       </S.InputMapWrapper>
 
       <S.PolicyContainer>
-        <S.PolicyLabel htmlFor='라벨'>
+        <S.PolicyLabel>
           약관동의
           <span>*</span>
         </S.PolicyLabel>
-        <S.Policy>
-          {Checkbox}
-          <S.RadioBtnLabel htmlFor='policy'>전체동의</S.RadioBtnLabel>
-          <S.PolicyGuide htmlFor='policy'>
-            {SIGN_UP_MESSAGES.POLICY_GUIDE}
-          </S.PolicyGuide>
-        </S.Policy>
-        <S.Error>{error.policy}</S.Error>
+        {CheckboxComponent}
       </S.PolicyContainer>
       <S.SubmitBox isClicked={isClicked ? 'true' : undefined}>
         <S.SubmitBtn large onClick={handleSubmit}>
@@ -250,6 +249,7 @@ const S = {
   ...CommonStyles,
   FormContainer: styled.form`
     width: 50%;
+    height: 100%;
     padding: 8px;
     margin-top: 20px;
   `,
@@ -266,7 +266,7 @@ const S = {
     display: inline-block;
     margin-bottom: 10px;
     > span {
-      color: #e483b0;
+      color: var(--color-point-pink);
       display: inline-block;
       margin-left: 0.5rem;
     }
@@ -280,24 +280,24 @@ const S = {
     padding-left: 20px;
     font-size: 0.9rem;
     margin-top: 8px;
-    color: #e483b0;
+    color: var(--color-point-pink);
   `,
   PolicyContainer: styled.div`
-    margin: 5rem 0 1rem 0;
+    margin: 4rem 0 1rem 0;
   `,
   Policy: styled.div`
     padding: 1rem 0.6rem 0.1rem 0.6rem;
     display: flex;
     align-items: center;
   `,
-  PolicyLabel: styled.label`
+  PolicyLabel: styled.div`
     font-weight: 700;
     font-size: 1.13rem;
     display: inline-block;
-    margin-bottom: 10px;
     padding-left: 10px;
+    margin-bottom: 1.3rem;
     > span {
-      color: #e483b0;
+      color: var(--color-point-pink);
       display: inline-block;
       margin-left: 0.5rem;
     }

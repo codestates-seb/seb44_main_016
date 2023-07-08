@@ -21,10 +21,16 @@ const GlobalStyles = () => (
 
         /* color */
         --color-primary : #676FC6;
+        --color-primary-hover : #858cdc;
+        --color-point-purple: #7f7ad9;
         --color-point-red : #FF451A;
+        --color-point-pink : #e483b0;
         --color-point-blue : #537FEE;
         --color-point-yellow : #F8AC19;
         --color-point-lilac : #C2C5E8;
+        --color-point-light-blue: #a8aece;
+        --color-point-gray: #a4a7b5;
+        --color-point-light-gray: #D6D6D6;
         --color-white : #FFF;
 
         --color-gray01 : #333;
@@ -38,6 +44,7 @@ const GlobalStyles = () => (
         --color-gray09 : #F6F6F6;
 
         --color-border-gray : #E6E6E6;
+        --color-border-lilac : #d9d5e7;
 
         /* box-shadow */
         --shadow-default : 0 1px 10px rgba(170,170,170,25);
@@ -108,15 +115,16 @@ const GlobalStyles = () => (
       
       ::-webkit-scrollbar-thumb {
         background: linear-gradient(195deg, #8A96DB, #EFF1F8);  
-        height: 20%;
+        border-radius: 30px;
       }
 
-      ::-webkit-scrollbar-thumb:hover {
-        background-color:#a5a5a5; 
-        height: 30%;
+      ::-webkit-scrollbar-track {
+        background: transparent;
       }
 
-
+      ::-webkit-scrollbar-corner {
+        background: transparent;
+      }
 
     `}
   />
