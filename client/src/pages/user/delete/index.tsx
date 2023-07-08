@@ -4,7 +4,6 @@ import { keyframes, css } from '@emotion/react';
 import { useState } from 'react';
 import CommonStyles from '../../../styles/CommonStyles';
 import useInput from '../../../hooks/useComponents';
-import Image from 'next/image';
 import { USER_DELETE_MESSAGES } from '../../../constants/user';
 import BackBtn from '../../../../public/image/back2.svg';
 import CheckboxAgreement from '../../../components/CheckboxAgreement';
@@ -52,6 +51,14 @@ export default function UserUpdate() {
     },
   ];
 
+  const handleDelete = (e) => {
+    e.preventDefault();
+    // 탈퇴 로직 처리 후 페이지 이동
+    // '/user/delete/goodbye'로 이동
+    const deletePageURL = router.asPath;
+    localStorage.setItem('deletePageURL', deletePageURL);
+    router.push('/user/delete/goodbye');
+  };
   return (
     <S.Container>
       <S.BackBox>
@@ -68,8 +75,13 @@ export default function UserUpdate() {
           회원 탈퇴를 할 경우, {'마마망'}님의 아이디, 가계부, 팔로워 모든 내역이
           삭제되며 되돌릴 수 없습니다.
         </S.WarningMessage>
-        {inputData.map((el) => (
-          <S.InputBox>
+        <input
+          name='username'
+          autoComplete='사용자명'
+          style={{ display: 'none' }}
+        />
+        {inputData.map((el, i) => (
+          <S.InputBox key={el.label.text}>
             <S.LabelBox>
               <S.Label htmlFor={el.label.htmlFor}>{el.label.text}</S.Label>
               <S.Guide>{el.guide}</S.Guide>
@@ -80,7 +92,7 @@ export default function UserUpdate() {
         ))}
         <S.CheckboxBox>{CheckboxComponent}</S.CheckboxBox>
         <S.SubmitBox isClicked={isClicked ? 'true' : undefined}>
-          <S.SubmitBtn large>
+          <S.SubmitBtn large onClick={handleDelete}>
             {/* <S.SubmitBtn large onClick={handleSubmit}> 추후 사용 예정  */}
             회원 탈퇴
           </S.SubmitBtn>
@@ -114,7 +126,7 @@ interface SubmitBoxProps {
 
 const S = {
   ...CommonStyles,
-  Container: styled.main`
+  Container: styled.div`
     width: 100%;
     height: 100%;
     padding: 0rem 2rem;
