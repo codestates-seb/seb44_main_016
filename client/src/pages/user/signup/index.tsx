@@ -1,13 +1,16 @@
 import styled from '@emotion/styled';
 import Logo from '../../../../public/image/logo.svg';
 import SignUpForm from './SignUpForm';
+import Link from 'next/link';
 
 export default function SignUp() {
   return (
     <S.Container>
-      <S.LogoBox>
-        <Logo width='337' />
-      </S.LogoBox>
+      <Link href='/'>
+        <S.LogoBtn type='button'>
+          <Logo width='337' aria-label='제로힙 로고 아이콘' />
+        </S.LogoBtn>
+      </Link>
       <SignUpForm />
     </S.Container>
   );
@@ -22,7 +25,7 @@ const S = {
     justify-content: center;
     align-items: center;
   `,
-  LogoBox: styled.div`
+  LogoBtn: styled.button`
     margin: 35px 45px 25px 0;
   `,
 };

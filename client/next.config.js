@@ -4,7 +4,10 @@ const withTwin = require('./withTwin.js');
  * @type {import('next').NextConfig}
  */
 module.exports = withTwin({
-  reactStrictMode: true,
+  // reactStrictMode: true,
+  experimental: {
+    scrollRestoration: true,
+  },
   webpack: (config) => {
     // SVG 설정
     config.module.rules.push({

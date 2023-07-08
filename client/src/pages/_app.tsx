@@ -5,15 +5,25 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import styled from '@emotion/styled';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+import Aside from '../components/Aside';
+import HomeHeader from '../components/HomeHeader';
+
 const queryClient = new QueryClient();
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
 
-  let showNav = true;
+  let isShowNav = true;
+  let isShowHeader = false;
   let bgColor = '#F0F3F8';
-  if (router.pathname.startsWith('/user')) {
-    showNav = false;
+  if (router.pathname === '/') {
+    isShowHeader = true;
+  } else if (
+    router.pathname.startsWith('/user/signup') ||
+    router.pathname.startsWith('/user/login') ||
+    router.pathname.startsWith('/user/delete/goodbye')
+  ) {
+    isShowNav = false;
     if (router.pathname.startsWith('/user/signup')) {
       bgColor = '#FFF';
     }
@@ -26,9 +36,18 @@ const App = ({ Component, pageProps }: AppProps) => {
         <GlobalStyles />
         <S.RootScreen>
           <S.AppContainer>
-            <S.FlexPage bgColor={bgColor}>
-              {showNav && <S.AsideFrame>sidenav 영역</S.AsideFrame>}
-              <Component {...pageProps} />
+            <S.FlexPage>
+              {isShowNav && <Aside isLoggedIn={true} />}
+              <S.SubPage>
+                {isShowHeader && <HomeHeader />}
+                <S.Main
+                  isShowNav={isShowNav}
+                  isShowHeader={isShowHeader}
+                  bgColor={bgColor}
+                >
+                  <Component {...pageProps} />
+                </S.Main>
+              </S.SubPage>
             </S.FlexPage>
           </S.AppContainer>
         </S.RootScreen>
@@ -54,16 +73,27 @@ const S = {
     display: flex;
   `,
 
-  AsideFrame: styled.aside`
-    width: 367px;
-    height: 100%;
-    background-color: #f6ccd9;
-  `,
-
-  FlexPage: styled.div<{ bgColor?: string }>`
-    display: flex;
+  FlexPage: styled.div`
     width: 100%;
     height: 100%;
+    display: flex;
+  `,
+
+  SubPage: styled.div`
+    width: 100%;
+    height: 100%;
+  `,
+
+  Main: styled.main<{
+    isShowNav: boolean;
+    isShowHeader: boolean;
+    bgColor?: string;
+  }>`
+    height: 100%;
     background-color: ${(props) => props.bgColor || 'transparent'};
+    margin-top: ${(props) => props.isShowHeader && '5rem'};
+    margin-left: ${(props) => props.isShowNav && '250px'}; // <Aside> width
+    display: flex;
+    flex-direction: column;
   `,
 };
