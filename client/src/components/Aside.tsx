@@ -139,13 +139,15 @@ export default function Aside(props: Props) {
 const S = {
   ...CommonStyles,
   AsideContainer: styled.aside`
-    position: relative;
+    position: fixed;
     height: 100%;
     background-color: white;
     border-right: 1px solid var(--color-gray08);
     // border: 1px solid;
+    flex-shrink: 0;
     display: flex;
     align-items: flex-start;
+    z-index: 1; // HomeHeader와 겹쳐져 Aside 오른쪽 테두리의 일부가 안 보는 버그 수정
   `,
   AsideInnerContainer: styled.section`
     width: 250px;
@@ -160,7 +162,6 @@ const S = {
   `,
   Lower: styled.section`
     width: 100%;
-    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
