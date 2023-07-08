@@ -139,18 +139,18 @@ export default function Aside(props: Props) {
 const S = {
   ...CommonStyles,
   AsideContainer: styled.aside`
+    width: var(--aside-w);
     position: fixed;
     height: 100%;
-    background-color: white;
-    border-right: 1px solid var(--color-gray08);
-    // border: 1px solid;
     flex-shrink: 0;
     display: flex;
     align-items: flex-start;
     z-index: 1; // HomeHeader와 겹쳐져 Aside 오른쪽 테두리의 일부가 안 보는 버그 수정
   `,
   AsideInnerContainer: styled.section`
-    width: 250px;
+    width: 100%;
+    border-right: 0.05rem solid var(--color-gray08);
+    background-color: white;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -214,26 +214,26 @@ const S = {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 5px;
+    gap: 0.3rem;
   `,
   Nickname: styled.span`
     font-weight: bold;
   `,
   ProfileImg: styled.img`
-    width: 40px;
-    height: 40px;
-    border-radius: 9999px;
+    width: 2.5rem; // 40px
+    height: 2.5rem; // 40px
+    border-radius: var(--rounded-full);
     overflow: hidden;
     flex-shrink: 0;
     background-color: black;
   `,
 
   TabContainer: styled.section`
-    left: 80px;
+    left: 5rem;
     border-left: 1px solid var(--color-gray08);
     border-right: 1px solid var(--color-gray08);
     position: absolute;
-    width: 350px;
+    width: 22rem;
     height: 100%;
     background-color: white;
     font-weight: bold;
@@ -245,14 +245,14 @@ const S = {
   `,
   CloseTabButton: styled.button`
     position: absolute;
-    top: 0px;
-    right: 20px;
+    top: 0rem;
+    right: 1rem;
     color: var(--color-gray02);
   `,
   /*
   Backdrop: styled.section`
     position: absolute;
-    left: 80px;
+    left: 5rem;
     background-color: pink;
   `,
   */

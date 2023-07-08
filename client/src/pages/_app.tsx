@@ -71,7 +71,7 @@ const S = {
   `,
 
   AppContainer: styled.div`
-    max-width: 1140px;
+    max-width: var(--app-max-w);
     width: 100%;
     display: flex;
   `,
@@ -92,10 +92,11 @@ const S = {
     isShowHeader: boolean;
     bgColor?: string;
   }>`
-    height: 100%;
+    width: auto;
+    height: calc(100% - var(--header-h));
     background-color: ${(props) => props.bgColor || 'transparent'};
     margin-top: ${(props) => props.isShowHeader && '5rem'};
-    margin-left: ${(props) => props.isShowNav && '250px'}; // <Aside> width
+    margin-left: ${(props) => props.isShowNav && 'var(--aside-w)'};
     display: flex;
     flex-direction: column;
   `,

@@ -39,9 +39,10 @@ const S = {
   ...CommonStyles,
   HomeHeaderContainer: styled.header`
     position: fixed;
-    margin-left: 250px;
-    width: 890px;
-    height: 5rem;
+    margin-left: var(--aside-w);
+    max-width: var(--header-max-w);
+    width: var(--header-w);
+    height: var(--header-h);
     background-color: white;
     // border: 1px solid;
     display: flex;
@@ -52,7 +53,7 @@ const S = {
     width: 6rem;
     height: 75%;
     background-color: white;
-    font-size: 18px;
+    font-size: 1.25rem;
     font-weight: bold;
     color: ${(props) => props.isActive && 'var(--color-primary)'};
     border-bottom: ${(props) =>

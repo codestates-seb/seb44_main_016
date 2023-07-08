@@ -42,7 +42,15 @@ const GlobalStyles = () => (
 
         /* border-radius */
         --rounded-default: 0.625rem;
+        --rounded-full: 999rem;
 
+        /* width & height */
+        --app-max-w: 1140px;
+        --aside-w : 15.5rem;  // 15rem~15.625rem
+        --header-max-w : calc(var(--app-max-w) - var(--aside-w));
+        --header-w : calc(100vw - var(--aside-w));
+        --header-h : 5rem;
+        --main-w : calc(var(--app-max-w) - var(--aside-w));
       }
 
       li {
