@@ -6,7 +6,6 @@ import styled from '@emotion/styled';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import Aside from '../components/Aside';
-import ImgCropper from '../components/ImgCropper';
 
 const queryClient = new QueryClient();
 
@@ -30,7 +29,6 @@ const App = ({ Component, pageProps }: AppProps) => {
         <S.RootScreen>
           <S.AppContainer>
             <S.FlexPage>
-              <ImgCropper />
               {isShowNav && <Aside isLoggedIn={true} />}
               <S.SubPage isShowNav={isShowNav} bgColor={bgColor}>
                 <Component {...pageProps} />
