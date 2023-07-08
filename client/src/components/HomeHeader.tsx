@@ -54,19 +54,17 @@ const S = {
     height: 75%;
     background-color: white;
     font-size: 1.25rem;
-    font-weight: bold;
-    color: ${(props) => props.isActive && 'var(--color-primary)'};
-    border-bottom: ${(props) =>
-      props.isActive
-        ? '3px solid var(--color-primary)'
-        : '3px solid transparent'};
+    font-weight: ${(props) => props.isActive && 'bold'};
+    color: var(--color-gray01);
+    border-bottom: 3px solid
+      ${(props) => (props.isActive ? 'var(--color-primary)' : 'transparent')};
 
     display: flex;
     justify-content: center;
     align-items: center;
 
     &:hover {
-      filter: brightness(0.9);
+      color: var(--color-primary);
     }
   `,
 };
