@@ -16,7 +16,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   let isShowNav = true;
   let isShowHeader = false;
   let bgColor = '#F0F3F8';
-  if (router.pathname.startsWith('/')) {
+  if (!router.pathname.startsWith('/user')) {
     isShowHeader = true;
   } else if (router.pathname.startsWith('/user/signup' || 'user/login')) {
     isShowNav = false;

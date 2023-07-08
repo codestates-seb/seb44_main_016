@@ -78,15 +78,7 @@ export default function UserUpdate() {
             <S.Error>{el.error} </S.Error>
           </S.InputBox>
         ))}
-        <S.CheckboxBox>
-          {CheckboxComponent}
-          {/* <CheckboxAgreement
-            labelTitle={'삭제 동의'}
-            checkboxAgreement={'탈퇴를 원하고 되돌릴 수 없음에 동의합니다.'}
-            agreementError={'동의해주세요.'}
-            isBackgroundWhite={false}
-          /> */}
-        </S.CheckboxBox>
+        <S.CheckboxBox>{CheckboxComponent}</S.CheckboxBox>
         <S.SubmitBox isClicked={isClicked ? 'true' : undefined}>
           <S.SubmitBtn large>
             {/* <S.SubmitBtn large onClick={handleSubmit}> 추후 사용 예정  */}
@@ -124,6 +116,7 @@ const S = {
   ...CommonStyles,
   Container: styled.main`
     width: 100%;
+    height: 100%;
     padding: 0rem 2rem;
     position: relative;
     display: flex;
