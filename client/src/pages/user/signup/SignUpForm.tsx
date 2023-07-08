@@ -266,7 +266,7 @@ const S = {
     display: inline-block;
     margin-bottom: 10px;
     > span {
-      color: #e483b0;
+      color: var(--color-point-pink);
       display: inline-block;
       margin-left: 0.5rem;
     }
@@ -280,7 +280,7 @@ const S = {
     padding-left: 20px;
     font-size: 0.9rem;
     margin-top: 8px;
-    color: #e483b0;
+    color: var(--color-point-pink);
   `,
   PolicyContainer: styled.div`
     margin: 5rem 0 1rem 0;
@@ -297,7 +297,7 @@ const S = {
     padding-left: 10px;
     margin-bottom: 1.3rem;
     > span {
-      color: #e483b0;
+      color: var(--color-point-pink);
       display: inline-block;
       margin-left: 0.5rem;
     }

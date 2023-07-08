@@ -21,8 +21,10 @@ const GlobalStyles = () => (
 
         /* color */
         --color-primary : #676FC6;
+        --color-primary-hover : #858cdc;
         --color-point-purple: #7f7ad9;
         --color-point-red : #FF451A;
+        --color-point-pink : #e483b0;
         --color-point-blue : #537FEE;
         --color-point-yellow : #F8AC19;
         --color-point-lilac : #C2C5E8;
@@ -113,15 +115,16 @@ const GlobalStyles = () => (
       
       ::-webkit-scrollbar-thumb {
         background: linear-gradient(195deg, #8A96DB, #EFF1F8);  
-        height: 20%;
+        border-radius: 30px;
       }
 
-      ::-webkit-scrollbar-thumb:hover {
-        background-color:#a5a5a5; 
-        height: 30%;
+      ::-webkit-scrollbar-track {
+        background: transparent;
       }
 
-
+      ::-webkit-scrollbar-corner {
+        background: transparent;
+      }
 
     `}
   />

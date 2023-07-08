@@ -65,6 +65,8 @@ const S = {
     font-size: 0.9rem;
     margin-top: 8px;
     color: ${(props) =>
-      props.isBackgroundWhite ? '#e483b0;' : 'var(--color-point-purple)'};
+      props.isBackgroundWhite
+        ? 'var(--color-point-pink)'
+        : 'var(--color-point-purple)'};
   `,
 };
