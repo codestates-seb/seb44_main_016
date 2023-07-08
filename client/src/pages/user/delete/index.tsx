@@ -51,7 +51,7 @@ export default function UserUpdate() {
     },
   ];
 
-  const handleDelete = (e) => {
+  const handleDelete = (e: React.FormEvent) => {
     e.preventDefault();
     // 탈퇴 로직 처리 후 페이지 이동
     // '/user/delete/goodbye'로 이동
