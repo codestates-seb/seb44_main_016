@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import CommonStyles from '../styles/CommonStyles';
 import AsideButton from '../components/aside/AsideButton';
 import AsideLogo from '../components/aside/AsideLogo';
-import SvgBox from '../components/aside/SvgBox';
+import AsideProfileBox from '../components/aside/AsideProfileBox';
 
 import svgs from '../constants/svg';
 
@@ -77,7 +77,6 @@ export default function Aside(props: Props) {
                 )}
               </>
             )}
-
             <AsideButton leftIcon={svgs.ranking}>
               {isTabClosed && '명예의 전당'}
             </AsideButton>
@@ -92,18 +91,7 @@ export default function Aside(props: Props) {
         <S.Lower>
           {props.isLoggedIn ? (
             <>
-              <S.ProfileBox>
-                <S.ProfileLeftSection>
-                  <S.ProfileImg />
-                  <S.ProfileTexts>
-                    <S.Nickname>{isTabClosed && 'Waypil'}</S.Nickname>
-                    <span>{isTabClosed && '@waypil'}</span>
-                  </S.ProfileTexts>
-                </S.ProfileLeftSection>
-                <S.ProfileRightSection>
-                  <span>…</span>
-                </S.ProfileRightSection>
-              </S.ProfileBox>
+              <AsideProfileBox isTabClosed={isTabClosed} />
               {isTabClosed ? (
                 <S.SubmitBtn>글쓰기</S.SubmitBtn>
               ) : (
@@ -169,52 +157,6 @@ const S = {
   BookmarkedFaRecButton: styled.button`
     width: 100%;
     padding: 1rem 0rem;
-  `,
-  ProfileBox: styled.button`
-    width: 100%;
-    height: 3.25rem;
-    background-color: white;
-    padding-left: 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    &:hover {
-      filter: brightness(0.9);
-    }
-  `,
-  ProfileLeftSection: styled.section`
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    &:hover {
-      filter: brightness(0.9);
-    }
-  `,
-  ProfileRightSection: styled.section`
-    height: 100%;
-    padding-right: 1rem;
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
-  `,
-  ProfileTexts: styled.section`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.3rem;
-  `,
-  Nickname: styled.span`
-    font-weight: bold;
-  `,
-  ProfileImg: styled.img`
-    width: 2.5rem; // 40px
-    height: 2.5rem; // 40px
-    border-radius: var(--rounded-full);
-    overflow: hidden;
-    flex-shrink: 0;
-    background-color: black;
   `,
 
   TabContainer: styled.section`

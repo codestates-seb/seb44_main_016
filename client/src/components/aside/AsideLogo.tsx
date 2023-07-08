@@ -30,6 +30,4 @@ const S = {
       transform: scale(1.25);
     }
   `,
-  LogoSymbol: styled.button``,
-  LogoText: styled.button``,
 };
