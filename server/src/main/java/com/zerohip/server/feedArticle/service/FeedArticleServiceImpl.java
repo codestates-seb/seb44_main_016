@@ -1,6 +1,7 @@
 package com.zerohip.server.feedArticle.service;
 
 import com.zerohip.server.common.feedType.FeedType;
+import com.zerohip.server.feedArticle.dto.FeedArticleDto;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
 import com.zerohip.server.feedArticle.repository.FeedArticleRepository;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +50,16 @@ public class FeedArticleServiceImpl implements FeedArticleService {
     @Override
     public List<FeedArticle> findFeedArticles() {
         return feedArticleRepository.findAll();
+    }
+
+    @Override
+    public FeedArticle updateFeedArticle(Long feedArticleId, FeedArticleDto.Patch patchParam) {
+        FeedArticle findFeedArticle = findVerifiedFeedArticle(feedArticleId);
+        findFeedArticle.setContent(patchParam.getContent());
+        findFeedArticle.setFeedType((FeedType) patchParam.getFeedType());
+
+        FeedArticle updateFeedArticle = feedArticleRepository.save(findFeedArticle);
+        return updateFeedArticle;
     }
 
     //(현재 에러 때문에 메서드만 추가)

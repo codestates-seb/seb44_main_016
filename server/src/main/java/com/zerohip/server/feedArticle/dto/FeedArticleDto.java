@@ -51,4 +51,16 @@ public class FeedArticleDto {
     public class FeedArticleListResponse {
         private List<FeedArticle> feedArticles;
     }
+
+    @Getter
+    @AllArgsConstructor
+    public static class Patch {
+        @NotBlank
+        //@Size(max = 추후 지정) -> @NotBlank와 함께 사용하면 조금 더 정확할 것 같음.
+        private String content;
+        @NotNull
+        private Enum feedType;
+
+        //이미지, 해시태그 추가
+    }
 }
