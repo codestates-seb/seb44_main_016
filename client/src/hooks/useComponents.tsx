@@ -55,7 +55,7 @@ export function useCheckboxInput(
   const [isChecked, setIsChecked] = useState(false);
 
   const Component = useCallback(() => {
-    const handleClick = (e: MouseEvent<HTMLInputElement>) => {
+    const handleClick = () => {
       setIsChecked((prev) => !prev);
     };
 
@@ -79,6 +79,7 @@ const S = {
     border-radius: 0.35rem;
     width: 1.4rem;
     height: 1.4rem;
+    background-color: white;
     cursor: pointer;
     &:checked {
       border-color: transparent;

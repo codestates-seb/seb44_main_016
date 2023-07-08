@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { PostSignUp } from '../types/SignUp';
+import { PostSignUp } from '../types/user';
 
 export default async function postSignUpData(url: string, data: PostSignUp) {
   try {

@@ -1,4 +1,4 @@
-// 아이디 유효성 검사
+/** 아이디 유효성 검사 */
 export const validateLoginId = (loginId: string) => {
   const loginIdFormat = /^[a-z0-9]{4,10}$/;
   let errorMessage = '';
@@ -14,7 +14,7 @@ export const validateLoginId = (loginId: string) => {
   return '';
 };
 
-// 비밀번호 유효성 검사
+/** 비밀번호 유효성 검사 */
 export const validatePassword = (password: string) => {
   let errorMessage = '';
 
@@ -45,7 +45,7 @@ export const checkPasswordMatch = (
   return '';
 };
 
-// 닉네임 유효성 검사
+/** 닉네임 유효성 검사 */
 export const validateNickname = (nickname: string) => {
   const nicknameFormat = /^[a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ]{4,10}$/;
 
@@ -56,7 +56,7 @@ export const validateNickname = (nickname: string) => {
   return '';
 };
 
-// 이메일 유효성 검사 (doyu@doyu.com 형태)
+/** 이메일 유효성 검사 (doyu@doyu.com 형태) */
 export const validateEmail = (email: string) => {
   if (!email.includes('.')) {
     return '유효한 이메일 형식이 아닙니다.';
