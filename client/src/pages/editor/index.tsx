@@ -7,6 +7,7 @@ import { ko } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import CommonStyles from '../../styles/CommonStyles';
+import SelectOption from './SelectOption';
 
 const articleTypeOptions: { value: number; label: string }[] = [
   { value: 1, label: '가계부' },
@@ -43,6 +44,7 @@ export default function EditorPage() {
   };
   const handleChangeFaRecId = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedFaRecId = parseInt(e.target.value, 10);
+    console.log(selectedFaRecId);
     setFaRecId(selectedFaRecId);
   };
   const handleChangeDate = (date: Date) => {
@@ -70,6 +72,7 @@ export default function EditorPage() {
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    /*
     try {
       if (articleType === 1) {
         // 가계부
@@ -102,6 +105,7 @@ export default function EditorPage() {
     } catch (error) {
       console.error('Requset 에러 발생:', error);
     }
+    */
   };
 
   return (
@@ -126,36 +130,39 @@ export default function EditorPage() {
       {articleType === 1 && (
         <>
           {/* 작성할 가계부 (셀렉트) */}
-          <select name='faRecs' id='faRec' onChange={handleChangeFaRecId}>
-            <option value='1'>가계부1</option>
-            <option value='2'>가계부2</option>
-            <option value='3'>가계부3</option>
-          </select>
           <S.Row>
-            {/* 날짜 */}
-            <DatePicker
-              dateFormat='yyyy년 M월 d일 HH:mm'
-              dateFormatCalendar='yyyy년 M월'
-              timeFormat='HH:mm'
-              selected={faDate}
-              onChange={handleChangeDate}
-              showTimeInput
+            <SelectOption
+              legend='가계부 이름'
+              options={['가계부A', '가계부B', '가계부C']}
+              handler={handleChangeFaRecId}
             />
+          </S.Row>
+          <S.Row>
+            {/* 날짜+시간 */}
+            <fieldset>
+              <legend>날짜</legend>
+              <DatePicker
+                locale={ko}
+                dateFormat='yyyy년 M월 d일 HH:mm'
+                dateFormatCalendar='yyyy년 M월'
+                timeFormat='HH:mm'
+                selected={faDate}
+                onChange={handleChangeDate}
+                showTimeInput
+              />
+            </fieldset>
             {/* 카테고리 */}
-            <select
-              name='categories'
-              id='category'
-              onChange={handleChangeCategory}
-            >
-              <option value='식비'>식비</option>
-              <option value='교통비'>교통비</option>
-              <option value='교육비'>교육비</option>
-              <option value='여가비'>여가비</option>
-            </select>
-                disabled={faType !== 1}
+            <SelectOption
+              legend='지출 카테고리'
+              options={['식비', '교통비', '교육비', '여가비']}
+              handler={handleChangeCategory}
+              disabled={faType !== 1}
+            />
           </S.Row>
           <S.Row>
             {/* 금액 */}
+            <fieldset>
+              <legend>금액</legend>
               <S.InputText // InputNumber
                 type='number'
                 name='price'
@@ -165,6 +172,7 @@ export default function EditorPage() {
                 onInput={handleChangePrice}
                 onChange={handleChangePrice}
               />
+            </fieldset>
             {/* 지출/수입 (라디오 버튼) */}
             <S.RadioContainer>
               {faTypeOptions.map((option) => (
@@ -254,4 +262,20 @@ const S = {
     background-color: pink;
     border-radius: 1rem;
   `,
+
+  SelectBtn: styled.select`
+    background-color: white;
+    border-radius: 100px;
+    width: 100%;
+    padding: 1rem;
+    color: var(--color-gray01);
+    border: 1px solid var(--color-border-gray);
+    &:placeholder {
+      color: var(--color-gray07);
+    }
+    &:focus {
+      outline: 1px solid var(--color-primary);
+    }
+  `,
+  OptionBtn: styled.option``,
 };
