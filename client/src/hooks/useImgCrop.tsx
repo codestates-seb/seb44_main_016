@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import { Area, Point } from 'react-easy-crop/types';
 import { getCroppedImg } from '../components/img-crop/canvasUtils';
 
-export function useImageCrop() {
+export function useImgCrop() {
   const [imgSrc, setImgSrc] = useState<string | null>(null);
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);

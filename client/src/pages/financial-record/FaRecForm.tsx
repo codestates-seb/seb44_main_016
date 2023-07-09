@@ -3,7 +3,7 @@ import CommonStyles from '../../styles/CommonStyles';
 import useInput from '../../hooks/useComponents';
 import PlusIcon from '../../../public/images/icon/plus.svg';
 import { FormEvent } from 'react';
-import { useImageCrop } from '../../hooks/useImgCrop';
+import { useImgCrop } from '../../hooks/useImgCrop';
 import { handleFileChange } from '../../components/img-crop/imgCropUtils';
 import ImgCropModal from '../../components/img-crop/ImgCropModal';
 import { useMutation } from '@tanstack/react-query';
@@ -19,7 +19,7 @@ export default function FaRecForm() {
     setCroppedImage,
     cropModal,
     setCropModal,
-  } = useImageCrop();
+  } = useImgCrop();
 
   const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     await handleFileChange({
