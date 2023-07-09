@@ -28,5 +28,16 @@ export default function financialRecordEdit(
 
     const responseBody = JSON.stringify(updatedRecordList);
     res.status(200).json(responseBody);
+  } else if (req.method === 'GET') {
+    const { financialRecordId } = req.query;
+    const record = recordList.find(
+      (el) => el.financialRecordId === Number(financialRecordId)
+    );
+
+    if (record) {
+      res.status(200).json(record);
+    } else {
+      res.status(404).json({ message: 'Record not found' });
+    }
   }
 }
