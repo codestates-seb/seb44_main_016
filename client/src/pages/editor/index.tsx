@@ -130,8 +130,16 @@ export default function EditorPage() {
             <option value='3'>가계부3</option>
           </select>
           <S.Row>
-            {/* 날짜 (시간 미포함) */}
-            <DatePicker selected={faDate} onChange={handleChangeDate} />
+            {/* 날짜 */}
+            <DatePicker
+              dateFormat='yyyy년 M월 d일 HH:mm'
+              dateFormatCalendar='yyyy년 M월'
+              locale='ko'
+              timeFormat='HH:mm'
+              selected={faDate}
+              onChange={handleChangeDate}
+              showTimeInput
+            />
             {/* 카테고리 */}
             <select
               name='categories'
