@@ -51,7 +51,8 @@ export default function EditorPage() {
     setCategory(e.target.value);
   };
   const handleChangePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const enteredPrice = parseInt(e.target.value, 10);
+    const enteredPrice = parseInt(`0${e.target.value}`.replace(/\D/g, ''), 10); // 입력된 문자열에서 숫자 빼고 다 없애기
+    e.target.value = enteredPrice.toString(); // 00123 → 123
     setPrice(enteredPrice);
   };
   const handleChangeFaType = (id: number) => {
@@ -134,7 +135,6 @@ export default function EditorPage() {
             <DatePicker
               dateFormat='yyyy년 M월 d일 HH:mm'
               dateFormatCalendar='yyyy년 M월'
-              locale='ko'
               timeFormat='HH:mm'
               selected={faDate}
               onChange={handleChangeDate}
@@ -154,14 +154,15 @@ export default function EditorPage() {
           </S.Row>
           <S.Row>
             {/* 금액 */}
-            <input
-              type='number'
-              name='price'
-              placeholder='금액을 입력하세요'
-              min='0'
-              value={price}
-              onChange={handleChangePrice}
-            />
+              <S.InputText // InputNumber
+                type='number'
+                name='price'
+                placeholder='금액을 입력하세요'
+                min='0'
+                value={price}
+                onInput={handleChangePrice}
+                onChange={handleChangePrice}
+              />
             {/* 지출/수입 (라디오 버튼) */}
             <S.RadioContainer>
               {faTypeOptions.map((option) => (
@@ -217,7 +218,9 @@ export default function EditorPage() {
         </S.RadioContainer>
       )}
       {/* Submit 버튼 */}
-      <S.SubmitBtn type='submit'>편집 완료</S.SubmitBtn>
+      <S.Row>
+        <S.SubmitBtn type='submit'>편집 완료</S.SubmitBtn>
+      </S.Row>
     </S.EditorContainer>
   );
 }
