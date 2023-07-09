@@ -1,12 +1,14 @@
 import styled from '@emotion/styled';
 import CommonStyles from '../styles/CommonStyles';
-import useInput, { useCheckboxInput } from '../hooks/useComponents';
+import { useCheckboxInput } from '../hooks/useComponents';
 
 interface CheckboxAgreementProps {
   labelTitle: string;
-  checkboxAgreement: string;
-  agreementError: string;
+  checkboxAgreement?: string;
+  agreementError?: string;
   isBackgroundWhite: boolean;
+  isCentered?: boolean;
+  hasGuide?: boolean;
 }
 
 export default function CheckboxAgreement({
@@ -14,21 +16,31 @@ export default function CheckboxAgreement({
   checkboxAgreement,
   agreementError,
   isBackgroundWhite,
+  isCentered,
+  hasGuide,
 }: CheckboxAgreementProps) {
   const [Checkbox, isChecked, setIsChecked] = useCheckboxInput(
     'checkbox',
-    'policy'
+    labelTitle
   );
   return {
     CheckboxComponent: (
-      <S.CheckboxContainer>
+      <S.CheckboxContainer isCentered={isCentered}>
         <S.Policy>
           {Checkbox}
-          <S.RadioBtnLabel htmlFor='policy'>{labelTitle}</S.RadioBtnLabel>
-          <S.PolicyGuide htmlFor='policy'>{checkboxAgreement}</S.PolicyGuide>
+          <S.RadioBtnLabel
+            className={hasGuide ? 'guide' : ''}
+            htmlFor={labelTitle}
+          >
+            {labelTitle}
+          </S.RadioBtnLabel>
+          <S.PolicyGuide htmlFor={labelTitle}>
+            {checkboxAgreement}
+          </S.PolicyGuide>
         </S.Policy>
         <S.Error isBackgroundWhite={isBackgroundWhite}>
-          {agreementError && agreementError}
+          <h3 className='blind'>에러 메시지</h3>
+          <h4>{agreementError && agreementError}</h4>
         </S.Error>
       </S.CheckboxContainer>
     ),
@@ -40,10 +52,13 @@ export default function CheckboxAgreement({
 interface ErrorProps {
   isBackgroundWhite?: boolean;
 }
+interface ContainerProps {
+  isCentered?: boolean;
+}
 const S = {
   ...CommonStyles,
-  CheckboxContainer: styled.div`
-    width: 100%;
+  CheckboxContainer: styled.div<ContainerProps>`
+    width: ${(props) => (props.isCentered ? '' : '100%')};
     height: 100%;
   `,
   Policy: styled.div`
@@ -53,7 +68,10 @@ const S = {
   `,
   RadioBtnLabel: styled.label`
     font-weight: 600;
-    margin-left: 0.6rem;
+    margin-left: 0.8rem;
+    &.guide {
+      margin-left: 0.68rem;
+    }
   `,
   PolicyGuide: styled.label`
     font-size: 0.9rem;
@@ -62,11 +80,15 @@ const S = {
   `,
   Error: styled.div<ErrorProps>`
     padding-left: 20px;
-    font-size: 0.9rem;
+
     margin-top: 8px;
     color: ${(props) =>
       props.isBackgroundWhite
         ? 'var(--color-point-pink)'
         : 'var(--color-point-purple)'};
+    h4 {
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
   `,
 };
