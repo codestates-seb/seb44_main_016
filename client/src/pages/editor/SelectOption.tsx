@@ -29,7 +29,7 @@ export default function SelectOption(props: Props) {
         </S.Select>
       </S.SelectOptionContainer>
     );
-  }, []);
+  }, [props.disabled]);
 
   return DOMs;
 }
@@ -39,11 +39,14 @@ const S = {
   SelectOptionContainer: styled.fieldset`
     width: 100%;
   `,
-  SelectOptionLegend: styled.legend``,
+  SelectOptionLegend: styled.legend`
+    padding-bottom: 0.5rem;
+    font-weight: bold;
+  `,
 
   Select: styled.select`
     background-color: white;
-    border-radius: 100px;
+    border-radius: 0.1rem;
     width: 100%;
     padding: 1rem;
     color: var(--color-gray01);
