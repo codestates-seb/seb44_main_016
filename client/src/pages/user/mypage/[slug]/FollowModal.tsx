@@ -26,6 +26,7 @@ export default function FollowModal() {
               <CloseBtn onClick={openModalHandler} />
             </S.ModalTop>
             <S.ModalFollowerBox>
+              <h3 className='blind'>구독함 리스트</h3>
               <ModalList />
               <ModalList />
               <ModalList />
