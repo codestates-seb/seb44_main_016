@@ -7,7 +7,7 @@ import useInput from '../../../hooks/useComponents';
 import Logo from '../../../../public/image/logo.svg';
 import CommonStyles from '../../../styles/CommonStyles';
 import { bounce } from '../../../animation/keyframe';
-import Oauth from './Oauth';
+import Oauth from './OAuth';
 
 export default function Login() {
   const [IdInput, loginId, setLoginId] = useInput('text', '아이디', 'loginId');
