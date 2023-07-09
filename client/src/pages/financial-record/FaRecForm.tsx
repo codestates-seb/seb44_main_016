@@ -65,7 +65,7 @@ export default function FaRecForm({
     });
   };
 
-  const { mutate, data, isError, isSuccess } = useMutation(
+  const { mutate, isError, isSuccess } = useMutation(
     pageType === 'create'
       ? APIfinancialRecord.createFaRec
       : APIfinancialRecord.updateFaRec,

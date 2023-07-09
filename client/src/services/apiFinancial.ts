@@ -5,7 +5,7 @@ export const APIfinancialRecord = {
     const response = await axios.get('/data/recordList.json');
     return response.data;
   },
-  createFaRec: async (formData) => {
+  createFaRec: async (formData: FormData) => {
     const response = await axios.post('/api/financial-record/', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -13,13 +13,14 @@ export const APIfinancialRecord = {
     });
     return response.data;
   },
-  getFaRec: async (financialRecordId) => {
+  getFaRec: async (financialRecordId: number) => {
     const response = await axios.get(
       `/api/financial-record/${financialRecordId}`
     );
     return response.data;
   },
-  updateFaRec: async (formData) => {
+  updateFaRec: async (formData: FormData) => {
+    const financialRecordId = Number(formData.get('financialRecordId'));
     const response = await axios.patch(
       `/api/financial-record/${financialRecordId}`,
       formData,
