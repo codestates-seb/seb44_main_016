@@ -8,7 +8,7 @@ type UseInputReturnType = [
   (value: string | null) => void
 ];
 
-type UseCheckBoxReturnType = [
+type UseOnlyCheckBoxReturnType = [
   React.ReactNode,
   boolean,
   (value: boolean) => void
@@ -48,14 +48,14 @@ export default function useInput(
   return [Component(), value, setValue];
 }
 
-export function useCheckboxInput(
+export function useOnlyCheckbox(
   type: string,
   label: string
-): UseCheckBoxReturnType {
+): UseOnlyCheckBoxReturnType {
   const [isChecked, setIsChecked] = useState(false);
 
   const Component = useCallback(() => {
-    const handleClick = (e: MouseEvent<HTMLInputElement>) => {
+    const handleClick = () => {
       setIsChecked((prev) => !prev);
     };
 
