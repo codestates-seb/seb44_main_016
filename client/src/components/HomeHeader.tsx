@@ -39,9 +39,10 @@ const S = {
   ...CommonStyles,
   HomeHeaderContainer: styled.header`
     position: fixed;
-    margin-left: 250px;
-    width: 890px;
-    height: 5rem;
+    padding-left: var(--aside-w);
+    max-width: var(--app-max-w);
+    width: 100%;
+    height: var(--header-h);
     background-color: white;
     // border: 1px solid;
     display: flex;
@@ -52,20 +53,18 @@ const S = {
     width: 6rem;
     height: 75%;
     background-color: white;
-    font-size: 18px;
-    font-weight: bold;
-    color: ${(props) => props.isActive && 'var(--color-primary)'};
-    border-bottom: ${(props) =>
-      props.isActive
-        ? '3px solid var(--color-primary)'
-        : '3px solid transparent'};
+    font-size: 1.25rem;
+    font-weight: ${(props) => props.isActive && 'bold'};
+    color: var(--color-gray01);
+    border-bottom: 3px solid
+      ${(props) => (props.isActive ? 'var(--color-primary)' : 'transparent')};
 
     display: flex;
     justify-content: center;
     align-items: center;
 
     &:hover {
-      filter: brightness(0.9);
+      color: var(--color-primary);
     }
   `,
 };
