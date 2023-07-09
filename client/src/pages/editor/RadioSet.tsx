@@ -12,16 +12,21 @@ type Props = {
 };
 
 export default function RadioSet(props: Props) {
-  return (
-    <S.RadioSetContainer>
-      <S.RadioSetLegend>{props.legend}</S.RadioSetLegend>
-      <S.RadioButtonsContainer isCenter={props.isCenter}>
-        {props.options.map((optionName, i) => (
-          <></>
-        ))}
-      </S.RadioButtonsContainer>
-    </S.RadioSetContainer>
-  );
+  const [DOMs, setDOMs] = React.useState(<span>로딩 중</span>);
+
+  React.useEffect(() => {
+    setDOMs(
+      <S.RadioSetContainer>
+        <S.RadioSetLegend>{props.legend}</S.RadioSetLegend>
+        <S.RadioButtonsContainer isCenter={props.isCenter}>
+          {props.options.map((optionName, i) => (
+            <></>
+          ))}
+        </S.RadioButtonsContainer>
+      </S.RadioSetContainer>
+    );
+  }, [props.options]);
+  return DOMs;
 }
 
 const S = {
