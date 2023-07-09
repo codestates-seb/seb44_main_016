@@ -22,25 +22,16 @@ export default function financialRecord(
     recordList?.unshift(newRecord);
     const responseBody = JSON.stringify(recordList);
     res.status(202).json(responseBody);
-  } else if (req.method === 'PATCH') {
-    const {
-      financialRecordId,
-      financialRecordName,
-      financialRecordDescription,
-      imgId,
-      userId,
-    } = req.body;
-
-    const updatedRecord = {
-      financialRecordId,
-      financialRecordName,
-      financialRecordDescription,
-      imgId,
-      userId,
-    };
-
-    recordList.map((record) =>
-      record.financialRecordId === financialRecordId ? updatedRecord : record
+  } else if (req.method === 'GET') {
+    const { financialRecordId } = req.query;
+    const record = recordList.find(
+      (el) => el.financialRecordId === Number(financialRecordId)
     );
+
+    if (record) {
+      res.status(200).json(record);
+    } else {
+      res.status(404).json({ message: 'Record not found' });
+    }
   }
 }

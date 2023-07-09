@@ -2,7 +2,7 @@ import FaRecForm from '../FaRecForm';
 
 export default function FaRecEditPage() {
   // 테스트용
-  const financialRecordId = 159;
+  const financialRecordId = 2;
   const initialFaRecName = '지상최강의햄스터햄구의 가계부';
   const initialFaRecDesc = '해바라기 한톨도 아껴야 잘 산다.';
   const initialImage =
