@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import CommonStyles from '../../styles/CommonStyles';
-import axios from 'axios';
 import useInput from '../../hooks/useComponents';
 import PlusIcon from '../../../public/images/icon/plus.svg';
 import { FormEvent } from 'react';
@@ -30,7 +29,7 @@ export default function FaRecForm() {
     });
   };
 
-  const createRecordMutation = useMutation(APIfinancialRecord.createRecord, {
+  const createFaRecMutation = useMutation(APIfinancialRecord.createFaRec, {
     onSuccess: (data) => {
       console.log('response-data', data);
     },
@@ -50,20 +49,7 @@ export default function FaRecForm() {
      */
     formData.append('userId', 'test');
 
-    // axios
-    //   .post('/api/financial-record/', formData, {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data',
-    //     },
-    //   })
-    //   .then((response) => {
-    //     console.log('response-data', response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
-
-    createRecordMutation.mutate(formData);
+    createFaRecMutation.mutate(formData);
   };
 
   return (
