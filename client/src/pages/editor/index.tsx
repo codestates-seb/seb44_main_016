@@ -208,7 +208,7 @@ export default function EditorPage() {
               <S.RadioBtn
                 type='radio'
                 value={option.value}
-                checked={faType === option.value}
+                checked={scope === option.value}
                 onChange={() => handleChangeScope(option.value)}
               />
               {option.label}
