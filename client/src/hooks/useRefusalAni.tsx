@@ -11,7 +11,7 @@ export interface SubmitBoxProps {
   isClicked?: string | undefined;
 }
 
-export function useRefusalAni() {
+export function useRefusalAni(): [SubmitBoxProps, () => void] {
   const [isClicked, setIsClicked] = useState(false);
 
   const isClickedProps = { isClicked: isClicked ? 'true' : undefined };

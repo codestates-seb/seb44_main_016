@@ -6,9 +6,8 @@ interface useCheckoutInputProps {
   labelTitle: string;
   checkboxAgreement?: string;
   agreementError?: string;
-  isBackgroundWhite: boolean;
+  isBackgroundWhite?: boolean;
   isCentered?: boolean;
-  hasGuide?: boolean;
 }
 
 export default function useCheckoutInput({
@@ -17,7 +16,6 @@ export default function useCheckoutInput({
   agreementError,
   isBackgroundWhite,
   isCentered,
-  hasGuide,
 }: useCheckoutInputProps) {
   const [Checkbox, isChecked, setIsChecked] = useOnlyCheckbox(
     'checkbox',
@@ -29,7 +27,7 @@ export default function useCheckoutInput({
         <S.Policy>
           {Checkbox}
           <S.RadioBtnLabel
-            className={hasGuide ? 'guide' : ''}
+            className={checkboxAgreement ? 'guide' : ''}
             htmlFor={labelTitle}
           >
             {labelTitle}
