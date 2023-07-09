@@ -4,7 +4,7 @@ import { keyframes, css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import CommonStyles from '../../../styles/CommonStyles';
-import useInput, { useCheckboxInput } from '../../../hooks/useComponents';
+import useInput from '../../../hooks/useComponents';
 import CheckboxAgreement from '../../../components/CheckboxAgreement';
 import { SIGN_UP_MESSAGES } from '../../../constants/user';
 import SelectBox from '../../../components/SelectBox';
@@ -15,6 +15,7 @@ import {
   validateNickname,
   checkPasswordMatch,
 } from '../../../utils/validationCheck';
+import { bounce } from '../../../animation/keyframe';
 import postSignUpData from '../../../services/apiUser';
 import { PostSignUp } from '../../../types/user';
 
@@ -182,10 +183,12 @@ export default function SignUpForm() {
           <S.InputContainer key={i}>
             <S.LabelBox>
               <S.Label htmlFor={el.label.htmlFor}>
-                {el.label.text}
+                <h2>{el.label.text}</h2>
                 <span>{el.label.required && '*'}</span>
               </S.Label>
-              <S.Guide>{el.guide ? el.guide : null}</S.Guide>
+              <S.Guide>
+                <h3>{el.guide ? el.guide : null}</h3>
+              </S.Guide>
             </S.LabelBox>
             <S.EmailAddress
               className={i === inputData.length - 1 ? 'email' : ''}
@@ -204,44 +207,30 @@ export default function SignUpForm() {
                 </S.DomainBox>
               )}
             </S.EmailAddress>
-            <S.Error>{el.error} </S.Error>
+            <S.Error>
+              <h3 className='blind'>에러 메시지</h3>
+              <h4>{el.error}</h4>{' '}
+            </S.Error>
           </S.InputContainer>
         ))}
       </S.InputMapWrapper>
 
       <S.PolicyContainer>
         <S.PolicyLabel>
-          약관동의
+          <h2>약관동의</h2>
           <span>*</span>
         </S.PolicyLabel>
         {CheckboxComponent}
       </S.PolicyContainer>
       <S.SubmitBox isClicked={isClicked ? 'true' : undefined}>
         <S.SubmitBtn large onClick={handleSubmit}>
-          회원가입
+          <h2>회원가입</h2>
         </S.SubmitBtn>
       </S.SubmitBox>
     </S.FormContainer>
   );
 }
 
-const bounce = keyframes`
-  0% {
-    transform: translateX(0);
-  }
-  30% {
-    transform: translateX(-10px);
-  }
-  50% {
-    transform: translateX(10px);
-  }
-  70% {
-    transform: translateX(-10px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-`;
 interface SubmitBoxProps {
   isClicked?: string | undefined;
 }
@@ -261,10 +250,12 @@ const S = {
     padding-left: 10px;
   `,
   Label: styled.label`
-    font-weight: 700;
-    font-size: 1.13rem;
-    display: inline-block;
-    margin-bottom: 10px;
+    h2 {
+      font-weight: 600;
+      font-size: 1.13rem;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
     > span {
       color: var(--color-point-pink);
       display: inline-block;
@@ -275,12 +266,19 @@ const S = {
     font-size: 1rem;
     color: #a4a7b5;
     margin-bottom: 14px;
+    h3 {
+      font-weight: 500;
+      font-size: 1rem;
+    }
   `,
   Error: styled.div`
     padding-left: 20px;
-    font-size: 0.9rem;
     margin-top: 8px;
     color: var(--color-point-pink);
+    h4 {
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
   `,
   PolicyContainer: styled.div`
     margin: 4rem 0 1rem 0;
@@ -291,11 +289,13 @@ const S = {
     align-items: center;
   `,
   PolicyLabel: styled.div`
-    font-weight: 700;
-    font-size: 1.13rem;
-    display: inline-block;
-    padding-left: 10px;
-    margin-bottom: 1.3rem;
+    h2 {
+      font-weight: 600;
+      font-size: 1.13rem;
+      display: inline-block;
+      padding-left: 10px;
+      margin-bottom: 1.3rem;
+    }
     > span {
       color: var(--color-point-pink);
       display: inline-block;
@@ -341,5 +341,9 @@ const S = {
       css`
         animation: ${bounce} 1s infinite;
       `}
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
   `,
 };

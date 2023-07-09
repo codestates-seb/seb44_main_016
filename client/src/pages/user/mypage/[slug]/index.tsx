@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import Image from 'next/image';
-import Link from 'next/link';
+import Head from 'next/head';
 import { keyframes, css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import CommonStyles from '../../../../styles/CommonStyles';
@@ -11,7 +11,7 @@ import FollowModal from './FollowModal';
 export default function Page({ params }: { params: { slug: string } }) {
   const router = useRouter();
   const { slug } = router.query;
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const openModalHandler = () => {
     setIsOpen(!isOpen);
   };
@@ -19,6 +19,11 @@ export default function Page({ params }: { params: { slug: string } }) {
   return (
     <S.Container>
       <S.UserProfileContainer>
+        <Head>
+          <title>제로힙 마이페이지</title>
+        </Head>
+        <h1 className='blind'>마이페이지</h1>
+
         <S.UserImg>
           <Image
             src='/image/mango.png'
@@ -30,18 +35,20 @@ export default function Page({ params }: { params: { slug: string } }) {
           />
         </S.UserImg>
         <S.UserName>
-          <S.H1>마마망</S.H1>
+          <h2 className='blind'>닉네임</h2>
+          <S.H3>마마망</S.H3>
         </S.UserName>
         <S.ModifyBtnBox>
           <FollowModal />
           <FollowModal />
-          <Link href='/user/update'>
-            <S.ModifyBtn type='button'>설정</S.ModifyBtn>
-          </Link>
+          <S.ModifyBtn type='button'>
+            <h2>설정</h2>
+          </S.ModifyBtn>
         </S.ModifyBtnBox>
       </S.UserProfileContainer>
       <S.UserArticleContainer>
         <S.ArticleContainer>
+          <h2 className='blind'>내가 쓴 글</h2>
           {'공통 컴포넌트 trunk에 머지되면 사용 예정'}
         </S.ArticleContainer>
       </S.UserArticleContainer>
@@ -70,7 +77,7 @@ const S = {
   UserName: styled.div`
     margin: 1rem 0;
   `,
-  H1: styled.h1`
+  H3: styled.h3`
     font-size: 1.5rem;
     font-weight: 600;
     background-image: linear-gradient(to right, #0d0d0d, var(--color-primary));
@@ -88,7 +95,6 @@ const S = {
     color: black;
     padding: 0.7rem 1rem;
     border-radius: 100px;
-    font-weight: 500;
     overflow: hidden;
     background-color: white;
     z-index: 1;
@@ -115,6 +121,10 @@ const S = {
     &:hover::before {
       top: 2.5rem;
       left: 2.5rem;
+    }
+    > h2 {
+      font-size: 1.1rem;
+      font-weight: 500;
     }
   `,
   UserArticleContainer: styled.div``,

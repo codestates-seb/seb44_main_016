@@ -11,7 +11,7 @@ export default function ModalList() {
             {' '}
             <Image
               src='/image/mango2.png'
-              alt='프로필 사진'
+              alt='유저 프로필 사진'
               width={44}
               height={44}
               style={imageStyle}
@@ -19,7 +19,7 @@ export default function ModalList() {
           </div>
         </S.UserPic>
         <S.UserId>
-          <div>manng35</div>
+          <h3>manng35</h3>
         </S.UserId>
         <S.UserFollow>
           <S.UserFollowBtn type='button'>구독하기</S.UserFollowBtn>
@@ -53,10 +53,13 @@ const S = {
     align-items: center;
     margin: 0 0.9rem 0 0.6rem;
     color: var(--color-gray04);
-    font-size: 0.95rem;
-    font-weight: 500;
+
     &:hover {
       color: var(--color-gray05);
+    }
+    h3 {
+      font-size: 0.95rem;
+      font-weight: 500;
     }
   `,
   UserFollow: styled.div`
