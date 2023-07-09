@@ -151,6 +151,7 @@ export default function EditorPage() {
               <option value='교육비'>교육비</option>
               <option value='여가비'>여가비</option>
             </select>
+                disabled={faType !== 1}
           </S.Row>
           <S.Row>
             {/* 금액 */}
