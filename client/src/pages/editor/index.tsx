@@ -3,6 +3,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
+import { ko } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import CommonStyles from '../../styles/CommonStyles';
@@ -28,6 +29,7 @@ export default function EditorPage() {
   /* ↓ 'articleType=가계부'일 경우에만 표시 ↓ */
   const [faRecId, setFaRecId] = React.useState(1); // 가계부의 고유번호
   const [faDate, setFaDate] = React.useState(new Date()); // 날짜 (시간 미포함)
+  const [faDate, setFaDate] = React.useState(new Date()); // 날짜+시간
   const [category, setCategory] = React.useState(''); // 카테고리명
   const [price, setPrice] = React.useState(0); // 금액
   const [faType, setFaType] = React.useState(1); // 지출/수입 (라디오 버튼)
