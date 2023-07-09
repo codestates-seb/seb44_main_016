@@ -12,24 +12,29 @@ type Props = {
 };
 
 export default function RadioSet(props: Props) {
-  return (
-    <S.RadioSetContainer>
-      <S.RadioSetLegend>{props.legend}</S.RadioSetLegend>
-      <S.RadioButtonsContainer isCenter={props.isCenter}>
-        {props.options.map((optionName, i) => (
-          <S.RadioBtnLabel key={i}>
-            <S.RadioBtn
-              type='radio'
-              value={i}
-              checked={props.checkValue === i}
-              onChange={() => props.handler(i)}
-            />
-            {optionName}
-          </S.RadioBtnLabel>
-        ))}
-      </S.RadioButtonsContainer>
-    </S.RadioSetContainer>
-  );
+  const [DOMs, setDOMs] = React.useState(<></>);
+
+  React.useEffect(() => {
+    setDOMs(
+      <S.RadioSetContainer>
+        <S.RadioSetLegend>{props.legend}</S.RadioSetLegend>
+        <S.RadioButtonsContainer isCenter={props.isCenter}>
+          {props.options.map((optionName, i) => (
+            <S.RadioBtnLabel key={i}>
+              <S.RadioBtn
+                type='radio'
+                value={i}
+                checked={props.checkValue === i}
+                onChange={() => props.handler(i)}
+              />
+              {optionName}
+            </S.RadioBtnLabel>
+          ))}
+        </S.RadioButtonsContainer>
+      </S.RadioSetContainer>
+    );
+  }, []);
+  return DOMs;
 }
 
 const S = {

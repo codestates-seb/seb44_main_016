@@ -12,7 +12,7 @@ type Props = {
 
 export default function SelectOption(props: Props) {
   // 에러 방지: Hydration failed because the initial UI does not match what was rendered on the server.
-  const [DOMs, setDOMs] = React.useState(<span>로딩 중</span>);
+  const [DOMs, setDOMs] = React.useState(<></>);
 
   React.useEffect(() => {
     setDOMs(
