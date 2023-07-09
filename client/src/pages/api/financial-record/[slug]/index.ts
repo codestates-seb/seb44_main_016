@@ -28,12 +28,13 @@ export default function financialRecordEdit(
 
     const responseBody = JSON.stringify(updatedRecordList);
     res.status(200).json(responseBody);
+    //
   } else if (req.method === 'GET') {
-    const { financialRecordId } = req.query;
+    const financialRecordId = Number(req.query.slug);
     const record = recordList.find(
-      (el) => el.financialRecordId === Number(financialRecordId)
+      (el) => el.financialRecordId === financialRecordId
     );
-
+    console.log(req.method, req.query);
     if (record) {
       res.status(200).json(record);
     } else {
