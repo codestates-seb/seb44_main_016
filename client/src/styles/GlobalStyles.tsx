@@ -108,6 +108,14 @@ const GlobalStyles = () => (
       input {
         border: none;
       }
+      
+      .blind {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+      }
 
       ::-webkit-scrollbar {
         width: 1vw; 
