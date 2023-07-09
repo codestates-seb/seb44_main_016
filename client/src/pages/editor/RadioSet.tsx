@@ -7,7 +7,6 @@ type Props = {
   legend: string;
   options: string[];
   checkValue: number;
-  handler: (id: number) => void;
   isCenter?: boolean;
 };
 
@@ -22,7 +21,6 @@ export default function RadioSet(props: Props) {
               type='radio'
               value={i}
               checked={props.checkValue === i}
-              onChange={() => props.handler(i)}
             />
             {optionName}
           </S.RadioBtnLabel>
