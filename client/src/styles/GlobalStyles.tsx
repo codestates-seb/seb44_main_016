@@ -24,6 +24,7 @@ const GlobalStyles = () => (
         --color-point-yellow : #F8AC19;
         --color-point-lilac : #C2C5E8;
         --color-white : #FFF;
+        --color-alert-red :#EE5353;
 
         --color-gray01 : #333;
         --color-gray02 : #4D4D4D;
@@ -37,6 +38,14 @@ const GlobalStyles = () => (
 
 
         --color-border-gray : #E6E6E6;
+
+        /* font-size */
+        --text-xs : 0.75rem; /* 12 */
+        --text-s : 0.875rem; /* 14 */
+        --text-default : 1rem; /* 사용하지 않아도 default 크기 16 */ 
+        --text-m : 1.25rem; /* 20 */
+        --text-l : 1.5rem; /* 24 */
+        --text-xl : 2rem; /* 32 */
 
         /* box-shadow */
         --shadow-default : 0 1px 10px rgba(170,170,170,25);

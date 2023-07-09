@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import CommonStyles from '../../styles/CommonStyles';
 import useInput from '../../hooks/useComponents';
 import PlusIcon from '../../../public/images/icon/plus.svg';
-import { FormEvent, useEffect } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useImgCrop } from '../../hooks/useImgCrop';
 import { handleFileChange } from '../../components/img-crop/imgCropUtils';
 import ImgCropModal from '../../components/img-crop/ImgCropModal';
@@ -36,6 +36,11 @@ export default function FaRecForm({
     '가계부 설명',
     'faDesc'
   );
+
+  const [errors, setErrors] = useState({
+    faRecName: '',
+    faRecDesc: '',
+  });
 
   // edit일 경우 value 전달
   useEffect(() => {
@@ -76,6 +81,18 @@ export default function FaRecForm({
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+
+    const newErrors = {
+      faRecName: faRecName ? '' : '가계부 이름은 필수입니다.',
+      faRecDesc: faRecDesc ? '' : '가계부 설명은 필수입니다.',
+    };
+
+    setErrors(newErrors);
+
+    if (newErrors.faRecName || newErrors.faRecDesc) {
+      return;
+    }
+
     const formData = new FormData();
     formData.append('financialRecordName', faRecName || '');
     formData.append('financialRecordDescription', faRecDesc || '');
@@ -128,10 +145,16 @@ export default function FaRecForm({
           />
         )}
         <S.InputFieldWrap>
-          {nameInput}
-          {descInput}
+          <div>
+            {nameInput}
+            {errors.faRecName && <S.Error>{errors.faRecName}</S.Error>}
+          </div>
+          <div>
+            {descInput}
+            {errors.faRecDesc && <S.Error>{errors.faRecDesc}</S.Error>}
+          </div>
         </S.InputFieldWrap>
-        <S.SubmitBtn>가계부 만들기</S.SubmitBtn>
+        <S.SubmitBtn>완료</S.SubmitBtn>
       </S.Container>
     </S.Form>
   );
@@ -219,9 +242,16 @@ const S = {
     transition: 0.7s;
   `,
   InputFieldWrap: styled.div`
+    width: 100%;
     margin-bottom: 2.5rem;
     & > * {
       margin-bottom: 1rem;
     }
+  `,
+  Error: styled.div`
+    color: var(--color-alert-red);
+    font-size: var(--text-s);
+    padding: 0 1rem;
+    margin-top: 0.75rem;
   `,
 };
