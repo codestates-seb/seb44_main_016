@@ -8,6 +8,7 @@ import SelectOption from './SelectOption';
 import StyledDatePicker from './StyledDatePicker';
 import InputNaturalNumber from './InputNaturalNumber';
 import RadioSet from './RadioSet';
+import ImgsUploader from './ImgsUploader';
 
 export default function EditorPage() {
   // 일부 값들은 Enum으로 바꾸는 걸 권장
@@ -158,17 +159,9 @@ export default function EditorPage() {
       )}
       {/* ↓ 모든 articleType에 표시 ↓ */}
       {/* 이미지 */}
-      <S.InputContainer>
-        <S.Legend>이미지</S.Legend>
-        <S.Row>
-          <S.Imgs>
-            <S.ImgSample />
-            <S.ImgSample />
-            <S.ImgSample />
-            <S.ImgSample />
-          </S.Imgs>
-        </S.Row>
-      </S.InputContainer>
+      <S.Row>
+        <ImgsUploader />
+      </S.Row>
       {/* 내용(본문) */}
       <S.InputContainer>
         <S.Legend>내용</S.Legend>
@@ -212,20 +205,6 @@ const S = {
     display: flex;
     justify-content: space-evenly;
     gap: 2rem;
-  `,
-
-  Imgs: styled.div`
-    width: fit-content;
-    display: flex;
-    gap: 1.25rem;
-    flex-wrap: wrap;
-  `,
-
-  ImgSample: styled.img`
-    width: 11.5rem;
-    height: 11.5rem;
-    background-color: pink;
-    border-radius: 0.5rem;
   `,
 
   SelectBtn: styled.select`
