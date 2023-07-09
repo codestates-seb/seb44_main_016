@@ -1,16 +1,10 @@
-import React from 'react';
 import FaRecForm from '../FaRecForm';
-import CommonStyles from '../../../styles/CommonStyles';
 
-export default function FaCreatePage() {
+export default function FaRecCreatePage() {
   return (
     <>
-      <S.BlindTitle>가계부 추가 페이지</S.BlindTitle>
-      <FaRecForm />
+      <h1 className='blind'>가계부 추가 페이지</h1>
+      <FaRecForm pageType='create' />
     </>
   );
 }
-
-const S = {
-  ...CommonStyles,
-};

@@ -2,16 +2,47 @@ import styled from '@emotion/styled';
 import CommonStyles from '../../styles/CommonStyles';
 import useInput from '../../hooks/useComponents';
 import PlusIcon from '../../../public/images/icon/plus.svg';
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { useImgCrop } from '../../hooks/useImgCrop';
 import { handleFileChange } from '../../components/img-crop/imgCropUtils';
 import ImgCropModal from '../../components/img-crop/ImgCropModal';
 import { useMutation } from '@tanstack/react-query';
 import { APIfinancialRecord } from '../../services/apiFinancial';
 
-export default function FaRecForm() {
-  const [nameInput, faRecName] = useInput('text', '가계부 이름', 'faName');
-  const [descInput, faRecDesc] = useInput('text', '가계부 설명', 'faDesc');
+type PageType = 'create' | 'edit';
+
+interface FaRecFormProps {
+  pageType: PageType;
+  financialRecordId?: number;
+  initialFaRecName?: string;
+  initialFaRecDesc?: string;
+  initialImage?: string;
+}
+
+export default function FaRecForm({
+  pageType,
+  financialRecordId,
+  initialFaRecName,
+  initialFaRecDesc,
+  initialImage,
+}: FaRecFormProps) {
+  const [nameInput, faRecName, setFaRecName] = useInput(
+    'text',
+    '가계부 이름',
+    'faName'
+  );
+  const [descInput, faRecDesc, setFaRecDesc] = useInput(
+    'text',
+    '가계부 설명',
+    'faDesc'
+  );
+
+  // edit일 경우 value 전달
+  useEffect(() => {
+    setFaRecName(initialFaRecName || '');
+    setFaRecDesc(initialFaRecDesc || '');
+  }, [initialFaRecName, initialFaRecDesc, setFaRecName, setFaRecDesc]);
+
   const {
     imgSrc,
     setImgSrc,
@@ -29,14 +60,19 @@ export default function FaRecForm() {
     });
   };
 
-  const createFaRecMutation = useMutation(APIfinancialRecord.createFaRec, {
-    onSuccess: (data) => {
-      console.log('response-data', data);
-    },
-    onError: (error) => {
-      console.error(error);
-    },
-  });
+  const { mutate, data, isError, isSuccess } = useMutation(
+    pageType === 'create'
+      ? APIfinancialRecord.createFaRec
+      : APIfinancialRecord.updateFaRec,
+    {
+      onSuccess: (data) => {
+        console.log('response-data', data);
+      },
+      onError: (error) => {
+        console.error(error);
+      },
+    }
+  );
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -49,7 +85,11 @@ export default function FaRecForm() {
      */
     formData.append('userId', 'test');
 
-    createFaRecMutation.mutate(formData);
+    if (pageType === 'edit') {
+      formData.append('financialRecordId', `${financialRecordId}`);
+    }
+
+    mutate(formData);
   };
 
   return (
@@ -61,6 +101,8 @@ export default function FaRecForm() {
               src={croppedImage}
               alt={faRecName ? `${faRecName} 프로필 사진` : '프로필 사진'}
             />
+          ) : initialImage ? (
+            <img src={initialImage} alt={`${initialFaRecName} 프로필 사진`} />
           ) : (
             <img src='/images/icon/person.svg' alt='사람 아이콘' />
           )}
