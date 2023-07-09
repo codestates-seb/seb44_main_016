@@ -103,9 +103,7 @@ export default function UserUpdate() {
             회원 정보 수정
           </S.SubmitBtn>
         </S.SubmitBox>
-        <Link href='/user/delete'>
-          <S.ModifyBtn type='button'>회원 탈퇴</S.ModifyBtn>
-        </Link>
+        <S.ModifyBtn type='button'>회원 탈퇴</S.ModifyBtn>
       </S.FormContainer>
     </S.Container>
   );

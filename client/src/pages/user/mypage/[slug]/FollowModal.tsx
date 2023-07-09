@@ -14,16 +14,19 @@ export default function FollowModal() {
   return (
     <S.FollowerContainer onClick={openModalHandler}>
       <S.ButtonNameBtn type='button'>
-        구독함 <S.FollowerNum>11</S.FollowerNum>
+        <h2>
+          구독함 <S.FollowerNum>11</S.FollowerNum>
+        </h2>
       </S.ButtonNameBtn>
-      {isOpen === true ? (
+      {isOpen ? (
         <S.ModalBackdrop onClick={openModalHandler}>
           <S.ModalView onClick={(e) => e.stopPropagation()}>
             <S.ModalTop>
-              <S.H1>구독함</S.H1>
+              <S.Title>구독함</S.Title>
               <CloseBtn onClick={openModalHandler} />
             </S.ModalTop>
             <S.ModalFollowerBox>
+              <h3 className='blind'>구독함 리스트</h3>
               <ModalList />
               <ModalList />
               <ModalList />
@@ -67,8 +70,10 @@ const S = {
     }
   `,
   ButtonNameBtn: styled.button`
-    font-size: 1.1rem;
-    font-weight: 500;
+    h2 {
+      font-size: 1.07rem;
+      font-weight: 500;
+    }
     &:hover {
       color: var(--color-gray02);
     }
@@ -99,7 +104,7 @@ const S = {
     align-items: center;
     border-bottom: 1px solid var(--color-gray08);
   `,
-  H1: styled.div`
+  Title: styled.div`
     font-weight: 400;
     color: var(--color-gray05);
     margin-right: 8rem;

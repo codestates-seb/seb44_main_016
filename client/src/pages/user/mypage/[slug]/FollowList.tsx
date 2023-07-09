@@ -11,7 +11,7 @@ export default function ModalList() {
             {' '}
             <Image
               src='/image/mango2.png'
-              alt='프로필 사진'
+              alt='유저 프로필 사진'
               width={44}
               height={44}
               style={imageStyle}
