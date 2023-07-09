@@ -33,7 +33,7 @@ export default function RadioSet(props: Props) {
         </S.RadioButtonsContainer>
       </S.RadioSetContainer>
     );
-  }, []);
+  }, [props.options]);
   return DOMs;
 }
 
