@@ -2,24 +2,37 @@ import React from 'react';
 
 import styled from '@emotion/styled';
 import axios from 'axios';
+import DatePicker from 'react-datepicker';
+import { ko } from 'date-fns/locale';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import CommonStyles from '../../styles/CommonStyles';
 import SelectOption from './SelectOption';
-import StyledDatePicker from './StyledDatePicker';
-import InputNaturalNumber from './InputNaturalNumber';
-import RadioSet from './RadioSet';
-import ImgsUploader from './ImgsUploader';
+
+const articleTypeOptions: { value: number; label: string }[] = [
+  { value: 1, label: '가계부' },
+  { value: 2, label: '절약 팁' },
+  { value: 3, label: '허락해줘!' },
+];
+const faTypeOptions: { value: number; label: string }[] = [
+  { value: 1, label: '지출' },
+  { value: 2, label: '수입' },
+];
+const scopeOptions: { value: number; label: string }[] = [
+  { value: 1, label: '가계부에만' },
+  { value: 2, label: '타임라인에도' },
+];
 
 export default function EditorPage() {
   // 일부 값들은 Enum으로 바꾸는 걸 권장
 
-  const [articleType, setArticleType] = React.useState(0); // 가계부/절약팁/허락해줘 (라디오 버튼)
+  const [articleType, setArticleType] = React.useState(1); // 가계부/절약팁/허락해줘 (라디오 버튼)
   /* ↓ 'articleType=가계부'일 경우에만 표시 ↓ */
-  const [faRecId, setFaRecId] = React.useState(0); // 가계부의 고유번호
+  const [faRecId, setFaRecId] = React.useState(1); // 가계부의 고유번호
   const [faDate, setFaDate] = React.useState(new Date()); // 날짜+시간
   const [category, setCategory] = React.useState(''); // 카테고리명
   const [price, setPrice] = React.useState(0); // 금액
-  const [faType, setFaType] = React.useState(0); // 지출/수입 (라디오 버튼)
+  const [faType, setFaType] = React.useState(1); // 지출/수입 (라디오 버튼)
   const [title, setTitle] = React.useState(''); // 제목(내역)
   /* ↓ 모든 articleType에 표시 ↓ */
   // const [images, setImages] = React.useState([]); // 이미지 (0~4장)
@@ -31,6 +44,7 @@ export default function EditorPage() {
   };
   const handleChangeFaRecId = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedFaRecId = parseInt(e.target.value, 10);
+    console.log(selectedFaRecId);
     setFaRecId(selectedFaRecId);
   };
   const handleChangeDate = (date: Date) => {
@@ -58,6 +72,7 @@ export default function EditorPage() {
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    /*
     try {
       if (articleType === 1) {
         // 가계부
@@ -90,22 +105,29 @@ export default function EditorPage() {
     } catch (error) {
       console.error('Requset 에러 발생:', error);
     }
+    */
   };
 
   return (
     <S.EditorContainer onSubmit={handleSubmit}>
       <S.Row>
         {/* 가계부/절약팁/허락해줘 (라디오 버튼) */}
-        <RadioSet
-          legend=''
-          options={['가계부', '절약 팁', '허락해줘!']}
-          checkValue={articleType}
-          handler={handleChangeArticleType}
-          isCenter={true}
-        />
+        <S.RadioContainer>
+          {articleTypeOptions.map((option) => (
+            <S.RadioBtnLabel key={option.value}>
+              <S.RadioBtn
+                type='radio'
+                value={option.value}
+                checked={articleType === option.value}
+                onChange={() => handleChangeArticleType(option.value)}
+              />
+              {option.label}
+            </S.RadioBtnLabel>
+          ))}
+        </S.RadioContainer>
       </S.Row>
       {/* ↓ 'articleType=가계부'일 경우에만 표시 ↓ */}
-      {articleType === 0 && (
+      {articleType === 1 && (
         <>
           {/* 작성할 가계부 (셀렉트) */}
           <S.Row>
@@ -117,74 +139,97 @@ export default function EditorPage() {
           </S.Row>
           <S.Row>
             {/* 날짜+시간 */}
-            <StyledDatePicker
-              legend={'날짜'}
-              selected={faDate}
-              handler={handleChangeDate}
-            />
+            <fieldset>
+              <legend>날짜</legend>
+              <DatePicker
+                locale={ko}
+                dateFormat='yyyy년 M월 d일 HH:mm'
+                dateFormatCalendar='yyyy년 M월'
+                timeFormat='HH:mm'
+                selected={faDate}
+                onChange={handleChangeDate}
+                showTimeInput
+              />
+            </fieldset>
             {/* 카테고리 */}
             <SelectOption
               legend='지출 카테고리'
               options={['식비', '교통비', '교육비', '여가비']}
               handler={handleChangeCategory}
-              disabled={faType !== 0}
+              disabled={faType !== 1}
             />
           </S.Row>
           <S.Row>
             {/* 금액 */}
-            <InputNaturalNumber
-              legend='금액'
-              num={price}
-              handler={handleChangePrice}
-            />
+            <fieldset>
+              <legend>금액</legend>
+              <S.InputText // InputNumber
+                type='number'
+                name='price'
+                placeholder='금액을 입력하세요'
+                min='0'
+                value={price}
+                onInput={handleChangePrice}
+                onChange={handleChangePrice}
+              />
+            </fieldset>
             {/* 지출/수입 (라디오 버튼) */}
-            <RadioSet
-              legend='분류'
-              options={['지출', '수입']}
-              checkValue={faType}
-              handler={handleChangeFaType}
-            />
+            <S.RadioContainer>
+              {faTypeOptions.map((option) => (
+                <S.RadioBtnLabel key={option.value}>
+                  <S.RadioBtn
+                    type='radio'
+                    value={option.value}
+                    checked={faType === option.value}
+                    onChange={() => handleChangeFaType(option.value)}
+                  />
+                  {option.label}
+                </S.RadioBtnLabel>
+              ))}
+            </S.RadioContainer>
           </S.Row>
           {/* 내역(제목) */}
-          <S.InputContainer>
-            <S.Legend>제목</S.Legend>
-            <S.InputText
-              type='text'
-              placeholder='제목을 입력하세요 (예: 사용 내역, 사용처 등)'
-              value={title}
-              onChange={handleChangeTitle}
-            />
-          </S.InputContainer>
+          <S.InputText
+            type='text'
+            placeholder='제목을 입력하세요'
+            value={title}
+            onChange={handleChangeTitle}
+          />
         </>
       )}
       {/* ↓ 모든 articleType에 표시 ↓ */}
       {/* 이미지 */}
       <S.Row>
-        <ImgsUploader />
+        <S.ImgSample />
+        <S.ImgSample />
+        <S.ImgSample />
+        <S.ImgSample />
       </S.Row>
       {/* 내용(본문) */}
-      <S.InputContainer>
-        <S.Legend>내용</S.Legend>
-        <S.Textarea
-          placeholder='내용을 입력해주세요'
-          value={content}
-          onChange={handleChangeContent}
-        />
-      </S.InputContainer>
-      {/* 공개 범위 (라디오 버튼) */}
+      <S.Textarea
+        placeholder='내용을 입력해주세요'
+        value={content}
+        onChange={handleChangeContent}
+      />
+      {articleType === 1 && (
+        <S.RadioContainer>
+          {/* 공개 범위 (라디오 버튼) */}
+          {scopeOptions.map((option) => (
+            <S.RadioBtnLabel key={option.value}>
+              <S.RadioBtn
+                type='radio'
+                value={option.value}
+                checked={scope === option.value}
+                onChange={() => handleChangeScope(option.value)}
+              />
+              {option.label}
+            </S.RadioBtnLabel>
+          ))}
+        </S.RadioContainer>
+      )}
+      {/* Submit 버튼 */}
       <S.Row>
-        {articleType === 0 && (
-          <RadioSet
-            legend='공개 범위'
-            options={['가계부에만', '타임라인에도']}
-            checkValue={scope}
-            handler={handleChangeScope}
-          />
-        )}
-        {/* Submit 버튼 */}
-        <S.SubmitBtnContainer>
-          <S.SubmitBtn type='submit'>편집 완료</S.SubmitBtn>
-        </S.SubmitBtnContainer>
+        <S.SubmitBtn type='submit'>편집 완료</S.SubmitBtn>
       </S.Row>
     </S.EditorContainer>
   );
@@ -197,14 +242,25 @@ const S = {
     display: flex;
     flex-direction: column;
     padding: 3rem;
-    gap: 2rem;
+    gap: 1.25rem;
   `,
 
   Row: styled.div`
     width: 100%;
     display: flex;
     justify-content: space-evenly;
-    gap: 2rem;
+  `,
+
+  RadioContainer: styled.div`
+    display: flex;
+    gap: 1.25rem;
+  `,
+
+  ImgSample: styled.img`
+    width: 10rem;
+    height: 10rem;
+    background-color: pink;
+    border-radius: 1rem;
   `,
 
   SelectBtn: styled.select`
@@ -221,21 +277,5 @@ const S = {
       outline: 1px solid var(--color-primary);
     }
   `,
-
-  SubmitBtnContainer: styled.div`
-    display: flex;
-    justify-content: end;
-  `,
-
-  InputContainer: styled.fieldset`
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.25rem;
-  `,
-  Legend: styled.legend`
-    padding-bottom: 0.5rem;
-    font-weight: bold;
-  `,
+  OptionBtn: styled.option``,
 };
