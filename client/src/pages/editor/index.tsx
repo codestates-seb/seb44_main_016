@@ -1,20 +1,11 @@
 import React from 'react';
 
-import tw from 'twin.macro';
 import styled from '@emotion/styled';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import CommonStyles from '../../styles/CommonStyles';
-
-const S = {
-  ...CommonStyles,
-  EditorContainer: styled.form(tw`w-full flex flex-col p-[40px] gap-5`),
-  Row: styled.section(tw`w-full flex justify-evenly`),
-  RadioContainer: styled.section(tw`flex gap-5`),
-  ImgSample: styled.img(tw`w-[153px] h-[153px]  bg-pink-500 rounded-[10px]`),
-};
 
 const articleTypeOptions: { value: number; label: string }[] = [
   { value: 1, label: '가계부' },
@@ -212,3 +203,32 @@ export default function EditorPage() {
     </S.EditorContainer>
   );
 }
+
+const S = {
+  ...CommonStyles,
+  EditorContainer: styled.form`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem;
+    gap: 1.25rem;
+  `,
+
+  Row: styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+  `,
+
+  RadioContainer: styled.div`
+    display: flex;
+    gap: 1.25rem;
+  `,
+
+  ImgSample: styled.img`
+    width: 10rem;
+    height: 10rem;
+    background-color: pink;
+    border-radius: 1rem;
+  `,
+};
