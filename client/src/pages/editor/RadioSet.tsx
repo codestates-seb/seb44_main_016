@@ -15,19 +15,9 @@ export default function RadioSet(props: Props) {
   return (
     <S.RadioSetContainer>
       <S.RadioSetLegend>{props.legend}</S.RadioSetLegend>
-      <S.RadioSetContainer>
-        {props.options.map((optionName, i) => (
-          <S.RadioBtnLabel key={i}>
-            <S.RadioBtn
-              type='radio'
-              value={i}
-              checked={props.checkValue === i}
-              onChange={() => props.handler(i)}
-            />
-            {optionName}
-          </S.RadioBtnLabel>
-        ))}
-      </S.RadioSetContainer>
+      <S.RadioButtonsContainer
+        isCenter={props.isCenter}
+      ></S.RadioButtonsContainer>
     </S.RadioSetContainer>
   );
 }
@@ -44,6 +34,13 @@ const S = {
   RadioSetLegend: styled.legend`
     padding-bottom: 0.5rem;
     font-weight: bold;
+  `,
+  RadioButtonsContainer: styled.div<{ isCenter: boolean | undefined }>`
+    width: 100%;
+    display: flex;
+    justify-content: ${(props) => (props.isCenter ? 'center' : 'start')};
+    align-items: center;
+    gap: 1.25rem;
   `,
 };
 
