@@ -15,9 +15,11 @@ export default function RadioSet(props: Props) {
   return (
     <S.RadioSetContainer>
       <S.RadioSetLegend>{props.legend}</S.RadioSetLegend>
-      <S.RadioButtonsContainer
-        isCenter={props.isCenter}
-      ></S.RadioButtonsContainer>
+      <S.RadioButtonsContainer isCenter={props.isCenter}>
+        {props.options.map((optionName, i) => (
+          <></>
+        ))}
+      </S.RadioButtonsContainer>
     </S.RadioSetContainer>
   );
 }
