@@ -107,9 +107,7 @@ const GlobalStyles = () => (
         border: none;
       }
 
-      .react-datepicker-wrapper {
-        width: 100%;
-      }
+      
     `}
   />
 );
