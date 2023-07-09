@@ -81,7 +81,7 @@ const S = {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.2rem;
   `,
   LoginFormBox: styled.form`
     width: 100%;

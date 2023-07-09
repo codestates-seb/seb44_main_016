@@ -83,7 +83,8 @@ const S = {
 
   Main: styled.main<{ isShowNav: boolean; isShowHeader: boolean }>`
     width: auto;
-    height: calc(100% - var(--header-h));
+    height: 100%;
+    height: ${(props) => props.isShowHeader && 'calc(100% - var(--header-h));'};
     margin-top: ${(props) => props.isShowHeader && '5rem'};
     margin-left: ${(props) => props.isShowNav && 'var(--aside-w)'};
     display: flex;

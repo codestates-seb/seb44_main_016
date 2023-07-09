@@ -6,7 +6,7 @@ import CloseBtn from '../../../../../public/image/closeBtn.svg';
 import ModalList from './FollowList';
 
 export default function FollowModal() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const openModalHandler = () => {
     setIsOpen(!isOpen);
   };
@@ -18,7 +18,7 @@ export default function FollowModal() {
           구독함 <S.FollowerNum>11</S.FollowerNum>
         </h2>
       </S.ButtonNameBtn>
-      {isOpen === true ? (
+      {isOpen ? (
         <S.ModalBackdrop onClick={openModalHandler}>
           <S.ModalView onClick={(e) => e.stopPropagation()}>
             <S.ModalTop>

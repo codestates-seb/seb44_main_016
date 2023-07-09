@@ -11,10 +11,6 @@ import FollowModal from './FollowModal';
 export default function Page({ params }: { params: { slug: string } }) {
   const router = useRouter();
   const { slug } = router.query;
-  const [isOpen, setIsOpen] = useState(false);
-  const openModalHandler = () => {
-    setIsOpen(!isOpen);
-  };
 
   return (
     <S.Container>
