@@ -27,8 +27,8 @@ public class FinancialRecord {
   private String financialRecordName;
 
   // 가계부 내역 매핑(List 형식)
-  @OneToMany(mappedBy = "financialRecord", cascade = CascadeType.ALL)
-  private List<FinancialRecordArticle> articles = new LinkedList<>();
+//  @OneToMany(mappedBy = "financialRecord", cascade = CascadeType.ALL)
+//  private List<FinancialRecordArticle> articles = new LinkedList<>();
 
   // 유저 매핑(List 형식)
 
