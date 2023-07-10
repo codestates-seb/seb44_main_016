@@ -47,6 +47,7 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
   public FinancialRecord updateFaRec(Long faRecId, FinancialRecordDto.Patch patchParam) {
     FinancialRecord findFaRec = findVerifiedFaRec(faRecId);
     findFaRec.setFinancialRecordName(patchParam.getFinancialRecordName());
+    findFaRec.setFinancialRecordDescription(patchParam.getFinancialRecordDescription());
 
     FinancialRecord updateFaRec = repository.save(findFaRec);
     return updateFaRec;
