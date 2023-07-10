@@ -15,7 +15,8 @@ export default function FaRecEditPage() {
 
   const { isLoading, error, data, isSuccess } = useQuery<reFacData>(
     ['reFac'],
-    () => APIfinancialRecord.getFaRec(financialRecordId)
+    () => APIfinancialRecord.getFaRec(financialRecordId),
+    { staleTime: 1000 * 60 * 30 }
   );
 
   let financialRecordName, financialRecordDescription, imgId;
