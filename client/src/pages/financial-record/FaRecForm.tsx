@@ -53,7 +53,12 @@ export default function FaRecForm({
     faRecName: '',
     faRecDesc: '',
   });
-  const randomImg = useMemo(() => getRandomImageUrl(RANDOM_IMG_URLS), []);
+
+  const [randomImg, setRandomImg] = useState<string | null>(null);
+
+  useEffect(() => {
+    setRandomImg(getRandomImageUrl(RANDOM_IMG_URLS));
+  }, []);
 
   // edit일 경우 value 전달
   useEffect(() => {
