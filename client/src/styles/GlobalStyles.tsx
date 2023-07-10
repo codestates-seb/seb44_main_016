@@ -18,13 +18,13 @@ const GlobalStyles = () => (
 
 
         /* color */
-        --color-primary : #676FC6;
+        --color-primary : #6264CA;
         --color-point-red : #FF451A;
         --color-point-blue : #537FEE;
         --color-point-yellow : #F8AC19;
         --color-point-lilac : #C2C5E8;
         --color-white : #FFF;
-        --color-alert-red :#EE5353;
+        --color-alert-red :#a39d9d;
 
         --color-gray01 : #333;
         --color-gray02 : #4D4D4D;

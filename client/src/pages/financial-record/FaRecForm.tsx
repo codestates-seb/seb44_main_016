@@ -8,6 +8,9 @@ import { handleFileChange } from '../../components/img-crop/imgCropUtils';
 import ImgCropModal from '../../components/img-crop/ImgCropModal';
 import { useMutation } from '@tanstack/react-query';
 import { APIfinancialRecord } from '../../services/apiFinancial';
+import InputField from '../../components/InputField';
+import { getRandomImageUrl } from '../../utils/randomImg';
+import { RANDOM_IMG_URLS } from '../../constants/faRecImgUrls';
 
 type PageType = 'create' | 'edit';
 
@@ -19,6 +22,11 @@ interface FaRecFormProps {
   initialImage?: string;
 }
 
+type InputData = {
+  id: string;
+  name: string;
+};
+
 export default function FaRecForm({
   pageType,
   financialRecordId,
@@ -26,21 +34,26 @@ export default function FaRecForm({
   initialFaRecDesc,
   initialImage,
 }: FaRecFormProps) {
+  const inputData: InputData[] = [
+    { id: 'faName', name: '가계부 이름' },
+    { id: 'faDesc', name: '가계부 설명' },
+  ];
   const [nameInput, faRecName, setFaRecName] = useInput(
     'text',
-    '가계부 이름',
-    'faName'
+    inputData[0].name,
+    inputData[0].id
   );
   const [descInput, faRecDesc, setFaRecDesc] = useInput(
     'text',
-    '가계부 설명',
-    'faDesc'
+    inputData[1].name,
+    inputData[1].id
   );
 
   const [errors, setErrors] = useState({
     faRecName: '',
     faRecDesc: '',
   });
+  const randomImg = getRandomImageUrl(RANDOM_IMG_URLS);
 
   // edit일 경우 value 전달
   useEffect(() => {
@@ -96,7 +109,7 @@ export default function FaRecForm({
     const formData = new FormData();
     formData.append('financialRecordName', faRecName || '');
     formData.append('financialRecordDescription', faRecDesc || '');
-    formData.append('imgId', croppedImage || '');
+    formData.append('imgId', croppedImage || initialImage || randomImg);
     /**
      *  아직 userId 받아오지 못해 테스트 아이디 입력. 추후 수정 예정
      */
@@ -121,10 +134,7 @@ export default function FaRecForm({
           ) : initialImage ? (
             <img src={initialImage} alt={`${initialFaRecName} 프로필 사진`} />
           ) : (
-            <img
-              src='https://source.unsplash.com/500x500/?pet'
-              alt='사람 아이콘'
-            />
+            <img src={randomImg} alt={`${faRecName} 프로필 사진`} />
           )}
 
           <S.FileInput
@@ -148,14 +158,20 @@ export default function FaRecForm({
           />
         )}
         <S.InputFieldWrap>
-          <div>
-            {nameInput}
-            {errors.faRecName && <S.Error>{errors.faRecName}</S.Error>}
-          </div>
-          <div>
-            {descInput}
-            {errors.faRecDesc && <S.Error>{errors.faRecDesc}</S.Error>}
-          </div>
+          <S.InputFieldWrap>
+            <InputField
+              inputComponent={nameInput}
+              error={errors.faRecName}
+              label={inputData[0].name}
+              id={inputData[0].id}
+            />
+            <InputField
+              inputComponent={descInput}
+              error={errors.faRecDesc}
+              label={inputData[1].name}
+              id={inputData[1].id}
+            />
+          </S.InputFieldWrap>
         </S.InputFieldWrap>
         <S.SubmitBtn>완료</S.SubmitBtn>
       </S.Container>
@@ -183,7 +199,7 @@ const S = {
     align-items: center;
     justify-content: center;
   `,
-  Container: styled.section`
+  Container: styled.div`
     position: relative;
     display: flex;
     flex-direction: column;
@@ -204,14 +220,11 @@ const S = {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition-duration: 0.7s;
     }
 
-    & > label {
-      opacity: 0;
-    }
-
-    &:hover > label {
-      opacity: 1;
+    &:hover > img {
+      transform: scale(1.1);
     }
   `,
   PlusBtn: styled.button`
@@ -250,11 +263,5 @@ const S = {
     & > * {
       margin-bottom: 1rem;
     }
-  `,
-  Error: styled.div`
-    color: var(--color-alert-red);
-    font-size: var(--text-s);
-    padding: 0 1rem;
-    margin-top: 0.75rem;
   `,
 };
