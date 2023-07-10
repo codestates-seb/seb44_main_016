@@ -20,11 +20,14 @@ const GlobalStyles = () => (
 
 
         /* color */
-        --color-primary : #676FC6;
+        --color-primary : #6264ca;
+        // --color-primary : #6264ca;
+
         --color-primary-hover : #858cdc;
         --color-point-purple: #7f7ad9;
         --color-point-red : #FF451A;
-        --color-point-pink : #e483b0;
+        --color-point-pink-red: #ee5353;
+        --color-point-pink : #d95784;
         --color-point-blue : #537FEE;
         --color-point-yellow : #F8AC19;
         --color-point-lilac : #C2C5E8;
@@ -32,6 +35,8 @@ const GlobalStyles = () => (
         --color-point-gray: #a4a7b5;
         --color-point-light-gray: #D6D6D6;
         --color-white : #FFF;
+
+        --color-error-red: #df0c0c;
 
         --color-gray01 : #333;
         --color-gray02 : #4D4D4D;
@@ -45,6 +50,14 @@ const GlobalStyles = () => (
 
         --color-border-gray : #E6E6E6;
         --color-border-lilac : #d9d5e7;
+
+        /* font-size /
+        --text-xs : 0.75rem; / 12 /
+        --text-s : 0.875rem; / 14 /
+        --text-default : 1rem; / 사용하지 않아도 default 크기 16 / 
+        --text-m : 1.25rem; / 20 /
+        --text-l : 1.5rem; / 24 /
+        --text-xl : 2rem; / 32 */
 
         /* box-shadow */
         --shadow-default : 0 1px 10px rgba(170,170,170,25);
@@ -116,12 +129,18 @@ const GlobalStyles = () => (
         border: none;
       }
       
+      input,textarea { font-size: var(--text-default)}
+
       .blind {
         position: absolute;
         width: 1px;
         height: 1px;
         margin: -1px;
         overflow: hidden;
+      }
+
+      .react-datepicker-wrapper {
+        width: 100%;
       }
 
       ::-webkit-scrollbar {

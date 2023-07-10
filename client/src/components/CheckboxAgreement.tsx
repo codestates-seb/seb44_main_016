@@ -85,9 +85,9 @@ const S = {
     color: ${(props) =>
       props.isBackgroundWhite
         ? 'var(--color-point-pink)'
-        : 'var(--color-point-purple)'};
+        : 'var(--color-error-red)'};
     h4 {
-      font-size: 0.9rem;
+      font-size: 0.98rem;
       font-weight: 400;
     }
   `,

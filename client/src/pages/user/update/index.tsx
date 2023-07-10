@@ -176,15 +176,15 @@ const S = {
   `,
   Error: styled.div`
     padding-left: 20px;
-    font-size: 0.9rem;
+    font-size: 0.98rem;
     margin-top: 8px;
-    color: var(--color-point-purple);
+    font-weight: 400;
+    color: var(--color-error-red);
   `,
   InputBox: styled.div`
     width: 45%;
   `,
   LabelBox: styled.div`
-    padding-left: 10px;
     margin-bottom: 0.7rem;
   `,
   Label: styled.label`
@@ -193,7 +193,7 @@ const S = {
     display: inline-block;
   `,
   Guide: styled.span`
-    font-size: 0.9rem;
+    font-size: 0.94rem;
     color: var(--color-point-gray);
     display: inline-block;
     margin: 2rem 0 0 0.7rem;
@@ -201,7 +201,7 @@ const S = {
   ModifyBtn: styled.button`
     position: relative;
     display: inline-block;
-    color: var(--color-gray04);
+    color: var(--color-gray03);
     font-weight: 400;
     margin-bottom: 2rem;
     &:hover {

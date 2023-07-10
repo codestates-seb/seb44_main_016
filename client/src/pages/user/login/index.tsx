@@ -70,7 +70,7 @@ const S = {
     align-items: center;
   `,
   HomeBtnBox: styled.div`
-    margin-bottom: 2.5rem;
+    margin: 0 0.7rem 2.5rem 0;
   `,
   LogoBtn: styled.button``,
 
@@ -124,10 +124,10 @@ const S = {
     h2 {
       font-size: 1rem;
       font-weight: 400;
-      color: var(--color-gray05);
+      color: var(--color-gray04);
       margin-right: 1.5rem;
       &:hover {
-        color: var(--color-gray06);
+        color: var(--color-primary);
       }
     }
   `,
@@ -135,10 +135,10 @@ const S = {
     h2 {
       font-size: 1rem;
       font-weight: 400;
-      color: var(--color-gray05);
+      color: var(--color-gray04);
       margin-left: 1.5rem;
       &:hover {
-        color: var(--color-gray06);
+        color: var(--color-primary);
       }
     }
   `,
