@@ -48,6 +48,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    z-index: 998;
   `,
   HomeHeaderButton: styled.button<{ isActive: boolean }>`
     width: 6rem;

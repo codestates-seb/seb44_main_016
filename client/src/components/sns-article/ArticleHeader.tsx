@@ -57,21 +57,13 @@ export default function ArticleHeaderComponent(
           <S.ProfileImg />
         </S.ProfileImgButton>
         <S.Nickname>{props.children}</S.Nickname>
-        {props.type === 'feed' ? (
-          <>
-            <></>
-          </>
-        ) : (
-          <>
-            <section>{getKoreanDate(props.createdAt)}</section>
-          </>
+        {props.type === 'feed' || (
+          <S.DateText>{getKoreanDate(props.createdAt)}</S.DateText>
         )}
       </S.LeftDiv>
       <S.RightDiv>
         {props.type === 'feed' ? (
-          <>
-            <section>{getKoreanDate(props.createdAt)}</section>
-          </>
+          <S.DateText>{getKoreanDate(props.createdAt)}</S.DateText>
         ) : (
           <>
             <span>{props.category}</span>
@@ -106,6 +98,12 @@ const S = {
   `,
   Nickname: styled.button`
     font-weight: bold;
+    margin-right: 0.1rem;
+  `,
+  DateText: styled.span`
+    font-weight: bold;
+    font-size: 0.85rem;
+    color: var(--color-gray03);
   `,
   ProfileImgButton: styled.button`
     width: 40px;
