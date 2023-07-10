@@ -33,13 +33,6 @@ public class FeedArticleServiceImpl implements FeedArticleService {
         }
     }
 
-    @Override
-    public FeedArticle findVerifiedFeedArticle(Long feedArticleId){
-    Optional<FeedArticle> optionalFeedArticle = feedArticleRepository.findById(feedArticleId);
-    FeedArticle findFeedArticle = optionalFeedArticle.orElseThrow(() -> new RuntimeException("게시글이 존재하지 않습니다."));
-    return findFeedArticle;
-    }
-
     //피드 게시글 조회
     @Override
     public FeedArticle findFeedArticle(Long feedArticleId) {
@@ -64,7 +57,11 @@ public class FeedArticleServiceImpl implements FeedArticleService {
 
     //(현재 에러 때문에 메서드만 추가)
     @Override
-    public void deleteFeedArticle(Long feedArticleId) {
-
+    public void deleteFeedArticle(Long feedArticleId) {}
+    @Override
+    public FeedArticle findVerifiedFeedArticle(Long feedArticleId){
+        Optional<FeedArticle> optionalFeedArticle = feedArticleRepository.findById(feedArticleId);
+        FeedArticle findFeedArticle = optionalFeedArticle.orElseThrow(() -> new RuntimeException("게시글이 존재하지 않습니다."));
+        return findFeedArticle;
     }
 }
