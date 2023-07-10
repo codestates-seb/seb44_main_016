@@ -23,8 +23,7 @@ import java.util.Date;
 @Entity
 public class FinancialRecordArticle {
 
-  public FinancialRecordArticle(Long financialRecordArticleId, String title, String content, Date faDate, String category, int price, Scope scope, FinancialRecord financialRecord) {
-    this.financialRecordArticleId = financialRecordArticleId;
+  public FinancialRecordArticle(String title, String content, Date faDate, String category, int price, Scope scope, FinancialRecord financialRecord) {
     this.title = title;
     this.content = content;
     this.faDate = faDate;
@@ -35,8 +34,7 @@ public class FinancialRecordArticle {
   }
 
   // No financialRecord
-  public FinancialRecordArticle(Long financialRecordArticleId, String title, String content, Date faDate, String category, int price, Scope scope) {
-    this.financialRecordArticleId = financialRecordArticleId;
+  public FinancialRecordArticle(String title, String content, Date faDate, String category, int price, Scope scope) {
     this.title = title;
     this.content = content;
     this.faDate = faDate;
