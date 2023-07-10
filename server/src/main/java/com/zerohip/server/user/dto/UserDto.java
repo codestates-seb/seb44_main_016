@@ -1,0 +1,114 @@
+package com.zerohip.server.user.dto;
+
+import lombok.*;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
+
+public class UserDto {
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Login {
+
+        private String loginId;
+        private String password;
+    }
+
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class Post {
+
+        @NotBlank(message = "이메일은 공백이 아니어야 합니다.")
+        @Email(message = "올바른 이메일 형식을 입력하세요.")
+        private String email;
+
+        @NotBlank(message = "아이디는 공백이 아니어야 합니다.")
+        @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "아이디는 영문 대소문자와 숫자만 가능합니다.")
+        @Size(min = 4, max = 10, message = "아이디는 4 ~ 10자 사이여야 합니다.")
+        private String loginId;
+
+        @NotBlank(message = "패스워드는 공백이 아니여야 합니다.")
+        @Pattern(regexp = "^(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*()])[a-z0-9!@#$%^&*()]+$",
+                message = "비밀번호는 영문 소문자와 숫자, 키패드 1~0까지의 특수문자만 가능하며 각각 한 글자 이상이 포함되어야 합니다.")
+        @Size(min = 8, max = 16, message = "비밀번호는 8~16자 사이여야 합니다.")
+        private String password;
+
+        @NotBlank(message = "닉네임은 공백이 아니어야 합니다.")
+        @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "닉네임은 영문 대소문자와 숫자만 가능합니다.")
+        @Size(min = 4, max = 10, message = "닉네임은 4 ~ 10자 사이여야 합니다.")
+        private String nickname;
+
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class Patch {
+
+//        private Long UserId;
+//        private String email;
+        private String loginId;
+
+        @NotBlank(message = "패스워드는 공백이 아니여야 합니다.")
+        @Pattern(regexp = "^[a-zA-Z0-9!@#$%^&*()]*$", message = "비밀번호는 영문 대소문자와 키패드 1~0까지의 특수문자만 가능합니다.")
+        @Size(min = 8, max = 16, message = "비밀번호는 8~16자 사이여야 합니다.")
+        private String password;
+
+        @NotBlank(message = "닉네임은 공백이 아니어야 합니다.")
+        @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "닉네임은 영문 대소문자와 숫자만 가능합니다.")
+        @Size(min = 4, max = 10, message = "닉네임은 4 ~ 10자 사이여야 합니다.")
+        private String nickname;
+
+        public void setLoginId(String loginId) {
+            this.loginId = loginId;
+        }
+
+        // private 이미지 userImage
+
+    }
+
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Response {
+
+        private Long userId;
+        private String email;
+        private String loginId;
+        private String password;
+        private String nickName;
+        private LocalDateTime createdAt;
+
+        // 매핑 후 추가
+        // 작성한 faRec, faRecBoard, article 수
+        // flex, 절약버튼 총 수량도 ?
+
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class PatchResponse {
+
+        private Long userId;
+        private String email;
+        private String loginId;
+        private String password;
+        private String nickName;
+        private LocalDateTime modifiedAt;
+
+    }
+}

@@ -16,8 +16,8 @@ public interface UserService {
   List<User> findUsers();
 
   // User 수정
-  User updateUser(Long userId, User.Patch patchParam);
+  User updateUser(User user);
 
   // User 삭제
-  void deleteUser(Long userId);
+  void deleteUser(User user);
 }
