@@ -121,7 +121,10 @@ export default function FaRecForm({
           ) : initialImage ? (
             <img src={initialImage} alt={`${initialFaRecName} 프로필 사진`} />
           ) : (
-            <img src='/images/icon/person.svg' alt='사람 아이콘' />
+            <img
+              src='https://source.unsplash.com/500x500/?pet'
+              alt='사람 아이콘'
+            />
           )}
 
           <S.FileInput
