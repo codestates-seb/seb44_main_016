@@ -52,7 +52,7 @@ export default function ArticleHeaderComponent(
 
   return (
     <S.ArticleHeaderContainer>
-      <S.Left>
+      <S.LeftDiv>
         <S.ProfileImgButton>
           <S.ProfileImg />
         </S.ProfileImgButton>
@@ -66,8 +66,8 @@ export default function ArticleHeaderComponent(
             <section>{getKoreanDate(props.createdAt)}</section>
           </>
         )}
-      </S.Left>
-      <S.Right>
+      </S.LeftDiv>
+      <S.RightDiv>
         {props.type === 'feed' ? (
           <>
             <section>{getKoreanDate(props.createdAt)}</section>
@@ -78,14 +78,14 @@ export default function ArticleHeaderComponent(
             <PriceText>{formatNumber(props.price)}</PriceText>
           </>
         )}
-      </S.Right>
+      </S.RightDiv>
     </S.ArticleHeaderContainer>
   );
 }
 // 팔로우 버튼 추가
 
 const S = {
-  ArticleHeaderContainer: styled.section`
+  ArticleHeaderContainer: styled.div`
     width: 100%;
     height: 58px;
     padding: 0px 20px;
@@ -94,12 +94,12 @@ const S = {
     justify-content: space-between;
     align-items: center;
   `,
-  Left: styled.section`
+  LeftDiv: styled.div`
     gap: 10px;
     display: flex;
     align-items: center;
   `,
-  Right: styled.section`
+  RightDiv: styled.div`
     gap: 10px;
     display: flex;
     align-items: center;

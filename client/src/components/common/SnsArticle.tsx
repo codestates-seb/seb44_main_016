@@ -126,7 +126,7 @@ const S = {
     flex-direction: column;
     align-items: flex-end;
   `,
-  LabelTemplate: styled.section`
+  LabelTemplate: styled.div`
     width: 116px;
     height: 37px;
     background-color: white;
@@ -139,7 +139,7 @@ const S = {
     align-items: center;
     justify-content: center;
   `,
-  Box: styled.section`
+  Box: styled.div`
     width: 100%;
     background-color: white;
 
@@ -147,12 +147,12 @@ const S = {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
   `,
-  ImgContainer: styled.section`
+  ImgContainer: styled.div`
     width: 100%;
     height: 328px;
     background-color: #ec4899;
   `,
-  ArtileMain: styled.section`
+  ArtileMain: styled.div`
     width: 100%;
     padding: 20px;
     display: flex;
@@ -163,7 +163,7 @@ const S = {
     line-height: 125%;
   `,
   /* ↓ ArtileMain 내부 컴포넌트 ↓ */
-  UDForm: styled.section`
+  UDForm: styled.div`
     width: 100%;
     display: flex;
     justify-content: flex-end;

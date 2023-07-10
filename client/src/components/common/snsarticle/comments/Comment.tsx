@@ -15,7 +15,7 @@ export default function CommentComponent(props: Props) {
 
   return (
     <S.CommentContainer>
-      <S.Left>
+      <S.LeftDiv>
         <S.ProfileImgButton>
           <S.ProfileImg />
         </S.ProfileImgButton>
@@ -40,7 +40,7 @@ export default function CommentComponent(props: Props) {
             )}
           </S.LowerTexts>
         </S.Texts>
-      </S.Left>
+      </S.LeftDiv>
       <S.LikeButtonContainer>
         <button onClick={handleChangeIsLike}>{isLike ? '❤' : '♡'}</button>
       </S.LikeButtonContainer>
@@ -58,11 +58,11 @@ const S = {
     justify-content: space-between;
     align-items: center;
   `,
-  Left: styled.section`
+  LeftDiv: styled.div`
     gap: 10px;
     display: flex;
   `,
-  LikeButtonContainer: styled.section`
+  LikeButtonContainer: styled.div`
     padding-left: 15px;
   `,
   ProfileImgButton: styled.button`
@@ -77,7 +77,7 @@ const S = {
     height: 100%;
     background-color: black;
   `,
-  Texts: styled.section`
+  Texts: styled.div`
     padding-left: 15px;
     display: flex;
     flex-direction: column;

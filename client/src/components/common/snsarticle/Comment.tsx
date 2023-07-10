@@ -9,15 +9,15 @@ const S = {
     border-0 border-solid border-b-[3px] border-gray-200
     flex justify-between items-center `
   ),
-  Left: styled.section(tw`flex gap-[10px]`),
+  LeftDiv: styled.div(tw`flex gap-[10px]`),
 
-  LikeButtonContainer: styled.section(tw` pl-[15px]`),
+  LikeButtonContainer: styled.div(tw` pl-[15px]`),
 
   ProfileImgButton: styled.button(
     tw`w-[40px] h-[40px] rounded-full overflow-hidden shrink-0`
   ),
   ProfileImg: styled.img(tw`w-full h-full bg-black `),
-  Texts: styled.section(tw`flex flex-col gap-[10px]`),
+  Texts: styled.div(tw`flex flex-col gap-[10px]`),
 
   Upper: styled.p(tw`flex gap-[10px]`),
   Nickname: styled.button(tw`font-bold mr-[10px]`),
@@ -40,7 +40,7 @@ type Props = {
 export default function CommentComponent(props: Props) {
   return (
     <S.CommentContainer>
-      <S.Left>
+      <S.LeftDiv>
         <S.ProfileImgButton>
           <S.ProfileImg />
         </S.ProfileImgButton>
@@ -58,7 +58,7 @@ export default function CommentComponent(props: Props) {
             <S.ReportButton>신고</S.ReportButton>
           </S.Lower>
         </S.Texts>
-      </S.Left>
+      </S.LeftDiv>
       <S.LikeButtonContainer>
         <S.LikeButton>♡</S.LikeButton>
       </S.LikeButtonContainer>
