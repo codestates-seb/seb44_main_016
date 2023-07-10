@@ -5,17 +5,22 @@ export default function financialRecord(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { financialRecordName, financialRecordDescription, imgId, userId } =
-    req.body;
+  if (req.method === 'POST') {
+    const { financialRecordName, financialRecordDescription, imgId, userId } =
+      req.body;
 
-  const newRecord = {
-    financialRecordName,
-    financialRecordDescription,
-    imgId,
-    userId,
-  };
+    const financialRecordId = recordList.length + 1;
 
-  recordList?.unshift(newRecord);
-  const responseBody = JSON.stringify(recordList);
-  res.status(202).json(responseBody);
+    const newRecord = {
+      financialRecordId,
+      financialRecordName,
+      financialRecordDescription,
+      imgId,
+      userId,
+    };
+
+    recordList?.unshift(newRecord);
+    const responseBody = JSON.stringify(recordList);
+    res.status(202).json(responseBody);
+  }
 }

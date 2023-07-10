@@ -1,99 +1,182 @@
 import styled from '@emotion/styled';
 import CommonStyles from '../../styles/CommonStyles';
 import useInput from '../../hooks/useComponents';
-import PlusIcon from '../../../public/images/icon/plus.svg';
-import { FormEvent, useState } from 'react';
-import axios from 'axios';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
+import { useImgCrop } from '../../hooks/useImgCrop';
+import { handleFileChange } from '../../components/img-crop/imgCropUtils';
+import ImgCropModal from '../../components/img-crop/ImgCropModal';
+import { useMutation } from '@tanstack/react-query';
+import { APIfinancialRecord } from '../../services/apiFinancial';
+import InputField from '../../components/InputField';
+import { getRandomImageUrl } from '../../utils/randomImg';
+import { RANDOM_IMG_URLS } from '../../constants/faRecImgUrls';
+import FilePlusLabel from '../../components/FilePlusLabel';
 
-export default function FaRecForm() {
+type PageType = 'create' | 'edit';
+
+interface FaRecFormProps {
+  pageType: PageType;
+  financialRecordId?: number;
+  initialFaRecName?: string;
+  initialFaRecDesc?: string;
+  initialImage?: string;
+}
+
+type InputData = {
+  id: string;
+  name: string;
+};
+
+export default function FaRecForm({
+  pageType,
+  financialRecordId,
+  initialFaRecName,
+  initialFaRecDesc,
+  initialImage,
+}: FaRecFormProps) {
+  const inputData: InputData[] = [
+    { id: 'faName', name: '가계부 이름' },
+    { id: 'faDesc', name: '가계부 설명' },
+  ];
   const [nameInput, faRecName, setFaRecName] = useInput(
     'text',
-    '가계부 이름',
-    'faName'
+    inputData[0].name,
+    inputData[0].id
   );
   const [descInput, faRecDesc, setFaRecDesc] = useInput(
     'text',
-    '가계부 설명',
-    'faDesc'
+    inputData[1].name,
+    inputData[1].id
   );
-  const [img, setImg] = useState<string>('');
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let file: File | null = null;
-    if (e.target.files?.length) {
-      file = e.target.files[0];
-    }
+  const [errors, setErrors] = useState({
+    faRecName: '',
+    faRecDesc: '',
+  });
 
-    const reader = new FileReader();
+  const [randomImg, setRandomImg] = useState<string>('');
 
-    reader.onloadend = (e) => {
-      if (e.target && typeof e.target.result === 'string') {
-        setImg(e.target.result);
-      }
-    };
+  useEffect(() => {
+    setRandomImg(getRandomImageUrl(RANDOM_IMG_URLS));
+  }, []);
 
-    if (file) {
-      reader.readAsDataURL(file);
-    } else {
-      setImg('');
-    }
+  // edit일 경우 value 전달
+  useEffect(() => {
+    setFaRecName(initialFaRecName || '');
+    setFaRecDesc(initialFaRecDesc || '');
+  }, [initialFaRecName, initialFaRecDesc, setFaRecName, setFaRecDesc]);
+
+  const {
+    imgSrc,
+    setImgSrc,
+    croppedImage,
+    setCroppedImage,
+    cropModal,
+    setCropModal,
+  } = useImgCrop();
+
+  const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    await handleFileChange({
+      e,
+      setCropModal,
+      setImgSrc,
+    });
   };
+
+  const { mutate, isError, isSuccess } = useMutation(
+    pageType === 'create'
+      ? APIfinancialRecord.createFaRec
+      : APIfinancialRecord.updateFaRec,
+    {
+      onSuccess: (data) => {
+        console.log('response-data', data);
+      },
+      onError: (error) => {
+        console.error(error);
+      },
+    }
+  );
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+
+    const newErrors = {
+      faRecName: faRecName ? '' : '가계부 이름은 필수입니다.',
+      faRecDesc: faRecDesc ? '' : '가계부 설명은 필수입니다.',
+    };
+
+    setErrors(newErrors);
+
+    if (newErrors.faRecName || newErrors.faRecDesc) {
+      return;
+    }
+
     const formData = new FormData();
     formData.append('financialRecordName', faRecName || '');
     formData.append('financialRecordDescription', faRecDesc || '');
-    formData.append('imgId', img);
+    formData.append('imgId', croppedImage || initialImage || randomImg);
     /**
      *  아직 userId 받아오지 못해 테스트 아이디 입력. 추후 수정 예정
      */
     formData.append('userId', 'test');
 
-    axios
-      .post(
-        'https://zerohip-r7g30pp7y-everland.vercel.app/api/financial-record',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      )
-      .then((response) => {
-        console.log('response-data', response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    if (pageType === 'edit') {
+      formData.append('financialRecordId', `${financialRecordId}`);
+    }
+
+    mutate(formData);
   };
 
   return (
     <S.Form onSubmit={handleSubmit}>
       <S.Container>
         <S.ImgBox>
-          <img
-            src={
-              img ||
-              'https://blog.kakaocdn.net/dn/bY6iW4/btrEJwN3Zrf/SqQZ605snSkSqP5U96S3AK/img.png'
-            }
-            alt=''
-          />
+          {croppedImage ? (
+            <img
+              src={croppedImage}
+              alt={faRecName ? `${faRecName} 프로필 사진` : '프로필 사진'}
+            />
+          ) : initialImage ? (
+            <img src={initialImage} alt={`${initialFaRecName} 프로필 사진`} />
+          ) : (
+            <img src={randomImg} alt={`${faRecName} 프로필 사진`} />
+          )}
+
           <S.FileInput
             type='file'
             id='addFaRecImg'
             accept='image/*'
-            onChange={handleImageUpload}
+            onChange={onFileChange}
           />
-          <S.FileLabelBtn htmlFor='addFaRecImg' aria-label='사진 추가하기 버튼'>
-            <PlusIcon />
-          </S.FileLabelBtn>
+          <FilePlusLabel htmlFor='addFaRecImg' />
         </S.ImgBox>
+        {cropModal && (
+          <ImgCropModal
+            isOpen={cropModal}
+            setCropModal={setCropModal}
+            imgSrc={imgSrc}
+            aspect={1 / 1}
+            cropShape='round'
+            onCropComplete={(image) => setCroppedImage(image)}
+          />
+        )}
         <S.InputFieldWrap>
-          {nameInput}
-          {descInput}
+          <S.InputFieldWrap>
+            <InputField
+              inputComponent={nameInput}
+              error={errors.faRecName}
+              label={inputData[0].name}
+              id={inputData[0].id}
+            />
+            <InputField
+              inputComponent={descInput}
+              error={errors.faRecDesc}
+              label={inputData[1].name}
+              id={inputData[1].id}
+            />
+          </S.InputFieldWrap>
         </S.InputFieldWrap>
-        <S.SubmitBtn>가계부 만들기</S.SubmitBtn>
+        <S.SubmitBtn>완료</S.SubmitBtn>
       </S.Container>
     </S.Form>
   );
@@ -101,13 +184,26 @@ export default function FaRecForm() {
 
 const S = {
   ...CommonStyles,
+  CropContainer: styled.div`
+    width: 400px;
+    height: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    & > * {
+      position: relative;
+    }
+  `,
   Form: styled.form`
     width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
   `,
-  Container: styled.section`
+  Container: styled.div`
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -127,14 +223,11 @@ const S = {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition-duration: 0.7s;
     }
 
-    & > label {
-      opacity: 0;
-    }
-
-    &:hover > label {
-      opacity: 1;
+    &:hover > img {
+      transform: scale(1.1);
     }
   `,
   PlusBtn: styled.button`
@@ -153,21 +246,9 @@ const S = {
   FileInput: styled.input`
     display: none;
   `,
-  FileLabelBtn: styled.label`
-    position: absolute;
-    background: rgba(103, 111, 198, 0.7);
-    width: 2.3rem;
-    height: 2.3rem;
-    border-radius: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: 0.7s;
-  `,
+
   InputFieldWrap: styled.div`
+    width: 100%;
     margin-bottom: 2.5rem;
     & > * {
       margin-bottom: 1rem;
