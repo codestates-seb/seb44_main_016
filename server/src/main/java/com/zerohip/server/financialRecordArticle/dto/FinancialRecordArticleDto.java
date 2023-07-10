@@ -32,7 +32,6 @@ public class FinancialRecordArticleDto {
     private Integer price;
     @NotNull
     private Scope scope;
-
     // 가계부 매핑 데이터
     // 유저 매핑 데이터
     // 이미지 매핑 데이터
@@ -57,7 +56,6 @@ public class FinancialRecordArticleDto {
     private Integer price;
     @NotNull
     private Scope scope;
-
     // 가계부 매핑 데이터
     // 유저 매핑 데이터
     // 이미지 매핑 데이터
@@ -85,7 +83,6 @@ public class FinancialRecordArticleDto {
 
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
-
     // 가계부 매핑 데이터
     // 유저 매핑 데이터
     // 이미지 매핑 데이터

@@ -23,6 +23,8 @@ public class FinancialRecord {
   @Column(nullable = false, unique = false, updatable = true)
   private String financialRecordName;
 
+  // 리스트 매핑
+
   // 유저 매핑(List 형식)
 
 

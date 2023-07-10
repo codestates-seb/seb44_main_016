@@ -13,6 +13,6 @@ import static org.mapstruct.ReportingPolicy.IGNORE;
 public interface FinancialRecordMapper {
   FinancialRecord financialRecordPostToFinancialRecord(FinancialRecordDto.Post requestBody);
   FinancialRecord financialRecordPatchToFinancialRecord(FinancialRecordDto.Patch requestBody);
-  FinancialRecordDto.Response financialRecordToFinancialRecordResponse(FinancialRecord financialRecord);
+  FinancialRecordDto.Response financialRecordToFinancialRecordResponse(FinancialRecord financialRecord); // FinancialRecord -> FinancialRecordDto.Response
   List<FinancialRecordDto.Response> financialRecordsToFinancialRecordResponses(List<FinancialRecord> financialRecords);
 }

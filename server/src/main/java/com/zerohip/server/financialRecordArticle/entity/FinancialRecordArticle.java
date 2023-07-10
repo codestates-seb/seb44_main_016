@@ -33,7 +33,7 @@ public class FinancialRecordArticle {
     this.financialRecord = financialRecord;
   }
 
-  // No financialRecord
+  // No financialRecord, id
   public FinancialRecordArticle(String title, String content, Date faDate, String category, int price, Scope scope) {
     this.title = title;
     this.content = content;
