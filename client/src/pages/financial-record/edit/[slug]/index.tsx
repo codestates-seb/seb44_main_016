@@ -1,12 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 import FaRecForm from '../../FaRecForm';
 import { APIfinancialRecord } from '../../../../services/apiFinancial';
+import { Metadata } from 'next';
 
 type reFacData = {
   financialRecordId: number;
   financialRecordName: string;
   financialRecordDescription: string;
   imgId: string;
+};
+
+export const metadata: Metadata = {
+  title: '가계부 수정',
+  description: '가계부 수정 페이지입니다.',
 };
 
 export default function FaRecEditPage() {
