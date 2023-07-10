@@ -21,3 +21,14 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
+server:
+  servlet:
+    encoding:
+      force-response: true
