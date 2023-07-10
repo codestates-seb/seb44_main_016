@@ -176,7 +176,7 @@ const S = {
 
   TabContainer: styled.div`
     left: 5rem;
-    border-right: 1px solid var(--color-gray08);
+    border-right: 0.05rem solid var(--color-gray08);
     position: absolute;
     width: var(--aside-tab-w);
     height: 100%;

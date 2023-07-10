@@ -50,6 +50,7 @@ const GlobalStyles = () => (
         --aside-tab-w: 22rem;
         --header-h : 5rem;
         --main-w : calc(var(--app-max-w) - var(--aside-w));
+        --article-w : 45rem;
       }
 
       li {

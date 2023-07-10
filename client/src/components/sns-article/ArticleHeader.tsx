@@ -85,6 +85,7 @@ const S = {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 0.05rem solid var(--color-gray08);
   `,
   LeftDiv: styled.div`
     gap: 10px;
