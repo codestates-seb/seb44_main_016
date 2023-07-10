@@ -111,6 +111,7 @@ const S = {
     display: grid;
     place-items: center;
     background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
   `,
   CropContainer: styled.div`
     max-width: 400px;
