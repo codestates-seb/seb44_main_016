@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import Comment from './comments/Comment';
-import CommonStyles from '../../../styles/CommonStyles';
+import CommonStyles from '../../styles/CommonStyles';
 
 type Props = {
   isMe?: boolean; // 댓글 작성자가 자기 자신이면 true

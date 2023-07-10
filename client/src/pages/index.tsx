@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import SnsArticle from '../components/common/SnsArticle';
+import SnsArticle from '../components/SnsArticle';
 
 const feedArticleDummyA = {
   feedArticleId: 1,
