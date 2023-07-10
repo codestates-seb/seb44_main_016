@@ -54,7 +54,7 @@ export default function FaRecForm({
     faRecDesc: '',
   });
 
-  const [randomImg, setRandomImg] = useState<string | null>(null);
+  const [randomImg, setRandomImg] = useState<string>('');
 
   useEffect(() => {
     setRandomImg(getRandomImageUrl(RANDOM_IMG_URLS));
