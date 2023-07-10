@@ -26,6 +26,9 @@ public class FinancialRecord {
   @Column(nullable = false, unique = false, updatable = true)
   private String financialRecordName;
 
+  @Column(nullable = true, unique = false, updatable = true)
+  private String financialRecordDescription;
+
   // 가계부 내역 매핑(List 형식)
 //  @OneToMany(mappedBy = "financialRecord", cascade = CascadeType.ALL)
 //  private List<FinancialRecordArticle> articles = new LinkedList<>();

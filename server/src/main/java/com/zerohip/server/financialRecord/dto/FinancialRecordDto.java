@@ -17,7 +17,7 @@ public class FinancialRecordDto {
     @NotBlank
     @Size(min = 1, max = 30)
     private String financialRecordName;
-
+    private String financialRecordDescription;
     // User
   }
 
@@ -27,7 +27,7 @@ public class FinancialRecordDto {
     @NotBlank
     @Size(min = 1, max = 30)
     private String financialRecordName;
-
+    private String financialRecordDescription;
     // User
   }
 
@@ -36,6 +36,7 @@ public class FinancialRecordDto {
   public static class Response {
     private Long financialRecordId;
     private String financialRecordName;
+    private String financialRecordDescription;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     // User
