@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 import CommonStyles from '../../styles/CommonStyles';
 import useInput from '../../hooks/useComponents';
-import PlusIcon from '../../../public/images/icon/plus.svg';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { useImgCrop } from '../../hooks/useImgCrop';
 import { handleFileChange } from '../../components/img-crop/imgCropUtils';
 import ImgCropModal from '../../components/img-crop/ImgCropModal';
@@ -11,6 +10,7 @@ import { APIfinancialRecord } from '../../services/apiFinancial';
 import InputField from '../../components/InputField';
 import { getRandomImageUrl } from '../../utils/randomImg';
 import { RANDOM_IMG_URLS } from '../../constants/faRecImgUrls';
+import FilePlusLabel from '../../components/FilePlusLabel';
 
 type PageType = 'create' | 'edit';
 
@@ -53,7 +53,7 @@ export default function FaRecForm({
     faRecName: '',
     faRecDesc: '',
   });
-  const randomImg = getRandomImageUrl(RANDOM_IMG_URLS);
+  const randomImg = useMemo(() => getRandomImageUrl(RANDOM_IMG_URLS), []);
 
   // edit일 경우 value 전달
   useEffect(() => {
@@ -143,9 +143,7 @@ export default function FaRecForm({
             accept='image/*'
             onChange={onFileChange}
           />
-          <S.FileLabelBtn htmlFor='addFaRecImg' aria-label='사진 추가하기 버튼'>
-            <PlusIcon />
-          </S.FileLabelBtn>
+          <FilePlusLabel htmlFor='addFaRecImg' />
         </S.ImgBox>
         {cropModal && (
           <ImgCropModal
@@ -243,20 +241,7 @@ const S = {
   FileInput: styled.input`
     display: none;
   `,
-  FileLabelBtn: styled.label`
-    position: absolute;
-    background: rgba(103, 111, 198, 0.7);
-    width: 2.3rem;
-    height: 2.3rem;
-    border-radius: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: 0.7s;
-  `,
+
   InputFieldWrap: styled.div`
     width: 100%;
     margin-bottom: 2.5rem;
