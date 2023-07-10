@@ -19,7 +19,7 @@ export default function CommentsComponent() {
   };
 
   return (
-    <section>
+    <div>
       <S.CommentsDropdownButton onClick={handleChangeOpenedOrClosed}>
         <span>댓글 12개 모두 보기</span>
         <S.SvgContainer isReverse={!isCommentsOpened}>
@@ -41,7 +41,7 @@ export default function CommentsComponent() {
         <S.InputText placeholder='댓글을 입력하세요'></S.InputText>
         <S.SubmitBtn small={false}>게시</S.SubmitBtn>
       </S.CommentForm>
-    </section>
+    </div>
   );
 }
 
