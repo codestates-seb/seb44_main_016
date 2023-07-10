@@ -108,7 +108,17 @@ const GlobalStyles = () => (
         border: none;
       }
 
-      
+      .blind {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        border: 0;
+        margin: -1px;
+        padding:0;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%); 
+        overflow: hidden;
+      }
     `}
   />
 );
