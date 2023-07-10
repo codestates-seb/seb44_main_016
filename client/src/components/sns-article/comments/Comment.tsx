@@ -42,7 +42,9 @@ export default function CommentComponent(props: Props) {
         </S.Texts>
       </S.LeftDiv>
       <S.LikeButtonContainer>
-        <button onClick={handleChangeIsLike}>{isLike ? '❤' : '♡'}</button>
+        <S.LikeButton isLike={isLike} onClick={handleChangeIsLike}>
+          {isLike ? '♥' : '♡'}
+        </S.LikeButton>
       </S.LikeButtonContainer>
     </S.CommentContainer>
   );
@@ -63,7 +65,11 @@ const S = {
     display: flex;
   `,
   LikeButtonContainer: styled.div`
-    padding-left: 15px;
+    padding-left: 1rem;
+  `,
+  LikeButton: styled.button<{ isLike: boolean }>`
+    font-size: 1.2rem;
+    color: ${(props) => (props.isLike ? 'var(--color-point-red)' : 'black')};
   `,
   ProfileImgButton: styled.button`
     width: 40px;
