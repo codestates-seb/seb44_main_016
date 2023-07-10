@@ -69,7 +69,12 @@ const S = {
     align-items: center;
     margin: 2.7rem 0 3.5rem 0;
   `,
-  UserImg: styled.div``,
+  UserImg: styled.div`
+    transition: transform 0.3s ease-in-out;
+    &:hover {
+      transform: scale(1.5) translateY(0.55rem);
+    }
+  `,
   UserName: styled.div`
     margin: 1rem 0;
   `,

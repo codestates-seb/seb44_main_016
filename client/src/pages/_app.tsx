@@ -16,6 +16,8 @@ const App = ({ Component, pageProps }: AppProps) => {
   let isShowNav = true;
   let isShowHeader = false;
   let bgColor = '#F0F3F8';
+  let maxWidth = true;
+
   if (router.pathname === '/') {
     isShowHeader = true;
   } else if (
@@ -27,6 +29,9 @@ const App = ({ Component, pageProps }: AppProps) => {
     if (router.pathname.startsWith('/user/signup')) {
       bgColor = '#FFF';
     }
+    if (router.pathname.startsWith('/user/login')) {
+      maxWidth = false;
+    }
   }
 
   return (
@@ -35,7 +40,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       <QueryClientProvider client={queryClient}>
         <GlobalStyles />
         <S.RootScreen>
-          <S.AppContainer>
+          <S.AppContainer maxWidth={maxWidth}>
             <S.FlexPage bgColor={bgColor}>
               {isShowNav && <Aside isLoggedIn={true} />}
               <S.SubPage>
@@ -63,8 +68,9 @@ const S = {
     min-height: 100vh;
   `,
 
-  AppContainer: styled.div`
-    max-width: var(--app-max-w);
+  AppContainer: styled.div<{ maxWidth: boolean }>`
+    /* max-width: var(--app-max-w); */
+    max-width: ${(props) => props.maxWidth && 'var(--app-max-w)'};
     width: 100%;
     display: flex;
   `,
