@@ -36,7 +36,8 @@ public class FinancialRecord {
   // 유저 매핑(List 형식)
 
 
-  public FinancialRecord(String financialRecordName) {
+  public FinancialRecord(String financialRecordName, String financialRecordDescription) {
     this.financialRecordName = financialRecordName;
+    this.financialRecordDescription = financialRecordDescription;
   }
 }
