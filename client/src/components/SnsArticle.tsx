@@ -1,11 +1,11 @@
 import React from 'react'; // useState 사용
 import styled from '@emotion/styled';
 
-import CommonStyles from '../../styles/CommonStyles';
+import CommonStyles from '../styles/CommonStyles';
 
-import ArticleHeader from './snsarticle/ArticleHeader';
-import VoteForm from './snsarticle/VoteForm';
-import Comments from './snsarticle/Comments';
+import ArticleHeader from './sns-article/ArticleHeader';
+import VoteForm from './sns-article/VoteForm';
+import Comments from './sns-article/Comments';
 
 /* type은 추후 다른 파일로 분리하고 Import할 예정 */
 type PropsFeed = {
