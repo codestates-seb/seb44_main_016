@@ -14,7 +14,7 @@ public interface FinancialRecordArticleService {
   // 가계부 게시글 조회(전체)
   List<FinancialRecordArticle> findFaRecArticles();
   // 가계부 게시글 수정
-  FinancialRecordArticle updateFaRecArticle(Long faRecArticleId, FinancialRecordArticle.Patch patchParam);
+  //FinancialRecordArticle updateFaRecArticle(Long faRecArticleId, FinancialRecordArticle.Patch patchParam);
   // 가계부 게시글 삭제
   void deleteFaRecArticle(Long faRecArticleId);
 }
