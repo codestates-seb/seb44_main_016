@@ -16,7 +16,7 @@ import {
   checkPasswordMatch,
 } from '../../../utils/validationCheck';
 import { bounce } from '../../../animation/keyframe';
-import postSignUpData from '../../../services/apiUser';
+import userAPI from '../../../services/apiUser';
 import { PostSignUp } from '../../../types/user';
 
 export default function SignUpForm() {
@@ -62,19 +62,20 @@ export default function SignUpForm() {
     const newError = {
       loginId: loginId
         ? validateLoginId(loginId || '')
-        : '아이디를 입력해주세요.',
+        : '다른 사용자와 겹치지 않도록 아이디를 입력해주세요. (4~10자)',
       password: pwValue
         ? validatePassword(pwValue || '')
-        : '비밀번호를 입력해주세요.',
+        : '영문 소문자와 숫자, 특수기호(!@#$%^&*())를 모두 포함하여 입력해주세요. (8~16자)',
       passwordConfirm: password
         ? checkPasswordMatch(pwValue || '', password || '')
         : '확인을 위해 비밀번호를 다시 입력해주세요.',
       nickname: nickname
         ? validateNickname(nickname || '')
         : '닉네임을 입력해주세요. 마이 페이지에서 변경 가능합니다.',
-      email: domainValue
-        ? validateEmail(domainValue || '')
-        : '이메일을 입력해주세요.',
+      email:
+        domainValue && emailValue
+          ? validateEmail(domainValue || '')
+          : '이메일을 입력해주세요.',
       policy: isChecked ? '' : '필수 약관에 동의해주세요.',
     };
     setError(newError);
@@ -87,7 +88,6 @@ export default function SignUpForm() {
         text: '아이디',
         required: true,
       },
-      guide: SIGN_UP_MESSAGES.LOGIN_ID_GUIDE,
       component: IdInput,
       error: error.loginId,
     },
@@ -97,7 +97,6 @@ export default function SignUpForm() {
         text: '비밀번호',
         required: true,
       },
-      guide: SIGN_UP_MESSAGES.PASSWORD_GUIDE,
       component: PwInput,
       error: error.password,
     },
@@ -132,10 +131,9 @@ export default function SignUpForm() {
   ];
 
   async function sendPostRequest(data: PostSignUp) {
-    const url =
-      'https://zerohip-git-user-55-everland.vercel.app/api/user/signup';
+    const url = 'http://localhost:3000/api/user/signup';
     try {
-      const responseData = await postSignUpData(url, data);
+      const responseData = await userAPI.postSignUp(url, data);
       console.log(responseData);
     } catch (error) {
       console.error('Error:', error);
@@ -146,7 +144,6 @@ export default function SignUpForm() {
     e.preventDefault();
     if (
       error.loginId ||
-      error.password ||
       error.passwordConfirm ||
       error.nickname ||
       error.email ||
@@ -186,9 +183,6 @@ export default function SignUpForm() {
                 <h2>{el.label.text}</h2>
                 <span>{el.label.required && '*'}</span>
               </S.Label>
-              <S.Guide>
-                <h3>{el.guide ? el.guide : null}</h3>
-              </S.Guide>
             </S.LabelBox>
             <S.EmailAddress
               className={i === inputData.length - 1 ? 'email' : ''}
@@ -246,9 +240,7 @@ const S = {
     margin-bottom: 48px;
   `,
   InputMapWrapper: styled.div``,
-  LabelBox: styled.div`
-    padding-left: 10px;
-  `,
+  LabelBox: styled.div``,
   Label: styled.label`
     h2 {
       font-weight: 600;
@@ -262,21 +254,12 @@ const S = {
       margin-left: 0.5rem;
     }
   `,
-  Guide: styled.div`
-    font-size: 1rem;
-    color: #a4a7b5;
-    margin-bottom: 14px;
-    h3 {
-      font-weight: 500;
-      font-size: 1rem;
-    }
-  `,
   Error: styled.div`
     padding-left: 20px;
     margin-top: 8px;
     color: var(--color-point-pink);
     h4 {
-      font-size: 0.9rem;
+      font-size: 0.98rem;
       font-weight: 400;
     }
   `,
