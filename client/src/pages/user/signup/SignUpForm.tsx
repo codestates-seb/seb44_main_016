@@ -1,6 +1,7 @@
 // 'use client';
 import styled from '@emotion/styled';
-import { keyframes, css } from '@emotion/react';
+import { css } from '@emotion/react';
+import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import CommonStyles from '../../../styles/CommonStyles';
@@ -8,16 +9,9 @@ import useInput from '../../../hooks/useComponents';
 import CheckboxAgreement from '../../../components/CheckboxAgreement';
 import { SIGN_UP_MESSAGES } from '../../../constants/user';
 import SelectBox from '../../../components/SelectBox';
-import {
-  validateEmail,
-  validateLoginId,
-  validatePassword,
-  validateNickname,
-  checkPasswordMatch,
-} from '../../../utils/validationCheck';
+import validation from '../../../utils/validationCheck';
 import { bounce } from '../../../animation/keyframe';
-import userAPI from '../../../services/apiUser';
-import { PostSignUp } from '../../../types/user';
+import apiUser from '../../../services/apiUser';
 
 export default function SignUpForm() {
   const router = useRouter();
@@ -61,20 +55,20 @@ export default function SignUpForm() {
   useEffect(() => {
     const newError = {
       loginId: loginId
-        ? validateLoginId(loginId || '')
+        ? validation.loginId(loginId || '')
         : '다른 사용자와 겹치지 않도록 아이디를 입력해주세요. (4~10자)',
       password: pwValue
-        ? validatePassword(pwValue || '')
+        ? validation.password(pwValue || '')
         : '영문 소문자와 숫자, 특수기호(!@#$%^&*())를 모두 포함하여 입력해주세요. (8~16자)',
       passwordConfirm: password
-        ? checkPasswordMatch(pwValue || '', password || '')
+        ? validation.passwordMatch(pwValue || '', password || '')
         : '확인을 위해 비밀번호를 다시 입력해주세요.',
       nickname: nickname
-        ? validateNickname(nickname || '')
+        ? validation.nickname(nickname || '')
         : '닉네임을 입력해주세요. 마이 페이지에서 변경 가능합니다.',
       email:
         domainValue && emailValue
-          ? validateEmail(domainValue || '')
+          ? validation.email(domainValue || '')
           : '이메일을 입력해주세요.',
       policy: isChecked ? '' : '필수 약관에 동의해주세요.',
     };
@@ -130,17 +124,16 @@ export default function SignUpForm() {
     },
   ];
 
-  async function sendPostRequest(data: PostSignUp) {
-    const url = 'http://localhost:3000/api/user/signup';
-    try {
-      const responseData = await userAPI.postSignUp(url, data);
-      console.log(responseData);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }
+  const requestBody = {
+    email: emailValue + '@' + domainValue,
+    loginId,
+    password,
+    nickname,
+  };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const { mutateAsync } = useMutation(() => apiUser.postSignUp(requestBody));
+
+  const handleSignUpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (
       error.loginId ||
@@ -156,14 +149,8 @@ export default function SignUpForm() {
       return;
     }
 
-    const data = {
-      email: emailValue + '@' + domainValue,
-      loginId,
-      password,
-      nickname,
-    };
-
-    sendPostRequest(data);
+    const res = await mutateAsync();
+    console.log(res);
     setLoginId('');
     setPwValue('');
     setPassword('');
@@ -217,7 +204,7 @@ export default function SignUpForm() {
         {CheckboxComponent}
       </S.PolicyContainer>
       <S.SubmitBox isClicked={isClicked ? 'true' : undefined}>
-        <S.SubmitBtn large onClick={handleSubmit}>
+        <S.SubmitBtn large onClick={handleSignUpSubmit}>
           <h2>회원가입</h2>
         </S.SubmitBtn>
       </S.SubmitBox>
