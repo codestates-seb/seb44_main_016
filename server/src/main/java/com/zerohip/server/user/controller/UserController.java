@@ -36,4 +36,18 @@ public class UserController {
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+
+
+
+    @DeleteMapping("/delete")
+    public ResponseEntity deleteUser(@AuthenticationPrincipal User author) {
+
+        if (author == null) {
+            throw new BusinessLogicException(ExceptionCode.USER_UNAUTHORIZED);
+        }
+
+        userService.deleteUser(author);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
