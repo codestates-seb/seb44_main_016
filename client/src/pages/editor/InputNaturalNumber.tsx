@@ -9,10 +9,10 @@ type Props = {
   handler: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export default function InputPrice(props: Props) {
+export default function InputNaturalNumber(props: Props) {
   return (
-    <S.InputPriceContainer>
-      <S.InputPriceLegend>{props.legend}</S.InputPriceLegend>
+    <S.InputNaturalNumberContainer>
+      <S.InputNaturalNumberLegend>{props.legend}</S.InputNaturalNumberLegend>
       <S.InputText // InputNumber
         type='number'
         name='price'
@@ -22,16 +22,16 @@ export default function InputPrice(props: Props) {
         onInput={props.handler}
         onChange={props.handler}
       />
-    </S.InputPriceContainer>
+    </S.InputNaturalNumberContainer>
   );
 }
 
 const S = {
   ...CommonStyles,
-  InputPriceContainer: styled.fieldset`
+  InputNaturalNumberContainer: styled.fieldset`
     width: 100%;
   `,
-  InputPriceLegend: styled.legend`
+  InputNaturalNumberLegend: styled.legend`
     padding-bottom: 0.5rem;
     font-weight: bold;
   `,
