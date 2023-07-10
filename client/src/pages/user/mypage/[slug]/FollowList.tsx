@@ -6,9 +6,8 @@ export default function ModalList() {
   return (
     <S.ModalFollowerBox>
       <S.UserInfo>
-        <S.UserPic>
-          <div>
-            {' '}
+        <S.UserPicIdBox>
+          <S.UserPic>
             <Image
               src='/image/mango2.png'
               alt='유저 프로필 사진'
@@ -16,16 +15,15 @@ export default function ModalList() {
               height={44}
               style={imageStyle}
             />
-          </div>
-        </S.UserPic>
-        <S.UserId>
-          <div>manng35</div>
-        </S.UserId>
+          </S.UserPic>
+          <S.UserId>
+            <div>manng35</div>
+          </S.UserId>
+        </S.UserPicIdBox>
         <S.UserFollow>
           <S.UserFollowBtn type='button'>구독하기</S.UserFollowBtn>
         </S.UserFollow>
       </S.UserInfo>
-      <S.UserDeleteBtn type='button'>삭제</S.UserDeleteBtn>
     </S.ModalFollowerBox>
   );
 }
@@ -39,24 +37,28 @@ const S = {
   `,
   UserInfo: styled.div`
     display: flex;
+    width: 100%;
+    justify-content: space-between;
+  `,
+  UserPicIdBox: styled.div`
+    display: flex;
   `,
   UserPic: styled.div`
     width: 44px;
     height: 44px;
     display: flex;
     align-items: center;
-    background-color: #f0dab1;
     border-radius: 50%;
   `,
   UserId: styled.div`
     display: flex;
     align-items: center;
     margin: 0 0.9rem 0 0.6rem;
-    color: var(--color-gray04);
+    color: var(--color-gray03);
     font-size: 0.95rem;
-    font-weight: 500;
+    font-weight: 400;
     &:hover {
-      color: var(--color-gray05);
+      font-weight: 500;
     }
   `,
   UserFollow: styled.div`
@@ -66,21 +68,22 @@ const S = {
   UserFollowBtn: styled.button`
     font-size: 0.93rem;
     color: var(--color-primary);
+    font-weight: 500;
     &:hover {
-      color: var(--color-primary-hover);
+      font-weight: 600;
     }
   `,
-  UserDeleteBtn: styled.button`
-    display: flex;
-    align-items: center;
-    font-size: 0.93rem;
-    font-weight: 400;
-    color: var(--color-gray06);
+  // UserDeleteBtn: styled.button`
+  //   display: flex;
+  //   align-items: center;
+  //   font-size: 0.93rem;
+  //   font-weight: 400;
+  //   color: var(--color-gray06);
 
-    &:hover {
-      color: var(--color-gray07);
-    }
-  `,
+  //   &:hover {
+  //     color: var(--color-gray07);
+  //   }
+  // `,
 };
 
 const imageStyle = {
