@@ -1,9 +1,12 @@
 import styled from '@emotion/styled';
-import PlusIcon from '../../../public/images/icon/plus.svg';
+import PlusIcon from '../../public/images/icon/plus.svg';
 
-export default function FilePlusLabel() {
+type Props = {
+  htmlFor: string;
+};
+export default function FilePlusLabel({ htmlFor }: Props) {
   return (
-    <S.FileLabelBtn htmlFor='addFaRecImg' aria-label='사진 추가하기 버튼'>
+    <S.FileLabelBtn htmlFor={htmlFor} aria-label='사진 추가하기 버튼'>
       <PlusIcon />
     </S.FileLabelBtn>
   );
