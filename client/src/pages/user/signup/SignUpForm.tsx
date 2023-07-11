@@ -22,16 +22,8 @@ export default function SignUpForm() {
     '비밀번호 확인',
     'pwConfirm'
   );
-  const [nicknameInput, nickname, setNickname] = useInput(
-    'text',
-    '닉네임',
-    'nickname'
-  );
-  const [emailInput, emailValue, setEmailValue] = useInput(
-    'text',
-    '이메일',
-    'email'
-  );
+  const [nicknameInput, nickname, setNickname] = useInput('text', '닉네임', 'nickname');
+  const [emailInput, emailValue, setEmailValue] = useInput('text', '이메일', 'email');
 
   const [error, setError] = useState({
     loginId: '',
@@ -137,6 +129,7 @@ export default function SignUpForm() {
     e.preventDefault();
     if (
       error.loginId ||
+      error.password ||
       error.passwordConfirm ||
       error.nickname ||
       error.email ||
@@ -151,12 +144,20 @@ export default function SignUpForm() {
 
     const res = await mutateAsync();
     console.log(res);
+
+    if (res.field === '아이디') {
+      console.log(res.field);
+      setError({ ...error, loginId: res.reason });
+      return;
+    }
+
     setLoginId('');
     setPwValue('');
     setPassword('');
     setNickname('');
     setEmailValue('');
     setDomainValue('');
+    setIsChecked(false);
     router.push('/');
   };
 
@@ -171,9 +172,7 @@ export default function SignUpForm() {
                 <span>{el.label.required && '*'}</span>
               </S.Label>
             </S.LabelBox>
-            <S.EmailAddress
-              className={i === inputData.length - 1 ? 'email' : ''}
-            >
+            <S.EmailAddress className={i === inputData.length - 1 ? 'email' : ''}>
               <S.InputBox className={i === inputData.length - 1 ? 'email' : ''}>
                 {el.component}
               </S.InputBox>
@@ -292,7 +291,7 @@ const S = {
 
     display: flex;
     justify-content: space-between;
-    > div:first-child {
+    > div:first-of-type {
       color: #c4c4c4;
       margin: 0 1rem;
       font-size: 1.2rem;
