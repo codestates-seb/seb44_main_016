@@ -6,8 +6,7 @@ import CommonStyles from '../styles/CommonStyles';
 
 export default function HomeHeader() {
   const [isHomeButtonActive, setIsHomeButtonActive] = React.useState(true);
-  const [isFollowerButtonActive, setIsFollowerButtonActive] =
-    React.useState(false);
+  const [isFollowerButtonActive, setIsFollowerButtonActive] = React.useState(false);
 
   const handleClickHomeButton = () => {
     setIsHomeButtonActive(true);
@@ -20,19 +19,11 @@ export default function HomeHeader() {
 
   return (
     <S.HomeHeaderContainer>
-      <S.HomeHeaderBtn
-        href='/'
-        onClick={handleClickHomeButton}
-        isActive={isHomeButtonActive}
-      >
+      <S.HomeHeaderBtn href='/' onClick={handleClickHomeButton} isActive={isHomeButtonActive}>
         홈
       </S.HomeHeaderBtn>
       {/* href='/?filterfollower=true' // 쿼리 미확정 */}
-      <S.HomeHeaderBtn
-        href=''
-        onClick={handleClickFollowerButton}
-        isActive={isFollowerButtonActive}
-      >
+      <S.HomeHeaderBtn href='' onClick={handleClickFollowerButton} isActive={isFollowerButtonActive}>
         팔로워
       </S.HomeHeaderBtn>
     </S.HomeHeaderContainer>
@@ -60,10 +51,8 @@ const S = {
     background-color: white;
     font-size: 1.25rem;
     font-weight: ${(props) => props.isActive && 'bold'};
-    color: ${(props) =>
-      props.isActive ? 'var(--color-primary)' : 'var(--color-gray03)'};
-    border-bottom: 3px solid
-      ${(props) => (props.isActive ? 'var(--color-primary)' : 'transparent')};
+    color: ${(props) => (props.isActive ? 'var(--color-primary)' : 'var(--color-gray03)')};
+    border-bottom: 3px solid ${(props) => (props.isActive ? 'var(--color-primary)' : 'transparent')};
 
     display: flex;
     justify-content: center;
