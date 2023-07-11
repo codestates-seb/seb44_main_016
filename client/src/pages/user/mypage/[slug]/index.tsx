@@ -11,7 +11,7 @@ import useInput, { useCheckboxInput } from '../../../../hooks/useComponents';
 import FollowModal from './FollowModal';
 import withAuthn from '../../../../components/WithAuthn';
 
-export default function MyPage() {
+function MyPage() {
   const router = useRouter();
   const accessToken = useSelector<RootState>((state) => state.authnReducer.login);
   console.log(accessToken);
@@ -170,4 +170,4 @@ const imageStyle = {
   cursor: 'pointer',
 };
 
-// export default withAuthn(MyPage);
+export default withAuthn(MyPage);
