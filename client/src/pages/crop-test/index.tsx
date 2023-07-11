@@ -7,14 +7,7 @@ import CommonStyles from '../../styles/CommonStyles';
 import Link from 'next/link';
 
 export default function index() {
-  const {
-    imgSrc,
-    setImgSrc,
-    croppedImage,
-    setCroppedImage,
-    cropModal,
-    setCropModal,
-  } = useImgCrop();
+  const { imgSrc, setImgSrc, croppedImage, setCroppedImage, cropModal, setCropModal } = useImgCrop();
 
   const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     await handleFileChange({

@@ -29,10 +29,8 @@ export function rotateSize(width: number, height: number, rotation: number) {
   const rotRad = getRadianAngle(rotation);
 
   return {
-    width:
-      Math.abs(Math.cos(rotRad) * width) + Math.abs(Math.sin(rotRad) * height),
-    height:
-      Math.abs(Math.sin(rotRad) * width) + Math.abs(Math.cos(rotRad) * height),
+    width: Math.abs(Math.cos(rotRad) * width) + Math.abs(Math.sin(rotRad) * height),
+    height: Math.abs(Math.sin(rotRad) * width) + Math.abs(Math.cos(rotRad) * height),
   };
 }
 
@@ -59,11 +57,7 @@ export async function getCroppedImg(
   const rotRad = getRadianAngle(rotation);
 
   // calculate bounding box of the rotated image
-  const { width: bBoxWidth, height: bBoxHeight } = rotateSize(
-    image.width,
-    image.height,
-    rotation
-  );
+  const { width: bBoxWidth, height: bBoxHeight } = rotateSize(image.width, image.height, rotation);
 
   // set canvas size to match the bounding box
   canvas.width = bBoxWidth;
@@ -127,11 +121,7 @@ export async function getRotatedImage(imageSrc: ImageSrc, rotation = 0) {
     throw new Error('Unable to create 2D context.');
   }
 
-  const orientationChanged =
-    rotation === 90 ||
-    rotation === -90 ||
-    rotation === 270 ||
-    rotation === -270;
+  const orientationChanged = rotation === 90 || rotation === -90 || rotation === 270 || rotation === -270;
   if (orientationChanged) {
     canvas.width = image.height;
     canvas.height = image.width;

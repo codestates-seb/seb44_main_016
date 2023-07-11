@@ -10,12 +10,9 @@ export function useImgCrop() {
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const [cropModal, setCropModal] = useState(false);
 
-  const onCropComplete = useCallback(
-    (croppedArea: Area, croppedAreaPixels: Area) => {
-      setCroppedAreaPixels(croppedAreaPixels);
-    },
-    []
-  );
+  const onCropComplete = useCallback((croppedArea: Area, croppedAreaPixels: Area) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  }, []);
 
   const showCroppedImage = useCallback(async () => {
     try {
