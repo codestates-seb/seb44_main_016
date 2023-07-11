@@ -1,5 +1,6 @@
 import React from 'react'; // useState 사용
 import styled from '@emotion/styled';
+import Link from 'next/link';
 
 import CommonStyles from '../styles/CommonStyles';
 
@@ -20,12 +21,14 @@ export default function HomeHeader() {
   return (
     <S.HomeHeaderContainer>
       <S.HomeHeaderBtn
+        href='/'
         onClick={handleClickHomeButton}
         isActive={isHomeButtonActive}
       >
         홈
       </S.HomeHeaderBtn>
       <S.HomeHeaderBtn
+        href='/?filterfollower=true'
         onClick={handleClickFollowButton}
         isActive={isFollowerButtonActive}
       >
@@ -44,12 +47,13 @@ const S = {
     width: 100%;
     height: var(--header-h);
     background-color: white;
-    // border: 1px solid;
+    // border-right: 0.05rem solid var(--color-gray08);
+    border-bottom: 0.05rem solid var(--color-gray08);
     display: flex;
     justify-content: center;
     align-items: flex-end;
   `,
-  HomeHeaderBtn: styled.button<{ isActive: boolean }>`
+  HomeHeaderBtn: styled(Link)<{ isActive: boolean }>`
     width: 6rem;
     height: 75%;
     background-color: white;
