@@ -40,19 +40,6 @@ export default function index() {
       <S.ImgBox>
         <img src={croppedImage || ''} alt='' />
       </S.ImgBox>
-      <S.SubmitBtn color='--color-point-blue' small>
-        버튼
-      </S.SubmitBtn>
-      <S.SubmitBtn color='--color-point-red'>버튼</S.SubmitBtn>
-      <S.SubmitBtn color='--color-point-yellow'>버튼</S.SubmitBtn>
-      <S.SubmitBtn color='--color-point-lilac'>버튼</S.SubmitBtn>
-      <S.Textarea placeholder='123' />
-      <S.LinkBtn href='/' color='--color-point-red'>
-        이동
-      </S.LinkBtn>
-      <S.LinkBtn href='/' small>
-        이동
-      </S.LinkBtn>
     </div>
   );
 }
