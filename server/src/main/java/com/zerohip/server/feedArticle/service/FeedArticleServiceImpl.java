@@ -57,7 +57,10 @@ public class FeedArticleServiceImpl implements FeedArticleService {
 
     //(현재 에러 때문에 메서드만 추가)
     @Override
-    public void deleteFeedArticle(Long feedArticleId) {}
+    public void deleteFeedArticle(Long feedArticleId) {
+        FeedArticle findFeedArticle = findVerifiedFeedArticle(feedArticleId);
+        feedArticleRepository.delete(findFeedArticle);
+    }
     @Override
     public FeedArticle findVerifiedFeedArticle(Long feedArticleId){
         Optional<FeedArticle> optionalFeedArticle = feedArticleRepository.findById(feedArticleId);
