@@ -2,7 +2,9 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import Comment from './comments/Comment';
-import CommonStyles from '../../../styles/CommonStyles';
+import CommonStyles from '../../styles/CommonStyles';
+
+import svgs from '../../constants/svg';
 
 type Props = {
   isMe?: boolean; // 댓글 작성자가 자기 자신이면 true
@@ -17,9 +19,12 @@ export default function CommentsComponent() {
   };
 
   return (
-    <section>
+    <div>
       <S.CommentsDropdownButton onClick={handleChangeOpenedOrClosed}>
-        댓글 12개 모두 보기
+        <span>댓글 12개 모두 보기</span>
+        <S.SvgContainer isReverse={!isCommentsOpened}>
+          {svgs.dropdown || <></>}
+        </S.SvgContainer>
       </S.CommentsDropdownButton>
       {isCommentsOpened ? (
         <S.CommentList>
@@ -36,9 +41,13 @@ export default function CommentsComponent() {
         <S.InputText placeholder='댓글을 입력하세요'></S.InputText>
         <S.SubmitBtn small={false}>게시</S.SubmitBtn>
       </S.CommentForm>
-    </section>
+    </div>
   );
 }
+
+type SvgContainerProps = {
+  isReverse?: boolean;
+};
 
 const S = {
   ...CommonStyles,
@@ -50,6 +59,7 @@ const S = {
     border-radius: 9999px;
     padding: 0px 20px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
   `,
   CommentList: styled.ol`
@@ -67,6 +77,10 @@ const S = {
     display: flex;
     flex-shrink: 0;
     justify-content: center;
+  `,
+  SvgContainer: styled.div<SvgContainerProps>`
+    transform: ${(props) =>
+      props.isReverse ? 'rotate(180deg)' : 'rotate(0deg)'};
   `,
 };
 // '더 보기' 버튼 구현 요망
