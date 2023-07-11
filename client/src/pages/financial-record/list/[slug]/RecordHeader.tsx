@@ -6,16 +6,6 @@ import Tab from '../../../../components/Tab';
 export default function RecordHeader() {
   const router = useRouter();
   const faRecId = router.query.slug;
-  const tabs = [
-    {
-      name: '가계부',
-      link: `/financial-record/financial-list/${faRecId}`,
-    },
-    {
-      name: '타임라인',
-      link: `/financial-record/financial-list/${faRecId}/timeline`,
-    },
-  ];
 
   return (
     <>
@@ -58,14 +48,11 @@ export default function RecordHeader() {
             </S.Button>
           </S.ButtonWrap>
           <S.DescContainer>
-            가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부
-            설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부
-            설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명
+            가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부
+            설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명
           </S.DescContainer>
         </S.ContentBox>
       </S.Container>
-
-      <Tab tabs={tabs} />
     </>
   );
 }

@@ -1,22 +1,22 @@
 import styled from '@emotion/styled';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 
-export default function Tab({ tabs }) {
-  const router = useRouter();
+type TabProps = {
+  tabs: string[];
+  activeTab: string;
+  onTabChange: (tab: string) => void;
+};
 
-  console.log(router);
-
+export default function Tab({ tabs, activeTab, onTabChange }) {
   return (
     <S.TabWrapper>
       {tabs.map((tab, i) => (
-        <Link
+        <button
           key={i}
-          href={tab.link}
-          className={router.asPath === tab.link ? 'active' : ''}
+          onClick={() => onTabChange(tab)}
+          className={activeTab === tab ? 'active' : ''}
         >
-          {tab.name}
-        </Link>
+          {tab}
+        </button>
       ))}
     </S.TabWrapper>
   );
@@ -29,7 +29,7 @@ const S = {
     display: flex;
     justify-content: center;
 
-    & > a {
+    & > button {
       padding: 1rem 1.7rem;
       color: var(--color-gray03);
       border-top: 2px solid transparent;

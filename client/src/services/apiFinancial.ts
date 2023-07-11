@@ -14,22 +14,16 @@ export const APIfinancialRecord = {
     return response.data;
   },
   getFaRec: async (financialRecordId: number) => {
-    const response = await axios.get(
-      `/api/financial-record/${financialRecordId}`
-    );
+    const response = await axios.get(`/api/financial-record/${financialRecordId}`);
     return response.data;
   },
   updateFaRec: async (formData: FormData) => {
     const financialRecordId = Number(formData.get('financialRecordId'));
-    const response = await axios.patch(
-      `/api/financial-record/${financialRecordId}`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
-    );
+    const response = await axios.patch(`/api/financial-record/${financialRecordId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     return response.data;
   },
 };

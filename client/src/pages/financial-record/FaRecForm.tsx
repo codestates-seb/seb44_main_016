@@ -38,16 +38,8 @@ export default function FaRecForm({
     { id: 'faName', name: '가계부 이름' },
     { id: 'faDesc', name: '가계부 설명' },
   ];
-  const [nameInput, faRecName, setFaRecName] = useInput(
-    'text',
-    inputData[0].name,
-    inputData[0].id
-  );
-  const [descInput, faRecDesc, setFaRecDesc] = useInput(
-    'text',
-    inputData[1].name,
-    inputData[1].id
-  );
+  const [nameInput, faRecName, setFaRecName] = useInput('text', inputData[0].name, inputData[0].id);
+  const [descInput, faRecDesc, setFaRecDesc] = useInput('text', inputData[1].name, inputData[1].id);
 
   const [errors, setErrors] = useState({
     faRecName: '',
@@ -66,14 +58,7 @@ export default function FaRecForm({
     setFaRecDesc(initialFaRecDesc || '');
   }, [initialFaRecName, initialFaRecDesc, setFaRecName, setFaRecDesc]);
 
-  const {
-    imgSrc,
-    setImgSrc,
-    croppedImage,
-    setCroppedImage,
-    cropModal,
-    setCropModal,
-  } = useImgCrop();
+  const { imgSrc, setImgSrc, croppedImage, setCroppedImage, cropModal, setCropModal } = useImgCrop();
 
   const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     await handleFileChange({
@@ -84,9 +69,7 @@ export default function FaRecForm({
   };
 
   const { mutate, isError, isSuccess } = useMutation(
-    pageType === 'create'
-      ? APIfinancialRecord.createFaRec
-      : APIfinancialRecord.updateFaRec,
+    pageType === 'create' ? APIfinancialRecord.createFaRec : APIfinancialRecord.updateFaRec,
     {
       onSuccess: (data) => {
         console.log('response-data', data);
@@ -132,22 +115,14 @@ export default function FaRecForm({
       <S.Container>
         <S.ImgBox>
           {croppedImage ? (
-            <img
-              src={croppedImage}
-              alt={faRecName ? `${faRecName} 프로필 사진` : '프로필 사진'}
-            />
+            <img src={croppedImage} alt={faRecName ? `${faRecName} 프로필 사진` : '프로필 사진'} />
           ) : initialImage ? (
             <img src={initialImage} alt={`${initialFaRecName} 프로필 사진`} />
           ) : (
             <img src={randomImg} alt={`${faRecName} 프로필 사진`} />
           )}
 
-          <S.FileInput
-            type='file'
-            id='addFaRecImg'
-            accept='image/*'
-            onChange={onFileChange}
-          />
+          <S.FileInput type='file' id='addFaRecImg' accept='image/*' onChange={onFileChange} />
           <FilePlusLabel htmlFor='addFaRecImg' />
         </S.ImgBox>
         {cropModal && (
