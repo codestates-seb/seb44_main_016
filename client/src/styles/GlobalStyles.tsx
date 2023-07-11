@@ -117,7 +117,6 @@ const GlobalStyles = () => (
         cursor: pointer;
         background: none;
         border: none;
-        outline: none;
         font-size: inherit;
         font-weight: inherit;
         font-family: inherit;
