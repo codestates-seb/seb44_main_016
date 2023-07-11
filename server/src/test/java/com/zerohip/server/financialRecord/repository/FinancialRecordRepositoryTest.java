@@ -89,8 +89,4 @@ class FinancialRecordRepositoryTest {
     // Verify
     assertThat(financialRecordRepository.findById(saveFaRec.getFinancialRecordId())).isEmpty();
   }
-
-
-
-
 }

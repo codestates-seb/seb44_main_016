@@ -12,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,6 +32,7 @@ class FinancialRecordServiceImplTest {
   void setUp() {
     // 가계부 인스턴스 생성
     faRec = new FinancialRecord("test용 가계부", "test용 가계부 설명");
+    faRec = new FinancialRecord("test용 가계부");
   }
 
   @Test
@@ -68,11 +68,11 @@ class FinancialRecordServiceImplTest {
     FinancialRecord saveFaRec1 = financialRecordService.createFaRec(faRec);
 
     FinancialRecord faRec2 = new FinancialRecord("test용 가계부2", "test용 가계부 설명2");
+
     FinancialRecord saveFaRec2 = financialRecordService.createFaRec(faRec2);
 
     log.info("saveFaRec1.getFinancialRecordName() = {}", saveFaRec1.getFinancialRecordName());
     log.info("saveFaRec2.getFinancialRecordName() = {}", saveFaRec2.getFinancialRecordName());
-
 
     // Verify
     findFaRecsTest(saveFaRec1, saveFaRec2);
@@ -84,6 +84,8 @@ class FinancialRecordServiceImplTest {
     List<FinancialRecord> result = financialRecordService.findFaRecs();
     assertThat(result.size()).isEqualTo(faRecs.length);
     assertThat(result).containsExactly(faRecs);
+    // 생성된 가계부의 id로 조회
+    financialRecordService.findAllFaRecs();
   }
 
   @Test
