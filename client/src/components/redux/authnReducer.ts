@@ -1,25 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface LoginData {
-  accessToken: string | null;
-  refreshToken: string | null;
-  userId: number | null;
-  userName: string | null;
-  userEmail: string | null;
-  isLogin: boolean;
-}
+import { LoginResData } from '../../types/user';
 
 interface AuthnState {
-  login: LoginData;
+  login: LoginResData;
 }
 
 const initialState: AuthnState = {
   login: {
-    accessToken: null,
-    refreshToken: null,
     userId: null,
-    userName: null,
-    userEmail: null,
+    accessToken: null,
+    loginId: null,
+    nickname: null,
+    email: null,
     isLogin: false,
   },
 };
@@ -28,7 +20,7 @@ const authnReducer = createSlice({
   name: 'authnReducer',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<LoginData>) => {
+    login: (state, action: PayloadAction<LoginResData>) => {
       state.login = action.payload;
     },
     logout: (state) => {

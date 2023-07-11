@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import styled from '@emotion/styled';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-
+import { Providers } from '../components/redux/provider';
 import Aside from '../components/Aside';
 import HomeHeader from '../components/HomeHeader';
 
@@ -37,23 +37,25 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       {/*모든 ReactDOM에 margin: 0; padding: 0; box-sizing: border-box; 적용 */}
-      <QueryClientProvider client={queryClient}>
-        <GlobalStyles />
-        <S.RootScreen>
-          <S.AppContainer maxWidth={maxWidth}>
-            <S.FlexPage bgColor={bgColor}>
-              {isShowNav && <Aside isLoggedIn={true} />}
-              <S.SubPage>
-                {isShowHeader && <HomeHeader />}
-                <S.Main isShowNav={isShowNav} isShowHeader={isShowHeader}>
-                  <Component {...pageProps} />
-                </S.Main>
-              </S.SubPage>
-            </S.FlexPage>
-          </S.AppContainer>
-        </S.RootScreen>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+      <Providers>
+        <QueryClientProvider client={queryClient}>
+          <GlobalStyles />
+          <S.RootScreen>
+            <S.AppContainer maxWidth={maxWidth}>
+              <S.FlexPage bgColor={bgColor}>
+                {isShowNav && <Aside isLoggedIn={true} />}
+                <S.SubPage>
+                  {isShowHeader && <HomeHeader />}
+                  <S.Main isShowNav={isShowNav} isShowHeader={isShowHeader}>
+                    <Component {...pageProps} />
+                  </S.Main>
+                </S.SubPage>
+              </S.FlexPage>
+            </S.AppContainer>
+          </S.RootScreen>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </Providers>
     </>
   );
 };
