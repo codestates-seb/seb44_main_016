@@ -38,7 +38,7 @@ const TimelineArticleDummyA = {
 
 const TimelineArticleDummyB = {
   financialRecordId: 0, // 지출/수입이 속한 가계부 ID
-  category: '급여',
+  category: '',
   financialRecordDate: new Date(),
   price: 2_761_000, // 수입
   title: '',

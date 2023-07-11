@@ -38,14 +38,14 @@ export default function ArticleHeaderComponent(
 ) {
   let PriceText;
   if (props.type === 'feed') {
-    PriceText = styled(S.PriceText)``;
+    PriceText = styled(S.PriceTextBase)``;
   } else {
     PriceText =
       props.price < 0
-        ? styled(S.PriceText)`
+        ? styled(S.PriceTextBase)`
             color: var(--color-point-red);
           `
-        : styled(S.PriceText)`
+        : styled(S.PriceTextBase)`
             color: var(--color-point-blue);
           `;
   }
@@ -66,7 +66,11 @@ export default function ArticleHeaderComponent(
           <S.DateText>{getKoreanDate(props.createdAt)}</S.DateText>
         ) : (
           <>
-            <span>{props.category}</span>
+            {props.category === '' ? (
+              <></>
+            ) : (
+              <S.CategoryText>{props.category}</S.CategoryText>
+            )}
             <PriceText>{formatNumber(props.price)}</PriceText>
           </>
         )}
@@ -95,7 +99,7 @@ const S = {
   RightDiv: styled.div`
     gap: 10px;
     display: flex;
-    align-items: center;
+    align-items: baseline;
   `,
   Nickname: styled.button`
     font-weight: bold;
@@ -118,7 +122,17 @@ const S = {
     height: 100%;
     background-color: black;
   `,
-  PriceText: styled.span`
+  CategoryText: styled.span`
+    height: 0.6rem;
+    padding: 0rem 0.3rem;
+    background-color: #ffdcdd;
+    font-weight: 500;
+    border-radius: var(--rounded-full);
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+  `,
+  PriceTextBase: styled.span`
     font-weight: bold;
   `,
 };
