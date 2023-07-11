@@ -27,11 +27,12 @@ public class FinancialRecord {
   private String financialRecordName;
 
   @Column(nullable = true, unique = false, updatable = true)
-  private String financialRecordDescription;
 
-  // 가계부 내역 매핑(List 형식)
-//  @OneToMany(mappedBy = "financialRecord", cascade = CascadeType.ALL)
-//  private List<FinancialRecordArticle> articles = new LinkedList<>();
+  private String memo;
+
+  // 게시물 수
+  // 타임라인수 -> 매핑 시 적용
+  // 리스트 매핑
 
   // 유저 매핑(List 형식)
 

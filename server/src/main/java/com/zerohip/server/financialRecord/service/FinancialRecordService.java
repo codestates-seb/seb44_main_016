@@ -5,7 +5,6 @@ import com.zerohip.server.financialRecord.entity.FinancialRecord;
 import java.util.List;
 
 public interface FinancialRecordService {
-
   // 가계부 생성
   FinancialRecord createFaRec(FinancialRecord faRec);
 
