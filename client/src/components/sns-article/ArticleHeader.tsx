@@ -102,7 +102,7 @@ const S = {
     margin-right: 0.1rem;
   `,
   DateText: styled.span`
-    font-weight: bold;
+    font-weight: 500;
     font-size: 0.85rem;
     color: var(--color-gray03);
   `,
