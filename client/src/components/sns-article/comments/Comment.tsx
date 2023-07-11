@@ -27,16 +27,14 @@ export default function CommentComponent(props: Props) {
           <S.LowerTexts>
             <span>1주</span> {/* CreatedAt */}
             <span>좋아요 805개</span> {/* LikeCount */}
-            <button>답글 달기</button> {/* AddReplyButton */}
+            <S.BtnInComment>답글 달기</S.BtnInComment>
             {props.isMe ? (
               <>
-                <button>수정</button>
-                <button>삭제</button>
+                <S.BtnInComment>수정</S.BtnInComment>
+                <S.BtnInComment>삭제</S.BtnInComment>
               </>
             ) : (
-              <>
-                <button>신고</button> {/* ReportButton */}
-              </>
+              <S.BtnInComment>신고</S.BtnInComment>
             )}
           </S.LowerTexts>
         </S.Texts>
@@ -100,7 +98,14 @@ const S = {
   `,
   LowerTexts: styled.p`
     display: flex;
-    gap: 10px;
+    align-items: baseline;
+    gap: 0.8rem;
+    color: var(--color-text-lightgray);
+    font-size: 0.8rem;
+  `,
+  BtnInComment: styled.button`
+    color: var(--color-text-lightgray);
+    font-size: 0.8rem;
   `,
 };
 // '더 보기' 버튼 구현 요망

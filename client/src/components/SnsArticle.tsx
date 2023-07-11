@@ -268,6 +268,6 @@ const S = {
   `,
   UDBtn: styled.button`
     font-size: 0.9rem;
-    color: var(--color-gray04);
+    color: var(--color-text-lightgray);
   `,
 };
