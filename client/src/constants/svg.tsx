@@ -173,12 +173,7 @@ const SVGs = {
       viewBox='0 0 15 9'
       fill='none'
     >
-      <path
-        d='M14 8L7.5 2L1 8'
-        stroke='#B3B3B3'
-        strokeWidth='2'
-        strokeLinecap='round'
-      />
+      <path d='M14 8L7.5 2L1 8' stroke='#B3B3B3' strokeWidth='2' strokeLinecap='round' />
     </svg>
   ),
   person: (

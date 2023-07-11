@@ -29,10 +29,8 @@ export function rotateSize(width: number, height: number, rotation: number) {
   const rotRad = getRadianAngle(rotation);
 
   return {
-    width:
-      Math.abs(Math.cos(rotRad) * width) + Math.abs(Math.sin(rotRad) * height),
-    height:
-      Math.abs(Math.sin(rotRad) * width) + Math.abs(Math.cos(rotRad) * height),
+    width: Math.abs(Math.cos(rotRad) * width) + Math.abs(Math.sin(rotRad) * height),
+    height: Math.abs(Math.sin(rotRad) * width) + Math.abs(Math.cos(rotRad) * height),
   };
 }
 
@@ -128,10 +126,7 @@ export async function getRotatedImage(imageSrc: ImageSrc, rotation = 0) {
   }
 
   const orientationChanged =
-    rotation === 90 ||
-    rotation === -90 ||
-    rotation === 270 ||
-    rotation === -270;
+    rotation === 90 || rotation === -90 || rotation === 270 || rotation === -270;
   if (orientationChanged) {
     canvas.width = image.height;
     canvas.height = image.width;

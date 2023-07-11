@@ -11,21 +11,12 @@ import CommonStyles from '../styles/CommonStyles';
 import styled from '@emotion/styled';
 import DropDown from '../../public/image/dropdown.svg';
 
-const DOMAIN = [
-  'naver.com',
-  'gmail.com',
-  'daum.net',
-  'outlook.com',
-  'korea.kr',
-];
+const DOMAIN = ['naver.com', 'gmail.com', 'daum.net', 'outlook.com', 'korea.kr'];
 interface SelectBoxProps {
   searchItem: string;
   setSearchItem: (value: string) => void;
 }
-export default function SelectBox({
-  searchItem,
-  setSearchItem,
-}: SelectBoxProps) {
+export default function SelectBox({ searchItem, setSearchItem }: SelectBoxProps) {
   const [isDropDownClicked, setIsDropDownClicked] = useState(false);
   const [isLayoutClicked, setIsLayoutClicked] = useState(false);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(0);
@@ -69,10 +60,7 @@ export default function SelectBox({
       e.preventDefault();
       setSelectedOptionIndex((prevIndex) => prevIndex - 1);
       setSearchItem(filteredItems[selectedOptionIndex]);
-    } else if (
-      e.key === 'ArrowDown' &&
-      selectedOptionIndex < DOMAIN.length - 1
-    ) {
+    } else if (e.key === 'ArrowDown' && selectedOptionIndex < DOMAIN.length - 1) {
       e.preventDefault();
       setSelectedOptionIndex((prevIndex) => prevIndex + 1);
       setSearchItem(filteredItems[selectedOptionIndex]);

@@ -8,11 +8,7 @@ type UseInputReturnType = [
   (value: string | null) => void
 ];
 
-type UseCheckBoxReturnType = [
-  React.ReactNode,
-  boolean,
-  (value: boolean) => void
-];
+type UseCheckBoxReturnType = [React.ReactNode, boolean, (value: boolean) => void];
 
 export default function useInput(
   type: string,
@@ -27,11 +23,7 @@ export default function useInput(
     };
 
     const autoCompleteValue =
-      type === 'password'
-        ? 'new-password'
-        : type === 'text'
-        ? 'username'
-        : undefined;
+      type === 'password' ? 'new-password' : type === 'text' ? 'username' : undefined;
 
     const inputProps = {
       type,
@@ -48,10 +40,7 @@ export default function useInput(
   return [Component(), value, setValue];
 }
 
-export function useCheckboxInput(
-  type: string,
-  label: string
-): UseCheckBoxReturnType {
+export function useCheckboxInput(type: string, label: string): UseCheckBoxReturnType {
   const [isChecked, setIsChecked] = useState(false);
 
   const Component = useCallback(() => {

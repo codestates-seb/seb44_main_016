@@ -4,14 +4,8 @@ import ImgCropModal from '../../components/img-crop/ImgCropModal';
 import styled from '@emotion/styled';
 
 export default function index() {
-  const {
-    imgSrc,
-    setImgSrc,
-    croppedImage,
-    setCroppedImage,
-    cropModal,
-    setCropModal,
-  } = useImgCrop();
+  const { imgSrc, setImgSrc, croppedImage, setCroppedImage, cropModal, setCropModal } =
+    useImgCrop();
 
   const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     await handleFileChange({

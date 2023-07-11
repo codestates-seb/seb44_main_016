@@ -9,9 +9,7 @@ type Props = {
 
 export default function SvgBox(props: Props) {
   return (
-    <S.SvgContainer isReverse={props.isReverse}>
-      {props.children || <></>}
-    </S.SvgContainer>
+    <S.SvgContainer isReverse={props.isReverse}>{props.children || <></>}</S.SvgContainer>
   );
 }
 
@@ -27,7 +25,6 @@ const S = {
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
-    transform: ${(props) =>
-      props.isReverse ? 'rotate(180deg)' : 'rotate(0deg)'};
+    transform: ${(props) => (props.isReverse ? 'rotate(180deg)' : 'rotate(0deg)')};
   `,
 };

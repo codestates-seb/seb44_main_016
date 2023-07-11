@@ -19,24 +19,16 @@ export default function CheckboxAgreement({
   isCentered,
   hasGuide,
 }: CheckboxAgreementProps) {
-  const [Checkbox, isChecked, setIsChecked] = useCheckboxInput(
-    'checkbox',
-    labelTitle
-  );
+  const [Checkbox, isChecked, setIsChecked] = useCheckboxInput('checkbox', labelTitle);
   return {
     CheckboxComponent: (
       <S.CheckboxContainer isCentered={isCentered}>
         <S.Policy>
           {Checkbox}
-          <S.RadioBtnLabel
-            className={hasGuide ? 'guide' : ''}
-            htmlFor={labelTitle}
-          >
+          <S.RadioBtnLabel className={hasGuide ? 'guide' : ''} htmlFor={labelTitle}>
             {labelTitle}
           </S.RadioBtnLabel>
-          <S.PolicyGuide htmlFor={labelTitle}>
-            {checkboxAgreement}
-          </S.PolicyGuide>
+          <S.PolicyGuide htmlFor={labelTitle}>{checkboxAgreement}</S.PolicyGuide>
         </S.Policy>
         <S.Error isBackgroundWhite={isBackgroundWhite}>
           <h3 className='blind'>에러 메시지</h3>
@@ -83,9 +75,7 @@ const S = {
 
     margin-top: 8px;
     color: ${(props) =>
-      props.isBackgroundWhite
-        ? 'var(--color-point-pink)'
-        : 'var(--color-error-red)'};
+      props.isBackgroundWhite ? 'var(--color-point-pink)' : 'var(--color-error-red)'};
     h4 {
       font-size: 0.98rem;
       font-weight: 400;

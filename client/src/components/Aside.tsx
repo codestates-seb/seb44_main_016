@@ -44,15 +44,10 @@ export default function Aside(props: Props) {
         <S.Upper>
           <AsideLogo isTabClosed={isTabClosed} />
           <ol>
-            <AsideButton leftIcon={svgs.home}>
-              {isTabClosed && '홈'}
-            </AsideButton>
+            <AsideButton leftIcon={svgs.home}>{isTabClosed && '홈'}</AsideButton>
             {props.isLoggedIn && (
               <>
-                <AsideButton
-                  onClick={handleOpenOrCloseNoticeTab}
-                  leftIcon={svgs.notice}
-                >
+                <AsideButton onClick={handleOpenOrCloseNoticeTab} leftIcon={svgs.notice}>
                   {isTabClosed && '알림'}
                 </AsideButton>
                 <AsideButton
@@ -81,10 +76,7 @@ export default function Aside(props: Props) {
             <AsideButton leftIcon={svgs.ranking}>
               {isTabClosed && '명예의 전당'}
             </AsideButton>
-            <AsideButton
-              onClick={handleOpenOrCloseSearchTab}
-              leftIcon={svgs.search}
-            >
+            <AsideButton onClick={handleOpenOrCloseSearchTab} leftIcon={svgs.search}>
               {isTabClosed && '검색'}
             </AsideButton>
           </ol>

@@ -5,8 +5,7 @@ import CommonStyles from '../styles/CommonStyles';
 
 export default function HomeHeader() {
   const [isHomeButtonActive, setIsHomeButtonActive] = React.useState(true);
-  const [isFollowerButtonActive, setIsFollowerButtonActive] =
-    React.useState(false);
+  const [isFollowerButtonActive, setIsFollowerButtonActive] = React.useState(false);
 
   const handleClickHomeButton = () => {
     setIsHomeButtonActive(true);
@@ -19,10 +18,7 @@ export default function HomeHeader() {
 
   return (
     <S.HomeHeaderContainer>
-      <S.HomeHeaderButton
-        onClick={handleClickHomeButton}
-        isActive={isHomeButtonActive}
-      >
+      <S.HomeHeaderButton onClick={handleClickHomeButton} isActive={isHomeButtonActive}>
         홈
       </S.HomeHeaderButton>
       <S.HomeHeaderButton

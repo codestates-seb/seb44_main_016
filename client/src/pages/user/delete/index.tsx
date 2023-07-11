@@ -65,11 +65,7 @@ export default function UserUpdate() {
       </Head>
       <h1 className='blind'>제로힙 회원 탈퇴</h1>
       <S.BackBox>
-        <button
-          type='button'
-          aria-label='뒤로 가기'
-          onClick={() => router.back()}
-        >
+        <button type='button' aria-label='뒤로 가기' onClick={() => router.back()}>
           <BackBtn width='25' fill='#b8b7c2' aria-hidden={true} />
         </button>
       </S.BackBox>
@@ -81,11 +77,7 @@ export default function UserUpdate() {
           <br />
           {`모든 데이터가 삭제되며 되돌릴 수 없습니다.`}
         </S.WarningMessage>
-        <input
-          name='username'
-          autoComplete='사용자명'
-          style={{ display: 'none' }}
-        />
+        <input name='username' autoComplete='사용자명' style={{ display: 'none' }} />
         {inputData.map((el) => (
           <S.InputBox key={el.label.text}>
             <S.LabelBox>

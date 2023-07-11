@@ -12,11 +12,7 @@ import Link from 'next/link';
 
 export default function UserUpdate() {
   const router = useRouter();
-  const [nicknameInput, nickname, setNickname] = useInput(
-    'text',
-    '마마망',
-    'nickname'
-  );
+  const [nicknameInput, nickname, setNickname] = useInput('text', '마마망', 'nickname');
   const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw');
   const [PwConfirmInput, password, setPassword] = useInput(
     'password',
@@ -63,11 +59,7 @@ export default function UserUpdate() {
   return (
     <S.Container>
       <S.BackBox>
-        <button
-          type='button'
-          aria-label='뒤로 가기'
-          onClick={() => router.back()}
-        >
+        <button type='button' aria-label='뒤로 가기' onClick={() => router.back()}>
           <BackBtn width='25' fill='#b8b7c2' aria-hidden={true} />
         </button>
       </S.BackBox>
