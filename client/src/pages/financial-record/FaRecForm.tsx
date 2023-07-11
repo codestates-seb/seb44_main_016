@@ -113,7 +113,7 @@ export default function FaRecForm({
 
     const formData = new FormData();
     formData.append('financialRecordName', faRecName || '');
-    formData.append('financialRecordDescription', faRecDesc || '');
+    formData.append('memo', faRecDesc || '');
     formData.append('imgId', croppedImage || initialImage || randomImg);
     /**
      *  아직 userId 받아오지 못해 테스트 아이디 입력. 추후 수정 예정

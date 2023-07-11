@@ -6,18 +6,13 @@ export default function financialRecordEdit(
   res: NextApiResponse
 ) {
   if (req.method === 'PATCH') {
-    const {
-      financialRecordId,
-      financialRecordName,
-      financialRecordDescription,
-      imgId,
-      userId,
-    } = req.body;
+    const { financialRecordId, financialRecordName, memo, imgId, userId } =
+      req.body;
 
     const updatedRecord = {
       financialRecordId,
       financialRecordName,
-      financialRecordDescription,
+      memo,
       imgId,
       userId,
     };
