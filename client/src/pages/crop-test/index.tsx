@@ -2,6 +2,9 @@ import { useImgCrop } from '../../hooks/useImgCrop';
 import { handleFileChange } from '../../components/img-crop/imgCropUtils';
 import ImgCropModal from '../../components/img-crop/ImgCropModal';
 import styled from '@emotion/styled';
+import FilePlusLabel from '../../components/FilePlusLabel';
+import CommonStyles from '../../styles/CommonStyles';
+import Link from 'next/link';
 
 export default function index() {
   const {
@@ -42,6 +45,7 @@ export default function index() {
 }
 
 const S = {
+  ...CommonStyles,
   ImgBox: styled.div`
     width: 400px;
     height: 400px;
