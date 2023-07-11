@@ -3,6 +3,7 @@ import { handleFileChange } from '../../components/img-crop/imgCropUtils';
 import ImgCropModal from '../../components/img-crop/ImgCropModal';
 import styled from '@emotion/styled';
 import FilePlusLabel from '../../components/FilePlusLabel';
+import CommonStyles from '../../styles/CommonStyles';
 
 export default function index() {
   const {
@@ -38,11 +39,17 @@ export default function index() {
       <S.ImgBox>
         <img src={croppedImage || ''} alt='' />
       </S.ImgBox>
+      <S.SubmitBtn color='--color-point-blue'>버튼</S.SubmitBtn>
+      <S.SubmitBtn color='--color-point-red'>버튼</S.SubmitBtn>
+      <S.SubmitBtn color='--color-point-yellow'>버튼</S.SubmitBtn>
+      <S.SubmitBtn color='--color-point-lilac'>버튼</S.SubmitBtn>
+      <S.Textarea placeholder='123' />
     </div>
   );
 }
 
 const S = {
+  ...CommonStyles,
   ImgBox: styled.div`
     width: 400px;
     height: 400px;
