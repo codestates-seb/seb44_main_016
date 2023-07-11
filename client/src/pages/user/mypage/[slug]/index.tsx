@@ -2,16 +2,19 @@ import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import Image from 'next/image';
 import Head from 'next/head';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../components/redux/store';
 import { keyframes, css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import CommonStyles from '../../../../styles/CommonStyles';
 import useInput, { useCheckboxInput } from '../../../../hooks/useComponents';
 import FollowModal from './FollowModal';
+import withAuthn from '../../../../components/WithAuthn';
 
-export default function Page({ params }: { params: { slug: string } }) {
+export default function MyPage() {
   const router = useRouter();
-  const { slug } = router.query;
-
+  const accessToken = useSelector<RootState>((state) => state.authnReducer.login);
+  console.log(accessToken);
   return (
     <S.Container>
       <S.UserProfileContainer>
@@ -166,3 +169,5 @@ const imageStyle = {
   left: '20%',
   cursor: 'pointer',
 };
+
+// export default withAuthn(MyPage);
