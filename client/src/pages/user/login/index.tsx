@@ -41,14 +41,13 @@ export default function Login() {
       // const accessToken = res.headers.Authorization;
       const accessToken = 'ggg';
       // console.log(accessToken);
-      const { userId, loginId, nickname, email } = res.data.user;
+      const { loginId, nickname, userId } = res.data.user;
       // const refreshToken = getCookie('refreshToken'); 나중에 서버 연결 후
       // console.log(refreshToken); 나중에 서버 연결 후
       setCookie('refreshToken', '리프레쉬톸흔'); // 나중에 refreshToken 자동으로 받아옴
 
-      console.log(loginId, nickname, email);
-      dispatch(login({ userId, accessToken, loginId, nickname, email, isLogin: true }));
-      router.push(`/`);
+      dispatch(login({ userId, accessToken, loginId, nickname, isLoggedIn: true }));
+      router.push(`/user/mypage/${userId}`);
     }
 
     return;

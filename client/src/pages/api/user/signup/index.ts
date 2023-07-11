@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { userData } from '../../../test/userData';
 
 export default function signUp(req: NextApiRequest, res: NextApiResponse) {
-  const userId = Math.floor(Math.random() * 1000);
+  const userId = Math.floor(Math.random() * 1000) + 'ashg';
   const { email, loginId, password, nickname } = req.body;
 
   const user = userData.find((user) => user.loginId === loginId);

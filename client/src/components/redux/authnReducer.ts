@@ -11,8 +11,7 @@ const initialState: AuthnState = {
     accessToken: null,
     loginId: null,
     nickname: null,
-    email: null,
-    isLogin: false,
+    isLoggedIn: false,
   },
 };
 

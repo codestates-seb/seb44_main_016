@@ -11,10 +11,9 @@ export interface LoginReqData {
 }
 
 export interface LoginResData {
-  userId: string | null;
-  accessToken: string | null;
-  loginId: number | null;
-  nickname: string | null;
-  email: string | null;
-  isLogin: boolean;
+  userId?: number | null;
+  loginId?: number | null;
+  nickname?: string | null;
+  accessToken?: string | null;
+  isLoggedIn: boolean;
 }
