@@ -1,9 +1,7 @@
-import { cookies } from 'next/headers';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '../components/redux/store';
-
-// const cookieStore = cookies();
+import { setCookie, getCookie, deleteCookie } from 'cookies-next';
 
 /** INSTANCE WITH TOKEN */
 export const tokenInstance = axios.create({
@@ -43,7 +41,8 @@ tokenInstance.interceptors.response.use(
       // }
 
       if (message === 'Network Error' || response?.data?.errorCode === '400') {
-        const refreshToken = cookies().get('refreshToken');
+        // 몇으로?
+        const refreshToken = getCookie('refreshToken');
         /** GET : NEW ACCESS TOKEN */
         const response = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/auth/user/token`,
@@ -56,13 +55,12 @@ tokenInstance.interceptors.response.use(
         );
         /** CHANGE ACCESS TOKEN */
         originalRequest.headers.Authorization = response.headers.authorization;
-        cookies().set('accessToken', '');
-        cookies().set('accessToken', response.headers.authorization);
+        setCookie('accessToken', response.headers.authorization);
         return axios(originalRequest);
       }
     } catch (error) {
-      cookies().set('accessToken', '');
-      cookies().set('refreshToken', '');
+      deleteCookie('accessToken');
+      deleteCookie('refreshToken');
       window.location.href = '/';
       return false;
     }
