@@ -19,11 +19,9 @@ const validation = {
     if (password.length < 8 || password.length > 16)
       return (errorMessage += '비밀번호는 8~16자리여야 합니다.\n');
 
-    if (!/[a-z]/.test(password))
-      return (errorMessage += '비밀번호는 소문자를 포함해야 합니다.\n');
+    if (!/[a-z]/.test(password)) return (errorMessage += '비밀번호는 소문자를 포함해야 합니다.\n');
 
-    if (!/\d/.test(password))
-      return (errorMessage += '비밀번호는 숫자를 포함해야 합니다.\n');
+    if (!/\d/.test(password)) return (errorMessage += '비밀번호는 숫자를 포함해야 합니다.\n');
 
     if (/[^a-zA-Z\d!@#$%^&*()]/.test(password))
       return (errorMessage += '비밀번호는 !@#$%^&*() 특수문자만 허용합니다.\n');

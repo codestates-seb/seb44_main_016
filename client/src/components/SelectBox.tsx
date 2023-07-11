@@ -1,12 +1,4 @@
-import {
-  useState,
-  useEffect,
-  useRef,
-  ChangeEvent,
-  KeyboardEvent,
-  MouseEvent,
-  FocusEvent,
-} from 'react';
+import { useState, useEffect, useRef, ChangeEvent, KeyboardEvent, MouseEvent, FocusEvent } from 'react';
 import CommonStyles from '../styles/CommonStyles';
 import styled from '@emotion/styled';
 import DropDown from '../../public/image/dropdown.svg';
@@ -92,11 +84,7 @@ export default function SelectBox({ searchItem, setSearchItem }: SelectBoxProps)
   };
 
   const optionElements = filteredItems.map((el, i) => (
-    <S.Li
-      key={el}
-      onClick={() => handleOptionClick(el)}
-      className={searchItem === el ? 'selected' : ''}
-    >
+    <S.Li key={el} onClick={() => handleOptionClick(el)} className={searchItem === el ? 'selected' : ''}>
       {el}
     </S.Li>
   ));
@@ -125,11 +113,7 @@ export default function SelectBox({ searchItem, setSearchItem }: SelectBoxProps)
         {isDropDownClicked && isLayoutClicked && (
           <>
             <S.Ul>
-              {optionElements.length > 0 ? (
-                optionElements
-              ) : (
-                <S.Result>검색된 결과가 없습니다.</S.Result>
-              )}
+              {optionElements.length > 0 ? optionElements : <S.Result>검색된 결과가 없습니다.</S.Result>}
             </S.Ul>
             <S.Layout onClick={handleDropBoxClick}></S.Layout>
           </>

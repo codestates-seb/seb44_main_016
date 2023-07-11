@@ -26,7 +26,7 @@ const apiUser = {
       return res;
     } catch (err) {
       // console.error('Error:', err.response.data.error);
-      return err.response.data.error;
+      return err.response;
     }
   },
 };

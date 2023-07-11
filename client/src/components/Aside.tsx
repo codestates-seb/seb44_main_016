@@ -18,8 +18,7 @@ export default function Aside(props: Props) {
   const [isNoticeTabOpened, setIsNoticeTabOpened] = React.useState(false);
   const isTabClosed = !isSearchTabOpened && !isNoticeTabOpened;
 
-  const [isBookmarkedFaRecListOpened, setIsBookmarkedFaRecListOpened] =
-    React.useState(true);
+  const [isBookmarkedFaRecListOpened, setIsBookmarkedFaRecListOpened] = React.useState(true);
 
   const handleOpenOrCloseBookmarkedFaRecList = () => {
     setIsBookmarkedFaRecListOpened((prevBool) => !prevBool);
@@ -60,22 +59,14 @@ export default function Aside(props: Props) {
                 </AsideButton>
                 {isBookmarkedFaRecListOpened && isTabClosed && (
                   <ol>
-                    <AsideButton isSmall={true}>
-                      {isTabClosed && 'XXX의 가계부'}
-                    </AsideButton>
-                    <AsideButton isSmall={true}>
-                      {isTabClosed && '♡ 데이트 통장 ♥'}
-                    </AsideButton>
-                    <AsideButton isSmall={true}>
-                      {isTabClosed && '산악회 곗돈 장부'}
-                    </AsideButton>
+                    <AsideButton isSmall={true}>{isTabClosed && 'XXX의 가계부'}</AsideButton>
+                    <AsideButton isSmall={true}>{isTabClosed && '♡ 데이트 통장 ♥'}</AsideButton>
+                    <AsideButton isSmall={true}>{isTabClosed && '산악회 곗돈 장부'}</AsideButton>
                   </ol>
                 )}
               </>
             )}
-            <AsideButton leftIcon={svgs.ranking}>
-              {isTabClosed && '명예의 전당'}
-            </AsideButton>
+            <AsideButton leftIcon={svgs.ranking}>{isTabClosed && '명예의 전당'}</AsideButton>
             <AsideButton onClick={handleOpenOrCloseSearchTab} leftIcon={svgs.search}>
               {isTabClosed && '검색'}
             </AsideButton>
@@ -85,11 +76,7 @@ export default function Aside(props: Props) {
           {props.isLoggedIn ? (
             <>
               <AsideProfileBox isTabClosed={isTabClosed} />
-              {isTabClosed ? (
-                <S.SubmitBtn>글쓰기</S.SubmitBtn>
-              ) : (
-                <AsideButton leftIcon={svgs.editor} />
-              )}
+              {isTabClosed ? <S.SubmitBtn>글쓰기</S.SubmitBtn> : <AsideButton leftIcon={svgs.editor} />}
             </>
           ) : isTabClosed ? (
             <S.SubmitBtn>로그인</S.SubmitBtn>

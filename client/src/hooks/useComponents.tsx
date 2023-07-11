@@ -2,19 +2,11 @@ import React, { useState, useCallback, ChangeEvent, MouseEvent } from 'react';
 import CommonStyles from '../styles/CommonStyles';
 import styled from '@emotion/styled';
 
-type UseInputReturnType = [
-  React.ReactNode,
-  string | null,
-  (value: string | null) => void
-];
+type UseInputReturnType = [React.ReactNode, string | null, (value: string | null) => void];
 
 type UseCheckBoxReturnType = [React.ReactNode, boolean, (value: boolean) => void];
 
-export default function useInput(
-  type: string,
-  placeholder: string,
-  label: string
-): UseInputReturnType {
+export default function useInput(type: string, placeholder: string, label: string): UseInputReturnType {
   const [value, setValue] = useState<string | null>(null);
 
   const Component = useCallback(() => {
@@ -22,8 +14,7 @@ export default function useInput(
       setValue(e.target.value);
     };
 
-    const autoCompleteValue =
-      type === 'password' ? 'new-password' : type === 'text' ? 'username' : undefined;
+    const autoCompleteValue = type === 'password' ? 'new-password' : type === 'text' ? 'username' : undefined;
 
     const inputProps = {
       type,

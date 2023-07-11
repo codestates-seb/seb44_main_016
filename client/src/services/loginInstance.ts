@@ -11,9 +11,7 @@ export const tokenInstance = axios.create({
 /** REQUEST INTERCEPTORS */
 tokenInstance.interceptors.request.use(
   (config) => {
-    const accessToken = useSelector<RootState>(
-      (state) => state.authnReducer.login.accessToken
-    );
+    const accessToken = useSelector<RootState>((state) => state.authnReducer.login.accessToken);
 
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
@@ -44,15 +42,12 @@ tokenInstance.interceptors.response.use(
         // 몇으로?
         const refreshToken = getCookie('refreshToken');
         /** GET : NEW ACCESS TOKEN */
-        const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/auth/user/token`,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-              refreshToken: refreshToken,
-            },
-          }
-        );
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/auth/user/token`, {
+          headers: {
+            'Content-Type': 'application/json',
+            refreshToken: refreshToken,
+          },
+        });
         /** CHANGE ACCESS TOKEN */
         originalRequest.headers.Authorization = response.headers.authorization;
         setCookie('accessToken', response.headers.authorization);

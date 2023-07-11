@@ -5,12 +5,7 @@ import loadingAnimation from '../animation/loading.json';
 export default function Loading() {
   return (
     <S.Container>
-      <Lottie
-        loop
-        animationData={loadingAnimation}
-        play
-        style={{ width: 160, height: 160 }}
-      />{' '}
+      <Lottie loop animationData={loadingAnimation} play style={{ width: 160, height: 160 }} />{' '}
     </S.Container>
   );
 }

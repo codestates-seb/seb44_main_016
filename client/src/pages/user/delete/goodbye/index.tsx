@@ -52,12 +52,7 @@ export default function GoodBye() {
       {showMessage ? (
         <S.ContentBox>
           <S.AnimationBox>
-            <Lottie
-              loop
-              animationData={deleteAnimation}
-              play
-              style={{ width: 310, height: 310 }}
-            />{' '}
+            <Lottie loop animationData={deleteAnimation} play style={{ width: 310, height: 310 }} />{' '}
           </S.AnimationBox>
           <S.GoodByeBox>
             <S.GoodByeComment>

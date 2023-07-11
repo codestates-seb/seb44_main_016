@@ -12,11 +12,7 @@ import CheckboxAgreement from '../../../components/CheckboxAgreement';
 export default function UserUpdate() {
   const router = useRouter();
   const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw');
-  const [PwConfirmInput, password, setPassword] = useInput(
-    'password',
-    '비밀번호 확인',
-    'pwConfirm'
-  );
+  const [PwConfirmInput, password, setPassword] = useInput('password', '비밀번호 확인', 'pwConfirm');
   const [error, setError] = useState({
     password: '회원 탈퇴를 원하시는 경우에 비밀번호를 입력해주세요.',
     passwordConfirm: '비밀번호를 다시 입력해주세요.',
@@ -26,8 +22,6 @@ export default function UserUpdate() {
     labelTitle: '삭제 동의',
     // checkboxAgreement: '탈퇴를 원하고 되돌릴 수 없음에 동의합니다.',
     agreementError: error.policy,
-    isBackgroundWhite: false,
-    hasGuide: true,
   });
   const [isClicked, setIsClicked] = useState(false);
 

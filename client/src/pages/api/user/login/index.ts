@@ -23,6 +23,6 @@ export default function logIn(req: NextApiRequest, res: NextApiResponse) {
     // res.setHeader('Authorization', accessToken);
     res.status(200).json(response);
   } else {
-    res.status(401).json({ error: 'Invalid login credentials' });
+    res.status(401).json({ message: '아이디 또는 비밀번호가 틀렸습니다 !' });
   }
 }

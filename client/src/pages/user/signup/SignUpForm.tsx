@@ -10,21 +10,18 @@ import CheckboxAgreement from '../../../components/CheckboxAgreement';
 import { SIGN_UP_MESSAGES } from '../../../constants/user';
 import SelectBox from '../../../components/SelectBox';
 import validation from '../../../utils/validationCheck';
-import { bounce } from '../../../animation/keyframe';
 import apiUser from '../../../services/apiUser';
+import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 
 export default function SignUpForm() {
   const router = useRouter();
   const [IdInput, loginId, setLoginId] = useInput('text', '아이디', 'loginId');
   const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw');
-  const [PwConfirmInput, password, setPassword] = useInput(
-    'password',
-    '비밀번호 확인',
-    'pwConfirm'
-  );
+  const [PwConfirmInput, password, setPassword] = useInput('password', '비밀번호 확인', 'pwConfirm');
   const [nicknameInput, nickname, setNickname] = useInput('text', '닉네임', 'nickname');
   const [emailInput, emailValue, setEmailValue] = useInput('text', '이메일', 'email');
-
+  const [isClickedProps, RefusalAnimation] = useRefusalAni();
+  const [domainValue, setDomainValue] = useState('');
   const [error, setError] = useState({
     loginId: '',
     password: '',
@@ -41,9 +38,6 @@ export default function SignUpForm() {
     isBackgroundWhite: true,
   });
 
-  const [isClicked, setIsClicked] = useState(false);
-  const [domainValue, setDomainValue] = useState('');
-
   useEffect(() => {
     const newError = {
       loginId: loginId
@@ -58,10 +52,7 @@ export default function SignUpForm() {
       nickname: nickname
         ? validation.nickname(nickname || '')
         : '닉네임을 입력해주세요. 마이 페이지에서 변경 가능합니다.',
-      email:
-        domainValue && emailValue
-          ? validation.email(domainValue || '')
-          : '이메일을 입력해주세요.',
+      email: domainValue && emailValue ? validation.email(domainValue || '') : '이메일을 입력해주세요.',
       policy: isChecked ? '' : '필수 약관에 동의해주세요.',
     };
     setError(newError);
@@ -127,18 +118,8 @@ export default function SignUpForm() {
 
   const handleSignUpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (
-      error.loginId ||
-      error.password ||
-      error.passwordConfirm ||
-      error.nickname ||
-      error.email ||
-      error.policy
-    ) {
-      setIsClicked(true);
-      setTimeout(() => {
-        setIsClicked(false);
-      }, 1000);
+    if (error.loginId || error.passwordConfirm || error.nickname || error.email || error.policy) {
+      RefusalAnimation();
       return;
     }
 
@@ -173,9 +154,7 @@ export default function SignUpForm() {
               </S.Label>
             </S.LabelBox>
             <S.EmailAddress className={i === inputData.length - 1 ? 'email' : ''}>
-              <S.InputBox className={i === inputData.length - 1 ? 'email' : ''}>
-                {el.component}
-              </S.InputBox>
+              <S.InputBox className={i === inputData.length - 1 ? 'email' : ''}>{el.component}</S.InputBox>
               {el.subComponent && (
                 <S.DomainBox>
                   <div>@</div>
@@ -202,7 +181,7 @@ export default function SignUpForm() {
         </S.PolicyLabel>
         {CheckboxComponent}
       </S.PolicyContainer>
-      <S.SubmitBox isClicked={isClicked ? 'true' : undefined}>
+      <S.SubmitBox {...isClickedProps}>
         <S.SubmitBtn large onClick={handleSignUpSubmit}>
           <h2>회원가입</h2>
         </S.SubmitBtn>
@@ -211,9 +190,6 @@ export default function SignUpForm() {
   );
 }
 
-interface SubmitBoxProps {
-  isClicked?: string | undefined;
-}
 const S = {
   ...CommonStyles,
   FormContainer: styled.form`
@@ -305,11 +281,7 @@ const S = {
 
   SubmitBox: styled.div<SubmitBoxProps>`
     margin: 2rem 0 4rem 0;
-    ${({ isClicked }) =>
-      isClicked &&
-      css`
-        animation: ${bounce} 1s infinite;
-      `}
+    ${isClickedStyled}
     h2 {
       font-size: 1.2rem;
       font-weight: 500;

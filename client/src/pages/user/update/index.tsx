@@ -14,11 +14,7 @@ export default function UserUpdate() {
   const router = useRouter();
   const [nicknameInput, nickname, setNickname] = useInput('text', '마마망', 'nickname');
   const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw');
-  const [PwConfirmInput, password, setPassword] = useInput(
-    'password',
-    '비밀번호 확인',
-    'pwConfirm'
-  );
+  const [PwConfirmInput, password, setPassword] = useInput('password', '비밀번호 확인', 'pwConfirm');
   const [error, setError] = useState({
     nickname: '아이디를 입력해주세요.',
     password: '아이디를 입력해주세요.',
@@ -66,13 +62,7 @@ export default function UserUpdate() {
       <S.FormContainer>
         <S.UserImg>
           <div>
-            <Image
-              src='/image/mango.png'
-              alt='프로필 사진'
-              width={150}
-              height={150}
-              style={imageStyle}
-            />
+            <Image src='/image/mango.png' alt='프로필 사진' width={150} height={150} style={imageStyle} />
           </div>
           <S.ImageUploadBtn type='button' aria-label='이미지 업로드 버튼'>
             <ImageUpload />

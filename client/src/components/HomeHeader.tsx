@@ -21,10 +21,7 @@ export default function HomeHeader() {
       <S.HomeHeaderButton onClick={handleClickHomeButton} isActive={isHomeButtonActive}>
         홈
       </S.HomeHeaderButton>
-      <S.HomeHeaderButton
-        onClick={handleClickFollowButton}
-        isActive={isFollowerButtonActive}
-      >
+      <S.HomeHeaderButton onClick={handleClickFollowButton} isActive={isFollowerButtonActive}>
         팔로워
       </S.HomeHeaderButton>
     </S.HomeHeaderContainer>
@@ -52,8 +49,7 @@ const S = {
     font-size: 1.25rem;
     font-weight: ${(props) => props.isActive && 'bold'};
     color: var(--color-gray01);
-    border-bottom: 3px solid
-      ${(props) => (props.isActive ? 'var(--color-primary)' : 'transparent')};
+    border-bottom: 3px solid ${(props) => (props.isActive ? 'var(--color-primary)' : 'transparent')};
 
     display: flex;
     justify-content: center;

@@ -14,7 +14,7 @@ import withAuthn from '../../../../components/WithAuthn';
 function MyPage() {
   const router = useRouter();
   const accessToken = useSelector<RootState>((state) => state.authnReducer.login);
-  console.log(accessToken);
+
   return (
     <S.Container>
       <S.UserProfileContainer>

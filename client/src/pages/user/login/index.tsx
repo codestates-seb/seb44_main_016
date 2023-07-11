@@ -2,27 +2,28 @@
 import Link from 'next/link';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import useInput from '../../../hooks/useComponents';
 import Logo from '../../../../public/image/logo.svg';
 import CommonStyles from '../../../styles/CommonStyles';
-import { bounce } from '../../../animation/keyframe';
 import Oauth from './OAuth';
 import apiUser from '../../../services/apiUser';
 import { useAppDispatch } from '../../../components/redux/hooks';
 import { login } from '../../../components/redux/authnReducer';
-import { setCookie, getCookie, deleteCookie } from 'cookies-next';
+import { setCookie } from 'cookies-next';
+import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 
 export default function Login() {
   const [IdInput, loginId, setLoginId] = useInput('text', '아이디', 'loginId');
   const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw');
+  const [error, setError] = useState('');
+  const [isClickedProps, RefusalAnimation] = useRefusalAni();
 
-  const [isClicked, setIsClicked] = useState(false);
   const router = useRouter();
   const dispatch = useAppDispatch();
+
   const loginData = {
     loginId,
     password: pwValue,
@@ -30,14 +31,24 @@ export default function Login() {
 
   const { mutateAsync } = useMutation(() => apiUser.postLogin(loginData));
 
+  useEffect(() => {
+    if ((!loginId && !pwValue) || (loginId && pwValue)) setError('');
+  }, [loginId, pwValue]);
+
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!loginId || !pwValue) {
+      setError('아이디나 비밀번호를 입력해주세요.');
+      RefusalAnimation();
+      return;
+    }
+
     const res = await mutateAsync();
-    console.log(res.data.user);
+    console.log(res);
 
     if (res.status === 200) {
-      // console.log('here');
+      console.log('here');
       // const accessToken = res.headers.Authorization;
       const accessToken = 'ggg';
       // console.log(accessToken);
@@ -47,7 +58,15 @@ export default function Login() {
       setCookie('refreshToken', '리프레쉬톸흔'); // 나중에 refreshToken 자동으로 받아옴
 
       dispatch(login({ userId, accessToken, loginId, nickname, isLoggedIn: true }));
+
+      setError('');
+      setLoginId('');
+      setPwValue('');
+      alert(`${nickname}님, 환영합니다!`);
       router.push(`/user/mypage/${userId}`);
+    } else if (res.status === 401) {
+      console.log('hh');
+      setError(res.data.message);
     }
 
     return;
@@ -67,7 +86,9 @@ export default function Login() {
         <S.LoginFormBox>
           <S.inputBox>{IdInput}</S.inputBox>
           <S.inputBox>{PwInput}</S.inputBox>
-          <S.LoginBox isClicked={isClicked ? 'true' : undefined}>
+          <S.Error> {error && error}</S.Error>
+
+          <S.LoginBox {...isClickedProps}>
             <S.SubmitBtn large onClick={handleLoginSubmit}>
               <h1>로그인</h1>
             </S.SubmitBtn>
@@ -88,10 +109,6 @@ export default function Login() {
       </S.LoginWrapper>
     </S.LoginContainer>
   );
-}
-
-interface SubmitBoxProps {
-  isClicked?: string | undefined;
 }
 
 const S = {
@@ -127,23 +144,20 @@ const S = {
   `,
   inputBox: styled.div`
     width: 100%;
-    margin-bottom: 0.5rem;
+    &:first-of-type {
+      margin-bottom: 0.5rem;
+    }
   `,
-  AutoLogin: styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0.6rem 0;
+  Error: styled.div`
+    color: var(--color-error-red);
+    margin-top: 0.8rem;
+    min-height: 21px;
   `,
   LoginBox: styled.div<SubmitBoxProps>`
     width: 60%;
-    margin: 1.6rem 0 3rem 0;
-    ${({ isClicked }) =>
-      isClicked &&
-      css`
-        animation: ${bounce} 1s infinite;
-      `}
+    margin: 0.8rem 0 3rem 0;
+    ${isClickedStyled}
+
     h1 {
       font-size: 1.1rem;
       font-weight: 500;
