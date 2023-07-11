@@ -1,6 +1,9 @@
+'use server';
 import Link from 'next/link';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import useInput from '../../../hooks/useComponents';
@@ -8,15 +11,49 @@ import Logo from '../../../../public/image/logo.svg';
 import CommonStyles from '../../../styles/CommonStyles';
 import { bounce } from '../../../animation/keyframe';
 import Oauth from './OAuth';
+import apiUser from '../../../services/apiUser';
+import { useAppDispatch } from '../../../components/redux/hooks';
+import { login } from '../../../components/redux/authnReducer';
+import { setCookie, getCookie, deleteCookie } from 'cookies-next';
 
 export default function Login() {
   const [IdInput, loginId, setLoginId] = useInput('text', '아이디', 'loginId');
   const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw');
-  const [isClicked, setIsClicked] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isClicked, setIsClicked] = useState(false);
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const loginData = {
+    loginId,
+    password: pwValue,
+  };
+
+  const { mutateAsync } = useMutation(() => apiUser.postLogin(loginData));
+
+  const handleLoginSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const res = await mutateAsync();
+    console.log(res.data.user);
+
+    if (res.status === 200) {
+      // console.log('here');
+      // const accessToken = res.headers.Authorization;
+      const accessToken = 'ggg';
+      // console.log(accessToken);
+      const { userId, loginId, nickname, email } = res.data.user;
+      // const refreshToken = getCookie('refreshToken'); 나중에 서버 연결 후
+      // console.log(refreshToken); 나중에 서버 연결 후
+      setCookie('refreshToken', '리프레쉬톸흔'); // 나중에 refreshToken 자동으로 받아옴
+
+      console.log(loginId, nickname, email);
+      dispatch(login({ userId, accessToken, loginId, nickname, email, isLogin: true }));
+      router.push(`/user/mypage/&{userId}`);
+    }
+
     return;
   };
+
   return (
     <S.LoginContainer>
       <Head>
@@ -32,19 +69,19 @@ export default function Login() {
           <S.inputBox>{IdInput}</S.inputBox>
           <S.inputBox>{PwInput}</S.inputBox>
           <S.LoginBox isClicked={isClicked ? 'true' : undefined}>
-            <S.SubmitBtn large onClick={handleSubmit}>
+            <S.SubmitBtn large onClick={handleLoginSubmit}>
               <h1>로그인</h1>
             </S.SubmitBtn>
           </S.LoginBox>
         </S.LoginFormBox>
         <S.Guide>
-          <S.SignUp>
+          <S.SignUpBtn onClick={() => router.push('/user/signup')}>
             <h2>회원가입</h2>
-          </S.SignUp>
+          </S.SignUpBtn>
           <div> | </div>
-          <S.FindPassword>
+          <S.FindPasswordBtn>
             <h2>비밀번호 찾기</h2>
-          </S.FindPassword>
+          </S.FindPasswordBtn>
         </S.Guide>
         <S.OauthBox>
           <Oauth />
@@ -120,7 +157,7 @@ const S = {
     margin-bottom: 1.8rem;
     color: var(--color-point-gray);
   `,
-  SignUp: styled.button`
+  SignUpBtn: styled.button`
     h2 {
       font-size: 1rem;
       font-weight: 400;
@@ -131,7 +168,7 @@ const S = {
       }
     }
   `,
-  FindPassword: styled.button`
+  FindPasswordBtn: styled.button`
     h2 {
       font-size: 1rem;
       font-weight: 400;
