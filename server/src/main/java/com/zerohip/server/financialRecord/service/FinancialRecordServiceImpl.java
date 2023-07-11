@@ -38,7 +38,7 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
 
   // 가계부 전체 조회(동적쿼리 사용 예정)
   @Override
-  public List<FinancialRecord> findAllFaRecs() {
+  public List<FinancialRecord> findFaRecs() {
     return repository.findAll();
   }
 
@@ -47,6 +47,7 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
   public FinancialRecord updateFaRec(Long faRecId, FinancialRecordDto.Patch patchParam) {
     FinancialRecord findFaRec = findVerifiedFaRec(faRecId);
     findFaRec.setFinancialRecordName(patchParam.getFinancialRecordName());
+    findFaRec.setFinancialRecordDescription(patchParam.getFinancialRecordDescription());
 
     FinancialRecord updateFaRec = repository.save(findFaRec);
     return updateFaRec;

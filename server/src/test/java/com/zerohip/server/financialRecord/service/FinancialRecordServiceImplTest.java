@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,6 +31,7 @@ class FinancialRecordServiceImplTest {
   @BeforeEach
   void setUp() {
     // 가계부 인스턴스 생성
+    faRec = new FinancialRecord("test용 가계부", "test용 가계부 설명");
     faRec = new FinancialRecord("test용 가계부");
   }
 
@@ -61,21 +63,29 @@ class FinancialRecordServiceImplTest {
 
   @Test
   @DisplayName("가계부 전체 조회(동적쿼리 사용 예정)")
-  void findAllFaRecs() {
+  void findFaRecs() {
     // 생성된 인스턴스의 정보로 가계부 생성 후 saveFaRec에 저장
     FinancialRecord saveFaRec1 = financialRecordService.createFaRec(faRec);
 
-    FinancialRecord faRec2 = new FinancialRecord("test용 가계부2");
+    FinancialRecord faRec2 = new FinancialRecord("test용 가계부2", "test용 가계부 설명2");
+
     FinancialRecord saveFaRec2 = financialRecordService.createFaRec(faRec2);
 
     log.info("saveFaRec1.getFinancialRecordName() = {}", saveFaRec1.getFinancialRecordName());
     log.info("saveFaRec2.getFinancialRecordName() = {}", saveFaRec2.getFinancialRecordName());
 
+    // Verify
+    findFaRecsTest(saveFaRec1, saveFaRec2);
+  }
+
+  // 가계부 전체 조회 테스트 메서드
+  // '...'는 가변 인자(varags)로 메소드에 임의 개수의 동일타입의 매개변수를 전달
+  void findFaRecsTest(FinancialRecord... faRecs) {
+    List<FinancialRecord> result = financialRecordService.findFaRecs();
+    assertThat(result.size()).isEqualTo(faRecs.length);
+    assertThat(result).containsExactly(faRecs);
     // 생성된 가계부의 id로 조회
     financialRecordService.findAllFaRecs();
-
-    // Verify
-//    assertThat(financialRecordService.findAllFaRecs());
   }
 
   @Test
@@ -89,7 +99,7 @@ class FinancialRecordServiceImplTest {
     FinancialRecord updateFaRec = financialRecordService.updateFaRec
             (
                     saveFaRec.getFinancialRecordId(),
-                    new FinancialRecordDto.Patch("수정된 가계부")
+                    new FinancialRecordDto.Patch("수정된 가계부", "수정된 가계부 설명")
             );
     log.info("updateFaRec.getFinancialRecordName() = {}", updateFaRec.getFinancialRecordName());
 
