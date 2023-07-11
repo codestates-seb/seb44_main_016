@@ -19,18 +19,18 @@ export default function HomeHeader() {
 
   return (
     <S.HomeHeaderContainer>
-      <S.HomeHeaderButton
+      <S.HomeHeaderBtn
         onClick={handleClickHomeButton}
         isActive={isHomeButtonActive}
       >
         홈
-      </S.HomeHeaderButton>
-      <S.HomeHeaderButton
+      </S.HomeHeaderBtn>
+      <S.HomeHeaderBtn
         onClick={handleClickFollowButton}
         isActive={isFollowerButtonActive}
       >
         팔로워
-      </S.HomeHeaderButton>
+      </S.HomeHeaderBtn>
     </S.HomeHeaderContainer>
   );
 }
@@ -49,13 +49,14 @@ const S = {
     justify-content: center;
     align-items: flex-end;
   `,
-  HomeHeaderButton: styled.button<{ isActive: boolean }>`
+  HomeHeaderBtn: styled.button<{ isActive: boolean }>`
     width: 6rem;
     height: 75%;
     background-color: white;
     font-size: 1.25rem;
     font-weight: ${(props) => props.isActive && 'bold'};
-    color: var(--color-gray01);
+    color: ${(props) =>
+      props.isActive ? 'var(--color-primary)' : 'var(--color-gray03)'};
     border-bottom: 3px solid
       ${(props) => (props.isActive ? 'var(--color-primary)' : 'transparent')};
 
