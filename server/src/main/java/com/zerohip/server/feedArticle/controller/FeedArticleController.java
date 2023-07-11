@@ -2,6 +2,7 @@ package com.zerohip.server.feedArticle.controller;
 
 import com.zerohip.server.feedArticle.dto.FeedArticleDto;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
+import com.zerohip.server.feedArticle.mapper.FeedArticleMapper;
 import com.zerohip.server.feedArticle.service.FeedArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,20 +17,23 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FeedArticleController {
     private final FeedArticleService feedArticleService;
+    private final FeedArticleMapper feedArticleMapper;
 
     // 피드 게시글 생성
     @PostMapping()
-    public ResponseEntity<FeedArticle> createFeedArticle(@RequestBody FeedArticle feedArticle) {
+    public ResponseEntity<FeedArticle> createFeedArticle(@RequestBody FeedArticleDto.post requestBody) {
+        FeedArticle feedArticle = feedArticleMapper.feedArticlePostToFeedArticle(requestBody);
         FeedArticle createdArticle = feedArticleService.createFeedArticle(feedArticle);
         return ResponseEntity.ok(createdArticle);
     }
 
     // 피드 게시글 조회(단건)
     @GetMapping("/{feedArticleId}")
-    public ResponseEntity<FeedArticle> getFeedArticle(@PathVariable("feedArticleId") Long feedArticleId) {
+    public ResponseEntity<FeedArticleDto.FeedArticleResponse> getFeedArticle(@PathVariable("feedArticleId") Long feedArticleId) {
         FeedArticle feedArticle = feedArticleService.findFeedArticle(feedArticleId);
         if (feedArticle != null) {
-            return ResponseEntity.ok(feedArticle);
+            FeedArticleDto.FeedArticleResponse response = feedArticleMapper.feedArticleToFeedArticleResponse(feedArticle);
+            return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -39,6 +43,7 @@ public class FeedArticleController {
     @GetMapping()
     public ResponseEntity<List<FeedArticle>> getAllFeedArticles() {
         List<FeedArticle> feedArticles = feedArticleService.findFeedArticles();
+        List<FeedArticleDto.FeedArticleListResponse> responses = feedArticleMapper.feedArticlesToFeedArticleResponses(feedArticles);
         return ResponseEntity.ok(feedArticles);
     }
 
@@ -47,8 +52,10 @@ public class FeedArticleController {
     public ResponseEntity<FeedArticle> updateFeedArticle(
             @PathVariable("feedArticleId") Long feedArticleId,
             @RequestBody FeedArticleDto.Patch patchParam) {
+        FeedArticle feedArticle = feedArticleMapper.feedArticlePatchToFeedArticle(patchParam);
         FeedArticle updatedArticle = feedArticleService.updateFeedArticle(feedArticleId, patchParam);
         if (updatedArticle != null) {
+            FeedArticleDto.FeedArticleResponse response = feedArticleMapper.feedArticleToFeedArticleResponse(updatedArticle);
             return ResponseEntity.ok(updatedArticle);
         } else {
             return ResponseEntity.notFound().build();
