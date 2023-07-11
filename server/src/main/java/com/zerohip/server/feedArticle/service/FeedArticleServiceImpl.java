@@ -45,6 +45,7 @@ public class FeedArticleServiceImpl implements FeedArticleService {
         return feedArticleRepository.findAll();
     }
 
+    //피드 게시글 수정
     @Override
     public FeedArticle updateFeedArticle(Long feedArticleId, FeedArticleDto.Patch patchParam) {
         FeedArticle findFeedArticle = findVerifiedFeedArticle(feedArticleId);
@@ -55,7 +56,7 @@ public class FeedArticleServiceImpl implements FeedArticleService {
         return updateFeedArticle;
     }
 
-    //(현재 에러 때문에 메서드만 추가)
+    //피드 게시글 삭제
     @Override
     public void deleteFeedArticle(Long feedArticleId) {
         FeedArticle findFeedArticle = findVerifiedFeedArticle(feedArticleId);
