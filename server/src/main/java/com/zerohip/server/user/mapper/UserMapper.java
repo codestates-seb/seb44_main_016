@@ -10,6 +10,10 @@ public interface UserMapper {
     User userPostDtoToUser(UserDto.Post userPostDto);
     User userPatchDtoToUser(UserDto.Patch userPatchDto);
 
+    User checkUserByLoginId(UserDto.CheckLoginId checkLoginIdDto);
+
+    User checkUserByEmail(UserDto.CheckEmail checkEmailDto);
+
 
     // response
     UserDto.Response userToUserResponseDto(User user);

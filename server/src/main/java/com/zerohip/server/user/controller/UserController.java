@@ -38,16 +38,36 @@ public class UserController {
     }
 
 
+    // ------------ 회원 가입 시 아이디, 이메일 중복 검증
+//    @PostMapping("/check/loginid")
+//    public ResponseEntity checkUserByLoginId(@RequestBody UserDto.CheckLoginId checkLoginIdDto) {
+//
+//        User userByLoginId = mapper.checkUserByLoginId(checkLoginIdDto);
+//        userService.
+//    }
+
+    // 글로벌,비즈니스 로직 엑셉션으로 예외처리를 해야하나?
+
+//    @PostMapping("/check/email")
+//    public ResponseEntity checkUserByEmail(@RequestBody UserDto.CheckEmail checkEmailDto) {
+//
+//        User userByEmail = mapper.checkUserByEmail(checkEmailDto);
+//
+//    }
+
+
 
 
     @DeleteMapping("/delete")
-    public ResponseEntity deleteUser(@AuthenticationPrincipal User author) {
+    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal User author) {
 
         if (author == null) {
-            throw new BusinessLogicException(ExceptionCode.USER_UNAUTHORIZED);
+            throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
         }
 
         userService.deleteUser(author);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 }

@@ -53,7 +53,7 @@ public class ErrorResponse {
         return new ErrorResponse(null, ConstraintViolationError.of(violations));
     }
 
-    //
+    // 커스텀 코드 추가
     public static ErrorResponse of(ExceptionCode exceptionCode) {
         return new ErrorResponse(exceptionCode.getStatus(), exceptionCode.getCustomCode(), exceptionCode.getMessage());
     }

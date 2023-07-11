@@ -79,6 +79,35 @@ public class UserDto {
 
 
     @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class CheckLoginId {
+
+        private String loginId;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class CheckEmail {
+
+        private String email;
+    }
+
+//    @Getter
+//    @AllArgsConstructor
+//    @NoArgsConstructor
+//    @Builder
+//    public static class CheckLoginIdResponse {
+//
+//        private String
+//    }
+
+
+
+    @Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
@@ -88,7 +117,7 @@ public class UserDto {
         private String email;
         private String loginId;
         private String password;
-        private String nickName;
+        private String nickname;
         private LocalDateTime createdAt;
 
         // 매핑 후 추가
@@ -107,7 +136,7 @@ public class UserDto {
         private String email;
         private String loginId;
         private String password;
-        private String nickName;
+        private String nickname;
         private LocalDateTime modifiedAt;
 
     }

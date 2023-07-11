@@ -20,4 +20,5 @@ public interface UserService {
 
   // User 삭제
   void deleteUser(User user);
+
 }

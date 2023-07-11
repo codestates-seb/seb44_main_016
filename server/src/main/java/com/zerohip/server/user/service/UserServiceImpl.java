@@ -72,9 +72,11 @@ public class UserServiceImpl implements UserService{
     }
 
 
+
+
     // ------------------- 검증 메서드 --------------------------
 
-    private User findVerifyUserByLoginId(String loginId) {
+    public User findVerifyUserByLoginId(String loginId) {
 
         Optional<User> optionalUser = userRepository.findUserByLoginId(loginId);
         User foundUser = optionalUser.orElseThrow(() ->
@@ -98,4 +100,5 @@ public class UserServiceImpl implements UserService{
             throw new BusinessLogicException(ExceptionCode.EMAIL_EXISTS);
         }
     }
+
 }
