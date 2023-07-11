@@ -48,7 +48,7 @@ export default function Login() {
 
       console.log(loginId, nickname, email);
       dispatch(login({ userId, accessToken, loginId, nickname, email, isLogin: true }));
-      router.push(`/user/mypage/&{userId}`);
+      router.push(`/`);
     }
 
     return;
