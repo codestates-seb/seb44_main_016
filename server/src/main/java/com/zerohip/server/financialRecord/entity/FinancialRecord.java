@@ -25,6 +25,9 @@ public class FinancialRecord {
 
   @Column(nullable = true, unique = false, updatable = true)
   private String memo;
+
+  // 게시물 수
+  // 타임라인수 -> 매핑 시 적용
   // 리스트 매핑
 
   // 유저 매핑(List 형식)
