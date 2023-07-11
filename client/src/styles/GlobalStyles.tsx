@@ -33,6 +33,9 @@ const GlobalStyles = () => (
         --color-point-gray: #a4a7b5;
         --color-point-light-gray: #D6D6D6;
         --color-white : #FFF;
+        --color-black: #000;
+
+        --color-error-red: #df0c0c;
 
         --color-error-red: #df0c0c;
 
@@ -116,7 +119,6 @@ const GlobalStyles = () => (
         cursor: pointer;
         background: none;
         border: none;
-        outline: none;
         font-size: inherit;
         font-weight: inherit;
         font-family: inherit;
@@ -127,8 +129,8 @@ const GlobalStyles = () => (
         border: none;
       }
       
-      input,textarea { font-size: var(--text-default)}
-
+      input,textarea { font-size:  1rem}
+      
       .blind {
         position: absolute;
         width: 1px;

@@ -1,26 +1,38 @@
 import styled from '@emotion/styled';
+import Link from 'next/link';
 
-interface ButtonProps {
+interface Props {
   small?: boolean;
   large?: boolean;
+  color?: string;
 }
 
 const CommonStyles = {
-  SubmitBtn: styled.button<ButtonProps>`
+  SubmitBtn: styled.button<Props>`
     position: relative;
     display: inline-block;
-    color: var(--color-white);
+    color: ${(props) =>
+      props.color === '--color-point-lilac'
+        ? `var(--color-black)`
+        : `var(--color-white)`};
     padding: 0.75rem 1rem;
     border-radius: 100px;
     font-weight: 400;
-    border: 2px solid var(--color-primary);
+    border: 2px solid
+      ${(props) =>
+        props.color ? `var(${props.color})` : `var(--color-primary)`};
     overflow: hidden;
     background-color: white;
     line-height: 1;
     z-index: 1;
 
     &:hover {
-      color: var(--color-primary);
+      color: ${(props) =>
+        props.color === '--color-point-lilac'
+          ? `var(--color-black)`
+          : props.color
+          ? `var(${props.color})`
+          : `var(--color-primary)`};
       background-color: white;
       transition-duration: 0.7s;
       font-weight: 700;
@@ -34,7 +46,97 @@ const CommonStyles = {
       left: -4rem;
       z-index: -1;
       border-radius: 100%;
-      background: var(--color-primary);
+      background: ${(props) =>
+        props.color ? `var(${props.color})` : `var(--color-primary)`};
+      transition: 0.7s;
+    }
+
+    &:hover::before {
+      top: 2.5rem;
+      left: 2.5rem;
+    }
+    ${({ small }) =>
+      small &&
+      `
+    width: auto;
+    padding: 0.68rem 1.125rem;
+    &::before {
+        width: 8rem;
+        height: 8rem;
+        top:-1.6rem;
+        left:-1.6rem;
+      }
+    &:hover::before{
+      top: 4rem;
+      left: 4rem;
+    }
+  `}
+
+    ${({ large }) =>
+      large &&
+      `
+    width: 100%;
+    max-width: 40rem;
+    &::before {
+        width: 80rem;
+        height: 80rem;
+        top:-16rem;
+        left:-16rem;
+      }
+
+      &:hover::before{
+        top: 10rem;
+        left: 10rem;
+      }
+  `}
+  
+  ${({ small, large }) =>
+      !small &&
+      !large &&
+      `
+    width: 10rem;
+  `}
+  `,
+  LinkBtn: styled(Link)<Props>`
+    position: relative;
+    display: inline-block;
+    color: ${(props) =>
+      props.color === '--color-point-lilac'
+        ? `var(--color-black)`
+        : `var(--color-white)`};
+    padding: 1rem;
+    border-radius: 100px;
+    font-weight: 400;
+    border: 2px solid
+      ${(props) =>
+        props.color ? `var(${props.color})` : `var(--color-primary)`};
+    overflow: hidden;
+    background-color: white;
+    z-index: 1;
+    text-align: center;
+
+    &:hover {
+      color: ${(props) =>
+        props.color === '--color-point-lilac'
+          ? `var(--color-black)`
+          : props.color
+          ? `var(${props.color})`
+          : `var(--color-primary)`};
+      background-color: white;
+      transition-duration: 0.7s;
+      font-weight: 700;
+    }
+    &::before {
+      content: '';
+      position: absolute;
+      width: 20rem;
+      height: 20rem;
+      top: -4rem;
+      left: -4rem;
+      z-index: -1;
+      border-radius: 100%;
+      background: ${(props) =>
+        props.color ? `var(${props.color})` : `var(--color-primary)`};
       transition: 0.7s;
     }
 
