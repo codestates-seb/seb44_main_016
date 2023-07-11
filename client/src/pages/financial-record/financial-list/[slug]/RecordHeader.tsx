@@ -1,57 +1,72 @@
 import styled from '@emotion/styled';
 import CommonStyles from '../../../../styles/CommonStyles';
 import { useRouter } from 'next/router';
+import Tab from '../../../../components/Tab';
 
 export default function RecordHeader() {
   const router = useRouter();
   const faRecId = router.query.slug;
+  const tabs = [
+    {
+      name: '가계부',
+      link: `/financial-record/financial-list/${faRecId}`,
+    },
+    {
+      name: '타임라인',
+      link: `/financial-record/financial-list/${faRecId}/timeline`,
+    },
+  ];
+
   return (
-    <S.Container>
-      <S.ImgBox>
-        <img
-          src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlX16ekpWJwSiFBtYqm_BIzS2E8gs2Iqf_87SbY3zQx4u59Zv-mjMUGmT9K0xOsgDICn0&usqp=CAU'
-          alt=''
-        />
-      </S.ImgBox>
-      <S.ContentBox>
-        <div>
-          <S.FaRecName>가계부 이름</S.FaRecName>
-          <S.LinkWrap>
-            {/* <S.LinkBtn
-              href='/financial-record/edit/[slug]'
-              // as={`/financial-record/edit/${faRecId}`}
-              // color='--color-point-lilac'
-              small
-            >
-              가계부 편집
-            </S.LinkBtn> */}
-            <S.SubmitBtn small>가계부 편집</S.SubmitBtn>
-            {/* <S.LinkBtn href='/' size='small'>
-              가계부 작성
-            </S.LinkBtn> */}
-          </S.LinkWrap>
-        </div>
-        <div>
-          <S.Button type='button'>
-            게시물
-            <span>59</span>
-          </S.Button>
-          <S.Button type='button'>
-            타임라인
-            <span>30</span>
-          </S.Button>
-          <S.Button type='button'>
-            멤버
-            <span>6</span>
-          </S.Button>
-        </div>
-        <S.DescContainer>
-          가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부
-          설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부
-          설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명
-        </S.DescContainer>
-      </S.ContentBox>
-    </S.Container>
+    <>
+      <S.Container>
+        <S.ImgBox>
+          <img
+            src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlX16ekpWJwSiFBtYqm_BIzS2E8gs2Iqf_87SbY3zQx4u59Zv-mjMUGmT9K0xOsgDICn0&usqp=CAU'
+            alt=''
+          />
+        </S.ImgBox>
+        <S.ContentBox>
+          <div>
+            <S.FaRecName>가계부 이름</S.FaRecName>
+            <S.LinkWrap>
+              <S.LinkBtn
+                href='/financial-record/edit/[slug]'
+                as={`/financial-record/edit/${faRecId}`}
+                color='--color-point-lilac'
+                size='small'
+              >
+                가계부 편집
+              </S.LinkBtn>
+              <S.LinkBtn href='/' size='small'>
+                가계부 작성
+              </S.LinkBtn>
+            </S.LinkWrap>
+          </div>
+          <S.ButtonWrap>
+            <S.Button type='button'>
+              게시물
+              <span>59</span>
+            </S.Button>
+            <S.Button type='button'>
+              타임라인
+              <span>30</span>
+            </S.Button>
+            <S.Button type='button'>
+              멤버
+              <span>6</span>
+            </S.Button>
+          </S.ButtonWrap>
+          <S.DescContainer>
+            가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부
+            설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부
+            설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명
+          </S.DescContainer>
+        </S.ContentBox>
+      </S.Container>
+
+      <Tab tabs={tabs} />
+    </>
   );
 }
 
@@ -111,9 +126,18 @@ const S = {
     -webkit-background-clip: text;
     background-image: linear-gradient(to right, #0d0d0d, var(--color-primary));
   `,
+  ButtonWrap: styled.div`
+    display: flex;
+    gap: 2rem;
+  `,
   Button: styled.button`
+    &:hover {
+      color: var(--color-gray02);
+    }
     & > span {
       font-weight: 600;
+      color: var(--color-primary);
+      margin-left: 0.625rem;
     }
   `,
   DescContainer: styled.div`
