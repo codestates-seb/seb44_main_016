@@ -28,7 +28,7 @@ export default function HomeHeader() {
         홈
       </S.HomeHeaderBtn>
       <S.HomeHeaderBtn
-        href='/?filterfollower=true'
+        href='/feedArticles?filterfollower=true'
         onClick={handleClickFollowButton}
         isActive={isFollowerButtonActive}
       >

@@ -79,7 +79,7 @@ export default function Aside(props: Props) {
                 )}
               </>
             )}
-            <AsideButton href='/?rank=true' leftIcon={svgs.ranking}>
+            <AsideButton href='/feedArticles?rank=true' leftIcon={svgs.ranking}>
               {isTabClosed && '명예의 전당'}
             </AsideButton>
             <AsideButton
