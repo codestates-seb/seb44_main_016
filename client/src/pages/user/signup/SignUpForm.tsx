@@ -158,7 +158,7 @@ export default function SignUpForm() {
     setEmailValue('');
     setDomainValue('');
     setIsChecked(false);
-    router.push('/');
+    router.push('/user/login');
   };
 
   return (
