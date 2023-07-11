@@ -13,7 +13,7 @@ export default function HomeHeader() {
     setIsHomeButtonActive(true);
     setIsFollowerButtonActive(false);
   };
-  const handleClickFollowButton = () => {
+  const handleClickFollowerButton = () => {
     setIsHomeButtonActive(false);
     setIsFollowerButtonActive(true);
   };
@@ -27,9 +27,10 @@ export default function HomeHeader() {
       >
         홈
       </S.HomeHeaderBtn>
+      {/* href='/?filterfollower=true' // 쿼리 미확정 */}
       <S.HomeHeaderBtn
-        href='/?filterfollower=true'
-        onClick={handleClickFollowButton}
+        href=''
+        onClick={handleClickFollowerButton}
         isActive={isFollowerButtonActive}
       >
         팔로워

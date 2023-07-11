@@ -55,8 +55,8 @@ export default function Aside(props: Props) {
                 >
                   {isTabClosed && '알림'}
                 </AsideButton>
+                {/* href='/financial-record' */}
                 <AsideButton
-                  href='/financial-record'
                   leftIcon={svgs.faRec}
                   rightIcon={svgs.dropdown}
                   isReverse={isBookmarkedFaRecListOpened}
@@ -66,20 +66,24 @@ export default function Aside(props: Props) {
                 </AsideButton>
                 {isBookmarkedFaRecListOpened && isTabClosed && (
                   <ol>
-                    <AsideButton href='/financial-record/1' isSmall={true}>
+                    {/* href='/financial-record/1' */}
+                    <AsideButton isSmall={true}>
                       {isTabClosed && 'XXX의 가계부'}
                     </AsideButton>
-                    <AsideButton href='/financial-record/2' isSmall={true}>
+                    {/* href='/financial-record/2' */}
+                    <AsideButton isSmall={true}>
                       {isTabClosed && '♡ 데이트 통장 ♥'}
                     </AsideButton>
-                    <AsideButton href='/financial-record/3' isSmall={true}>
+                    {/* href='/financial-record/3' */}
+                    <AsideButton isSmall={true}>
                       {isTabClosed && '산악회 곗돈 장부'}
                     </AsideButton>
                   </ol>
                 )}
               </>
             )}
-            <AsideButton href='/?rank=true' leftIcon={svgs.ranking}>
+            {/* href='/?rank=true' // 쿼리 미확정 */}
+            <AsideButton leftIcon={svgs.ranking}>
               {isTabClosed && '명예의 전당'}
             </AsideButton>
             <AsideButton
@@ -93,7 +97,8 @@ export default function Aside(props: Props) {
         <S.Lower>
           {props.isLoggedIn ? (
             <>
-              <AsideProfileBox href='/user/mypage' isTabClosed={isTabClosed} />
+              {/* href='/user/mypage' */}
+              <AsideProfileBox isTabClosed={isTabClosed} />
               {isTabClosed ? (
                 <S.LinkBtn href='/editor'>글쓰기</S.LinkBtn>
               ) : (
@@ -103,7 +108,7 @@ export default function Aside(props: Props) {
           ) : isTabClosed ? (
             <S.LinkBtn href='/user/login'>로그인</S.LinkBtn>
           ) : (
-            <AsideButton href='/editor' leftIcon={svgs.person} />
+            <AsideButton href='/user/login' leftIcon={svgs.person} />
           )}
         </S.Lower>
       </S.AsideInnerContainer>
