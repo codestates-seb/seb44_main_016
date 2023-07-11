@@ -1,14 +1,18 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
-interface Props {
+interface ButtonProps {
   small?: boolean;
   large?: boolean;
   color?: string;
 }
+interface LinkProps {
+  size?: string;
+  color?: string;
+}
 
 const CommonStyles = {
-  SubmitBtn: styled.button<Props>`
+  SubmitBtn: styled.button<ButtonProps>`
     position: relative;
     display: inline-block;
     color: ${(props) =>
@@ -61,8 +65,8 @@ const CommonStyles = {
     width: auto;
     padding: 0.68rem 1.125rem;
     &::before {
-        width: 8rem;
-        height: 8rem;
+        width: 10rem;
+        height: 10rem;
         top:-1.6rem;
         left:-1.6rem;
       }
@@ -97,7 +101,7 @@ const CommonStyles = {
     width: 10rem;
   `}
   `,
-  LinkBtn: styled(Link)<Props>`
+  LinkBtn: styled(Link)<LinkProps>`
     position: relative;
     display: inline-block;
     color: ${(props) =>
@@ -144,14 +148,14 @@ const CommonStyles = {
       top: 2.5rem;
       left: 2.5rem;
     }
-    ${({ small }) =>
-      small &&
+    ${({ size }) =>
+      size === 'small' &&
       `
     width: auto;
     padding: 0.68rem 1.125rem;
     &::before {
-        width: 8rem;
-        height: 8rem;
+        width: 10rem;
+        height: 10rem;
         top:-1.6rem;
         left:-1.6rem;
       }
@@ -161,8 +165,8 @@ const CommonStyles = {
     }
   `}
 
-    ${({ large }) =>
-      large &&
+    ${({ size }) =>
+      size === 'large' &&
       `
     width: 100%;
     max-width: 40rem;
@@ -179,9 +183,9 @@ const CommonStyles = {
       }
   `}
   
-  ${({ small, large }) =>
-      !small &&
-      !large &&
+  ${({ size }) =>
+      size !== 'small' &&
+      size !== 'large' &&
       `
     width: 10rem;
   `}
