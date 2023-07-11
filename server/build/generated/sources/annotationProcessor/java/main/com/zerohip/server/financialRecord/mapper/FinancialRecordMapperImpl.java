@@ -2,6 +2,7 @@ package com.zerohip.server.financialRecord.mapper;
 
 import com.zerohip.server.financialRecord.dto.FinancialRecordDto;
 import com.zerohip.server.financialRecord.entity.FinancialRecord;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.processing.Generated;
@@ -9,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-07-06T14:18:57+0900",
-    comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.1.1.jar, environment: Java 17.0.7 (Amazon.com Inc.)"
+    date = "2023-07-11T14:28:16+0900",
+    comments = "version: 1.5.3.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.1.1.jar, environment: Java 11.0.18 (Azul Systems, Inc.)"
 )
 @Component
 public class FinancialRecordMapperImpl implements FinancialRecordMapper {
@@ -53,7 +54,10 @@ public class FinancialRecordMapperImpl implements FinancialRecordMapper {
         financialRecordId = financialRecord.getFinancialRecordId();
         financialRecordName = financialRecord.getFinancialRecordName();
 
-        FinancialRecordDto.Response response = new FinancialRecordDto.Response( financialRecordId, financialRecordName );
+        LocalDateTime createdAt = null;
+        LocalDateTime modifiedAt = null;
+
+        FinancialRecordDto.Response response = new FinancialRecordDto.Response( financialRecordId, financialRecordName, createdAt, modifiedAt );
 
         return response;
     }
