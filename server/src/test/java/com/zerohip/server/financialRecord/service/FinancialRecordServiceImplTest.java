@@ -32,7 +32,7 @@ class FinancialRecordServiceImplTest {
   @BeforeEach
   void setUp() {
     // 가계부 인스턴스 생성
-    faRec = new FinancialRecord("test용 가계부");
+    faRec = new FinancialRecord("test용 가계부", "test용 가계부 설명");
   }
 
   @Test
@@ -97,7 +97,7 @@ class FinancialRecordServiceImplTest {
     FinancialRecord updateFaRec = financialRecordService.updateFaRec
             (
                     saveFaRec.getFinancialRecordId(),
-                    new FinancialRecordDto.Patch("수정된 가계부")
+                    new FinancialRecordDto.Patch("수정된 가계부", "수정된 가계부 설명")
             );
     log.info("updateFaRec.getFinancialRecordName() = {}", updateFaRec.getFinancialRecordName());
 
