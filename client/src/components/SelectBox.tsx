@@ -112,7 +112,9 @@ export default function SelectBox({ searchItem, setSearchItem }: SelectBoxProps)
         </S.DropDownBtn>
         {isDropDownClicked && isLayoutClicked && (
           <>
-            <S.Ul>{optionElements.length > 0 ? optionElements : <S.Result>검색된 결과가 없습니다.</S.Result>}</S.Ul>
+            <S.Ul>
+              {optionElements.length > 0 ? optionElements : <S.Result>검색된 결과가 없습니다.</S.Result>}
+            </S.Ul>
             <S.Layout onClick={handleDropBoxClick}></S.Layout>
           </>
         )}

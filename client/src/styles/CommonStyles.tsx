@@ -15,7 +15,8 @@ const CommonStyles = {
   SubmitBtn: styled.button<ButtonProps>`
     position: relative;
     display: inline-block;
-    color: ${(props) => (props.color === '--color-point-lilac' ? `var(--color-black)` : `var(--color-white)`)};
+    color: ${(props) =>
+      props.color === '--color-point-lilac' ? `var(--color-black)` : `var(--color-white)`};
     padding: 1rem;
     border-radius: 100px;
     font-weight: 400;
@@ -98,7 +99,8 @@ const CommonStyles = {
   LinkBtn: styled(Link)<LinkProps>`
     position: relative;
     display: inline-block;
-    color: ${(props) => (props.color === '--color-point-lilac' ? `var(--color-black)` : `var(--color-white)`)};
+    color: ${(props) =>
+      props.color === '--color-point-lilac' ? `var(--color-black)` : `var(--color-white)`};
     padding: 1rem;
     border-radius: 100px;
     font-weight: 400;
