@@ -1,31 +1,14 @@
-import {
-  useState,
-  useEffect,
-  useRef,
-  ChangeEvent,
-  KeyboardEvent,
-  MouseEvent,
-  FocusEvent,
-} from 'react';
+import { useState, useEffect, useRef, ChangeEvent, KeyboardEvent, MouseEvent, FocusEvent } from 'react';
 import CommonStyles from '../styles/CommonStyles';
 import styled from '@emotion/styled';
 import DropDown from '../../public/image/dropdown.svg';
 
-const DOMAIN = [
-  'naver.com',
-  'gmail.com',
-  'daum.net',
-  'outlook.com',
-  'korea.kr',
-];
+const DOMAIN = ['naver.com', 'gmail.com', 'daum.net', 'outlook.com', 'korea.kr'];
 interface SelectBoxProps {
   searchItem: string;
   setSearchItem: (value: string) => void;
 }
-export default function SelectBox({
-  searchItem,
-  setSearchItem,
-}: SelectBoxProps) {
+export default function SelectBox({ searchItem, setSearchItem }: SelectBoxProps) {
   const [isDropDownClicked, setIsDropDownClicked] = useState(false);
   const [isLayoutClicked, setIsLayoutClicked] = useState(false);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(0);
@@ -69,10 +52,7 @@ export default function SelectBox({
       e.preventDefault();
       setSelectedOptionIndex((prevIndex) => prevIndex - 1);
       setSearchItem(filteredItems[selectedOptionIndex]);
-    } else if (
-      e.key === 'ArrowDown' &&
-      selectedOptionIndex < DOMAIN.length - 1
-    ) {
+    } else if (e.key === 'ArrowDown' && selectedOptionIndex < DOMAIN.length - 1) {
       e.preventDefault();
       setSelectedOptionIndex((prevIndex) => prevIndex + 1);
       setSearchItem(filteredItems[selectedOptionIndex]);
@@ -104,11 +84,7 @@ export default function SelectBox({
   };
 
   const optionElements = filteredItems.map((el, i) => (
-    <S.Li
-      key={el}
-      onClick={() => handleOptionClick(el)}
-      className={searchItem === el ? 'selected' : ''}
-    >
+    <S.Li key={el} onClick={() => handleOptionClick(el)} className={searchItem === el ? 'selected' : ''}>
       {el}
     </S.Li>
   ));
@@ -137,11 +113,7 @@ export default function SelectBox({
         {isDropDownClicked && isLayoutClicked && (
           <>
             <S.Ul>
-              {optionElements.length > 0 ? (
-                optionElements
-              ) : (
-                <S.Result>검색된 결과가 없습니다.</S.Result>
-              )}
+              {optionElements.length > 0 ? optionElements : <S.Result>검색된 결과가 없습니다.</S.Result>}
             </S.Ul>
             <S.Layout onClick={handleDropBoxClick}></S.Layout>
           </>

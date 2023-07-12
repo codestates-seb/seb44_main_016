@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import styled from '@emotion/styled';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-
+import { Providers } from '../components/redux/provider';
 import Aside from '../components/Aside';
 import HomeHeader from '../components/HomeHeader';
 
@@ -16,6 +16,8 @@ const App = ({ Component, pageProps }: AppProps) => {
   let isShowNav = true;
   let isShowHeader = false;
   let bgColor = '#F0F3F8';
+  let maxWidth = true;
+
   if (router.pathname === '/') {
     isShowHeader = true;
   } else if (
@@ -27,28 +29,33 @@ const App = ({ Component, pageProps }: AppProps) => {
     if (router.pathname.startsWith('/user/signup')) {
       bgColor = '#FFF';
     }
+    if (router.pathname.startsWith('/user/login')) {
+      maxWidth = false;
+    }
   }
 
   return (
     <>
       {/*모든 ReactDOM에 margin: 0; padding: 0; box-sizing: border-box; 적용 */}
-      <QueryClientProvider client={queryClient}>
-        <GlobalStyles />
-        <S.RootScreen>
-          <S.AppContainer>
-            <S.FlexPage bgColor={bgColor}>
-              {isShowNav && <Aside isLoggedIn={true} />}
-              <S.SubPage>
-                {isShowHeader && <HomeHeader />}
-                <S.Main isShowNav={isShowNav} isShowHeader={isShowHeader}>
-                  <Component {...pageProps} />
-                </S.Main>
-              </S.SubPage>
-            </S.FlexPage>
-          </S.AppContainer>
-        </S.RootScreen>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+      <Providers>
+        <QueryClientProvider client={queryClient}>
+          <GlobalStyles />
+          <S.RootScreen>
+            <S.AppContainer maxWidth={maxWidth}>
+              <S.FlexPage bgColor={bgColor}>
+                {isShowNav && <Aside isLoggedIn={true} />}
+                <S.SubPage>
+                  {isShowHeader && <HomeHeader />}
+                  <S.Main isShowNav={isShowNav} isShowHeader={isShowHeader}>
+                    <Component {...pageProps} />
+                  </S.Main>
+                </S.SubPage>
+              </S.FlexPage>
+            </S.AppContainer>
+          </S.RootScreen>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </Providers>
     </>
   );
 };
@@ -63,8 +70,9 @@ const S = {
     min-height: 100vh;
   `,
 
-  AppContainer: styled.div`
-    max-width: var(--app-max-w);
+  AppContainer: styled.div<{ maxWidth: boolean }>`
+    /* max-width: var(--app-max-w); */
+    max-width: ${(props) => props.maxWidth && 'var(--app-max-w)'};
     width: 100%;
     display: flex;
   `,

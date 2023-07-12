@@ -12,23 +12,16 @@ import CheckboxAgreement from '../../../components/CheckboxAgreement';
 export default function UserUpdate() {
   const router = useRouter();
   const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw');
-  const [PwConfirmInput, password, setPassword] = useInput(
-    'password',
-    '비밀번호 확인',
-    'pwConfirm'
-  );
+  const [PwConfirmInput, password, setPassword] = useInput('password', '비밀번호 확인', 'pwConfirm');
   const [error, setError] = useState({
-    nickname: '아이디를 입력해주세요.',
-    password: '비밀번호를 입력해주세요.',
-    passwordConfirm: '비밀번호를 입력해주세요.',
-    policy: '동의해주세요.',
+    password: '회원 탈퇴를 원하시는 경우에 비밀번호를 입력해주세요.',
+    passwordConfirm: '비밀번호를 다시 입력해주세요.',
+    policy: '탈퇴를 원하고 되돌릴 수 없음에 동의합니다.',
   });
   const { CheckboxComponent, isChecked, setIsChecked } = CheckboxAgreement({
     labelTitle: '삭제 동의',
-    checkboxAgreement: '탈퇴를 원하고 되돌릴 수 없음에 동의합니다.',
+    // checkboxAgreement: '탈퇴를 원하고 되돌릴 수 없음에 동의합니다.',
     agreementError: error.policy,
-    isBackgroundWhite: false,
-    hasGuide: true,
   });
   const [isClicked, setIsClicked] = useState(false);
 
@@ -38,7 +31,6 @@ export default function UserUpdate() {
         htmlFor: 'pw',
         text: '비밀번호',
       },
-      guide: USER_DELETE_MESSAGES.PASSWORD_GUIDE,
       component: PwInput,
       error: error.password,
     },
@@ -47,7 +39,6 @@ export default function UserUpdate() {
         htmlFor: 'pwConfirm',
         text: '비밀번호 확인',
       },
-      guide: USER_DELETE_MESSAGES.PASSWORD_CONFIRM_GUIDE,
       component: PwConfirmInput,
       error: error.passwordConfirm,
     },
@@ -68,11 +59,7 @@ export default function UserUpdate() {
       </Head>
       <h1 className='blind'>제로힙 회원 탈퇴</h1>
       <S.BackBox>
-        <button
-          type='button'
-          aria-label='뒤로 가기'
-          onClick={() => router.back()}
-        >
+        <button type='button' aria-label='뒤로 가기' onClick={() => router.back()}>
           <BackBtn width='25' fill='#b8b7c2' aria-hidden={true} />
         </button>
       </S.BackBox>
@@ -80,21 +67,17 @@ export default function UserUpdate() {
         <h2 className='blind'>경고 메시지</h2>
 
         <S.WarningMessage>
-          회원 탈퇴를 할 경우, {'마마망'}님의 회원 정보, 가계부, 팔로워 모든
-          데이터가 삭제되며 되돌릴 수 없습니다.
+          {`회원 탈퇴를 할 경우, ${'마마망'}님의 회원 정보, 가계부, 구독 목록 등`}
+          <br />
+          {`모든 데이터가 삭제되며 되돌릴 수 없습니다.`}
         </S.WarningMessage>
-        <input
-          name='username'
-          autoComplete='사용자명'
-          style={{ display: 'none' }}
-        />
+        <input name='username' autoComplete='사용자명' style={{ display: 'none' }} />
         {inputData.map((el) => (
           <S.InputBox key={el.label.text}>
             <S.LabelBox>
               <S.Label htmlFor={el.label.htmlFor}>
                 <h2>{el.label.text}</h2>
               </S.Label>
-              <S.Guide>{el.guide}</S.Guide>
             </S.LabelBox>
             <S.InputField>{el.component}</S.InputField>
             <S.Error>
@@ -169,7 +152,7 @@ const S = {
   WarningMessage: styled.h3`
     width: 61%;
     padding: 1rem 0;
-    color: red;
+    color: var(--color-error-red);
     font-size: 1.1rem;
     font-weight: 500;
     text-align: center;
@@ -189,37 +172,31 @@ const S = {
   `,
   Error: styled.div`
     padding-left: 20px;
-    font-size: 0.9rem;
+    font-size: 0.98rem;
     margin-top: 8px;
-    color: var(--color-point-purple);
+    color: var(--color-error-red);
+
     h4 {
-      font-weight: 500;
+      font-weight: 400;
     }
   `,
   InputBox: styled.div`
     width: 53%;
   `,
   LabelBox: styled.div`
-    padding-left: 10px;
     margin-bottom: 0.7rem;
   `,
   Label: styled.label`
     font-weight: 600;
     font-size: 1rem;
     display: inline-block;
+    margin: 2rem 0 0 0rem;
     h2 {
       font-weight: 600;
       font-size: 1.07rem;
     }
   `,
-  Guide: styled.h3`
-    color: var(--color-point-gray);
-    display: inline-block;
-    margin: 2rem 0 0 0.7rem;
 
-    font-weight: 500;
-    font-size: 0.9rem;
-  `,
   ModifyBtn: styled.button`
     position: relative;
     display: inline-block;

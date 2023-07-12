@@ -2,15 +2,17 @@ import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import Image from 'next/image';
 import Head from 'next/head';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../components/redux/store';
 import { keyframes, css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import CommonStyles from '../../../../styles/CommonStyles';
 import useInput, { useCheckboxInput } from '../../../../hooks/useComponents';
 import FollowModal from './FollowModal';
+import withAuth from '../../../../components/WithAuth';
 
-export default function Page({ params }: { params: { slug: string } }) {
+function MyPage() {
   const router = useRouter();
-  const { slug } = router.query;
 
   return (
     <S.Container>
@@ -69,7 +71,12 @@ const S = {
     align-items: center;
     margin: 2.7rem 0 3.5rem 0;
   `,
-  UserImg: styled.div``,
+  UserImg: styled.div`
+    transition: transform 0.3s ease-in-out;
+    &:hover {
+      transform: scale(1.5) translateY(0.55rem);
+    }
+  `,
   UserName: styled.div`
     margin: 1rem 0;
   `,
@@ -161,3 +168,5 @@ const imageStyle = {
   left: '20%',
   cursor: 'pointer',
 };
+
+export default withAuth(MyPage);

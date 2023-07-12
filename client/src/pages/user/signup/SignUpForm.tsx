@@ -1,6 +1,7 @@
 // 'use client';
 import styled from '@emotion/styled';
-import { keyframes, css } from '@emotion/react';
+import { css } from '@emotion/react';
+import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import CommonStyles from '../../../styles/CommonStyles';
@@ -8,37 +9,19 @@ import useInput from '../../../hooks/useComponents';
 import CheckboxAgreement from '../../../components/CheckboxAgreement';
 import { SIGN_UP_MESSAGES } from '../../../constants/user';
 import SelectBox from '../../../components/SelectBox';
-import {
-  validateEmail,
-  validateLoginId,
-  validatePassword,
-  validateNickname,
-  checkPasswordMatch,
-} from '../../../utils/validationCheck';
-import { bounce } from '../../../animation/keyframe';
-import postSignUpData from '../../../services/apiUser';
-import { PostSignUp } from '../../../types/user';
+import validation from '../../../utils/validationCheck';
+import apiUser from '../../../services/apiUser';
+import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 
 export default function SignUpForm() {
   const router = useRouter();
   const [IdInput, loginId, setLoginId] = useInput('text', '아이디', 'loginId');
   const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw');
-  const [PwConfirmInput, password, setPassword] = useInput(
-    'password',
-    '비밀번호 확인',
-    'pwConfirm'
-  );
-  const [nicknameInput, nickname, setNickname] = useInput(
-    'text',
-    '닉네임',
-    'nickname'
-  );
-  const [emailInput, emailValue, setEmailValue] = useInput(
-    'text',
-    '이메일',
-    'email'
-  );
-
+  const [PwConfirmInput, password, setPassword] = useInput('password', '비밀번호 확인', 'pwConfirm');
+  const [nicknameInput, nickname, setNickname] = useInput('text', '닉네임', 'nickname');
+  const [emailInput, emailValue, setEmailValue] = useInput('text', '이메일', 'email');
+  const [isClickedProps, RefusalAnimation] = useRefusalAni();
+  const [domainValue, setDomainValue] = useState('');
   const [error, setError] = useState({
     loginId: '',
     password: '',
@@ -55,26 +38,21 @@ export default function SignUpForm() {
     isBackgroundWhite: true,
   });
 
-  const [isClicked, setIsClicked] = useState(false);
-  const [domainValue, setDomainValue] = useState('');
-
   useEffect(() => {
     const newError = {
       loginId: loginId
-        ? validateLoginId(loginId || '')
-        : '아이디를 입력해주세요.',
+        ? validation.loginId(loginId || '')
+        : '다른 사용자와 겹치지 않도록 아이디를 입력해주세요. (4~10자)',
       password: pwValue
-        ? validatePassword(pwValue || '')
-        : '비밀번호를 입력해주세요.',
+        ? validation.password(pwValue || '')
+        : '영문 소문자와 숫자, 특수기호(!@#$%^&*())를 모두 포함하여 입력해주세요. (8~16자)',
       passwordConfirm: password
-        ? checkPasswordMatch(pwValue || '', password || '')
+        ? validation.passwordMatch(pwValue || '', password || '')
         : '확인을 위해 비밀번호를 다시 입력해주세요.',
       nickname: nickname
-        ? validateNickname(nickname || '')
+        ? validation.nickname(nickname || '')
         : '닉네임을 입력해주세요. 마이 페이지에서 변경 가능합니다.',
-      email: domainValue
-        ? validateEmail(domainValue || '')
-        : '이메일을 입력해주세요.',
+      email: domainValue && emailValue ? validation.email(domainValue || '') : '이메일을 입력해주세요.',
       policy: isChecked ? '' : '필수 약관에 동의해주세요.',
     };
     setError(newError);
@@ -87,7 +65,6 @@ export default function SignUpForm() {
         text: '아이디',
         required: true,
       },
-      guide: SIGN_UP_MESSAGES.LOGIN_ID_GUIDE,
       component: IdInput,
       error: error.loginId,
     },
@@ -97,7 +74,6 @@ export default function SignUpForm() {
         text: '비밀번호',
         required: true,
       },
-      guide: SIGN_UP_MESSAGES.PASSWORD_GUIDE,
       component: PwInput,
       error: error.password,
     },
@@ -131,49 +107,39 @@ export default function SignUpForm() {
     },
   ];
 
-  async function sendPostRequest(data: PostSignUp) {
-    const url =
-      'https://zerohip-git-user-55-everland.vercel.app/api/user/signup';
-    try {
-      const responseData = await postSignUpData(url, data);
-      console.log(responseData);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }
+  const requestBody = {
+    email: emailValue + '@' + domainValue,
+    loginId,
+    password,
+    nickname,
+  };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const { mutateAsync } = useMutation(() => apiUser.postSignUp(requestBody));
+
+  const handleSignUpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (
-      error.loginId ||
-      error.password ||
-      error.passwordConfirm ||
-      error.nickname ||
-      error.email ||
-      error.policy
-    ) {
-      setIsClicked(true);
-      setTimeout(() => {
-        setIsClicked(false);
-      }, 1000);
+    if (error.loginId || error.passwordConfirm || error.nickname || error.email || error.policy) {
+      RefusalAnimation();
       return;
     }
 
-    const data = {
-      email: emailValue + '@' + domainValue,
-      loginId,
-      password,
-      nickname,
-    };
+    const res = await mutateAsync();
+    console.log(res);
 
-    sendPostRequest(data);
+    if (res.field === '아이디') {
+      console.log(res.field);
+      setError({ ...error, loginId: res.reason });
+      return;
+    }
+
     setLoginId('');
     setPwValue('');
     setPassword('');
     setNickname('');
     setEmailValue('');
     setDomainValue('');
-    router.push('/');
+    setIsChecked(false);
+    router.push('/user/login');
   };
 
   return (
@@ -183,19 +149,12 @@ export default function SignUpForm() {
           <S.InputContainer key={i}>
             <S.LabelBox>
               <S.Label htmlFor={el.label.htmlFor}>
-                <h2>{el.label.text}</h2>
+                {el.label.text}
                 <span>{el.label.required && '*'}</span>
               </S.Label>
-              <S.Guide>
-                <h3>{el.guide ? el.guide : null}</h3>
-              </S.Guide>
             </S.LabelBox>
-            <S.EmailAddress
-              className={i === inputData.length - 1 ? 'email' : ''}
-            >
-              <S.InputBox className={i === inputData.length - 1 ? 'email' : ''}>
-                {el.component}
-              </S.InputBox>
+            <S.EmailAddress className={i === inputData.length - 1 ? 'email' : ''}>
+              <S.InputBox className={i === inputData.length - 1 ? 'email' : ''}>{el.component}</S.InputBox>
               {el.subComponent && (
                 <S.DomainBox>
                   <div>@</div>
@@ -207,33 +166,27 @@ export default function SignUpForm() {
                 </S.DomainBox>
               )}
             </S.EmailAddress>
-            <S.Error>
-              <h3 className='blind'>에러 메시지</h3>
-              <h4>{el.error}</h4>{' '}
-            </S.Error>
+            <S.Error>{el.error}</S.Error>
           </S.InputContainer>
         ))}
       </S.InputMapWrapper>
 
       <S.PolicyContainer>
         <S.PolicyLabel>
-          <h2>약관동의</h2>
+          약관동의
           <span>*</span>
         </S.PolicyLabel>
         {CheckboxComponent}
       </S.PolicyContainer>
-      <S.SubmitBox isClicked={isClicked ? 'true' : undefined}>
-        <S.SubmitBtn large onClick={handleSubmit}>
-          <h2>회원가입</h2>
+      <S.SubmitBox {...isClickedProps}>
+        <S.SubmitBtn large onClick={handleSignUpSubmit}>
+          회원가입
         </S.SubmitBtn>
       </S.SubmitBox>
     </S.FormContainer>
   );
 }
 
-interface SubmitBoxProps {
-  isClicked?: string | undefined;
-}
 const S = {
   ...CommonStyles,
   FormContainer: styled.form`
@@ -246,39 +199,25 @@ const S = {
     margin-bottom: 48px;
   `,
   InputMapWrapper: styled.div``,
-  LabelBox: styled.div`
-    padding-left: 10px;
-  `,
+  LabelBox: styled.div``,
   Label: styled.label`
-    h2 {
-      font-weight: 600;
-      font-size: 1.13rem;
-      display: inline-block;
-      margin-bottom: 10px;
-    }
+    font-weight: 600;
+    font-size: 1.13rem;
+    display: inline-block;
+    margin-bottom: 10px;
+
     > span {
       color: var(--color-point-pink);
       display: inline-block;
       margin-left: 0.5rem;
     }
   `,
-  Guide: styled.div`
-    font-size: 1rem;
-    color: #a4a7b5;
-    margin-bottom: 14px;
-    h3 {
-      font-weight: 500;
-      font-size: 1rem;
-    }
-  `,
   Error: styled.div`
     padding-left: 20px;
     margin-top: 8px;
     color: var(--color-point-pink);
-    h4 {
-      font-size: 0.9rem;
-      font-weight: 400;
-    }
+    font-size: 0.98rem;
+    font-weight: 400;
   `,
   PolicyContainer: styled.div`
     margin: 4rem 0 1rem 0;
@@ -289,13 +228,12 @@ const S = {
     align-items: center;
   `,
   PolicyLabel: styled.div`
-    h2 {
-      font-weight: 600;
-      font-size: 1.13rem;
-      display: inline-block;
-      padding-left: 10px;
-      margin-bottom: 1.3rem;
-    }
+    font-weight: 600;
+    font-size: 1.13rem;
+    display: inline-block;
+    padding-left: 10px;
+    margin-bottom: 1.3rem;
+
     > span {
       color: var(--color-point-pink);
       display: inline-block;
@@ -322,7 +260,7 @@ const S = {
 
     display: flex;
     justify-content: space-between;
-    > div:first-child {
+    > div:first-of-type {
       color: #c4c4c4;
       margin: 0 1rem;
       font-size: 1.2rem;
@@ -336,14 +274,8 @@ const S = {
 
   SubmitBox: styled.div<SubmitBoxProps>`
     margin: 2rem 0 4rem 0;
-    ${({ isClicked }) =>
-      isClicked &&
-      css`
-        animation: ${bounce} 1s infinite;
-      `}
-    h2 {
-      font-size: 1.2rem;
-      font-weight: 500;
-    }
+    ${isClickedStyled}
+    font-size: 1.2rem;
+    font-weight: 500;
   `,
 };

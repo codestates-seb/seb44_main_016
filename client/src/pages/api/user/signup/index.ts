@@ -1,19 +1,29 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { userData } from '../../../test/userData';
+import { userData } from '../../../../constants/userData';
 
 export default function signUp(req: NextApiRequest, res: NextApiResponse) {
-  const userId = Math.floor(Math.random() * 1000);
+  const userId = Math.floor(Math.random() * 1000) + 'ashg';
   const { email, loginId, password, nickname } = req.body;
 
-  const newUser = {
-    userId,
-    email,
-    loginId,
-    password,
-    nickname,
-  };
+  const user = userData.find((user) => user.loginId === loginId);
 
-  userData.unshift(newUser);
-  const responseBody = JSON.stringify(newUser);
-  res.status(201).json(responseBody);
+  if (!user) {
+    const newUser = {
+      userId,
+      email,
+      loginId,
+      password,
+      nickname,
+    };
+
+    userData.unshift(newUser);
+    console.log(userData);
+
+    const responseBody = JSON.stringify(newUser);
+    res.status(201).json(responseBody);
+  } else {
+    res.status(401).json({
+      fieldErrors: { field: '아이디', reason: '중복된 아이디입니다.' },
+    });
+  }
 }

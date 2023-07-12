@@ -56,6 +56,7 @@ const S = {
     bottom: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
     display: grid;
     place-items: center;
   `,
@@ -75,7 +76,7 @@ const S = {
       font-weight: 500;
     }
     &:hover {
-      color: var(--color-gray02);
+      color: var(--color-primary);
     }
   `,
   FollowerContainer: styled.div`
@@ -106,7 +107,7 @@ const S = {
   `,
   Title: styled.div`
     font-weight: 400;
-    color: var(--color-gray05);
+    color: var(--color-gray03);
     margin-right: 8rem;
   `,
   ModalFollowerBox: styled.div`

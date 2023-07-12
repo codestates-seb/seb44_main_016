@@ -1,22 +1,79 @@
+'use server';
 import Link from 'next/link';
 import Head from 'next/head';
-import { useEffect, useState } from 'react';
-import { css } from '@emotion/react';
+import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useMutation } from '@tanstack/react-query';
+import { RootState } from '../../../components/redux/store';
 import styled from '@emotion/styled';
 import useInput from '../../../hooks/useComponents';
 import Logo from '../../../../public/image/logo.svg';
 import CommonStyles from '../../../styles/CommonStyles';
-import { bounce } from '../../../animation/keyframe';
 import Oauth from './OAuth';
+import apiUser from '../../../services/apiUser';
+import { useAppDispatch } from '../../../components/redux/hooks';
+import { login } from '../../../components/redux/authnReducer';
+import { setCookie } from 'cookies-next';
+import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 
 export default function Login() {
   const [IdInput, loginId, setLoginId] = useInput('text', '아이디', 'loginId');
   const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw');
-  const [isClicked, setIsClicked] = useState(false);
+  const [error, setError] = useState('');
+  const [isClickedProps, RefusalAnimation] = useRefusalAni();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  const loginData = {
+    loginId,
+    password: pwValue,
+  };
+
+  const { mutateAsync } = useMutation(() => apiUser.postLogin(loginData));
+  const isLoggedIn = useSelector<RootState>((state) => state.authnReducer.login.isLoggedIn);
+
+  useEffect(() => {
+    if (isLoggedIn) router.push('/');
+  }, []);
+
+  useEffect(() => {
+    if ((!loginId && !pwValue) || (loginId && pwValue)) setError('');
+  }, [loginId, pwValue]);
+
+  const handleLoginSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!loginId || !pwValue) {
+      setError('아이디나 비밀번호를 입력해주세요.');
+      RefusalAnimation();
+      return;
+    }
+
+    const res = await mutateAsync();
+    // console.log(res);
+
+    if (res.status === 200) {
+      // const accessToken = res.headers.Authorization;
+      const accessToken = 'temp-access-token-from-header';
+      const { nickname, userId, loginId } = res.data.user;
+      // const refreshToken = getCookie('refreshToken'); 나중에 서버 연결 후
+      setCookie('refreshToken', 'im-refresh-token');
+
+      dispatch(login({ userId, accessToken, loginId, nickname, isLoggedIn: true }));
+
+      setError('');
+      setLoginId('');
+      setPwValue('');
+      alert(`${nickname}님, 환영합니다!`);
+      router.push(`/`);
+    } else if (res.status === 401) {
+      setError(res.data.message);
+    }
     return;
   };
+
   return (
     <S.LoginContainer>
       <Head>
@@ -31,20 +88,18 @@ export default function Login() {
         <S.LoginFormBox>
           <S.inputBox>{IdInput}</S.inputBox>
           <S.inputBox>{PwInput}</S.inputBox>
-          <S.LoginBox isClicked={isClicked ? 'true' : undefined}>
-            <S.SubmitBtn large onClick={handleSubmit}>
+          <S.Error> {error && error}</S.Error>
+
+          <S.LoginBox {...isClickedProps}>
+            <S.SubmitBtn large onClick={handleLoginSubmit}>
               <h1>로그인</h1>
             </S.SubmitBtn>
           </S.LoginBox>
         </S.LoginFormBox>
         <S.Guide>
-          <S.SignUp>
-            <h2>회원가입</h2>
-          </S.SignUp>
+          <S.SignUpBtn onClick={() => router.push('/user/signup')}>회원가입</S.SignUpBtn>
           <div> | </div>
-          <S.FindPassword>
-            <h2>비밀번호 찾기</h2>
-          </S.FindPassword>
+          <S.FindPasswordBtn>비밀번호 찾기</S.FindPasswordBtn>
         </S.Guide>
         <S.OauthBox>
           <Oauth />
@@ -52,10 +107,6 @@ export default function Login() {
       </S.LoginWrapper>
     </S.LoginContainer>
   );
-}
-
-interface SubmitBoxProps {
-  isClicked?: string | undefined;
 }
 
 const S = {
@@ -70,7 +121,7 @@ const S = {
     align-items: center;
   `,
   HomeBtnBox: styled.div`
-    margin-bottom: 2.5rem;
+    margin: 0 0.7rem 2.5rem 0;
   `,
   LogoBtn: styled.button``,
 
@@ -91,23 +142,20 @@ const S = {
   `,
   inputBox: styled.div`
     width: 100%;
-    margin-bottom: 0.5rem;
+    &:first-of-type {
+      margin-bottom: 0.5rem;
+    }
   `,
-  AutoLogin: styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0.6rem 0;
+  Error: styled.div`
+    color: var(--color-error-red);
+    margin-top: 0.8rem;
+    min-height: 21px;
   `,
   LoginBox: styled.div<SubmitBoxProps>`
     width: 60%;
-    margin: 1.6rem 0 3rem 0;
-    ${({ isClicked }) =>
-      isClicked &&
-      css`
-        animation: ${bounce} 1s infinite;
-      `}
+    margin: 0.8rem 0 3rem 0;
+    ${isClickedStyled}
+
     h1 {
       font-size: 1.1rem;
       font-weight: 500;
@@ -120,26 +168,22 @@ const S = {
     margin-bottom: 1.8rem;
     color: var(--color-point-gray);
   `,
-  SignUp: styled.button`
-    h2 {
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--color-gray05);
-      margin-right: 1.5rem;
-      &:hover {
-        color: var(--color-gray06);
-      }
+  SignUpBtn: styled.button`
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--color-gray04);
+    margin-right: 1.5rem;
+    &:hover {
+      color: var(--color-primary);
     }
   `,
-  FindPassword: styled.button`
-    h2 {
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--color-gray05);
-      margin-left: 1.5rem;
-      &:hover {
-        color: var(--color-gray06);
-      }
+  FindPasswordBtn: styled.button`
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--color-gray04);
+    margin-left: 1.5rem;
+    &:hover {
+      color: var(--color-primary);
     }
   `,
   OauthBox: styled.div``,

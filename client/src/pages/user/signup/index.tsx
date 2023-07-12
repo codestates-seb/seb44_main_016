@@ -3,19 +3,18 @@ import styled from '@emotion/styled';
 import Logo from '../../../../public/image/logo.svg';
 import SignUpForm from './SignUpForm';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function SignUp() {
+  const router = useRouter();
   return (
     <S.Container>
       <Head>
         <title>제로힙 회원가입 페이지</title>
       </Head>
-      <S.HomeBtnBox>
-        <Link href='/'>
-          <h1 className='blind'>회원가입</h1>
-          <Logo width='337' />
-          <h2 className='blind'>홈으로 이동하는 제로힙 로고 이미지</h2>
-        </Link>
+      <S.HomeBtnBox type='button' onClick={() => router.push('/')}>
+        <h1 className='blind'>회원가입</h1>
+        <Logo width='337' />
       </S.HomeBtnBox>
       <SignUpForm />
     </S.Container>

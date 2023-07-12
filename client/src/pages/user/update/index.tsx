@@ -12,17 +12,9 @@ import Link from 'next/link';
 
 export default function UserUpdate() {
   const router = useRouter();
-  const [nicknameInput, nickname, setNickname] = useInput(
-    'text',
-    '마마망',
-    'nickname'
-  );
+  const [nicknameInput, nickname, setNickname] = useInput('text', '마마망', 'nickname');
   const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw');
-  const [PwConfirmInput, password, setPassword] = useInput(
-    'password',
-    '비밀번호 확인',
-    'pwConfirm'
-  );
+  const [PwConfirmInput, password, setPassword] = useInput('password', '비밀번호 확인', 'pwConfirm');
   const [error, setError] = useState({
     nickname: '아이디를 입력해주세요.',
     password: '아이디를 입력해주세요.',
@@ -63,24 +55,14 @@ export default function UserUpdate() {
   return (
     <S.Container>
       <S.BackBox>
-        <button
-          type='button'
-          aria-label='뒤로 가기'
-          onClick={() => router.back()}
-        >
+        <button type='button' aria-label='뒤로 가기' onClick={() => router.back()}>
           <BackBtn width='25' fill='#b8b7c2' aria-hidden={true} />
         </button>
       </S.BackBox>
       <S.FormContainer>
         <S.UserImg>
           <div>
-            <Image
-              src='/image/mango.png'
-              alt='프로필 사진'
-              width={150}
-              height={150}
-              style={imageStyle}
-            />
+            <Image src='/image/mango.png' alt='프로필 사진' width={150} height={150} style={imageStyle} />
           </div>
           <S.ImageUploadBtn type='button' aria-label='이미지 업로드 버튼'>
             <ImageUpload />
@@ -176,15 +158,15 @@ const S = {
   `,
   Error: styled.div`
     padding-left: 20px;
-    font-size: 0.9rem;
+    font-size: 0.98rem;
     margin-top: 8px;
-    color: var(--color-point-purple);
+    font-weight: 400;
+    color: var(--color-error-red);
   `,
   InputBox: styled.div`
     width: 45%;
   `,
   LabelBox: styled.div`
-    padding-left: 10px;
     margin-bottom: 0.7rem;
   `,
   Label: styled.label`
@@ -193,7 +175,7 @@ const S = {
     display: inline-block;
   `,
   Guide: styled.span`
-    font-size: 0.9rem;
+    font-size: 0.94rem;
     color: var(--color-point-gray);
     display: inline-block;
     margin: 2rem 0 0 0.7rem;
@@ -201,7 +183,7 @@ const S = {
   ModifyBtn: styled.button`
     position: relative;
     display: inline-block;
-    color: var(--color-gray04);
+    color: var(--color-gray03);
     font-weight: 400;
     margin-bottom: 2rem;
     &:hover {

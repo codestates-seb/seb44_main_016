@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import Logo from '../../../../../public/image/logo.svg';
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../components/redux/store';
 import CommonStyles from '../../../../styles/CommonStyles';
 import Link from 'next/link';
 import Lottie from 'react-lottie-player';
@@ -12,10 +14,12 @@ import Loading from '../../../../components/Loading';
 export default function GoodBye() {
   const router = useRouter();
   const [showMessage, setShowMessage] = useState(false);
+  const accessToken = useSelector<RootState>((state) => state.authnReducer.login);
+  console.log(accessToken);
+
   useEffect(() => {
     const previousUrl = localStorage.getItem('deletePageURL');
-    const isFromDeletePage =
-      previousUrl && previousUrl.includes('/user/delete');
+    const isFromDeletePage = previousUrl && previousUrl.includes('/user/delete');
     if (!isFromDeletePage) {
       // router.push('/'); // 코드 수정 때마다 페이지 이동하기 때문에, 완성 전까지 주석처리
       return;
@@ -48,12 +52,7 @@ export default function GoodBye() {
       {showMessage ? (
         <S.ContentBox>
           <S.AnimationBox>
-            <Lottie
-              loop
-              animationData={deleteAnimation}
-              play
-              style={{ width: 310, height: 310 }}
-            />{' '}
+            <Lottie loop animationData={deleteAnimation} play style={{ width: 310, height: 310 }} />{' '}
           </S.AnimationBox>
           <S.GoodByeBox>
             <S.GoodByeComment>

@@ -129,8 +129,8 @@ const GlobalStyles = () => (
         border: none;
       }
       
-      input,textarea { font-size:  1rem}
-      
+      input,textarea { font-size: var(--text-default)}
+
       .blind {
         position: absolute;
         width: 1px;

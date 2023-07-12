@@ -12,14 +12,14 @@
 <g clip-path="url(#clip2_1503_1609)">
 <path fill-rule="evenodd" clip-rule="evenodd" d="M0 81.8324V61.6936L34.1558 27.6191V55.2381L17.5912 71.7633L48.7353 102.833V130.452L0 81.8324Z" fill="#8A96DB"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M82.8915 48.6195V68.7583L48.7357 102.833V75.2138L65.3004 58.6885L34.1562 27.6189V0L82.8915 48.6195Z" fill="#8A96DB"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M48.7344 75.2137L65.2991 58.6885L79.1411 72.4983L48.7344 102.833V75.2137Z" fill="#676FC6"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M34.1567 55.2381L17.592 71.7633L3.75 57.9535L34.1567 27.6191V55.2381Z" fill="#676FC6"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M48.7344 75.2137L65.2991 58.6885L79.1411 72.4983L48.7344 102.833V75.2137Z" fill="#6264ca"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M34.1567 55.2381L17.592 71.7633L3.75 57.9535L34.1567 27.6191V55.2381Z" fill="#6264ca"/>
 </g>
 <defs>
 <linearGradient id="paint0_linear_1503_1609" x1="207.999" y1="82.0001" x2="335.499" y2="16.0001" gradientUnits="userSpaceOnUse">
 <stop offset="0.487013" stop-color="#20202B"/>
 <stop offset="0.876221" stop-color="#5E65B3" stop-opacity="0.123779"/>
-<stop offset="1" stop-color="#676FC6" stop-opacity="0"/>
+<stop offset="1" stop-color="#6264ca" stop-opacity="0"/>
 </linearGradient>
 <clipPath id="clip0_1503_1609">
 <rect width="243.917" height="75.4173" fill="white" transform="translate(108.082 26.498)"/>
