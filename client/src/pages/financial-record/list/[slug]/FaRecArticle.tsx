@@ -36,6 +36,7 @@ export default function FaRecArticle() {
         <S.DropdownIcon>{SVGs.dropdown}</S.DropdownIcon>
       </S.Header>
       <FaRecCarousel />
+      <S.Contents>완전 끝내주는 초밥 오마카세를 먹으러 다녀왔다 너무너무마싰다~</S.Contents>
     </S.Article>
   );
 }
@@ -90,5 +91,10 @@ const S = {
   Price: styled.span`
     font-weight: 600;
     color: var(--color-point-red);
+  `,
+  Contents: styled.div`
+    width: 100%;
+    min-height: 10rem;
+    padding: 1.25rem;
   `,
 };

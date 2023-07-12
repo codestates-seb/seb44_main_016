@@ -15,7 +15,8 @@ export default function FinancialPage() {
     <S.Container>
       <FaRecHeader />
       <Tab tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
-      {activeTab === '가계부' ? <FaRecArticle /> : '아기오구'}
+      {/* map 함수로 변경 예정 */}
+      {activeTab === '가계부' ? <FaRecArticle /> : '타임라인페이지'}
     </S.Container>
   );
 }
