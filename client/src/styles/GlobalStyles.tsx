@@ -11,6 +11,10 @@ const GlobalStyles = () => (
         box-sizing: border-box;
       }
 
+      html {
+        scroll-behavior: smooth;
+      }
+
       :root {
         color: #333;
         font-family: 'Pretendard';
@@ -39,6 +43,8 @@ const GlobalStyles = () => (
 
         --color-error-red: #df0c0c;
 
+        --color-error-red: #df0c0c;
+
         --color-gray01 : #333;
         --color-gray02 : #4D4D4D;
         --color-gray03 : #666;
@@ -52,13 +58,13 @@ const GlobalStyles = () => (
         --color-border-gray : #E6E6E6;
         --color-border-lilac : #d9d5e7;
 
-        /* font-size /
-        --text-xs : 0.75rem; / 12 /
-        --text-s : 0.875rem; / 14 /
-        --text-default : 1rem; / 사용하지 않아도 default 크기 16 / 
-        --text-m : 1.25rem; / 20 /
-        --text-l : 1.5rem; / 24 /
-        --text-xl : 2rem; / 32 */
+        /* font-size */
+        --text-xs : 0.75rem; // 12
+        --text-s : 0.875rem; // 14
+        --text-default : 1rem; // 16
+        --text-m : 1.25rem; // 20
+        --text-l : 1.5rem; // 24 
+        --text-xl : 2rem; // 32
 
         --color-text-lightgray : #767676;
 

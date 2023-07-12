@@ -23,7 +23,14 @@ function MyPage() {
         <h1 className='blind'>마이페이지</h1>
 
         <S.UserImg>
-          <Image src='/image/mango.png' alt='프로필 사진' priority={true} width={150} height={150} style={imageStyle} />
+          <Image
+            src='/image/mango.png'
+            alt='프로필 사진'
+            priority={true}
+            width={150}
+            height={150}
+            style={imageStyle}
+          />
         </S.UserImg>
         <S.UserName>
           <S.Nickname>마마망</S.Nickname>
