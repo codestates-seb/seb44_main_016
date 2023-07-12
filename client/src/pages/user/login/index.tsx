@@ -3,7 +3,9 @@ import Link from 'next/link';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
+import { useMutation } from '@tanstack/react-query';
+import { RootState } from '../../../components/redux/store';
 import styled from '@emotion/styled';
 import useInput from '../../../hooks/useComponents';
 import Logo from '../../../../public/image/logo.svg';
@@ -30,6 +32,11 @@ export default function Login() {
   };
 
   const { mutateAsync } = useMutation(() => apiUser.postLogin(loginData));
+  const isLoggedIn = useSelector<RootState>((state) => state.authnReducer.login.isLoggedIn);
+
+  useEffect(() => {
+    if (isLoggedIn) router.push('/');
+  }, []);
 
   useEffect(() => {
     if ((!loginId && !pwValue) || (loginId && pwValue)) setError('');

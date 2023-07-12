@@ -13,7 +13,6 @@ import withAuth from '../../../../components/WithAuth';
 
 function MyPage() {
   const router = useRouter();
-  const accessToken = useSelector<RootState>((state) => state.authnReducer.login);
 
   return (
     <S.Container>
