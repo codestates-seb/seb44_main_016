@@ -28,7 +28,11 @@ const S = {
     & > button {
       padding: 1rem 1.7rem;
       color: var(--color-gray03);
-      border-top: 2px solid transparent;
+      border-top: 3px solid transparent;
+
+      &:hover {
+        color: var(--color-primary);
+      }
       &.active {
         border-color: var(--color-primary);
         color: var(--color-primary);

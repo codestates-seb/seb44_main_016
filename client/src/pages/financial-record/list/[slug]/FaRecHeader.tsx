@@ -78,11 +78,11 @@ const S = {
     min-width: 150px;
     border-radius: var(--rounded-full);
     overflow: hidden;
-
     & > img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition-duration: 0.7s;
     }
     &:hover > img {
       transform: scale(1.1);
@@ -111,14 +111,13 @@ const S = {
     & > a {
       font-size: var(--text-s);
       line-height: 1;
-      padding: 0.55rem 1.125rem;
     }
     & > a + a {
       margin-left: 1.25rem;
     }
   `,
   FaRecName: styled.h1`
-    font-size: var(--font-m);
+    font-size: var(--text-m);
     color: transparent;
     background-clip: text;
     -webkit-background-clip: text;

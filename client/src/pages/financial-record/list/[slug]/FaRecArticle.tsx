@@ -3,23 +3,21 @@ import ImgIcon from '../../../../../public/images/icon/img.svg';
 import SVGs from '../../../../constants/svg';
 import FaRecCarousel from './FaRecCarousel';
 
-export default function FaRecArticle() {
-  const dummyData = [
-    {
-      financialRecordId: 1,
-      category: '식비',
-      faDate: 1657686000000,
-      title: '초밥',
-      price: -20000,
-      content: '완전 끝내주는 초밥 오마카세를 먹으러 다녀왔다 너무너무마싰다~',
-      scope: '가계부 타임라인',
-      imgId: [
-        'https://images.unsplash.com/photo-1563612116625-3012372fccce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=741&q=80',
-        'https://images.unsplash.com/photo-1583623025817-d180a2221d0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80',
-      ],
-      userId: 2,
-    },
-  ];
+type FaRecArticleProps = {
+  data: {
+    financialRecordId: number;
+    category: string;
+    faDate: number;
+    title: string;
+    price: number;
+    content: string;
+    scope: string;
+    imgId: string[];
+    userId: number;
+  };
+};
+
+export default function FaRecArticle({ data }: FaRecArticleProps) {
   return (
     <S.Article>
       <S.Header>
