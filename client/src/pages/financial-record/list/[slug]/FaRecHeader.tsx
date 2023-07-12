@@ -2,7 +2,11 @@ import styled from '@emotion/styled';
 import CommonStyles from '../../../../styles/CommonStyles';
 import { useRouter } from 'next/router';
 
-export default function FaRecHeader({ setActiveTab }) {
+interface FaRecHeaderProps {
+  setActiveTab: (value: string) => void;
+}
+
+export default function FaRecHeader({ setActiveTab }: FaRecHeaderProps) {
   const router = useRouter();
   const faRecId = router.query.slug;
   const handleButtonClick = (tabName: string) => {
