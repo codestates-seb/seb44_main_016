@@ -36,7 +36,7 @@ public class FinancialRecordDto {
     private Long financialRecordId;
     private String financialRecordName;
     private String memo;
-
+    
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     // User

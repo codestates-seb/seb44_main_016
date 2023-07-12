@@ -1,6 +1,7 @@
 package com.zerohip.server.financialRecord.entity;
 
 import com.zerohip.server.common.audit.Auditable;
+import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.LinkedList;
+import java.util.List;
 
 @NoArgsConstructor
 @Setter
@@ -25,6 +28,7 @@ public class FinancialRecord extends Auditable {
   private String financialRecordName;
 
   @Column(nullable = true, unique = false, updatable = true)
+
   private String memo;
 
   // 게시물 수

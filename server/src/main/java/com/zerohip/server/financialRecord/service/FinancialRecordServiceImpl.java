@@ -50,7 +50,6 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
     FinancialRecord findFaRec = findVerifiedFaRec(faRecId);
     findFaRec.setFinancialRecordName(patchParam.getFinancialRecordName());
     findFaRec.setMemo(patchParam.getMemo());
-
     FinancialRecord updateFaRec = repository.save(findFaRec);
     return updateFaRec;
   }

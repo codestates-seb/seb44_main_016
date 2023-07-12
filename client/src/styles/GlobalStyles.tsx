@@ -37,6 +37,8 @@ const GlobalStyles = () => (
 
         --color-error-red: #df0c0c;
 
+        --color-error-red: #df0c0c;
+
         --color-gray01 : #333;
         --color-gray02 : #4D4D4D;
         --color-gray03 : #666;

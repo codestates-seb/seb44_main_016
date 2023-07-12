@@ -13,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -73,7 +72,6 @@ class FinancialRecordServiceImplTest {
 
     log.info("saveFaRec1.getFinancialRecordName() = {}", saveFaRec1.getFinancialRecordName());
     log.info("saveFaRec2.getFinancialRecordName() = {}", saveFaRec2.getFinancialRecordName());
-
 
     // Verify
     findFaRecsTest(saveFaRec1, saveFaRec2);
