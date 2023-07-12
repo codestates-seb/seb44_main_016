@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import CommonStyles from '../styles/CommonStyles';
 import { useCheckboxInput } from './useComponents';
 
-interface CheckboxAgreementProps {
+interface useCheckboxErrorProps {
   labelTitle: string;
   checkboxAgreement?: string;
   agreementError?: string;
@@ -10,13 +10,13 @@ interface CheckboxAgreementProps {
   isCentered?: boolean;
 }
 
-export default function useCheckboxInput({
+export default function useCheckboxError({
   labelTitle,
   checkboxAgreement,
   agreementError,
   isBackgroundWhite,
   isCentered,
-}: useCheckoutInputProps) {
+}: useCheckboxErrorProps) {
   const [Checkbox, isChecked, setIsChecked] = useCheckboxInput('checkbox', labelTitle);
   return {
     CheckboxComponent: (
