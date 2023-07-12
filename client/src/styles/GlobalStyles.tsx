@@ -17,6 +17,8 @@ const GlobalStyles = () => (
         font-weight: 400;
         overflow: overlay;
         overflow-x: hidden;
+        overflow: overlay;
+        overflow-x: hidden;
 
 
         /* color */
@@ -130,8 +132,8 @@ const GlobalStyles = () => (
         border: none;
       }
       
-      input,textarea { font-size:  1rem}
-      
+      input,textarea { font-size: var(--text-default)}
+
       .blind {
         position: absolute;
         width: 1px;

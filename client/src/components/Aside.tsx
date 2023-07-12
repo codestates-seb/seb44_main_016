@@ -43,9 +43,7 @@ export default function Aside(props: Props) {
         <S.Upper>
           <AsideLogo isTabClosed={isTabClosed} />
           <ol>
-            <AsideButton href='/' leftIcon={svgs.home}>
-              {isTabClosed && '홈'}
-            </AsideButton>
+            <AsideButton leftIcon={svgs.home}>{isTabClosed && '홈'}</AsideButton>
             {props.isLoggedIn && (
               <>
                 <AsideButton onClick={handleOpenOrCloseNoticeTab} leftIcon={svgs.notice}>
@@ -62,17 +60,13 @@ export default function Aside(props: Props) {
                 </AsideButton>
                 {isBookmarkedFaRecListOpened && isTabClosed && (
                   <ol>
-                    {/* href='/financial-record/1' */}
                     <AsideButton isSmall={true}>{isTabClosed && 'XXX의 가계부'}</AsideButton>
-                    {/* href='/financial-record/2' */}
                     <AsideButton isSmall={true}>{isTabClosed && '♡ 데이트 통장 ♥'}</AsideButton>
-                    {/* href='/financial-record/3' */}
                     <AsideButton isSmall={true}>{isTabClosed && '산악회 곗돈 장부'}</AsideButton>
                   </ol>
                 )}
               </>
             )}
-            {/* href='/?rank=true' // 쿼리 미확정 */}
             <AsideButton leftIcon={svgs.ranking}>{isTabClosed && '명예의 전당'}</AsideButton>
             <AsideButton onClick={handleOpenOrCloseSearchTab} leftIcon={svgs.search}>
               {isTabClosed && '검색'}
@@ -84,11 +78,7 @@ export default function Aside(props: Props) {
             <>
               {/* href='/user/mypage' */}
               <AsideProfileBox isTabClosed={isTabClosed} />
-              {isTabClosed ? (
-                <S.LinkBtn href='/editor'>글쓰기</S.LinkBtn>
-              ) : (
-                <AsideButton href='/editor' leftIcon={svgs.editor} />
-              )}
+              {isTabClosed ? <S.SubmitBtn>글쓰기</S.SubmitBtn> : <AsideButton leftIcon={svgs.editor} />}
             </>
           ) : isTabClosed ? (
             <S.LinkBtn href='/user/login'>로그인</S.LinkBtn>
