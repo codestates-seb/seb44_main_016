@@ -19,7 +19,6 @@ import java.util.Optional;
 public class FinancialRecordServiceImpl implements FinancialRecordService {
 
   private final FinancialRecordRepository repository;
-
   // 가계부 생성
   @Override
   public FinancialRecord createFaRec(FinancialRecord faRec) {

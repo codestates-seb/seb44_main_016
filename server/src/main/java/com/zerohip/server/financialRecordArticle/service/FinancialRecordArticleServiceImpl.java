@@ -8,6 +8,9 @@ import com.zerohip.server.financialRecordArticle.dto.FinancialRecordArticleDto;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import com.zerohip.server.financialRecordArticle.repository.FinancialRecordArticleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +21,6 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class FinancialRecordArticleServiceImpl implements FinancialRecordArticleService {
-
   // 결합도 관련해서 고민이 필요해 보임
   private final FinancialRecordService financialRecordService;
   private final FinancialRecordArticleRepository repository;
@@ -45,8 +47,8 @@ public class FinancialRecordArticleServiceImpl implements FinancialRecordArticle
 
   // 가계부 전체 조회(동적쿼리 사용 예정)
   @Override
-  public List<FinancialRecordArticle> findFaRecArticles(Long financialRecordId) {
-    return repository.findAll();
+  public Page<FinancialRecordArticle> findFaRecArticles(Long financialRecordId, int page, int size) {
+    return repository.findAll(PageRequest.of(page -1, size, Sort.by("faDate").descending()));
   }
 
   // 가계부 수정
