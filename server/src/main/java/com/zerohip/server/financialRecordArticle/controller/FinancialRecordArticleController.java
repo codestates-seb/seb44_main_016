@@ -16,6 +16,9 @@ import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
 
+/**
+ * 추후 Dto에서 가계부 ID값으로 받아온다음에 파라미터가 아닌 Dto를 가져올 때 함께 포함할 수 있도록 수정 예정
+ */
 @Slf4j
 @Validated
 @RestController
@@ -40,8 +43,9 @@ public class FinancialRecordArticleController {
   }
 
   @GetMapping("/{financial-record-article-id}")
-  public ResponseEntity getFinancialRecordArticles(@PathVariable("financial-record-id") Long financialRecordId) {
-    FinancialRecordArticle verifiedFaRecArticle = service.findVerifiedFaRecArticle(financialRecordId);
+  public ResponseEntity getFinancialRecordArticles(@PathVariable("financial-record-id") Long financialRecordId,
+                                                   @PathVariable("financial-record-article-id") Long financialRecordArticleId) {
+    FinancialRecordArticle verifiedFaRecArticle = service.findVerifiedFaRecArticle(financialRecordArticleId);
 
     return ResponseEntity.ok(mapper.financialRecordArticleToFinancialRecordArticleResponse(verifiedFaRecArticle));
   }
@@ -56,8 +60,9 @@ public class FinancialRecordArticleController {
   }
 
   @PatchMapping("/{financial-record-article-id}")
-  public ResponseEntity patchFinancialRecord(@PathVariable("financial-record-article-id") Long financialRecordArticleId,
-                                             @Valid @RequestBody FinancialRecordArticleDto.Patch requestbody) {
+  public ResponseEntity patchFinancialRecord(@Valid @RequestBody FinancialRecordArticleDto.Patch requestbody,
+                                             @PathVariable("financial-record-id") Long financialRecordId,
+                                             @PathVariable("financial-record-article-id") Long financialRecordArticleId) {
     FinancialRecordArticle updatedFaRecArticle = service.updateFaRecArticle(financialRecordArticleId, requestbody);
 
     return ResponseEntity.ok(mapper.financialRecordArticleToFinancialRecordArticleResponse(updatedFaRecArticle));

@@ -48,7 +48,7 @@ public class FinancialRecordArticleServiceImpl implements FinancialRecordArticle
   // 가계부 전체 조회(동적쿼리 사용 예정)
   @Override
   public Page<FinancialRecordArticle> findFaRecArticles(Long financialRecordId, int page, int size) {
-    return repository.findAll(PageRequest.of(page -1, size, Sort.by("financialRecordArticleId")));
+    return repository.findAll(PageRequest.of(page -1, size, Sort.by("faDate").descending()));
   }
 
   // 가계부 수정
