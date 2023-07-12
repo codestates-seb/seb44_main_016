@@ -26,7 +26,6 @@ import org.springframework.web.filter.CorsFilter;
 /**
  * JWT 를 Authorization header 에 포함되지 않고 요청을 보낸 경우 403 에러
  * 유효하지 않은 JWT를 Authorization header 에 담아 보낼 경우 403 에러 -> 검증 실패이므로 401 로 예외 처리
- * 권한이 부여되지 않은 리소스에 request를 전송할 경우 403 에러
  */
 
 @Configuration
