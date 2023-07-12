@@ -4,6 +4,9 @@ import com.zerohip.server.financialRecord.dto.FinancialRecordDto;
 import com.zerohip.server.financialRecord.entity.FinancialRecord;
 import com.zerohip.server.financialRecord.repository.FinancialRecordRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,8 +40,8 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
 
   // 가계부 전체 조회(동적쿼리 사용 예정)
   @Override
-  public List<FinancialRecord> findFaRecs() {
-    return repository.findAll();
+  public Page<FinancialRecord> findFaRecs(int page, int size) {
+    return repository.findAll(PageRequest.of(page - 1, size, Sort.by("financialRecordId")));
   }
 
   // 가계부 수정
@@ -46,8 +49,7 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
   public FinancialRecord updateFaRec(Long faRecId, FinancialRecordDto.Patch patchParam) {
     FinancialRecord findFaRec = findVerifiedFaRec(faRecId);
     findFaRec.setFinancialRecordName(patchParam.getFinancialRecordName());
-    findFaRec.setFinancialRecordDescription(patchParam.getFinancialRecordDescription());
-
+    findFaRec.setMemo(patchParam.getMemo());
     FinancialRecord updateFaRec = repository.save(findFaRec);
     return updateFaRec;
   }
