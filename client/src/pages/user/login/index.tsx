@@ -67,7 +67,7 @@ export default function Login() {
       setLoginId('');
       setPwValue('');
       alert(`${nickname}님, 환영합니다!`);
-      router.push(`/user/mypage/${userId}`);
+      router.push(`/`);
     } else if (res.status === 401) {
       setError(res.data.message);
     }
