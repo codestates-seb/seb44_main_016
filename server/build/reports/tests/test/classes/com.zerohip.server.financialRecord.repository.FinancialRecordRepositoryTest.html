@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - FinancialRecordRepositoryTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>FinancialRecordRepositoryTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.zerohip.server.financialRecord.repository.html">com.zerohip.server.financialRecord.repository</a> &gt; FinancialRecordRepositoryTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">4</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.126s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Method name</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">가계부 삭제</td>
+<td class="success">delete()</td>
+<td class="success">0.064s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">가계부 조회(전체)</td>
+<td class="success">findAll()</td>
+<td class="success">0.053s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">가계부 조회(단건)</td>
+<td class="success">findById()</td>
+<td class="success">0.006s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">가계부 생성</td>
+<td class="success">save()</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2023-07-12 17:48:39 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper [ 305] - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.zerohip.server.financialRecord.repository.FinancialRecordRepositoryTest], using SpringBootContextLoader
+2023-07-12 17:48:39 [Test worker] INFO  o.s.t.c.s.AbstractContextLoader [ 264] - Could not detect default resource locations for test class [com.zerohip.server.financialRecord.repository.FinancialRecordRepositoryTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2023-07-12 17:48:39 [Test worker] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils [  83] - Could not detect default configuration classes for test class [com.zerohip.server.financialRecord.repository.FinancialRecordRepositoryTest]: FinancialRecordRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-07-12 17:48:39 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper [ 239] - Found @SpringBootConfiguration com.zerohip.server.ServerApplication for test class com.zerohip.server.financialRecord.repository.FinancialRecordRepositoryTest
+2023-07-12 17:48:39 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper [ 245] - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2023-07-12 17:48:39 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper [ 174] - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@55731ccd, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@750adad8, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@41935a9d, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@1b08d26f, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@565030b7, org.springframework.test.context.support.DirtiesContextTestExecutionListener@752fecbf, org.springframework.test.context.transaction.TransactionalTestExecutionListener@2eb31735, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@73753326, org.springframework.test.context.event.EventPublishingTestExecutionListener@24f77077, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@2eb73a42, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@188b9a1e, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@423d662a, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@5d56c2d2, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@4a249610, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@ebbbe20]
+2023-07-12 17:48:39 [Test worker] INFO  o.s.t.c.t.TransactionContext [ 107] - Began transaction (1) for test context [DefaultTestContext@75b25ec3 testClass = FinancialRecordRepositoryTest, testInstance = com.zerohip.server.financialRecord.repository.FinancialRecordRepositoryTest@69e736bf, testMethod = delete@FinancialRecordRepositoryTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@6b60d99c testClass = FinancialRecordRepositoryTest, locations = '{}', classes = '{class com.zerohip.server.ServerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@3f91b517, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@7a55af6b, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@8576fa0, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@3daf7722, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@1458ed9c, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@1dac5ef], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -&gt; true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@6075a4ea]; rollback [true]
+Hibernate: 
+    /* insert com.zerohip.server.financialRecord.entity.FinancialRecord
+        */ insert 
+        into
+            financial_record
+            (financial_record_id, financial_record_name, memo) 
+        values
+            (default, ?, ?)
+2023-07-12 17:48:39 [Test worker] INFO  c.z.s.f.r.FinancialRecordRepositoryTest [  84] - saveFaRec.getFinancialRecordName() = test용 가계부
+2023-07-12 17:48:39 [Test worker] INFO  o.s.t.c.t.TransactionContext [ 139] - Rolled back transaction for test: [DefaultTestContext@75b25ec3 testClass = FinancialRecordRepositoryTest, testInstance = com.zerohip.server.financialRecord.repository.FinancialRecordRepositoryTest@69e736bf, testMethod = delete@FinancialRecordRepositoryTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@6b60d99c testClass = FinancialRecordRepositoryTest, locations = '{}', classes = '{class com.zerohip.server.ServerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@3f91b517, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@7a55af6b, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@8576fa0, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@3daf7722, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@1458ed9c, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@1dac5ef], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -&gt; true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]
+2023-07-12 17:48:39 [Test worker] INFO  o.s.t.c.t.TransactionContext [ 107] - Began transaction (1) for test context [DefaultTestContext@75b25ec3 testClass = FinancialRecordRepositoryTest, testInstance = com.zerohip.server.financialRecord.repository.FinancialRecordRepositoryTest@738153d8, testMethod = findAll@FinancialRecordRepositoryTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@6b60d99c testClass = FinancialRecordRepositoryTest, locations = '{}', classes = '{class com.zerohip.server.ServerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@3f91b517, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@7a55af6b, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@8576fa0, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@3daf7722, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@1458ed9c, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@1dac5ef], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -&gt; true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@6075a4ea]; rollback [true]
+Hibernate: 
+    /* insert com.zerohip.server.financialRecord.entity.FinancialRecord
+        */ insert 
+        into
+            financial_record
+            (financial_record_id, financial_record_name, memo) 
+        values
+            (default, ?, ?)
+Hibernate: 
+    /* insert com.zerohip.server.financialRecord.entity.FinancialRecord
+        */ insert 
+        into
+            financial_record
+            (financial_record_id, financial_record_name, memo) 
+        values
+            (default, ?, ?)
+2023-07-12 17:48:39 [Test worker] INFO  c.z.s.f.r.FinancialRecordRepositoryTest [  68] - saveFaRec.getFinancialRecordName() = test용 가계부
+2023-07-12 17:48:39 [Test worker] INFO  c.z.s.f.r.FinancialRecordRepositoryTest [  69] - saveFaRec2.getFinancialRecordName() = test용 가계부2
+Hibernate: 
+    /* select
+        generatedAlias0 
+    from
+        FinancialRecord as generatedAlias0 */ select
+            financialr0_.financial_record_id as financia1_0_,
+            financialr0_.financial_record_name as financia2_0_,
+            financialr0_.memo as memo3_0_ 
+        from
+            financial_record financialr0_
+2023-07-12 17:48:39 [Test worker] INFO  o.s.t.c.t.TransactionContext [ 139] - Rolled back transaction for test: [DefaultTestContext@75b25ec3 testClass = FinancialRecordRepositoryTest, testInstance = com.zerohip.server.financialRecord.repository.FinancialRecordRepositoryTest@738153d8, testMethod = findAll@FinancialRecordRepositoryTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@6b60d99c testClass = FinancialRecordRepositoryTest, locations = '{}', classes = '{class com.zerohip.server.ServerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@3f91b517, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@7a55af6b, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@8576fa0, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@3daf7722, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@1458ed9c, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@1dac5ef], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -&gt; true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]
+2023-07-12 17:48:39 [Test worker] INFO  o.s.t.c.t.TransactionContext [ 107] - Began transaction (1) for test context [DefaultTestContext@75b25ec3 testClass = FinancialRecordRepositoryTest, testInstance = com.zerohip.server.financialRecord.repository.FinancialRecordRepositoryTest@1cf7c055, testMethod = findById@FinancialRecordRepositoryTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@6b60d99c testClass = FinancialRecordRepositoryTest, locations = '{}', classes = '{class com.zerohip.server.ServerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@3f91b517, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@7a55af6b, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@8576fa0, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@3daf7722, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@1458ed9c, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@1dac5ef], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -&gt; true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@6075a4ea]; rollback [true]
+Hibernate: 
+    /* insert com.zerohip.server.financialRecord.entity.FinancialRecord
+        */ insert 
+        into
+            financial_record
+            (financial_record_id, financial_record_name, memo) 
+        values
+            (default, ?, ?)
+2023-07-12 17:48:39 [Test worker] INFO  c.z.s.f.r.FinancialRecordRepositoryTest [  48] - saveFaRec.getFinancialRecordName() = test용 가계부
+2023-07-12 17:48:39 [Test worker] INFO  c.z.s.f.r.FinancialRecordRepositoryTest [  52] - findFaRec.getFinancialRecordName() = test용 가계부
+2023-07-12 17:48:39 [Test worker] INFO  o.s.t.c.t.TransactionContext [ 139] - Rolled back transaction for test: [DefaultTestContext@75b25ec3 testClass = FinancialRecordRepositoryTest, testInstance = com.zerohip.server.financialRecord.repository.FinancialRecordRepositoryTest@1cf7c055, testMethod = findById@FinancialRecordRepositoryTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@6b60d99c testClass = FinancialRecordRepositoryTest, locations = '{}', classes = '{class com.zerohip.server.ServerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@3f91b517, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@7a55af6b, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@8576fa0, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@3daf7722, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@1458ed9c, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@1dac5ef], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -&gt; true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]
+2023-07-12 17:48:39 [Test worker] INFO  o.s.t.c.t.TransactionContext [ 107] - Began transaction (1) for test context [DefaultTestContext@75b25ec3 testClass = FinancialRecordRepositoryTest, testInstance = com.zerohip.server.financialRecord.repository.FinancialRecordRepositoryTest@24ae2183, testMethod = save@FinancialRecordRepositoryTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@6b60d99c testClass = FinancialRecordRepositoryTest, locations = '{}', classes = '{class com.zerohip.server.ServerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@3f91b517, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@7a55af6b, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@8576fa0, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@3daf7722, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@1458ed9c, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@1dac5ef], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -&gt; true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@6075a4ea]; rollback [true]
+Hibernate: 
+    /* insert com.zerohip.server.financialRecord.entity.FinancialRecord
+        */ insert 
+        into
+            financial_record
+            (financial_record_id, financial_record_name, memo) 
+        values
+            (default, ?, ?)
+2023-07-12 17:48:39 [Test worker] INFO  c.z.s.f.r.FinancialRecordRepositoryTest [  38] - saveFaRec.getFinancialRecordName() = test용 가계부
+2023-07-12 17:48:39 [Test worker] INFO  o.s.t.c.t.TransactionContext [ 139] - Rolled back transaction for test: [DefaultTestContext@75b25ec3 testClass = FinancialRecordRepositoryTest, testInstance = com.zerohip.server.financialRecord.repository.FinancialRecordRepositoryTest@24ae2183, testMethod = save@FinancialRecordRepositoryTest, testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@6b60d99c testClass = FinancialRecordRepositoryTest, locations = '{}', classes = '{class com.zerohip.server.ServerApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@3f91b517, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@7a55af6b, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@8576fa0, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@3daf7722, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@1458ed9c, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@1dac5ef], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.populatedRequestContextHolder' -&gt; true, 'org.springframework.test.context.web.ServletTestExecutionListener.resetRequestContextHolder' -&gt; true, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.1.1</a> at 2023. 7. 12. 오후 5:48:40</p>
+</div>
+</div>
+</body>
+</html>
