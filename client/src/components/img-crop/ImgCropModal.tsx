@@ -73,37 +73,47 @@ function ImgCropModal({
   }
 
   return (
-    <S.CropContainer>
-      <Cropper
-        image={imgSrc || ''}
-        crop={crop}
-        zoom={zoom}
-        aspect={aspect}
-        onCropChange={handleCropChange}
-        onCropComplete={handleCropComplete}
-        onZoomChange={handleZoomChange}
-        cropShape={cropShape}
-      />
-      <S.ButtonWrap>
-        <button type='button' onClick={showCroppedImage}>
-          선택
-        </button>
-        <button onClick={() => setCropModal(false)}>취소</button>
-      </S.ButtonWrap>
-    </S.CropContainer>
+    <S.CropWrap>
+      <S.CropContainer>
+        <Cropper
+          image={imgSrc || ''}
+          crop={crop}
+          zoom={zoom}
+          aspect={aspect}
+          onCropChange={handleCropChange}
+          onCropComplete={handleCropComplete}
+          onZoomChange={handleZoomChange}
+          cropShape={cropShape}
+        />
+        <S.ButtonWrap>
+          <button type='button' onClick={showCroppedImage}>
+            선택
+          </button>
+          <button onClick={() => setCropModal(false)}>취소</button>
+        </S.ButtonWrap>
+      </S.CropContainer>
+    </S.CropWrap>
   );
 }
 
 const S = {
   ...CommonStyles,
+  CropWrap: styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+  `,
   CropContainer: styled.div`
     max-width: 400px;
     width: 100%;
     height: 300px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     background: var(--color-white);
     padding: 1rem;
     border-radius: var(--rounded-default);
@@ -112,6 +122,7 @@ const S = {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    z-index: 2;
     & > div:nth-of-type(1) {
       position: relative !important;
       display: block;

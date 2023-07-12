@@ -17,12 +17,12 @@ const GlobalStyles = () => (
         font-weight: 400;
         overflow: overlay;
         overflow-x: hidden;
+        overflow: overlay;
+        overflow-x: hidden;
 
 
         /* color */
-        --color-primary : #6264ca;
-        // --color-primary : #6264ca;
-
+        --color-primary : #6264CA;
         --color-primary-hover : #858cdc;
         --color-point-purple: #7f7ad9;
         --color-point-red : #FF451A;
@@ -35,6 +35,7 @@ const GlobalStyles = () => (
         --color-point-gray: #a4a7b5;
         --color-point-light-gray: #D6D6D6;
         --color-white : #FFF;
+        --color-black: #000;
 
         --color-error-red: #df0c0c;
 
@@ -118,7 +119,6 @@ const GlobalStyles = () => (
         cursor: pointer;
         background: none;
         border: none;
-        outline: none;
         font-size: inherit;
         font-weight: inherit;
         font-family: inherit;

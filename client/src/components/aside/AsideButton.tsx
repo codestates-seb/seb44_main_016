@@ -1,9 +1,12 @@
 import React from 'react'; // useState 사용
 import styled from '@emotion/styled';
+import Link from 'next/link';
+
 import SvgBox from './SvgBox';
 
 /* type은 추후 다른 파일로 분리하고 Import할 예정 */
 type Props = {
+  href?: string;
   leftIcon?: JSX.Element; // <svg>
   rightIcon?: JSX.Element; // <svg>
   isSmall?: boolean;
@@ -16,7 +19,7 @@ type Props = {
 export default function AsideButton(props: Props) {
   return (
     <S.AsideButtonContainer isSmall={props.isSmall}>
-      <S.AsideInnerButtonLeft onClick={props.onClick}>
+      <S.AsideInnerButtonLeft href={props.href || ''} onClick={props.onClick}>
         <SvgBox>{props.leftIcon || <></>}</SvgBox>
         {props.children ? <S.Text>{props.children}</S.Text> : <></>}
       </S.AsideInnerButtonLeft>
@@ -33,6 +36,9 @@ const S = {
   AsideButtonContainer: styled.div<{ isSmall?: boolean }>`
     width: 100%;
     height: ${(props) => (props.isSmall ? '2.75rem' : '3.25rem')};
+    font-size: ${(props) => (props.isSmall ? '0.9rem' : '1rem')};
+    font-weight: ${(props) => (props.isSmall ? '400' : '500')};
+    color: ${(props) => (props.isSmall ? 'var(--color-gray01);' : 'black')};
     background-color: white;
     display: flex;
     justify-content: space-between;
@@ -41,7 +47,7 @@ const S = {
       filter: brightness(0.9);
     }
   `,
-  AsideInnerButtonLeft: styled.button`
+  AsideInnerButtonLeft: styled(Link)`
     width: 100%;
     height: 100%;
     padding: 0rem 1rem;

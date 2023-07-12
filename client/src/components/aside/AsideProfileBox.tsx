@@ -1,12 +1,14 @@
 import styled from '@emotion/styled';
+import Link from 'next/link';
 
 type Props = {
+  href?: string;
   isTabClosed?: boolean;
 };
 
 export default function AsideProfileBox(props: Props) {
   return (
-    <S.ProfileBoxContainer>
+    <S.ProfileBoxContainer href={props.href || ''}>
       <S.ProfileLeftDiv>
         <S.ProfileImg />
         <S.ProfileTexts>
@@ -20,9 +22,10 @@ export default function AsideProfileBox(props: Props) {
 }
 
 const S = {
-  ProfileBoxContainer: styled.button`
+  ProfileBoxContainer: styled(Link)`
     width: 100%;
     height: 3.25rem;
+    color: black;
     background-color: white;
     padding-left: 1.25rem;
     display: flex;

@@ -1,5 +1,6 @@
 import React from 'react'; // useState 사용
 import styled from '@emotion/styled';
+import Link from 'next/link';
 
 import CommonStyles from '../styles/CommonStyles';
 
@@ -11,19 +12,20 @@ export default function HomeHeader() {
     setIsHomeButtonActive(true);
     setIsFollowerButtonActive(false);
   };
-  const handleClickFollowButton = () => {
+  const handleClickFollowerButton = () => {
     setIsHomeButtonActive(false);
     setIsFollowerButtonActive(true);
   };
 
   return (
     <S.HomeHeaderContainer>
-      <S.HomeHeaderButton onClick={handleClickHomeButton} isActive={isHomeButtonActive}>
+      <S.HomeHeaderBtn href='/' onClick={handleClickHomeButton} isActive={isHomeButtonActive}>
         홈
-      </S.HomeHeaderButton>
-      <S.HomeHeaderButton onClick={handleClickFollowButton} isActive={isFollowerButtonActive}>
+      </S.HomeHeaderBtn>
+      {/* href='/?filterfollower=true' // 쿼리 미확정 */}
+      <S.HomeHeaderBtn href='' onClick={handleClickFollowerButton} isActive={isFollowerButtonActive}>
         팔로워
-      </S.HomeHeaderButton>
+      </S.HomeHeaderBtn>
     </S.HomeHeaderContainer>
   );
 }
@@ -37,18 +39,19 @@ const S = {
     width: 100%;
     height: var(--header-h);
     background-color: white;
-    // border: 1px solid;
+    // border-right: 0.05rem solid var(--color-gray08);
+    border-bottom: 0.05rem solid var(--color-gray08);
     display: flex;
     justify-content: center;
     align-items: flex-end;
   `,
-  HomeHeaderButton: styled.button<{ isActive: boolean }>`
+  HomeHeaderBtn: styled(Link)<{ isActive: boolean }>`
     width: 6rem;
     height: 75%;
     background-color: white;
     font-size: 1.25rem;
     font-weight: ${(props) => props.isActive && 'bold'};
-    color: var(--color-gray01);
+    color: ${(props) => (props.isActive ? 'var(--color-primary)' : 'var(--color-gray03)')};
     border-bottom: 3px solid ${(props) => (props.isActive ? 'var(--color-primary)' : 'transparent')};
 
     display: flex;

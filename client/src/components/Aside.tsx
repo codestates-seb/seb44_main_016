@@ -49,6 +49,7 @@ export default function Aside(props: Props) {
                 <AsideButton onClick={handleOpenOrCloseNoticeTab} leftIcon={svgs.notice}>
                   {isTabClosed && '알림'}
                 </AsideButton>
+                {/* href='/financial-record' */}
                 <AsideButton
                   leftIcon={svgs.faRec}
                   rightIcon={svgs.dropdown}
@@ -75,13 +76,14 @@ export default function Aside(props: Props) {
         <S.Lower>
           {props.isLoggedIn ? (
             <>
+              {/* href='/user/mypage' */}
               <AsideProfileBox isTabClosed={isTabClosed} />
               {isTabClosed ? <S.SubmitBtn>글쓰기</S.SubmitBtn> : <AsideButton leftIcon={svgs.editor} />}
             </>
           ) : isTabClosed ? (
-            <S.SubmitBtn>로그인</S.SubmitBtn>
+            <S.LinkBtn href='/user/login'>로그인</S.LinkBtn>
           ) : (
-            <AsideButton leftIcon={svgs.person} />
+            <AsideButton href='/user/login' leftIcon={svgs.person} />
           )}
         </S.Lower>
       </S.AsideInnerContainer>
@@ -146,11 +148,6 @@ const S = {
     align-items: center;
     gap: 1.5rem;
     padding: 1.5rem 0rem;
-  `,
-
-  BookmarkedFaRecButton: styled.button`
-    width: 100%;
-    padding: 1rem 0rem;
   `,
 
   TabContainer: styled.div`
