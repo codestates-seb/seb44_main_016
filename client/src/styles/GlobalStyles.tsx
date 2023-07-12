@@ -58,6 +58,8 @@ const GlobalStyles = () => (
         --text-l : 1.5rem; / 24 /
         --text-xl : 2rem; / 32 */
 
+        --color-text-lightgray : #767676;
+
         /* box-shadow */
         --shadow-default : 0 1px 10px rgba(170,170,170,25);
 
@@ -71,6 +73,7 @@ const GlobalStyles = () => (
         --aside-tab-w: 22rem;
         --header-h : 5rem;
         --main-w : calc(var(--app-max-w) - var(--aside-w));
+        --article-w : 45rem;
       }
 
       li {

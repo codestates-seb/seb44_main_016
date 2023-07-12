@@ -44,6 +44,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    z-index: 998;
   `,
   HomeHeaderBtn: styled(Link)<{ isActive: boolean }>`
     width: 6rem;
