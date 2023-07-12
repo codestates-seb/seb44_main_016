@@ -12,14 +12,7 @@ type Props = {
 
 export default function ImgBox(props: Props) {
   const inputImgBtnId = `addArticleImg${props.id}`;
-  const {
-    imgSrc,
-    setImgSrc,
-    croppedImage,
-    setCroppedImage,
-    cropModal,
-    setCropModal,
-  } = useImgCrop();
+  const { imgSrc, setImgSrc, croppedImage, setCroppedImage, cropModal, setCropModal } = useImgCrop();
 
   // 파일을 crop img로 변경해주는 함수
   const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,12 +33,7 @@ export default function ImgBox(props: Props) {
           <S.Img src={imgSrc || ''} alt='' />
         </>
       )}
-      <S.InputImgBtn
-        type='file'
-        id={inputImgBtnId}
-        accept='image/*'
-        onChange={onFileChange}
-      />
+      <S.InputImgBtn type='file' id={inputImgBtnId} accept='image/*' onChange={onFileChange} />
       <S.InputImgLabel
         isImgBlank={imgSrc === null}
         htmlFor={inputImgBtnId}

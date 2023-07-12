@@ -73,10 +73,7 @@ export default function EditorPage() {
           // "voteId": , (가계부에는 절약/Flex 기능을 사용하지 않음)
           // "financialRecordArticleHashTagId": , (미구현 & 필수 사항 아님)
         };
-        await axios.post(
-          `http://localhost:8080/financialrecord/${faRecId}/article/'`,
-          body
-        );
+        await axios.post(`http://localhost:8080/financialrecord/${faRecId}/article/'`, body);
       } else {
         // 절약팁/허락해줘
         const body = {
@@ -117,11 +114,7 @@ export default function EditorPage() {
           </S.Row>
           <S.Row>
             {/* 날짜+시간 */}
-            <StyledDatePicker
-              legend={'날짜'}
-              selected={faDate}
-              handler={handleChangeDate}
-            />
+            <StyledDatePicker legend={'날짜'} selected={faDate} handler={handleChangeDate} />
             {/* 카테고리 */}
             <SelectOption
               legend='지출 카테고리'
@@ -132,11 +125,7 @@ export default function EditorPage() {
           </S.Row>
           <S.Row>
             {/* 금액 */}
-            <InputNaturalNumber
-              legend='금액'
-              num={price}
-              handler={handleChangePrice}
-            />
+            <InputNaturalNumber legend='금액' num={price} handler={handleChangePrice} />
             {/* 지출/수입 (라디오 버튼) */}
             <RadioSet
               legend='분류'
@@ -165,11 +154,7 @@ export default function EditorPage() {
       {/* 내용(본문) */}
       <S.InputContainer>
         <S.Legend>내용</S.Legend>
-        <S.Textarea
-          placeholder='내용을 입력해주세요'
-          value={content}
-          onChange={handleChangeContent}
-        />
+        <S.Textarea placeholder='내용을 입력해주세요' value={content} onChange={handleChangeContent} />
       </S.InputContainer>
       {/* 공개 범위 (라디오 버튼) */}
       <S.Row>
