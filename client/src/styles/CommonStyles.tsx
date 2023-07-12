@@ -16,15 +16,11 @@ const CommonStyles = {
     position: relative;
     display: inline-block;
     color: ${(props) =>
-      props.color === '--color-point-lilac'
-        ? `var(--color-black)`
-        : `var(--color-white)`};
+      props.color === '--color-point-lilac' ? `var(--color-black)` : `var(--color-white)`};
     padding: 1rem;
     border-radius: 100px;
     font-weight: 400;
-    border: 2px solid
-      ${(props) =>
-        props.color ? `var(${props.color})` : `var(--color-primary)`};
+    border: 2px solid ${(props) => (props.color ? `var(${props.color})` : `var(--color-primary)`)};
     overflow: hidden;
     background-color: white;
     z-index: 1;
@@ -49,8 +45,7 @@ const CommonStyles = {
       left: -4rem;
       z-index: -1;
       border-radius: 100%;
-      background: ${(props) =>
-        props.color ? `var(${props.color})` : `var(--color-primary)`};
+      background: ${(props) => (props.color ? `var(${props.color})` : `var(--color-primary)`)};
       transition: 0.7s;
     }
 
@@ -104,15 +99,11 @@ const CommonStyles = {
     position: relative;
     display: inline-block;
     color: ${(props) =>
-      props.color === '--color-point-lilac'
-        ? `var(--color-black)`
-        : `var(--color-white)`};
+      props.color === '--color-point-lilac' ? `var(--color-black)` : `var(--color-white)`};
     padding: 1rem;
     border-radius: 100px;
     font-weight: 400;
-    border: 2px solid
-      ${(props) =>
-        props.color ? `var(${props.color})` : `var(--color-primary)`};
+    border: 2px solid ${(props) => (props.color ? `var(${props.color})` : `var(--color-primary)`)};
     overflow: hidden;
     background-color: white;
     z-index: 1;
@@ -138,8 +129,7 @@ const CommonStyles = {
       left: -4rem;
       z-index: -1;
       border-radius: 100%;
-      background: ${(props) =>
-        props.color ? `var(${props.color})` : `var(--color-primary)`};
+      background: ${(props) => (props.color ? `var(${props.color})` : `var(--color-primary)`)};
       transition: 0.7s;
     }
 

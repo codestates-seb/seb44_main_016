@@ -16,9 +16,7 @@ export default function AsideProfileBox(props: Props) {
           <span>{props.isTabClosed && '@waypil'}</span>
         </S.ProfileTexts>
       </S.ProfileLeftDiv>
-      <S.ProfileRightDiv>
-        {props.isTabClosed && <span>…</span>}
-      </S.ProfileRightDiv>
+      <S.ProfileRightDiv>{props.isTabClosed && <span>…</span>}</S.ProfileRightDiv>
     </S.ProfileBoxContainer>
   );
 }

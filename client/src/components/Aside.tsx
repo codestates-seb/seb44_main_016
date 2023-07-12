@@ -18,8 +18,7 @@ export default function Aside(props: Props) {
   const [isNoticeTabOpened, setIsNoticeTabOpened] = React.useState(false);
   const isTabClosed = !isSearchTabOpened && !isNoticeTabOpened;
 
-  const [isBookmarkedFaRecListOpened, setIsBookmarkedFaRecListOpened] =
-    React.useState(true);
+  const [isBookmarkedFaRecListOpened, setIsBookmarkedFaRecListOpened] = React.useState(true);
 
   const handleOpenOrCloseBookmarkedFaRecList = () => {
     setIsBookmarkedFaRecListOpened((prevBool) => !prevBool);
@@ -49,10 +48,7 @@ export default function Aside(props: Props) {
             </AsideButton>
             {props.isLoggedIn && (
               <>
-                <AsideButton
-                  onClick={handleOpenOrCloseNoticeTab}
-                  leftIcon={svgs.notice}
-                >
+                <AsideButton onClick={handleOpenOrCloseNoticeTab} leftIcon={svgs.notice}>
                   {isTabClosed && '알림'}
                 </AsideButton>
                 {/* href='/financial-record' */}
@@ -67,29 +63,18 @@ export default function Aside(props: Props) {
                 {isBookmarkedFaRecListOpened && isTabClosed && (
                   <ol>
                     {/* href='/financial-record/1' */}
-                    <AsideButton isSmall={true}>
-                      {isTabClosed && 'XXX의 가계부'}
-                    </AsideButton>
+                    <AsideButton isSmall={true}>{isTabClosed && 'XXX의 가계부'}</AsideButton>
                     {/* href='/financial-record/2' */}
-                    <AsideButton isSmall={true}>
-                      {isTabClosed && '♡ 데이트 통장 ♥'}
-                    </AsideButton>
+                    <AsideButton isSmall={true}>{isTabClosed && '♡ 데이트 통장 ♥'}</AsideButton>
                     {/* href='/financial-record/3' */}
-                    <AsideButton isSmall={true}>
-                      {isTabClosed && '산악회 곗돈 장부'}
-                    </AsideButton>
+                    <AsideButton isSmall={true}>{isTabClosed && '산악회 곗돈 장부'}</AsideButton>
                   </ol>
                 )}
               </>
             )}
             {/* href='/?rank=true' // 쿼리 미확정 */}
-            <AsideButton leftIcon={svgs.ranking}>
-              {isTabClosed && '명예의 전당'}
-            </AsideButton>
-            <AsideButton
-              onClick={handleOpenOrCloseSearchTab}
-              leftIcon={svgs.search}
-            >
+            <AsideButton leftIcon={svgs.ranking}>{isTabClosed && '명예의 전당'}</AsideButton>
+            <AsideButton onClick={handleOpenOrCloseSearchTab} leftIcon={svgs.search}>
               {isTabClosed && '검색'}
             </AsideButton>
           </ol>

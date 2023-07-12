@@ -19,19 +19,11 @@ module.exports = function withTwin(nextConfig) {
             loader: 'babel-loader',
             options: {
               sourceMaps: dev,
-              presets: [
-                [
-                  '@babel/preset-react',
-                  { runtime: 'automatic', importSource: '@emotion/react' },
-                ],
-              ],
+              presets: [['@babel/preset-react', { runtime: 'automatic', importSource: '@emotion/react' }]],
               plugins: [
                 require.resolve('babel-plugin-macros'),
                 require.resolve('@emotion/babel-plugin'),
-                [
-                  require.resolve('@babel/plugin-syntax-typescript'),
-                  { isTSX: true },
-                ],
+                [require.resolve('@babel/plugin-syntax-typescript'), { isTSX: true }],
               ],
             },
           },
