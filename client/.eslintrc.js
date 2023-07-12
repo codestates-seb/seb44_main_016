@@ -20,7 +20,7 @@ module.exports = {
         semi: true,
         useTabs: false,
         tabWidth: 2,
-        printWidth: 110,
+        printWidth: 120,
         bracketSpacing: true,
         arrowParens: 'always',
         endOfLine: 'lf',

@@ -130,6 +130,25 @@ const SVGs = {
       />
     </svg>
   ),
+  slideLeft: (
+    <svg xmlns='http://www.w3.org/2000/svg' width='49' height='49' viewBox='0 0 49 49' fill='none'>
+      <circle
+        cx='24.5'
+        cy='24.5'
+        r='24.5'
+        transform='rotate(-180 24.5 24.5)'
+        fill='black'
+        fillOpacity='0.5'
+      />
+      <path d='M28 33L20 24.5L28 16' stroke='white' strokeWidth='3' strokeLinecap='round' />
+    </svg>
+  ),
+  slideRight: (
+    <svg xmlns='http://www.w3.org/2000/svg' width='49' height='49' viewBox='0 0 49 49' fill='none'>
+      <circle cx='24.5' cy='24.5' r='24.5' fill='black' fillOpacity='0.5' />
+      <path d='M21 16L29 24.5L21 33' stroke='white' strokeWidth='3' strokeLinecap='round' />
+    </svg>
+  ),
 };
 
 export default SVGs;

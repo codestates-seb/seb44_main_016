@@ -14,14 +14,7 @@ interface ImageCropModalProps {
   cropShape: 'round' | 'rect';
 }
 
-function ImgCropModal({
-  isOpen,
-  imgSrc,
-  onCropComplete,
-  setCropModal,
-  aspect,
-  cropShape,
-}: ImageCropModalProps) {
+function ImgCropModal({ isOpen, imgSrc, onCropComplete, setCropModal, aspect, cropShape }: ImageCropModalProps) {
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
