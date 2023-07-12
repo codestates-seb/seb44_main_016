@@ -15,7 +15,8 @@ public enum ExceptionCode {
     AUTHOR_UNAUTHORIZED(403, 5000, "인증된 사용자 정보를 찾을 수 없습니다."),
     USER_UNAUTHORIZED(403, 5001, "인증되지 않은 사용자입니다."),
     EMAIL_EXISTS(409,5002, "중복된 이메일입니다."),
-    LoginId_EXISTS(409,5003, "중복된 ID 입니다.");
+    LoginId_EXISTS(409,5003, "중복된 ID 입니다."),
+    PASSWORD_MISMATCH(409,5004, "비밀번호가 일치하지 않습니다.");
 
 
 

@@ -46,8 +46,14 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public User findUser(Long userId) {
+    public User findUserByUserId(Long userId) {
         return null;
+    }
+
+    @Override
+    public User findUserByLoginId(String loginId) {
+
+        return findVerifyUserByLoginId(loginId);
     }
 
 
@@ -64,21 +70,32 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public void deleteUser(User user) {
+    public void deleteUser(User user, String password) {
 
         User findUser = findVerifyUserByLoginId(user.getLoginId());
-
-        userRepository.delete(findUser);
+        if (checkedPassword(findUser, password)) userRepository.delete(findUser);
     }
+
 
 
 
 
     // ------------------- 검증 메서드 --------------------------
 
-    public User findVerifyUserByLoginId(String loginId) {
+
+
+    private User findVerifyUserByLoginId(String loginId) {
 
         Optional<User> optionalUser = userRepository.findUserByLoginId(loginId);
+        User foundUser = optionalUser.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+
+        return foundUser;
+    }
+
+    private User findVerifyUserByUserId(Long userId) {
+
+        Optional<User> optionalUser = userRepository.findUserByUserId(userId);
         User foundUser = optionalUser.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
@@ -99,6 +116,16 @@ public class UserServiceImpl implements UserService{
         if (user.isPresent()) {
             throw new BusinessLogicException(ExceptionCode.EMAIL_EXISTS);
         }
+    }
+
+    private Boolean checkedPassword(User author, String password) {
+
+        String originPassword = author.getPassword();
+
+        if (passwordEncoder.matches(password, originPassword)) {
+            return true;
+        }
+        else throw new BusinessLogicException(ExceptionCode.PASSWORD_MISMATCH);
     }
 
 }

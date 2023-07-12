@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 /**
- * @AuthenticationPrincipal : 필터에서 검증된 jwt 사용자 정보를 스프링 시큐리티가 User author 에게 주입해주는 에너테이션.
+ * @AuthenticationPrincipal : 필터에서 검증된 jwt 사용자 정보를 스프링 시큐리티가 User author 에게 주입해주는 에너테이션
+ * 토큰에서 loginId 추출 가능
  */
 
 @RestController
@@ -29,7 +30,7 @@ public class UserController {
     private final UserMapper mapper;
 
     @PostMapping("/signup")
-    public ResponseEntity postUser(@Valid @RequestBody UserDto.Post userPostDto){
+    public ResponseEntity postUser(@Valid @RequestBody UserDto.Post userPostDto) {
 
         User user = mapper.userPostDtoToUser(userPostDto);
         userService.createUser(user);
@@ -38,36 +39,49 @@ public class UserController {
     }
 
 
-    // ------------ 회원 가입 시 아이디, 이메일 중복 검증
-//    @PostMapping("/check/loginid")
-//    public ResponseEntity checkUserByLoginId(@RequestBody UserDto.CheckLoginId checkLoginIdDto) {
-//
-//        User userByLoginId = mapper.checkUserByLoginId(checkLoginIdDto);
-//        userService.
-//    }
-
-    // 글로벌,비즈니스 로직 엑셉션으로 예외처리를 해야하나?
-
-//    @PostMapping("/check/email")
-//    public ResponseEntity checkUserByEmail(@RequestBody UserDto.CheckEmail checkEmailDto) {
-//
-//        User userByEmail = mapper.checkUserByEmail(checkEmailDto);
-//
-//    }
-
-
-
-
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal User author) {
+    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal User author,
+                                        @RequestBody UserDto.CheckPassword checkPasswordDto) {
 
         if (author == null) {
             throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
         }
 
-        userService.deleteUser(author);
+        userService.deleteUser(author, checkPasswordDto.getPassword());
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 }
+
+
+
+
+    // (deleteUser 내부로 이동)
+//    @PostMapping("/checkpw")
+//    public ResponseEntity<?> checkPassword(@AuthenticationPrincipal User author,
+//                                           @RequestBody UserDto.CheckPassword checkPasswordDto) {
+//
+//        User originUser = userService.findUserByLoginId(author.getLoginId());
+//        User checkPasswordUser = mapper.checkPasswordToUser(checkPasswordDto);
+//        Boolean checkedPassword = userService.checkedPassword(originUser.getLoginId(), checkPasswordUser.getPassword());
+//        UserDto.CheckPasswordResponse response = mapper.userToCheckPasswordResponse(checkPasswordUser);
+//        if(checkedPassword == true){response.setCheck(true);
+//        } else {response.setCheck(false);}
+//        return new ResponseEntity<>(response,HttpStatus.OK);
+//    }
+
+
+
+
+
+//    @GetMapping("/gegege")
+//    public ResponseEntity checkPassword(@AuthenticationPrincipal User author) {
+//
+//        User user = new User();
+//        user.setUserId(author.getUserId());
+//        user.setEmail(author.getEmail());
+//        user.setLoginId(author.getLoginId());
+//        user.setPassword(author.getPassword());
+//        user.setNickname(author.getNickname());
+//
+//        return new ResponseEntity<>(mapper.userToUserResponseDto(user),HttpStatus.OK);
+//    }

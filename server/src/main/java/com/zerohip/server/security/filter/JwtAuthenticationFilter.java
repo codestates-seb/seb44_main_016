@@ -79,7 +79,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         claims.put("roles", user.getRoles());
 
         String subject = user.getLoginId();
-        System.out.println(claims); // test 후 삭제 예정
 
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
 

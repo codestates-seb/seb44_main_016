@@ -10,7 +10,10 @@ public interface UserService {
   User createUser(User user);
 
   // User 조회(단건)
-  User findUser(Long userId);
+  User findUserByUserId(Long userId);
+
+  User findUserByLoginId(String loginId);
+
 
   // User 조회(전체)
   List<User> findUsers();
@@ -19,6 +22,6 @@ public interface UserService {
   User updateUser(User user);
 
   // User 삭제
-  void deleteUser(User user);
+  void deleteUser(User user, String password);
 
 }

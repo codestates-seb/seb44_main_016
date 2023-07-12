@@ -27,7 +27,7 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
          *  UserDetails -> NeverLandUserDetailsService 로 다운 캐스팅하여 가져옴
          */
         NeverLandUserDetailsService.NeverLandUserDetails userDetails = (NeverLandUserDetailsService.NeverLandUserDetails) authentication.getPrincipal();
-        String userId = userDetails.getLoginId();
+        Long userId = userDetails.getUserId();
         String loginId = userDetails.getLoginId();
         String nickname = userDetails.getNickname();
 

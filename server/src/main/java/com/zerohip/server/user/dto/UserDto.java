@@ -96,6 +96,16 @@ public class UserDto {
         private String email;
     }
 
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class CheckPassword {
+
+        private String password;
+    }
+
+
 //    @Getter
 //    @AllArgsConstructor
 //    @NoArgsConstructor
@@ -139,5 +149,16 @@ public class UserDto {
         private String nickname;
         private LocalDateTime modifiedAt;
 
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class CheckPasswordResponse {
+        private Boolean passwordCheck;
+
+        public void setCheck(Boolean passwordCheck) {
+            this.passwordCheck = passwordCheck;
+        }
     }
 }
