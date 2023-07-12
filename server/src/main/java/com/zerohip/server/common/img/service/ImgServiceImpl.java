@@ -1,3 +1,4 @@
+/*
 package com.zerohip.server.common.img.service;
 
 import com.zerohip.server.common.article.Article;
@@ -124,9 +125,12 @@ public class ImgServiceImpl implements ImgService {
     if (article instanceof FinancialRecordArticle financialRecordArticle) {
       img.setFinancialRecordArticle(financialRecordArticle);
     } else if (article instanceof FeedArticle feedArticle) {
-      /*img.setFeedArticle(feedArticle);*/
+      */
+/*img.setFeedArticle(feedArticle);*//*
+
     } else {
       throw new RuntimeException("존재하지 않는 게시글입니다.");
     }
   }
 }
+*/

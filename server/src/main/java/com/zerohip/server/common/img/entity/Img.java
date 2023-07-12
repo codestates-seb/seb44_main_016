@@ -1,3 +1,4 @@
+/*
 package com.zerohip.server.common.img.entity;
 
 import com.zerohip.server.common.article.Article;
@@ -31,7 +32,10 @@ public class Img {
   @JoinColumn(name = "fianancial-record-article-id")
   private FinancialRecordArticle financialRecordArticle;
 
-  /*@ManyToOne
+  */
+/*@ManyToOne
   @JoinColumn(name = "feed-article-id")
-  private FeedArticle feedArticle;*/
+  private FeedArticle feedArticle;*//*
+
 }
+*/
