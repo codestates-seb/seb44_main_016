@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import CommonStyles from '../styles/CommonStyles';
-import { useCheckboxInput } from '../hooks/useComponents';
+import { useOnlyCheckbox } from '../hooks/useComponents';
 
 interface CheckboxAgreementProps {
   labelTitle: string;
@@ -10,14 +10,14 @@ interface CheckboxAgreementProps {
   isCentered?: boolean;
 }
 
-export default function CheckboxAgreement({
+export default function useCheckboxInput({
   labelTitle,
   checkboxAgreement,
   agreementError,
   isBackgroundWhite,
   isCentered,
 }: CheckboxAgreementProps) {
-  const [Checkbox, isChecked, setIsChecked] = useCheckboxInput('checkbox', labelTitle);
+  const [Checkbox, isChecked, setIsChecked] = useOnlyCheckbox('checkbox', labelTitle);
   return {
     CheckboxComponent: (
       <S.CheckboxContainer isCentered={isCentered}>
