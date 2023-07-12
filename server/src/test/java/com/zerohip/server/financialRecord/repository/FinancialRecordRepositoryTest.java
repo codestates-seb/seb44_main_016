@@ -27,7 +27,7 @@ class FinancialRecordRepositoryTest {
   @BeforeEach
   void setUp() {
     // 가계부 인스턴스 생성
-    faRec = new FinancialRecord("test용 가계부");
+    faRec = new FinancialRecord("test용 가계부", "test용 가계부 설명");
   }
 
   @Test
@@ -62,7 +62,7 @@ class FinancialRecordRepositoryTest {
     FinancialRecord saveFaRec = financialRecordRepository.save(faRec);
 
     // 다른 가계부 인스턴스 생성 및 저장
-    FinancialRecord faRec2 = new FinancialRecord("test용 가계부2");
+    FinancialRecord faRec2 = new FinancialRecord("test용 가계부2", "test용 가계부 설명2");
     FinancialRecord saveFaRec2 = financialRecordRepository.save(faRec2);
 
     log.info("saveFaRec.getFinancialRecordName() = {}", saveFaRec.getFinancialRecordName());

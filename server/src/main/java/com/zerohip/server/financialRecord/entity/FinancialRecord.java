@@ -1,5 +1,6 @@
 package com.zerohip.server.financialRecord.entity;
 
+import com.zerohip.server.common.audit.Auditable;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
-public class FinancialRecord {
+public class FinancialRecord extends Auditable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,9 +36,9 @@ public class FinancialRecord {
 
   // 유저 매핑(List 형식)
 
-
-  public FinancialRecord(String financialRecordName) {
+  public FinancialRecord(String financialRecordName, String memo) {
     this.financialRecordName = financialRecordName;
+    this.memo = memo;
   }
 
   public FinancialRecord(String financialRecordName, String memo, List<FinancialRecordArticle> financialRecordArticles) {

@@ -1,10 +1,8 @@
 package com.zerohip.server.financialRecord.dto;
 
-import com.zerohip.server.common.audit.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -38,6 +36,7 @@ public class FinancialRecordDto {
     private Long financialRecordId;
     private String financialRecordName;
     private String memo;
+
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     // User
