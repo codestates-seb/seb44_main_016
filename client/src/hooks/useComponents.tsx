@@ -1,9 +1,8 @@
-import React, { useState, useCallback, ChangeEvent, MouseEvent } from 'react';
+import React, { useState, useCallback, ChangeEvent } from 'react';
 import CommonStyles from '../styles/CommonStyles';
 import styled from '@emotion/styled';
 
 type UseInputReturnType = [React.ReactNode, string | null, (value: string | null) => void];
-
 type UseCheckBoxReturnType = [React.ReactNode, boolean, (value: boolean) => void];
 
 export default function useInput(type: string, placeholder: string, label: string): UseInputReturnType {
