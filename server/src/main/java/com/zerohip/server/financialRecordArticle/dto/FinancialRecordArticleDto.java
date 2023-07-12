@@ -25,7 +25,7 @@ public class FinancialRecordArticleDto {
   public static class Post {
     @Size(max = 30)
     private String title;
-    @Size(max = 10000)
+    @Size(max = 2000)
     private String content;
     @NotNull
     private Date faDate;
@@ -40,7 +40,7 @@ public class FinancialRecordArticleDto {
 /*    // 유저 매핑 데이터
     private Long userId;*/
     // 이미지 매핑 데이터
-    private List<ImgDto.Response> imgDtos;
+//    private List<ImgDto.Response> imgDtos;
     // 댓글 매핑 데이터
     // 좋아요 매핑 데이터
     // 해시태그 매핑 데이터
@@ -51,7 +51,7 @@ public class FinancialRecordArticleDto {
   public static class Patch {
     @Size(max = 30)
     private String title;
-    @Size(max = 10000)
+    @Size(max = 2000)
     private String content;
     @NotNull
     private Date faDate;
@@ -73,7 +73,7 @@ public class FinancialRecordArticleDto {
     private Long financialRecordArticleId;
     @Size(max = 30)
     private String title;
-    @Size(max = 10000)
+    @Size(max = 2000)
     private String content;
     @NotNull
     private Date faDate;
@@ -92,7 +92,7 @@ public class FinancialRecordArticleDto {
 /*    // 유저 매핑 데이터
     private Long userId;*/
     // 이미지 매핑 데이터
-    private List<ImgDto.Response> imgDtos;
+//    private List<ImgDto.Response> imgDtos;
     // 댓글 매핑 데이터
     // 좋아요 매핑 데이터
     // 해시태그 매핑 데이터
