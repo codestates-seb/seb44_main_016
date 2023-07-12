@@ -46,10 +46,7 @@ type PropsTimeline = {
 };
 
 export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
-  const [isStart, isEnd, currentNum, setCurrentNum] = useRangeNumber(
-    0,
-    data.imgSrcs.length - 1
-  ); // 이미지 인덱스에 사용
+  const [isStart, isEnd, currentNum, setCurrentNum] = useRangeNumber(0, data.imgSrcs.length - 1); // 이미지 인덱스에 사용
 
   let date, labelText, Label;
   if (type === 'feed') {
@@ -99,12 +96,7 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
             Waypil
           </ArticleHeader>
         ) : (
-          <ArticleHeader
-            type={type}
-            createdAt={date}
-            category={data.category}
-            price={data.price}
-          >
+          <ArticleHeader type={type} createdAt={date} category={data.category} price={data.price}>
             Waypil
           </ArticleHeader>
         )}
@@ -123,18 +115,12 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
               })}
             </S.ImgsCarousel>
             {!isStart && (
-              <S.ImgSlideBtn
-                position={'left'}
-                onClick={() => setCurrentNum(currentNum - 1)}
-              >
+              <S.ImgSlideBtn position={'left'} onClick={() => setCurrentNum(currentNum - 1)}>
                 {svgs.slideLeft}
               </S.ImgSlideBtn>
             )}
             {!isEnd && (
-              <S.ImgSlideBtn
-                position={'right'}
-                onClick={() => setCurrentNum(currentNum + 1)}
-              >
+              <S.ImgSlideBtn position={'right'} onClick={() => setCurrentNum(currentNum + 1)}>
                 {svgs.slideRight}
               </S.ImgSlideBtn>
             )}
@@ -143,11 +129,7 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
           <></>
         )}
         <S.ArtileMain>
-          {type !== 'feed' && data.title !== '' ? (
-            <S.TitleText>{data.title}</S.TitleText>
-          ) : (
-            <></>
-          )}
+          {type !== 'feed' && data.title !== '' ? <S.TitleText>{data.title}</S.TitleText> : <></>}
           <S.ContextText>{data.content}</S.ContextText>
           {type === 'feed' || <VoteForm savingRate={256} flexRate={48} />}
           <S.UDForm>
@@ -204,9 +186,7 @@ const S = {
     height: 100%;
     display: flex;
     align-items: center;
-    transform: translateX(
-      calc(var(--article-w) * ${(props) => props.currentImgIndex * -1})
-    );
+    transform: translateX(calc(var(--article-w) * ${(props) => props.currentImgIndex * -1}));
     transition: all 0.5s;
   `,
   ImgBox: styled.li`
@@ -228,11 +208,7 @@ const S = {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-      180deg,
-      transparent 50%,
-      rgba(0, 0, 0, 0.5) 100%
-    );
+    background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.5) 100%);
     display: flex;
     justify-content: end;
     align-items: end;

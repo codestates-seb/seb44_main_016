@@ -33,9 +33,7 @@ type PropsTimeline = {
   children: string;
 };
 
-export default function ArticleHeaderComponent(
-  props: PropsFeed | PropsTimeline
-) {
+export default function ArticleHeaderComponent(props: PropsFeed | PropsTimeline) {
   let PriceText;
   if (props.type === 'feed') {
     PriceText = styled(S.PriceTextBase)``;
@@ -57,20 +55,14 @@ export default function ArticleHeaderComponent(
           <S.ProfileImg />
         </S.ProfileImgButton>
         <S.Nickname>{props.children}</S.Nickname>
-        {props.type === 'feed' || (
-          <S.DateText>{getKoreanDate(props.createdAt)}</S.DateText>
-        )}
+        {props.type === 'feed' || <S.DateText>{getKoreanDate(props.createdAt)}</S.DateText>}
       </S.LeftDiv>
       <S.RightDiv>
         {props.type === 'feed' ? (
           <S.DateText>{getKoreanDate(props.createdAt)}</S.DateText>
         ) : (
           <>
-            {props.category === '' ? (
-              <></>
-            ) : (
-              <S.CategoryText>{props.category}</S.CategoryText>
-            )}
+            {props.category === '' ? <></> : <S.CategoryText>{props.category}</S.CategoryText>}
             <PriceText>{formatNumber(props.price)}</PriceText>
           </>
         )}

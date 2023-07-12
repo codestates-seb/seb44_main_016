@@ -22,9 +22,7 @@ export default function CommentsComponent() {
     <div>
       <S.CommentsDropdownButton onClick={handleChangeOpenedOrClosed}>
         <span>댓글 12개 모두 보기</span>
-        <S.SvgContainer isReverse={!isCommentsOpened}>
-          {svgs.dropdown || <></>}
-        </S.SvgContainer>
+        <S.SvgContainer isReverse={!isCommentsOpened}>{svgs.dropdown || <></>}</S.SvgContainer>
       </S.CommentsDropdownButton>
       {isCommentsOpened ? (
         <S.CommentList>
@@ -79,8 +77,7 @@ const S = {
     justify-content: center;
   `,
   SvgContainer: styled.div<SvgContainerProps>`
-    transform: ${(props) =>
-      props.isReverse ? 'rotate(180deg)' : 'rotate(0deg)'};
+    transform: ${(props) => (props.isReverse ? 'rotate(180deg)' : 'rotate(0deg)')};
   `,
 };
 // '더 보기' 버튼 구현 요망
