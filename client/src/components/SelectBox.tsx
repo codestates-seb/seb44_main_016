@@ -112,9 +112,7 @@ export default function SelectBox({ searchItem, setSearchItem }: SelectBoxProps)
         </S.DropDownBtn>
         {isDropDownClicked && isLayoutClicked && (
           <>
-            <S.Ul>
-              {optionElements.length > 0 ? optionElements : <S.Result>검색된 결과가 없습니다.</S.Result>}
-            </S.Ul>
+            <S.Ul>{optionElements.length > 0 ? optionElements : <S.Result>검색된 결과가 없습니다.</S.Result>}</S.Ul>
             <S.Layout onClick={handleDropBoxClick}></S.Layout>
           </>
         )}
@@ -157,7 +155,7 @@ const S = {
 
     border: 1px solid var(--color-point-lilac);
     background-color: white;
-    margin-top: 0.3rem;
+    margin-top: 0.5rem;
     border-radius: 20px;
     width: 100%;
     padding: 0.7rem 1rem;

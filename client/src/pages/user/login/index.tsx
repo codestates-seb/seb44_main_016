@@ -80,10 +80,8 @@ export default function Login() {
         <title>제로힙 로그인 페이지</title>
       </Head>
       <S.LoginWrapper>
-        <S.HomeBtnBox>
-          <Link href='/'>
-            <Logo width='300' />
-          </Link>
+        <S.HomeBtnBox type='button' onClick={() => router.push(`/`)}>
+          <Logo width='300' aria-label='제로힙 로고' />
         </S.HomeBtnBox>
         <S.LoginFormBox>
           <S.inputBox>{IdInput}</S.inputBox>
@@ -118,7 +116,7 @@ const S = {
     justify-content: space-around;
     align-items: center;
   `,
-  HomeBtnBox: styled.div`
+  HomeBtnBox: styled.button`
     margin: 0 0.7rem 2.5rem 0;
   `,
   LogoBtn: styled.button``,

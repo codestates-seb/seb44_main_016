@@ -43,11 +43,8 @@ export default function GoodBye() {
         <title>제로힙 회원 탈퇴 성공 페이지</title>
       </Head>
       <h1 className='blind'>회원탈퇴 성공</h1>
-      <S.HomeBtnBox>
-        <Link href='/'>
-          <h2 className='blind'>홈으로 이동하는 제로힙 로고 이미지</h2>
-          <Logo width='155' />
-        </Link>
+      <S.HomeBtnBox type='button' onClick={() => router.push(`/`)}>
+        <Logo width='155' aria-label='제로힙 로고' />
       </S.HomeBtnBox>
       {showMessage ? (
         <S.ContentBox>
@@ -60,8 +57,8 @@ export default function GoodBye() {
               <span>님의 탈퇴가 정상적으로 처리되었습니다.</span>
             </S.GoodByeComment>
             <S.NextTimeComment>다음에 또 이용해주세요!</S.NextTimeComment>
-            <S.HomeBtn type='button'>
-              <h2>홈으로 이동</h2>
+            <S.HomeBtn type='button' onClick={() => router.push(`/`)}>
+              홈으로 이동
             </S.HomeBtn>
           </S.GoodByeBox>
         </S.ContentBox>
@@ -83,7 +80,7 @@ const S = {
     align-items: center;
     position: relative;
   `,
-  HomeBtnBox: styled.div`
+  HomeBtnBox: styled.button`
     display: flex;
     position: absolute;
     top: 0;
@@ -104,11 +101,12 @@ const S = {
     justify-content: center;
     align-items: center;
   `,
-  GoodByeComment: styled.h3`
+  GoodByeComment: styled.div`
     font-size: 1.8rem;
     margin: 1rem auto 0.7rem auto;
+    font-weight: 500;
   `,
-  NextTimeComment: styled.h3`
+  NextTimeComment: styled.div`
     font-size: 1.4rem;
     font-weight: 500;
     color: var(--color-primary);
@@ -150,9 +148,7 @@ const S = {
       top: 2.5rem;
       left: 2.5rem;
     }
-    > h2 {
-      font-weight: 500;
-      font-size: 1.1rem;
-    }
+    font-weight: 500;
+    font-size: 1.1rem;
   `,
 };

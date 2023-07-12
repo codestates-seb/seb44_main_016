@@ -23,25 +23,15 @@ function MyPage() {
         <h1 className='blind'>마이페이지</h1>
 
         <S.UserImg>
-          <Image
-            src='/image/mango.png'
-            alt='프로필 사진'
-            priority={true}
-            width={150}
-            height={150}
-            style={imageStyle}
-          />
+          <Image src='/image/mango.png' alt='프로필 사진' priority={true} width={150} height={150} style={imageStyle} />
         </S.UserImg>
         <S.UserName>
-          <h2 className='blind'>닉네임</h2>
-          <S.H3>마마망</S.H3>
+          <S.Nickname>마마망</S.Nickname>
         </S.UserName>
         <S.ModifyBtnBox>
           <FollowModal />
           <FollowModal />
-          <S.ModifyBtn type='button'>
-            <h2>설정</h2>
-          </S.ModifyBtn>
+          <S.ModifyBtn type='button'>설정</S.ModifyBtn>
         </S.ModifyBtnBox>
       </S.UserProfileContainer>
       <S.UserArticleContainer>
@@ -80,7 +70,7 @@ const S = {
   UserName: styled.div`
     margin: 1rem 0;
   `,
-  H3: styled.h3`
+  Nickname: styled.div`
     font-size: 1.5rem;
     font-weight: 600;
     background-image: linear-gradient(to right, #0d0d0d, var(--color-primary));
@@ -125,10 +115,8 @@ const S = {
       top: 2.5rem;
       left: 2.5rem;
     }
-    > h2 {
-      font-size: 1.1rem;
-      font-weight: 500;
-    }
+    font-size: 1.1rem;
+    font-weight: 500;
   `,
   UserArticleContainer: styled.div``,
 

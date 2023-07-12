@@ -1,6 +1,5 @@
 // 'use client';
 import styled from '@emotion/styled';
-import { css } from '@emotion/react';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -124,10 +123,9 @@ export default function SignUpForm() {
     }
 
     const res = await mutateAsync();
-    console.log(res);
+    console.log(res); //
 
     if (res.field === '아이디') {
-      console.log(res.field);
       setError({ ...error, loginId: res.reason });
       return;
     }
@@ -213,7 +211,7 @@ const S = {
     }
   `,
   Error: styled.div`
-    padding-left: 20px;
+    padding-left: 1rem;
     margin-top: 8px;
     color: var(--color-point-pink);
     font-size: 0.98rem;

@@ -64,8 +64,6 @@ export default function UserUpdate() {
         </button>
       </S.BackBox>
       <S.FormContainer>
-        <h2 className='blind'>경고 메시지</h2>
-
         <S.WarningMessage>
           {`회원 탈퇴를 할 경우, ${'마마망'}님의 회원 정보, 가계부, 구독 목록 등`}
           <br />
@@ -75,25 +73,17 @@ export default function UserUpdate() {
         {inputData.map((el) => (
           <S.InputBox key={el.label.text}>
             <S.LabelBox>
-              <S.Label htmlFor={el.label.htmlFor}>
-                <h2>{el.label.text}</h2>
-              </S.Label>
+              <S.Label htmlFor={el.label.htmlFor}>{el.label.text}</S.Label>
             </S.LabelBox>
             <S.InputField>{el.component}</S.InputField>
-            <S.Error>
-              <h3 className='blind'>에러 메시지</h3>
-              <h4>{el.error}</h4>
-            </S.Error>
+            <S.Error>{el.error}</S.Error>
           </S.InputBox>
         ))}
-        <S.CheckboxBox>
-          <h2 className='blind'>삭제 동의</h2>
-          {CheckboxComponent}
-        </S.CheckboxBox>
+        <S.CheckboxBox>{CheckboxComponent}</S.CheckboxBox>
         <S.SubmitBox isClicked={isClicked ? 'true' : undefined}>
           <S.SubmitBtn large onClick={handleDelete}>
             {/* <S.SubmitBtn large onClick={handleSubmit}> 추후 사용 예정  */}
-            <h2>회원 탈퇴</h2>
+            회원 탈퇴
           </S.SubmitBtn>
         </S.SubmitBox>
       </S.FormContainer>
@@ -149,7 +139,7 @@ const S = {
     flex-direction: column;
     align-items: center;
   `,
-  WarningMessage: styled.h3`
+  WarningMessage: styled.div`
     width: 61%;
     padding: 1rem 0;
     color: var(--color-error-red);
@@ -165,20 +155,14 @@ const S = {
       css`
         animation: ${bounce} 1s infinite;
       `}
-    h2 {
-      font-size: 1.1rem;
-      font-weight: 500;
-    }
+    font-size: 1.1rem;
+    font-weight: 500;
   `,
   Error: styled.div`
     padding-left: 20px;
     font-size: 0.98rem;
     margin-top: 8px;
     color: var(--color-error-red);
-
-    h4 {
-      font-weight: 400;
-    }
   `,
   InputBox: styled.div`
     width: 53%;
@@ -191,10 +175,8 @@ const S = {
     font-size: 1rem;
     display: inline-block;
     margin: 2rem 0 0 0rem;
-    h2 {
-      font-weight: 600;
-      font-size: 1.07rem;
-    }
+    font-weight: 600;
+    font-size: 1.07rem;
   `,
 
   ModifyBtn: styled.button`
