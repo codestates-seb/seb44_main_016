@@ -21,7 +21,12 @@ export default function RadioSet(props: Props) {
         <S.RadioButtonsContainer isCenter={props.isCenter}>
           {props.options.map((optionName, i) => (
             <S.RadioBtnLabel key={i}>
-              <S.RadioBtn type='radio' value={i} checked={props.checkValue === i} onChange={() => props.handler(i)} />
+              <S.RadioBtn
+                type='radio'
+                value={i}
+                checked={props.checkValue === i}
+                onChange={() => props.handler(i)}
+              />
               {optionName}
             </S.RadioBtnLabel>
           ))}

@@ -15,13 +15,15 @@ const CommonStyles = {
   SubmitBtn: styled.button<ButtonProps>`
     position: relative;
     display: inline-block;
-    color: ${(props) => (props.color === '--color-point-lilac' ? `var(--color-black)` : `var(--color-white)`)};
+    color: ${(props) =>
+      props.color === '--color-point-lilac' ? `var(--color-black)` : `var(--color-white)`};
     padding: 1rem;
     border-radius: 100px;
     font-weight: 400;
     border: 2px solid ${(props) => (props.color ? `var(${props.color})` : `var(--color-primary)`)};
     overflow: hidden;
     background-color: white;
+    line-height: 1;
     z-index: 1;
 
     &:hover {
@@ -97,7 +99,8 @@ const CommonStyles = {
   LinkBtn: styled(Link)<LinkProps>`
     position: relative;
     display: inline-block;
-    color: ${(props) => (props.color === '--color-point-lilac' ? `var(--color-black)` : `var(--color-white)`)};
+    color: ${(props) =>
+      props.color === '--color-point-lilac' ? `var(--color-black)` : `var(--color-white)`};
     padding: 1rem;
     border-radius: 100px;
     font-weight: 400;
@@ -181,10 +184,11 @@ const CommonStyles = {
     background-color: white;
     border-radius: 100px;
     width: 100%;
-    padding: 1rem;
+    padding: 0.875rem 1rem;
     color: var(--color-gray01);
     border: 1px solid var(--color-border-gray);
-    &:placeholder {
+    line-height: 1;
+    &::placeholder {
       color: var(--color-gray07);
     }
     &:focus {
@@ -201,7 +205,7 @@ const CommonStyles = {
     resize: none;
     min-height: 120px;
 
-    &:placeholder {
+    &::placeholder {
       color: var(--color-gray07);
     }
     &:focus {
@@ -227,6 +231,14 @@ const CommonStyles = {
     &:checked {
       border: 4px solid var(--color-primary);
     }
+  `,
+
+  BlindTitle: styled.h2`
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
   `,
 };
 
