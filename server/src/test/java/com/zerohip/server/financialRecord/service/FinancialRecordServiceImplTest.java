@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -81,9 +82,11 @@ class FinancialRecordServiceImplTest {
   // 가계부 전체 조회 테스트 메서드
   // '...'는 가변 인자(varags)로 메소드에 임의 개수의 동일타입의 매개변수를 전달
   void findFaRecsTest(FinancialRecord... faRecs) {
-    List<FinancialRecord> result = financialRecordService.findFaRecs();
-    assertThat(result.size()).isEqualTo(faRecs.length);
-    assertThat(result).containsExactly(faRecs);
+    Page<FinancialRecord> result = financialRecordService.findFaRecs(0, 10);
+    log.info("result.getTotalElements() = {}", result.getTotalElements());
+    List<FinancialRecord> resultContent = result.getContent();
+    assertThat(resultContent.size()).isEqualTo(faRecs.length);
+    assertThat(resultContent).containsExactly(faRecs);
   }
 
   @Test
