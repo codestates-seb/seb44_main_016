@@ -1,12 +1,14 @@
 import styled from '@emotion/styled';
 import CommonStyles from '../../../../styles/CommonStyles';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
-export default function FaRecHeader() {
+export default function FaRecHeader({ setActiveTab }) {
   const router = useRouter();
   const faRecId = router.query.slug;
-  const date = new Date().getTime();
-  console.log(new Date(date).toLocaleDateString());
+  const handleButtonClick = (tabName: string) => {
+    setActiveTab(tabName);
+  };
 
   return (
     <>
@@ -19,12 +21,7 @@ export default function FaRecHeader() {
         </S.ImgBox>
         <S.ContentBox>
           <div>
-            <S.FaRecName>
-              가계부
-              {/* 오늘은 햇살이 따뜻한 날이었어요. 코로나19로 인해 오랫동안 집에만 있었지만, 마스크를 쓰고 가까운
-              공원에 나가보았답니다. 공원에서 책을 읽으며 시간을 보내니, 일상의 소중함을 다시 한번 느꼈습니다.
-              자연과 함께하는 시간이 얼마나 중요한지 잊고 살았던 것 같아요. */}
-            </S.FaRecName>
+            <S.FaRecName>가계부</S.FaRecName>
             <S.LinkWrap>
               <S.LinkBtn
                 href='/financial-record/edit/[slug]'
@@ -40,14 +37,14 @@ export default function FaRecHeader() {
             </S.LinkWrap>
           </div>
           <S.ButtonWrap>
-            <S.Button type='button'>
+            <S.aLink href='#article' onClick={() => handleButtonClick('가계부')}>
               게시물
               <span>59</span>
-            </S.Button>
-            <S.Button type='button'>
+            </S.aLink>
+            <S.aLink href='#timeline' onClick={() => handleButtonClick('타임라인')}>
               타임라인
               <span>30</span>
-            </S.Button>
+            </S.aLink>
             <S.Button type='button'>
               멤버
               <span>6</span>
@@ -128,6 +125,16 @@ const S = {
     gap: 2rem;
   `,
   Button: styled.button`
+    &:hover {
+      color: var(--color-gray02);
+    }
+    & > span {
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-left: 0.625rem;
+    }
+  `,
+  aLink: styled.a`
     &:hover {
       color: var(--color-gray02);
     }

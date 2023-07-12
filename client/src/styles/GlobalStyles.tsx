@@ -11,6 +11,10 @@ const GlobalStyles = () => (
         box-sizing: border-box;
       }
 
+      html {
+        scroll-behavior: smooth;
+      }
+
       :root {
         color: #333;
         font-family: 'Pretendard';

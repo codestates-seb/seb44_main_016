@@ -56,29 +56,31 @@ export default function FinancialPage() {
 
   return (
     <S.Container>
-      <FaRecHeader />
+      <FaRecHeader setActiveTab={setActiveTab} />
       <Tab tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
       {/* map 함수로 변경 예정 */}
-      {activeTab === '가계부'
-        ? dummy.map((data, i) => {
-            const date = new Date(data.faDate);
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            const dateString = `${date.getFullYear()}. ${month}. ${date.getDate()}`;
-            let dateHeader = null;
+      {activeTab === '가계부' ? (
+        dummy.map((data, i) => {
+          const date = new Date(data.faDate);
+          const month = (date.getMonth() + 1).toString().padStart(2, '0');
+          const dateString = `${date.getFullYear()}. ${month}. ${date.getDate()}`;
+          let dateHeader = null;
 
-            if (lastDate !== dateString) {
-              dateHeader = <S.DateHeader>{dateString}</S.DateHeader>;
-              lastDate = dateString;
-            }
+          if (lastDate !== dateString) {
+            dateHeader = <S.DateHeader>{dateString}</S.DateHeader>;
+            lastDate = dateString;
+          }
 
-            return (
-              <div key={data.financialRecordId}>
-                {dateHeader}
-                <FaRecArticle data={data} />
-              </div>
-            );
-          })
-        : '타임라인페이지'}
+          return (
+            <div key={i} id='article'>
+              {dateHeader}
+              <FaRecArticle data={data} />
+            </div>
+          );
+        })
+      ) : (
+        <div id='timeline'>타임라인</div>
+      )}
     </S.Container>
   );
 }
