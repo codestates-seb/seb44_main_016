@@ -4,10 +4,10 @@ import { useRouter } from 'next/router';
 import { getCookie } from 'cookies-next';
 import { useAppDispatch } from './redux/hooks';
 import { useSelector } from 'react-redux';
-import { RootState } from '../components/redux/store';
+import { RootState } from './redux/store';
 import { login } from './redux/authnReducer';
 
-const withAuthn = (Component: ComponentType) => (props: object) => {
+const withAuth = (Component: ComponentType) => (props: object) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -30,4 +30,4 @@ const withAuthn = (Component: ComponentType) => (props: object) => {
   return <Component {...props} />;
 };
 
-export default withAuthn;
+export default withAuth;

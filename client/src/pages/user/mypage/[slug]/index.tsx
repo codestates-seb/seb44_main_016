@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import CommonStyles from '../../../../styles/CommonStyles';
 import useInput, { useCheckboxInput } from '../../../../hooks/useComponents';
 import FollowModal from './FollowModal';
-import withAuthn from '../../../../components/WithAuthn';
+import withAuth from '../../../../components/WithAuth';
 
 function MyPage() {
   const router = useRouter();
@@ -170,4 +170,4 @@ const imageStyle = {
   cursor: 'pointer',
 };
 
-export default withAuthn(MyPage);
+export default withAuth(MyPage);
