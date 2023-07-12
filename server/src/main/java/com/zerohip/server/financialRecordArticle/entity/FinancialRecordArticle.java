@@ -1,5 +1,7 @@
 package com.zerohip.server.financialRecordArticle.entity;
 
+import com.zerohip.server.common.article.Article;
+import com.zerohip.server.common.img.entity.Img;
 import com.zerohip.server.common.scope.Scope;
 import com.zerohip.server.financialRecord.entity.FinancialRecord;
 import lombok.Getter;
@@ -10,7 +12,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * faDate를 어떻게 저장할 것인가..!
@@ -21,27 +25,7 @@ import java.util.Date;
 @Setter
 @Getter
 @Entity
-public class FinancialRecordArticle {
-
-  public FinancialRecordArticle(String title, String content, Date faDate, String category, int price, Scope scope, FinancialRecord financialRecord) {
-    this.title = title;
-    this.content = content;
-    this.faDate = faDate;
-    this.category = category;
-    this.price = price;
-    this.scope = scope;
-    this.financialRecord = financialRecord;
-  }
-
-  // No financialRecord, id
-  public FinancialRecordArticle(String title, String content, Date faDate, String category, int price, Scope scope) {
-    this.title = title;
-    this.content = content;
-    this.faDate = faDate;
-    this.category = category;
-    this.price = price;
-    this.scope = scope;
-  }
+public class FinancialRecordArticle implements Article {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,8 +62,34 @@ public class FinancialRecordArticle {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "financialRecordId")
   private FinancialRecord financialRecord;
-  // 유저 매핑
+
   // 이미지 매핑
+  // cascade = CascadeType.ALL : 부모 엔티티(board)에서 생성, 업데이트, 삭제되면 image도 동일하게 처리
+  // orphanRemoval = true : 부모 엔티티(board)에서 image를 참조 제거하면 image엔티티에서도 DB에서 삭제
+  @OneToMany(mappedBy = "financialRecordArticle", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Img> imgList = new ArrayList<>();
+
+  public FinancialRecordArticle(String title, String content, Date faDate, String category, int price, Scope scope, FinancialRecord financialRecord) {
+    this.title = title;
+    this.content = content;
+    this.faDate = faDate;
+    this.category = category;
+    this.price = price;
+    this.scope = scope;
+    this.financialRecord = financialRecord;
+  }
+
+  // No financialRecord, id
+  public FinancialRecordArticle(String title, String content, Date faDate, String category, int price, Scope scope) {
+    this.title = title;
+    this.content = content;
+    this.faDate = faDate;
+    this.category = category;
+    this.price = price;
+    this.scope = scope;
+  }
+  // 유저 매핑
+
   // 댓글 매핑
   // 좋아요 매핑
   // 해시태그 매핑
