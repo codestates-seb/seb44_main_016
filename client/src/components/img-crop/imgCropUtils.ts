@@ -20,7 +20,11 @@ interface HandleFileChangeProps {
   setImgSrc: (value: string | null) => void;
 }
 
-export const handleFileChange = async ({ e, setCropModal, setImgSrc }: HandleFileChangeProps): Promise<void> => {
+export const handleFileChange = async ({
+  e,
+  setCropModal,
+  setImgSrc,
+}: HandleFileChangeProps): Promise<void> => {
   if (e.target.files && e.target.files.length > 0) {
     const file = e.target.files[0];
     const imageDataUrl = await readFile(file);
