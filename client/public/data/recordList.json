@@ -1,0 +1,227 @@
+[
+  {
+    "financialRecordId": 1,
+    "financialRecordName": "햄구1의 가계부",
+    "isBookmark": true,
+    "users": [
+      {
+        "userId": "user1",
+        "profileImgPath": "https://blog.kakaocdn.net/dn/bY6iW4/btrEJwN3Zrf/SqQZ605snSkSqP5U96S3AK/img.png"
+      },
+      {
+        "userId": "user2",
+        "profileImgPath": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlX16ekpWJwSiFBtYqm_BIzS2E8gs2Iqf_87SbY3zQx4u59Zv-mjMUGmT9K0xOsgDICn0&usqp=CAU"
+      }
+    ]
+  },
+  {
+    "financialRecordId": 2,
+    "financialRecordName": "햄구2의 가계부",
+    "isBookmark": true,
+    "users": [
+      {
+        "userId": "user3",
+        "profileImgPath": "https://pbs.twimg.com/profile_images/1173873201039806464/R1lWiNES_400x400.jpg"
+      },
+      {
+        "userId": "user4",
+        "profileImgPath": "https://blog.kakaocdn.net/dn/bY6iW4/btrEJwN3Zrf/SqQZ605snSkSqP5U96S3AK/img.png"
+      },
+      {
+        "userId": "user5",
+        "profileImgPath": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlX16ekpWJwSiFBtYqm_BIzS2E8gs2Iqf_87SbY3zQx4u59Zv-mjMUGmT9K0xOsgDICn0&usqp=CAU"
+      }
+    ]
+  },
+  {
+    "financialRecordId": 3,
+    "financialRecordName": "햄구3의 가계부",
+    "isBookmark": true,
+    "users": [
+    
+      {
+        "userId": "user4",
+        "profileImgPath": "https://blog.kakaocdn.net/dn/bY6iW4/btrEJwN3Zrf/SqQZ605snSkSqP5U96S3AK/img.png"
+      },
+      {
+        "userId": "user5",
+        "profileImgPath": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlX16ekpWJwSiFBtYqm_BIzS2E8gs2Iqf_87SbY3zQx4u59Zv-mjMUGmT9K0xOsgDICn0&usqp=CAU"
+      }
+    ]
+  },
+  {
+    "financialRecordId": 4,
+    "financialRecordName": "햄구4의 가계부",
+    "isBookmark": true,
+    "users": [
+    
+      {
+        "userId": "user4",
+        "profileImgPath": "https://blog.kakaocdn.net/dn/bY6iW4/btrEJwN3Zrf/SqQZ605snSkSqP5U96S3AK/img.png"
+      }
+    ]
+  },
+  {
+    "financialRecordId": 5,
+    "financialRecordName": "햄구5의 가계부",
+    "isBookmark": true,
+    "users": [
+      {
+        "userId": "user1",
+        "profileImgPath": "https://blog.kakaocdn.net/dn/bY6iW4/btrEJwN3Zrf/SqQZ605snSkSqP5U96S3AK/img.png"
+      },
+      {
+        "userId": "user2",
+        "profileImgPath": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlX16ekpWJwSiFBtYqm_BIzS2E8gs2Iqf_87SbY3zQx4u59Zv-mjMUGmT9K0xOsgDICn0&usqp=CAU"
+      },
+      {
+        "userId": "user4",
+        "profileImgPath": "https://blog.kakaocdn.net/dn/bY6iW4/btrEJwN3Zrf/SqQZ605snSkSqP5U96S3AK/img.png"
+      },
+      {
+        "userId": "user5",
+        "profileImgPath": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlX16ekpWJwSiFBtYqm_BIzS2E8gs2Iqf_87SbY3zQx4u59Zv-mjMUGmT9K0xOsgDICn0&usqp=CAU"
+      }
+    ]
+  },
+  {
+    "financialRecordId": 6,
+    "financialRecordName": "햄구2의 가계부",
+    "isBookmark": true,
+    "users": [
+      {
+        "userId": "user3",
+        "profileImgPath": "https://pbs.twimg.com/profile_images/1173873201039806464/R1lWiNES_400x400.jpg"
+      },
+      {
+        "userId": "user4",
+        "profileImgPath": "https://blog.kakaocdn.net/dn/bY6iW4/btrEJwN3Zrf/SqQZ605snSkSqP5U96S3AK/img.png"
+      },
+      {
+        "userId": "user5",
+        "profileImgPath": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlX16ekpWJwSiFBtYqm_BIzS2E8gs2Iqf_87SbY3zQx4u59Zv-mjMUGmT9K0xOsgDICn0&usqp=CAU"
+      }
+    ]
+  },
+  {
+    "financialRecordId": 7,
+    "financialRecordName": "햄구3의 가계부",
+    "isBookmark": true,
+    "users": [
+    
+      {
+        "userId": "user4",
+        "profileImgPath": "https://blog.kakaocdn.net/dn/bY6iW4/btrEJwN3Zrf/SqQZ605snSkSqP5U96S3AK/img.png"
+      },
+      {
+        "userId": "user5",
+        "profileImgPath": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlX16ekpWJwSiFBtYqm_BIzS2E8gs2Iqf_87SbY3zQx4u59Zv-mjMUGmT9K0xOsgDICn0&usqp=CAU"
+      }
+    ]
+  },
+  {
+    "financialRecordId": 8,
+    "financialRecordName": "햄구4의 가계부",
+    "isBookmark": true,
+    "users": [
+    
+      {
+        "userId": "user4",
+        "profileImgPath": "https://blog.kakaocdn.net/dn/bY6iW4/btrEJwN3Zrf/SqQZ605snSkSqP5U96S3AK/img.png"
+      }
+    ]
+  },
+  {
+    "financialRecordId": 9,
+    "financialRecordName": "햄구5의 가계부",
+    "isBookmark": true,
+    "users": [
+      {
+        "userId": "user1",
+        "profileImgPath": "https://blog.kakaocdn.net/dn/bY6iW4/btrEJwN3Zrf/SqQZ605snSkSqP5U96S3AK/img.png"
+      },
+      {
+        "userId": "user2",
+        "profileImgPath": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlX16ekpWJwSiFBtYqm_BIzS2E8gs2Iqf_87SbY3zQx4u59Zv-mjMUGmT9K0xOsgDICn0&usqp=CAU"
+      },
+      {
+        "userId": "user4",
+        "profileImgPath": "https://blog.kakaocdn.net/dn/bY6iW4/btrEJwN3Zrf/SqQZ605snSkSqP5U96S3AK/img.png"
+      },
+      {
+        "userId": "user5",
+        "profileImgPath": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlX16ekpWJwSiFBtYqm_BIzS2E8gs2Iqf_87SbY3zQx4u59Zv-mjMUGmT9K0xOsgDICn0&usqp=CAU"
+      }
+    ]
+  },
+  {
+    "financialRecordId": 10,
+    "financialRecordName": "햄구2의 가계부",
+    "isBookmark": true,
+    "users": [
+      {
+        "userId": "user3",
+        "profileImgPath": "https://pbs.twimg.com/profile_images/1173873201039806464/R1lWiNES_400x400.jpg"
+      },
+      {
+        "userId": "user4",
+        "profileImgPath": "https://blog.kakaocdn.net/dn/bY6iW4/btrEJwN3Zrf/SqQZ605snSkSqP5U96S3AK/img.png"
+      },
+      {
+        "userId": "user5",
+        "profileImgPath": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlX16ekpWJwSiFBtYqm_BIzS2E8gs2Iqf_87SbY3zQx4u59Zv-mjMUGmT9K0xOsgDICn0&usqp=CAU"
+      }
+    ]
+  },
+  {
+    "financialRecordId": 11,
+    "financialRecordName": "햄구3의 가계부",
+    "isBookmark": true,
+    "users": [
+    
+      {
+        "userId": "user4",
+        "profileImgPath": "https://blog.kakaocdn.net/dn/bY6iW4/btrEJwN3Zrf/SqQZ605snSkSqP5U96S3AK/img.png"
+      },
+      {
+        "userId": "user5",
+        "profileImgPath": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlX16ekpWJwSiFBtYqm_BIzS2E8gs2Iqf_87SbY3zQx4u59Zv-mjMUGmT9K0xOsgDICn0&usqp=CAU"
+      }
+    ]
+  },
+  {
+    "financialRecordId": 12,
+    "financialRecordName": "햄구4의 가계부",
+    "isBookmark": true,
+    "users": [
+    
+      {
+        "userId": "user4",
+        "profileImgPath": "https://blog.kakaocdn.net/dn/bY6iW4/btrEJwN3Zrf/SqQZ605snSkSqP5U96S3AK/img.png"
+      }
+    ]
+  },
+  {
+    "financialRecordId": 13,
+    "financialRecordName": "햄구5의 가계부",
+    "isBookmark": true,
+    "users": [
+      {
+        "userId": "user1",
+        "profileImgPath": "https://blog.kakaocdn.net/dn/bY6iW4/btrEJwN3Zrf/SqQZ605snSkSqP5U96S3AK/img.png"
+      },
+      {
+        "userId": "user2",
+        "profileImgPath": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlX16ekpWJwSiFBtYqm_BIzS2E8gs2Iqf_87SbY3zQx4u59Zv-mjMUGmT9K0xOsgDICn0&usqp=CAU"
+      },
+      {
+        "userId": "user4",
+        "profileImgPath": "https://blog.kakaocdn.net/dn/bY6iW4/btrEJwN3Zrf/SqQZ605snSkSqP5U96S3AK/img.png"
+      },
+      {
+        "userId": "user5",
+        "profileImgPath": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlX16ekpWJwSiFBtYqm_BIzS2E8gs2Iqf_87SbY3zQx4u59Zv-mjMUGmT9K0xOsgDICn0&usqp=CAU"
+      }    ]
+  }
+
+]
