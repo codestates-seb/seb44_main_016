@@ -18,8 +18,7 @@ export default function Aside(props: Props) {
   const [isNoticeTabOpened, setIsNoticeTabOpened] = React.useState(false);
   const isTabClosed = !isSearchTabOpened && !isNoticeTabOpened;
 
-  const [isBookmarkedFaRecListOpened, setIsBookmarkedFaRecListOpened] =
-    React.useState(true);
+  const [isBookmarkedFaRecListOpened, setIsBookmarkedFaRecListOpened] = React.useState(true);
 
   const handleOpenOrCloseBookmarkedFaRecList = () => {
     setIsBookmarkedFaRecListOpened((prevBool) => !prevBool);
@@ -44,17 +43,15 @@ export default function Aside(props: Props) {
         <S.Upper>
           <AsideLogo isTabClosed={isTabClosed} />
           <ol>
-            <AsideButton leftIcon={svgs.home}>
+            <AsideButton href='/' leftIcon={svgs.home}>
               {isTabClosed && '홈'}
             </AsideButton>
             {props.isLoggedIn && (
               <>
-                <AsideButton
-                  onClick={handleOpenOrCloseNoticeTab}
-                  leftIcon={svgs.notice}
-                >
+                <AsideButton onClick={handleOpenOrCloseNoticeTab} leftIcon={svgs.notice}>
                   {isTabClosed && '알림'}
                 </AsideButton>
+                {/* href='/financial-record' */}
                 <AsideButton
                   leftIcon={svgs.faRec}
                   rightIcon={svgs.dropdown}
@@ -65,26 +62,19 @@ export default function Aside(props: Props) {
                 </AsideButton>
                 {isBookmarkedFaRecListOpened && isTabClosed && (
                   <ol>
-                    <AsideButton isSmall={true}>
-                      {isTabClosed && 'XXX의 가계부'}
-                    </AsideButton>
-                    <AsideButton isSmall={true}>
-                      {isTabClosed && '♡ 데이트 통장 ♥'}
-                    </AsideButton>
-                    <AsideButton isSmall={true}>
-                      {isTabClosed && '산악회 곗돈 장부'}
-                    </AsideButton>
+                    {/* href='/financial-record/1' */}
+                    <AsideButton isSmall={true}>{isTabClosed && 'XXX의 가계부'}</AsideButton>
+                    {/* href='/financial-record/2' */}
+                    <AsideButton isSmall={true}>{isTabClosed && '♡ 데이트 통장 ♥'}</AsideButton>
+                    {/* href='/financial-record/3' */}
+                    <AsideButton isSmall={true}>{isTabClosed && '산악회 곗돈 장부'}</AsideButton>
                   </ol>
                 )}
               </>
             )}
-            <AsideButton leftIcon={svgs.ranking}>
-              {isTabClosed && '명예의 전당'}
-            </AsideButton>
-            <AsideButton
-              onClick={handleOpenOrCloseSearchTab}
-              leftIcon={svgs.search}
-            >
+            {/* href='/?rank=true' // 쿼리 미확정 */}
+            <AsideButton leftIcon={svgs.ranking}>{isTabClosed && '명예의 전당'}</AsideButton>
+            <AsideButton onClick={handleOpenOrCloseSearchTab} leftIcon={svgs.search}>
               {isTabClosed && '검색'}
             </AsideButton>
           </ol>
@@ -92,17 +82,18 @@ export default function Aside(props: Props) {
         <S.Lower>
           {props.isLoggedIn ? (
             <>
+              {/* href='/user/mypage' */}
               <AsideProfileBox isTabClosed={isTabClosed} />
               {isTabClosed ? (
-                <S.SubmitBtn>글쓰기</S.SubmitBtn>
+                <S.LinkBtn href='/editor'>글쓰기</S.LinkBtn>
               ) : (
-                <AsideButton leftIcon={svgs.editor} />
+                <AsideButton href='/editor' leftIcon={svgs.editor} />
               )}
             </>
           ) : isTabClosed ? (
-            <S.SubmitBtn>로그인</S.SubmitBtn>
+            <S.LinkBtn href='/user/login'>로그인</S.LinkBtn>
           ) : (
-            <AsideButton leftIcon={svgs.person} />
+            <AsideButton href='/user/login' leftIcon={svgs.person} />
           )}
         </S.Lower>
       </S.AsideInnerContainer>
@@ -167,11 +158,6 @@ const S = {
     align-items: center;
     gap: 1.5rem;
     padding: 1.5rem 0rem;
-  `,
-
-  BookmarkedFaRecButton: styled.button`
-    width: 100%;
-    padding: 1rem 0rem;
   `,
 
   TabContainer: styled.div`
