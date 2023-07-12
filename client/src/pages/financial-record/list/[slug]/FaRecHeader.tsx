@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
 import CommonStyles from '../../../../styles/CommonStyles';
 import { useRouter } from 'next/router';
-import Tab from '../../../../components/Tab';
 
-export default function RecordHeader() {
+export default function FaRecHeader() {
   const router = useRouter();
   const faRecId = router.query.slug;
+  const date = new Date().getTime();
+  console.log(new Date(date).toLocaleDateString());
 
   return (
     <>
@@ -18,7 +19,12 @@ export default function RecordHeader() {
         </S.ImgBox>
         <S.ContentBox>
           <div>
-            <S.FaRecName>가계부 이름</S.FaRecName>
+            <S.FaRecName>
+              가계부
+              {/* 오늘은 햇살이 따뜻한 날이었어요. 코로나19로 인해 오랫동안 집에만 있었지만, 마스크를 쓰고 가까운
+              공원에 나가보았답니다. 공원에서 책을 읽으며 시간을 보내니, 일상의 소중함을 다시 한번 느꼈습니다.
+              자연과 함께하는 시간이 얼마나 중요한지 잊고 살았던 것 같아요. */}
+            </S.FaRecName>
             <S.LinkWrap>
               <S.LinkBtn
                 href='/financial-record/edit/[slug]'
@@ -93,8 +99,13 @@ const S = {
       align-items: center;
       margin-bottom: 1.75rem;
     }
+
+    & > div:nth-of-type(1) {
+      justify-content: space-between;
+    }
   `,
   LinkWrap: styled.div`
+    flex-shrink: 0;
     margin-left: 1.4rem;
 
     & > a {

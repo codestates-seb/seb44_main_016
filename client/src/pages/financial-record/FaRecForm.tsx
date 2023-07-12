@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import CommonStyles from '../../styles/CommonStyles';
 import useInput from '../../hooks/useComponents';
-import { FormEvent, useEffect, useMemo, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useImgCrop } from '../../hooks/useImgCrop';
 import { handleFileChange } from '../../components/img-crop/imgCropUtils';
 import ImgCropModal from '../../components/img-crop/ImgCropModal';

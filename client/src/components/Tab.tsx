@@ -6,15 +6,11 @@ type TabProps = {
   onTabChange: (tab: string) => void;
 };
 
-export default function Tab({ tabs, activeTab, onTabChange }) {
+export default function Tab({ tabs, activeTab, onTabChange }: TabProps) {
   return (
     <S.TabWrapper>
       {tabs.map((tab, i) => (
-        <button
-          key={i}
-          onClick={() => onTabChange(tab)}
-          className={activeTab === tab ? 'active' : ''}
-        >
+        <button key={i} onClick={() => onTabChange(tab)} className={activeTab === tab ? 'active' : ''}>
           {tab}
         </button>
       ))}
@@ -36,6 +32,7 @@ const S = {
       &.active {
         border-color: var(--color-primary);
         color: var(--color-primary);
+        font-weight: bold;
       }
     }
   `,
