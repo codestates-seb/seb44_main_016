@@ -34,7 +34,11 @@ export default function ImgBox(props: Props) {
         </>
       )}
       <S.InputImgBtn type='file' id={inputImgBtnId} accept='image/*' onChange={onFileChange} />
-      <S.InputImgLabel isImgBlank={imgSrc === null} htmlFor={inputImgBtnId} aria-label='게시글 사진 추가하기 버튼'>
+      <S.InputImgLabel
+        isImgBlank={imgSrc === null}
+        htmlFor={inputImgBtnId}
+        aria-label='게시글 사진 추가하기 버튼'
+      >
         <S.PlusIcon>＋</S.PlusIcon>
       </S.InputImgLabel>
     </S.ImgContainer>

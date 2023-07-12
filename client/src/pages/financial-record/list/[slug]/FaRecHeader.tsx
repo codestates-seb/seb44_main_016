@@ -54,8 +54,8 @@ export default function FaRecHeader({ setActiveTab }: FaRecHeaderProps) {
             </S.Button>
           </S.ButtonWrap>
           <S.DescContainer>
-            가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부
-            설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명
+            가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부
+            설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명
           </S.DescContainer>
         </S.ContentBox>
       </S.Container>

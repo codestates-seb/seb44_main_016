@@ -127,7 +127,12 @@ export default function EditorPage() {
             {/* 금액 */}
             <InputNaturalNumber legend='금액' num={price} handler={handleChangePrice} />
             {/* 지출/수입 (라디오 버튼) */}
-            <RadioSet legend='분류' options={['지출', '수입']} checkValue={faType} handler={handleChangeFaType} />
+            <RadioSet
+              legend='분류'
+              options={['지출', '수입']}
+              checkValue={faType}
+              handler={handleChangeFaType}
+            />
           </S.Row>
           {/* 내역(제목) */}
           <S.InputContainer>
