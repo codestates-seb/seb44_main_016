@@ -2,6 +2,7 @@ package com.zerohip.server.feedArticle.dto;
 
 
 import com.zerohip.server.common.audit.Auditable;
+import com.zerohip.server.common.feedType.FeedType;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class FeedArticleDto {
         //@Size(min = 1, max = ???)를 사용하면 @NotBlank는 없어도 될 것 같기도.. 고민 필요
         private String content;
         @NotNull
-        private Enum feedType;
+        private FeedType feedType;
 
         //이미지, 댓글, 해시태그, 투표(절약/플렉스) 추가
     }
@@ -30,14 +31,14 @@ public class FeedArticleDto {
     //단일 피드게시글 조회
     @Getter
     @AllArgsConstructor
-    public class FeedArticleResponse {
+    public static class FeedArticleResponse {
         private Long feedArticleId;
         @NotNull
         //@Size(max = 추후 지정) -> @NotBlank와 함께 사용하면 조금 더 정확할 것 같음.
         //@Size(min = 1, max = ???)를 사용하면 @NotBlank는 없어도 될 것 같기도.. 고민 필요
         private String content;
         @NotNull
-        private Enum feedType;
+        private FeedType feedType;
         //조회 부분은 클라이언트의 요청을 받기 때문에 생성,수정 시간 명시
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
@@ -48,7 +49,7 @@ public class FeedArticleDto {
     //전체 피드게시글 죄회 - 피드 게시글의 정보를 리스트로 담아서 조회
     @Getter
     @AllArgsConstructor
-    public class FeedArticleListResponse {
+    public static class FeedArticleListResponse {
         private List<FeedArticle> feedArticles;
     }
 
@@ -59,7 +60,7 @@ public class FeedArticleDto {
         //@Size(max = 추후 지정) -> @NotBlank와 함께 사용하면 조금 더 정확할 것 같음.
         private String content;
         @NotNull
-        private Enum feedType;
+        private FeedType feedType;
 
         //이미지, 해시태그 추가
     }
