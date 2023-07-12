@@ -1,6 +1,5 @@
 package com.zerohip.server.financialRecord.dto;
 
-import com.zerohip.server.common.audit.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,7 +10,6 @@ import java.time.LocalDateTime;
 
 
 public class FinancialRecordDto {
-
   @Getter
   @AllArgsConstructor
   public static class Post {
@@ -19,6 +17,7 @@ public class FinancialRecordDto {
     @Size(min = 1, max = 30)
     private String financialRecordName;
     private String memo;
+
     // User
   }
 
@@ -29,6 +28,7 @@ public class FinancialRecordDto {
     @Size(min = 1, max = 30)
     private String financialRecordName;
     private String memo;
+
     // User
   }
 
@@ -38,6 +38,7 @@ public class FinancialRecordDto {
     private Long financialRecordId;
     private String financialRecordName;
     private String memo;
+    
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     // User

@@ -1,5 +1,6 @@
 package com.zerohip.server.financialRecordArticle.entity;
 
+
 import com.zerohip.server.common.article.Article;
 import com.zerohip.server.common.img.entity.Img;
 import com.zerohip.server.common.scope.Scope;
@@ -26,6 +27,7 @@ import java.util.List;
 @Getter
 @Entity
 public class FinancialRecordArticle implements Article {
+
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -89,7 +91,6 @@ public class FinancialRecordArticle implements Article {
     this.scope = scope;
   }
   // 유저 매핑
-
   // 댓글 매핑
   // 좋아요 매핑
   // 해시태그 매핑
