@@ -90,13 +90,9 @@ export default function Login() {
           </S.LoginBox>
         </S.LoginFormBox>
         <S.Guide>
-          <S.SignUpBtn onClick={() => router.push('/user/signup')}>
-            <h2>회원가입</h2>
-          </S.SignUpBtn>
+          <S.SignUpBtn onClick={() => router.push('/user/signup')}>회원가입</S.SignUpBtn>
           <div> | </div>
-          <S.FindPasswordBtn>
-            <h2>비밀번호 찾기</h2>
-          </S.FindPasswordBtn>
+          <S.FindPasswordBtn>비밀번호 찾기</S.FindPasswordBtn>
         </S.Guide>
         <S.OauthBox>
           <Oauth />
@@ -166,25 +162,21 @@ const S = {
     color: var(--color-point-gray);
   `,
   SignUpBtn: styled.button`
-    h2 {
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--color-gray04);
-      margin-right: 1.5rem;
-      &:hover {
-        color: var(--color-primary);
-      }
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--color-gray04);
+    margin-right: 1.5rem;
+    &:hover {
+      color: var(--color-primary);
     }
   `,
   FindPasswordBtn: styled.button`
-    h2 {
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--color-gray04);
-      margin-left: 1.5rem;
-      &:hover {
-        color: var(--color-primary);
-      }
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--color-gray04);
+    margin-left: 1.5rem;
+    &:hover {
+      color: var(--color-primary);
     }
   `,
   OauthBox: styled.div``,

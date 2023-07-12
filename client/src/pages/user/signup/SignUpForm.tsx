@@ -149,7 +149,7 @@ export default function SignUpForm() {
           <S.InputContainer key={i}>
             <S.LabelBox>
               <S.Label htmlFor={el.label.htmlFor}>
-                <h2>{el.label.text}</h2>
+                {el.label.text}
                 <span>{el.label.required && '*'}</span>
               </S.Label>
             </S.LabelBox>
@@ -166,24 +166,21 @@ export default function SignUpForm() {
                 </S.DomainBox>
               )}
             </S.EmailAddress>
-            <S.Error>
-              <h3 className='blind'>에러 메시지</h3>
-              <h4>{el.error}</h4>{' '}
-            </S.Error>
+            <S.Error>{el.error}</S.Error>
           </S.InputContainer>
         ))}
       </S.InputMapWrapper>
 
       <S.PolicyContainer>
         <S.PolicyLabel>
-          <h2>약관동의</h2>
+          약관동의
           <span>*</span>
         </S.PolicyLabel>
         {CheckboxComponent}
       </S.PolicyContainer>
       <S.SubmitBox {...isClickedProps}>
         <S.SubmitBtn large onClick={handleSignUpSubmit}>
-          <h2>회원가입</h2>
+          회원가입
         </S.SubmitBtn>
       </S.SubmitBox>
     </S.FormContainer>
@@ -204,12 +201,11 @@ const S = {
   InputMapWrapper: styled.div``,
   LabelBox: styled.div``,
   Label: styled.label`
-    h2 {
-      font-weight: 600;
-      font-size: 1.13rem;
-      display: inline-block;
-      margin-bottom: 10px;
-    }
+    font-weight: 600;
+    font-size: 1.13rem;
+    display: inline-block;
+    margin-bottom: 10px;
+
     > span {
       color: var(--color-point-pink);
       display: inline-block;
@@ -220,10 +216,8 @@ const S = {
     padding-left: 20px;
     margin-top: 8px;
     color: var(--color-point-pink);
-    h4 {
-      font-size: 0.98rem;
-      font-weight: 400;
-    }
+    font-size: 0.98rem;
+    font-weight: 400;
   `,
   PolicyContainer: styled.div`
     margin: 4rem 0 1rem 0;
@@ -234,13 +228,12 @@ const S = {
     align-items: center;
   `,
   PolicyLabel: styled.div`
-    h2 {
-      font-weight: 600;
-      font-size: 1.13rem;
-      display: inline-block;
-      padding-left: 10px;
-      margin-bottom: 1.3rem;
-    }
+    font-weight: 600;
+    font-size: 1.13rem;
+    display: inline-block;
+    padding-left: 10px;
+    margin-bottom: 1.3rem;
+
     > span {
       color: var(--color-point-pink);
       display: inline-block;
@@ -282,9 +275,7 @@ const S = {
   SubmitBox: styled.div<SubmitBoxProps>`
     margin: 2rem 0 4rem 0;
     ${isClickedStyled}
-    h2 {
-      font-size: 1.2rem;
-      font-weight: 500;
-    }
+    font-size: 1.2rem;
+    font-weight: 500;
   `,
 };

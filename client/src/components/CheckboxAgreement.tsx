@@ -28,10 +28,7 @@ export default function CheckboxAgreement({
           </S.RadioBtnLabel>
           <S.PolicyGuide htmlFor={labelTitle}>{checkboxAgreement}</S.PolicyGuide>
         </S.Policy>
-        <S.Error isBackgroundWhite={isBackgroundWhite}>
-          <h3 className='blind'>에러 메시지</h3>
-          <h4>{agreementError && agreementError}</h4>
-        </S.Error>
+        <S.Error isBackgroundWhite={isBackgroundWhite}>{agreementError && agreementError}</S.Error>
       </S.CheckboxContainer>
     ),
     isChecked,
@@ -73,9 +70,8 @@ const S = {
 
     margin-top: 8px;
     color: ${(props) => (props.isBackgroundWhite ? 'var(--color-point-pink)' : 'var(--color-error-red)')};
-    h4 {
-      font-size: 0.98rem;
-      font-weight: 400;
-    }
+
+    font-size: 0.98rem;
+    font-weight: 400;
   `,
 };
