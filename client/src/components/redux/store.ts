@@ -1,12 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authnReducer from './authnReducer';
 
-import toastReducer from './toast';
-
 export const store = configureStore({
   reducer: {
     authnReducer,
-    toastReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 });

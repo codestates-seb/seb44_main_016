@@ -101,9 +101,7 @@ export default function Login() {
           <div> | </div>
           <S.FindPasswordBtn>비밀번호 찾기</S.FindPasswordBtn>
         </S.Guide>
-        <S.OauthBox>
-          <Oauth />
-        </S.OauthBox>
+        <Oauth />
       </S.LoginWrapper>
     </S.LoginContainer>
   );
@@ -186,5 +184,4 @@ const S = {
       color: var(--color-primary);
     }
   `,
-  OauthBox: styled.div``,
 };

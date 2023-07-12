@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import { PostSignUp, LoginReqData } from '../types/user';
 
-// const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-const BASE_URL = 'https://zerohip-git-user-30-everland.vercel.app/api';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+// const BASE_URL = 'https://zerohip-git-user-30-everland.vercel.app/api';
 
 const apiUser = {
   /** 회원 가입 */
