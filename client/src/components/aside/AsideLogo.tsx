@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import Link from 'next/link';
 
 import SvgBox from '../aside/SvgBox';
 import svgs from '../../constants/svg';
@@ -10,7 +11,7 @@ type Props = {
 
 export default function Logo(props: Props) {
   return (
-    <S.LogoContainer isTabClosed={props.isTabClosed}>
+    <S.LogoContainer href='/' isTabClosed={props.isTabClosed}>
       <SvgBox>{svgs.logoSymbol}</SvgBox>
       <span>{props.isTabClosed && svgs.logotext}</span>
     </S.LogoContainer>
@@ -18,7 +19,7 @@ export default function Logo(props: Props) {
 }
 
 const S = {
-  LogoContainer: styled.button<{ isTabClosed: boolean | undefined }>`
+  LogoContainer: styled(Link)<{ isTabClosed: boolean | undefined }>`
     width: 100%;
     height: 3.25rem;
     padding-left: 1rem;

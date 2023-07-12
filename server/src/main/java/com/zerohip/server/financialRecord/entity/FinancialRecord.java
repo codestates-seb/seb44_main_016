@@ -1,6 +1,7 @@
 package com.zerohip.server.financialRecord.entity;
 
 import com.zerohip.server.common.audit.Auditable;
+import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @NoArgsConstructor
 @Setter
@@ -28,13 +30,20 @@ public class FinancialRecord extends Auditable {
   private String memo;
 
   // 게시물 수
-  // 타임라인수 -> 매핑 시 적용
+  // 타임라인수 -> 매핑 시 적용 -> 리스트에 담아서 글 수를 세어야 한다.(or 게시글에서 int형으로 더한다?)
+  @OneToMany(mappedBy = "financialRecord", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<FinancialRecordArticle> financialRecordArticles; // 글 매핑(List 형식)
 
   // 유저 매핑(List 형식)
-
 
   public FinancialRecord(String financialRecordName, String memo) {
     this.financialRecordName = financialRecordName;
     this.memo = memo;
+  }
+
+  public FinancialRecord(String financialRecordName, String memo, List<FinancialRecordArticle> financialRecordArticles) {
+    this.financialRecordName = financialRecordName;
+    this.memo = memo;
+    this.financialRecordArticles = financialRecordArticles;
   }
 }
