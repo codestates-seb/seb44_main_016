@@ -12,7 +12,7 @@ export default function FinancialPage() {
   };
   const tabs = ['가계부', '타임라인'];
 
-  const [data, isLoading, error] = useQuery(['faRecArticle']);
+  // const [data, isLoading, error] = useQuery(['faRecArticle']);
   // const dummy = [
   //   {
   //     financialRecordId: 1,
