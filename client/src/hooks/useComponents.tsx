@@ -58,6 +58,7 @@ const S = {
     border-radius: 0.35rem;
     width: 1.4rem;
     height: 1.4rem;
+    background-color: white;
     cursor: pointer;
     &:checked {
       border-color: transparent;
