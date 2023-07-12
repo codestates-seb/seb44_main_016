@@ -41,6 +41,7 @@ const S = {
     justify-content: space-around;
     align-items: center;
     position: relative;
+    margin-top: 1rem;
   `,
   ContentBox: styled.div``,
   AnimationBox: styled.div`
