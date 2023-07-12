@@ -34,12 +34,8 @@ tokenInstance.interceptors.response.use(
       const { message, response, config } = error;
       const originalRequest = config;
 
-      // if (errorResponse.status === 401) {
-      //   return await resetTokenAndReattemptRequest(error);
-      // }
-
       if (message === 'Network Error' || response?.data?.errorCode === '400') {
-        // 몇으로?
+        // 백엔드 상의 후 변경이나 확정 필요
         const refreshToken = getCookie('refreshToken');
         /** GET : NEW ACCESS TOKEN */
         const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/auth/user/token`, {

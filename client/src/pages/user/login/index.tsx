@@ -48,14 +48,11 @@ export default function Login() {
     console.log(res);
 
     if (res.status === 200) {
-      console.log('here');
       // const accessToken = res.headers.Authorization;
-      const accessToken = 'ggg';
-      // console.log(accessToken);
-      const { loginId, nickname, userId } = res.data.user;
+      const accessToken = 'temp-access-token-from-header';
+      const { nickname, userId, loginId } = res.data.user;
       // const refreshToken = getCookie('refreshToken'); 나중에 서버 연결 후
-      // console.log(refreshToken); 나중에 서버 연결 후
-      setCookie('refreshToken', '리프레쉬톸흔'); // 나중에 refreshToken 자동으로 받아옴
+      setCookie('refreshToken', 'im-refresh-token');
 
       dispatch(login({ userId, accessToken, loginId, nickname, isLoggedIn: true }));
 
@@ -65,10 +62,8 @@ export default function Login() {
       alert(`${nickname}님, 환영합니다!`);
       router.push(`/user/mypage/${userId}`);
     } else if (res.status === 401) {
-      console.log('hh');
       setError(res.data.message);
     }
-
     return;
   };
 

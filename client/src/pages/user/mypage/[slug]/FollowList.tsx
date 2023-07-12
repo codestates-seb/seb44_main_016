@@ -8,13 +8,7 @@ export default function ModalList() {
       <S.UserInfo>
         <S.UserPicIdBox>
           <S.UserPic>
-            <Image
-              src='/image/mango2.png'
-              alt='유저 프로필 사진'
-              width={44}
-              height={44}
-              style={imageStyle}
-            />
+            <Image src='/image/mango2.png' alt='유저 프로필 사진' width={44} height={44} style={imageStyle} />
           </S.UserPic>
           <S.UserId>
             <div>manng35</div>

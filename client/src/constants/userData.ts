@@ -7,6 +7,3 @@ export const userData = [
     nickname: 'DoyuMango',
   },
 ];
-export default function UserTest() {
-  return;
-}

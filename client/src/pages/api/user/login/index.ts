@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { userData } from '../../../test/userData';
+import { userData } from '../../../../constants/userData';
 // import jwt from 'jsonwebtoken';
 
 export default function logIn(req: NextApiRequest, res: NextApiResponse) {
