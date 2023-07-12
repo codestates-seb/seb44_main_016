@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 import ImgIcon from '../../../../../public/images/icon/img.svg';
+import SVGs from '../../../../constants/svg';
+import FaRecCarousel from './FaRecCarousel';
 
 export default function FaRecArticle() {
   const dummyData = [
@@ -22,13 +24,18 @@ export default function FaRecArticle() {
     <S.Article>
       <S.Header>
         <span>지출</span>
-        <span>카테고리</span>
-        <span>제목</span>
+        <S.Category>카테고리</S.Category>
+        <S.Title>제목</S.Title>
         <span>-4,550원</span>
-        <span>
-          <ImgIcon />
-        </span>
+        <S.ImgAndDate>
+          <span>
+            <ImgIcon />
+          </span>
+          <span>2023.06.28</span>
+        </S.ImgAndDate>
+        <S.DropdownIcon>{SVGs.dropdown}</S.DropdownIcon>
       </S.Header>
+      <FaRecCarousel />
     </S.Article>
   );
 }
@@ -46,5 +53,42 @@ const S = {
     display: flex;
     align-items: center;
     width: 100%;
+    padding: 1.25rem;
+    gap: 1.68rem;
+    font-weight: 500;
+  `,
+  Title: styled.span`
+    flex: 1;
+    text-align: left;
+  `,
+  Category: styled.span`
+    width: 6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  `,
+  ImgAndDate: styled.span`
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+
+    & > span:nth-of-type(1) {
+      width: 1.125rem;
+      & > svg {
+        width: 100%;
+      }
+    }
+
+    & > span:nth-of-type(2) {
+      color: var(--color-gray03);
+      font-weight: 400;
+    }
+  `,
+  DropdownIcon: styled.span`
+    transform: ratate(180deg);
+  `,
+  Price: styled.span`
+    font-weight: 600;
+    color: var(--color-point-red);
   `,
 };
