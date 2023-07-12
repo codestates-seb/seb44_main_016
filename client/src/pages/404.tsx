@@ -103,6 +103,5 @@ const S = {
       left: 2.5rem;
     }
     font-size: 1.1rem;
-    margin-bottom: 4rem;
   `,
 };
