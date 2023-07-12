@@ -7,12 +7,7 @@ type FieldType = {
   id: string;
 };
 
-export default function InputField({
-  inputComponent,
-  error,
-  label,
-  id,
-}: FieldType) {
+export default function InputField({ inputComponent, error, label, id }: FieldType) {
   return (
     <fieldset>
       <S.Label htmlFor={id}>{label}</S.Label>

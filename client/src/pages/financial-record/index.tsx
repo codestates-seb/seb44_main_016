@@ -32,11 +32,7 @@ export default function FinancialListPage() {
     APIfinancialRecord.getRecordList
   );
 
-  const [searchInput] = useInput(
-    'text',
-    '검색어를 입력해주세요',
-    'faRecSearch'
-  );
+  const [searchInput] = useInput('text', '검색어를 입력해주세요', 'faRecSearch');
 
   return (
     <S.ListWrap>
@@ -56,8 +52,7 @@ export default function FinancialListPage() {
         ) : error ? (
           <p>오류가 발생했습니다</p>
         ) : (
-          isSuccess &&
-          data.map((el) => <ListItem key={el.financialRecordId} item={el} />)
+          isSuccess && data.map((el) => <ListItem key={el.financialRecordId} item={el} />)
         )}
       </S.FaRecList>
     </S.ListWrap>

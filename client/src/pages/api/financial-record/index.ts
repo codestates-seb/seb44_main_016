@@ -1,20 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { recordList } from '../../test/recordList';
 
-export default function financialRecord(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default function financialRecord(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
-    const { financialRecordName, financialRecordDescription, imgId, userId } =
-      req.body;
+    const { financialRecordName, memo, imgId, userId } = req.body;
 
     const financialRecordId = recordList.length + 1;
 
     const newRecord = {
       financialRecordId,
       financialRecordName,
-      financialRecordDescription,
+      memo,
       imgId,
       userId,
     };
