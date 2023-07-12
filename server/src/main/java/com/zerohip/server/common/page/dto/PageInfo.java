@@ -1,4 +1,4 @@
-package server.page.dto;
+package com.zerohip.server.common.page.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
