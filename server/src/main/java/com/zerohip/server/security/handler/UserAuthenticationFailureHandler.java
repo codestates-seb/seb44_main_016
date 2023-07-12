@@ -27,7 +27,7 @@ public class UserAuthenticationFailureHandler implements AuthenticationFailureHa
     private void sendErrorResponse(HttpServletResponse response) throws IOException {
 
         Gson gson = new Gson();
-        ErrorResponse errorResponse = ErrorResponse.of(HttpStatus.UNAUTHORIZED, "아이디 또는 비밀번호가 틀렸습니다 !");    // 401
+        ErrorResponse errorResponse = ErrorResponse.of(HttpStatus.UNAUTHORIZED, "아이디 또는 비밀번호가 틀렸습니다.");    // 401
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.getWriter().write(gson.toJson(errorResponse, ErrorResponse.class));

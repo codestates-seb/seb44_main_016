@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
 public class ErrorResponder {
 
     public static void sendErrorResponse(HttpServletResponse response, HttpStatus status) throws IOException {

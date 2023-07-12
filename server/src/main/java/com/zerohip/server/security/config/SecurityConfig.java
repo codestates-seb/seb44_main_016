@@ -54,7 +54,7 @@ public class SecurityConfig {
                 .authenticationEntryPoint(new UserAuthenticationEntryPoint())
                 .accessDeniedHandler(new UserAccessDeniedHandler())
                 .and()
-                .apply(new CustomFilterConfigurer()) // 커스터마이징 된 CustomFilterConfigurer 추가
+                .apply(new CustomFilterConfig()) // 커스터마이징 된 CustomFilterConfigurer 추가
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().permitAll()   // role : user 만 있기 때문에 세부 권한 지정 필요 x
@@ -72,7 +72,7 @@ public class SecurityConfig {
 
 
     // CustomFilterConfigurer 등록
-    public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
+    public class CustomFilterConfig extends AbstractHttpConfigurer<CustomFilterConfig, HttpSecurity> {
 
         @Override
         public void configure(HttpSecurity builder) throws Exception {
