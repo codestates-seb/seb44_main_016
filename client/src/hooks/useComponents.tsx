@@ -1,9 +1,8 @@
-import React, { useState, useCallback, ChangeEvent, MouseEvent } from 'react';
+import React, { useState, useCallback, ChangeEvent } from 'react';
 import CommonStyles from '../styles/CommonStyles';
 import styled from '@emotion/styled';
 
 type UseInputReturnType = [React.ReactNode, string | null, (value: string | null) => void];
-
 type UseCheckBoxReturnType = [React.ReactNode, boolean, (value: boolean) => void];
 
 export default function useInput(type: string, placeholder: string, label: string): UseInputReturnType {
@@ -35,7 +34,7 @@ export function useCheckboxInput(type: string, label: string): UseCheckBoxReturn
   const [isChecked, setIsChecked] = useState(false);
 
   const Component = useCallback(() => {
-    const handleClick = (e: MouseEvent<HTMLInputElement>) => {
+    const handleClick = () => {
       setIsChecked((prev) => !prev);
     };
 
@@ -59,6 +58,7 @@ const S = {
     border-radius: 0.35rem;
     width: 1.4rem;
     height: 1.4rem;
+    background-color: white;
     cursor: pointer;
     &:checked {
       border-color: transparent;
