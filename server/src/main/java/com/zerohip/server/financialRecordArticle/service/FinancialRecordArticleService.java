@@ -6,10 +6,8 @@ import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import java.util.List;
 
 public interface FinancialRecordArticleService {
-
   // 가계부 게시글 생성
   FinancialRecordArticle createFaRecArticle(Long financialRecordId, FinancialRecordArticle faRecArticle);
-
   // 가계부 게시글 조회(단건)
   FinancialRecordArticle findFaRecArticle(Long faRecArticleId);
   // 가계부 게시글 조회(전체)

@@ -18,7 +18,6 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class FinancialRecordArticleServiceImpl implements FinancialRecordArticleService {
-
   // 결합도 관련해서 고민이 필요해 보임
   private final FinancialRecordService financialRecordService;
   private final FinancialRecordArticleRepository repository;
