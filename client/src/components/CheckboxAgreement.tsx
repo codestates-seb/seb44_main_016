@@ -6,9 +6,8 @@ interface CheckboxAgreementProps {
   labelTitle: string;
   checkboxAgreement?: string;
   agreementError?: string;
-  isBackgroundWhite: boolean;
+  isBackgroundWhite?: boolean;
   isCentered?: boolean;
-  hasGuide?: boolean;
 }
 
 export default function CheckboxAgreement({
@@ -17,7 +16,6 @@ export default function CheckboxAgreement({
   agreementError,
   isBackgroundWhite,
   isCentered,
-  hasGuide,
 }: CheckboxAgreementProps) {
   const [Checkbox, isChecked, setIsChecked] = useCheckboxInput('checkbox', labelTitle);
   return {
@@ -25,7 +23,7 @@ export default function CheckboxAgreement({
       <S.CheckboxContainer isCentered={isCentered}>
         <S.Policy>
           {Checkbox}
-          <S.RadioBtnLabel className={hasGuide ? 'guide' : ''} htmlFor={labelTitle}>
+          <S.RadioBtnLabel className={checkboxAgreement ? 'guide' : ''} htmlFor={labelTitle}>
             {labelTitle}
           </S.RadioBtnLabel>
           <S.PolicyGuide htmlFor={labelTitle}>{checkboxAgreement}</S.PolicyGuide>
@@ -74,8 +72,7 @@ const S = {
     padding-left: 20px;
 
     margin-top: 8px;
-    color: ${(props) =>
-      props.isBackgroundWhite ? 'var(--color-point-pink)' : 'var(--color-error-red)'};
+    color: ${(props) => (props.isBackgroundWhite ? 'var(--color-point-pink)' : 'var(--color-error-red)')};
     h4 {
       font-size: 0.98rem;
       font-weight: 400;
