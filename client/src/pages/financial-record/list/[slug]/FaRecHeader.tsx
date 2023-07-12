@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import CommonStyles from '../../../../styles/CommonStyles';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 
 export default function FaRecHeader({ setActiveTab }) {
   const router = useRouter();

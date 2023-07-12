@@ -26,4 +26,10 @@ export const APIfinancialRecord = {
     });
     return response.data;
   },
+  getRecordArticle: async (financialRecordId: number, page: number, size: number) => {
+    const response = await axios.get(
+      `/api/financial-record/${financialRecordId}/article?page=${page}&size=${size}`
+    );
+    return response.data;
+  },
 };
