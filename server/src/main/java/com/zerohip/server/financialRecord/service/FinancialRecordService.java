@@ -17,7 +17,7 @@ public interface FinancialRecordService {
   List<FinancialRecord> findFaRecs();
 
   // 가계부 수정
-  FinancialRecord updateFaRec(Long faRecId, FinancialRecordDto.Patch patchParam);
+  //FinancialRecord updateFaRec(Long faRecId, FinancialRecordDto.Patch patchParam);
 
   // 가계부 삭제
   void deleteFaRec(Long faRecId);

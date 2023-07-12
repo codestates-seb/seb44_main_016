@@ -112,7 +112,7 @@ const S = {
     flex-shrink: 0;
     display: flex;
     align-items: flex-start;
-    z-index: 1; // HomeHeader와 겹쳐져 Aside 오른쪽 테두리의 일부가 안 보는 버그 수정
+    z-index: 999; // HomeHeader와 겹쳐져 Aside 오른쪽 테두리의 일부가 안 보는 버그 수정
   `,
   LeftOfAsideCover: styled.div`
     position: absolute;
@@ -152,7 +152,7 @@ const S = {
 
   TabContainer: styled.div`
     left: 5rem;
-    border-right: 1px solid var(--color-gray08);
+    border-right: 0.05rem solid var(--color-gray08);
     position: absolute;
     width: var(--aside-tab-w);
     height: 100%;
