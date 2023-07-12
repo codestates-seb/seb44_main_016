@@ -17,7 +17,7 @@ const CommonStyles = {
     display: inline-block;
     color: ${(props) =>
       props.color === '--color-point-lilac' ? `var(--color-black)` : `var(--color-white)`};
-    padding: 0.75rem 1rem;
+    padding: 1rem;
     border-radius: 100px;
     font-weight: 400;
     border: 2px solid ${(props) => (props.color ? `var(${props.color})` : `var(--color-primary)`)};

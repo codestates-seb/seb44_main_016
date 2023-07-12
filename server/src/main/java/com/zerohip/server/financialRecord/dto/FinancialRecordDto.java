@@ -18,7 +18,7 @@ public class FinancialRecordDto {
     @NotBlank
     @Size(min = 1, max = 30)
     private String financialRecordName;
-    private String financialRecordDescription;
+    private String memo;
     // User
   }
 
@@ -28,7 +28,11 @@ public class FinancialRecordDto {
     @NotBlank
     @Size(min = 1, max = 30)
     private String financialRecordName;
+<<<<<<< HEAD
     private String financialRecordDescription;
+=======
+    private String memo;
+>>>>>>> 7539d9e164130989973044ebb22cb7035334fe1c
     // User
   }
 
@@ -37,7 +41,11 @@ public class FinancialRecordDto {
   public static class Response {
     private Long financialRecordId;
     private String financialRecordName;
+<<<<<<< HEAD
     private String financialRecordDescription;
+=======
+    private String memo;
+>>>>>>> 7539d9e164130989973044ebb22cb7035334fe1c
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     // User
