@@ -1,5 +1,6 @@
 package com.zerohip.server.financialRecord.entity;
 
+import com.zerohip.server.common.audit.Auditable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +13,7 @@ import javax.validation.constraints.Size;
 @Setter
 @Getter
 @Entity
-public class FinancialRecord {
+public class FinancialRecord extends Auditable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
