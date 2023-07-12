@@ -20,7 +20,7 @@ const GlobalStyles = () => (
 
 
         /* color */
-        --color-primary : #676FC6;
+        --color-primary : #6264CA;
         --color-primary-hover : #858cdc;
         --color-point-purple: #7f7ad9;
         --color-point-red : #FF451A;
