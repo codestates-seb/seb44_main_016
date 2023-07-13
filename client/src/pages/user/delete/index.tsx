@@ -1,29 +1,32 @@
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import Head from 'next/head';
 import styled from '@emotion/styled';
-import { keyframes, css } from '@emotion/react';
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import CommonStyles from '../../../styles/CommonStyles';
 import useInput from '../../../hooks/useComponents';
 import { USER_DELETE_MESSAGES } from '../../../constants/user';
 import BackBtn from '../../../../public/image/back2.svg';
-import CheckboxAgreement from '../../../components/CheckboxAgreement';
+import useCheckboxError from '../../../hooks/useCheckoutError';
+import validation from '../../../utils/validationCheck';
+import apiUser from '../../../services/apiUser';
+import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 
-export default function UserUpdate() {
+export default function UserDelete() {
   const router = useRouter();
-  const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw');
-  const [PwConfirmInput, password, setPassword] = useInput('password', '비밀번호 확인', 'pwConfirm');
+  const [PwInput, pwValue] = useInput('password', '비밀번호', 'pw');
+  const [PwConfirmInput, password] = useInput('password', '비밀번호 확인', 'pwConfirm');
   const [error, setError] = useState({
-    password: '회원 탈퇴를 원하시는 경우에 비밀번호를 입력해주세요.',
-    passwordConfirm: '비밀번호를 다시 입력해주세요.',
-    policy: '탈퇴를 원하고 되돌릴 수 없음에 동의합니다.',
+    password: '',
+    passwordConfirm: '',
+    policy: '',
   });
-  const { CheckboxComponent, isChecked, setIsChecked } = CheckboxAgreement({
+  const { CheckboxComponent, isChecked } = useCheckboxError({
     labelTitle: '삭제 동의',
-    // checkboxAgreement: '탈퇴를 원하고 되돌릴 수 없음에 동의합니다.',
     agreementError: error.policy,
   });
-  const [isClicked, setIsClicked] = useState(false);
+  const [isClickedProps, RefusalAnimation] = useRefusalAni();
 
   const inputData = [
     {
@@ -44,20 +47,38 @@ export default function UserUpdate() {
     },
   ];
 
-  const handleDelete = (e: React.FormEvent) => {
+  const { mutateAsync } = useMutation(() => apiUser.deleteUser());
+
+  useEffect(() => {
+    const newError = {
+      password: pwValue ? '' : USER_DELETE_MESSAGES.PASSWORD_GUIDE,
+      passwordConfirm: password
+        ? validation.passwordMatch(pwValue || '', password || '')
+        : USER_DELETE_MESSAGES.PASSWORD_CONFIRM_GUIDE,
+      policy: isChecked ? '' : USER_DELETE_MESSAGES.POLICY_GUIDE,
+    };
+    setError(newError);
+  }, [pwValue, password, isChecked]);
+
+  const handleDeleteSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // 탈퇴 로직 처리 후 페이지 이동
-    // '/user/delete/goodbye'로 이동
+
+    if (error.password || error.passwordConfirm || error.policy) {
+      RefusalAnimation();
+      return;
+    }
+
+    await mutateAsync();
     const deletePageURL = router.asPath;
     localStorage.setItem('deletePageURL', deletePageURL);
     router.push('/user/delete/goodbye');
   };
+
   return (
     <S.Container>
       <Head>
         <title>제로힙 회원 탈퇴 페이지</title>
       </Head>
-      <h1 className='blind'>제로힙 회원 탈퇴</h1>
       <S.BackBox>
         <button type='button' aria-label='뒤로 가기' onClick={() => router.back()}>
           <BackBtn width='25' fill='#b8b7c2' aria-hidden={true} />
@@ -76,41 +97,18 @@ export default function UserUpdate() {
               <S.Label htmlFor={el.label.htmlFor}>{el.label.text}</S.Label>
             </S.LabelBox>
             <S.InputField>{el.component}</S.InputField>
-            <S.Error>{el.error}</S.Error>
+            <S.Error htmlFor={el.label.htmlFor}>{el.error}</S.Error>
           </S.InputBox>
         ))}
         <S.CheckboxBox>{CheckboxComponent}</S.CheckboxBox>
-        <S.SubmitBox isClicked={isClicked ? 'true' : undefined}>
-          <S.SubmitBtn large onClick={handleDelete}>
-            {/* <S.SubmitBtn large onClick={handleSubmit}> 추후 사용 예정  */}
+        <S.SubmitBox {...isClickedProps}>
+          <S.SubmitBtn large onClick={handleDeleteSubmit}>
             회원 탈퇴
           </S.SubmitBtn>
         </S.SubmitBox>
       </S.FormContainer>
     </S.Container>
   );
-}
-
-const bounce = keyframes`
-  0% {
-    transform: translateX(0);
-  }
-  30% {
-    transform: translateX(-10px);
-  }
-  50% {
-    transform: translateX(10px);
-  }
-  70% {
-    transform: translateX(-10px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-`;
-
-interface SubmitBoxProps {
-  isClicked?: string | undefined;
 }
 
 const S = {
@@ -133,7 +131,6 @@ const S = {
   InputField: styled.div`
     margin: 0.5rem 0;
   `,
-
   FormContainer: styled.form`
     display: flex;
     flex-direction: column;
@@ -150,15 +147,11 @@ const S = {
   SubmitBox: styled.div<SubmitBoxProps>`
     width: 53%;
     margin-top: 1.5rem;
-    ${({ isClicked }) =>
-      isClicked &&
-      css`
-        animation: ${bounce} 1s infinite;
-      `}
+    ${isClickedStyled}
     font-size: 1.1rem;
     font-weight: 500;
   `,
-  Error: styled.div`
+  Error: styled.label`
     padding-left: 20px;
     font-size: 0.98rem;
     margin-top: 8px;
@@ -177,19 +170,6 @@ const S = {
     margin: 2rem 0 0 0rem;
     font-weight: 600;
     font-size: 1.07rem;
-  `,
-
-  ModifyBtn: styled.button`
-    position: relative;
-    display: inline-block;
-    color: var(--color-gray04);
-    font-weight: 400;
-    margin-bottom: 2rem;
-    &:hover {
-      color: var(--color-primary);
-      transition-duration: 0.7s;
-      font-weight: 400;
-    }
   `,
   CheckboxBox: styled.div`
     width: 52.5%;
