@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { recordArticle } from '../../../test/recordArticle';
+import { recordArticle } from '../../../../test/recordArticle';
 
 export default function financialRecordEdit(req: NextApiRequest, res: NextApiResponse) {
   const page = Number(req.query.page);
@@ -13,9 +13,10 @@ export default function financialRecordEdit(req: NextApiRequest, res: NextApiRes
   const startIndex = (page - 1) * size;
   const endIndex = startIndex + size;
   const pageOfRecords = recordArticle.slice(startIndex, endIndex);
+  const pageData = { page: Math.ceil(page), totalPages: Math.ceil(recordArticle.length / size) };
 
   if (pageOfRecords.length > 0) {
-    res.status(200).json(pageOfRecords);
+    res.status(200).json({ data: pageOfRecords, pageData: pageData });
   } else {
     res.status(404).json({ message: 'Record not found' });
   }

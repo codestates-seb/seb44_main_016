@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import ImgIcon from '../../../../../public/images/icon/img.svg';
 import SVGs from '../../../../constants/svg';
 import FaRecCarousel from './FaRecCarousel';
+import { useState } from 'react';
+import { keyframes } from '@emotion/react';
 
 type FaRecArticleProps = {
   data: {
@@ -15,29 +17,43 @@ type FaRecArticleProps = {
     imgId: string[];
     userId: number;
   };
+  date: string;
 };
 
-export default function FaRecArticle({ data }: FaRecArticleProps) {
+export default function FaRecArticle({ data, date }: FaRecArticleProps) {
+  const { category, title, price, content, imgId } = data;
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleDropdown = () => setIsOpen(!isOpen);
   return (
     <S.Article>
-      <S.Header>
+      <S.Header onClick={toggleDropdown}>
         <span>지출</span>
-        <S.Category>카테고리</S.Category>
-        <S.Title>제목</S.Title>
-        <span>-4,550원</span>
+        <S.Category>{category}</S.Category>
+        <S.Title>{title}</S.Title>
+        <span>{price}</span>
         <S.ImgAndDate>
-          <span>
-            <ImgIcon />
-          </span>
-          <span>2023.06.28</span>
+          <span>{!!imgId.length && <ImgIcon />}</span>
+          <span>{date}</span>
         </S.ImgAndDate>
-        <S.DropdownIcon>{SVGs.dropdown}</S.DropdownIcon>
+        <S.DropdownIcon isOpen={isOpen}>{SVGs.dropdown}</S.DropdownIcon>
       </S.Header>
-      <FaRecCarousel />
-      <S.Contents>완전 끝내주는 초밥 오마카세를 먹으러 다녀왔다 너무너무마싰다~</S.Contents>
+      <S.Details isOpen={isOpen}>
+        {!!imgId.length && <FaRecCarousel imgId={imgId} title={title} />}
+        <S.Contents>{content}</S.Contents>
+      </S.Details>
     </S.Article>
   );
 }
+
+const slideDown = keyframes`
+  0% { max-height: 0; overflow: hidden; }
+  100% { max-height: 700px; overflow: hidden; }
+`;
+
+const slideUp = keyframes`
+  0% { max-height: 500px; overflow: hidden; }
+  100% { max-height: 0; overflow: hidden; }
+`;
 
 const S = {
   Article: styled.div`
@@ -47,6 +63,7 @@ const S = {
     background: var(--color-white);
     border-radius: var(--rounded-default);
     box-shadow: var(--shadow-default);
+    margin-bottom: 1.25rem;
   `,
   Header: styled.button`
     display: flex;
@@ -59,6 +76,9 @@ const S = {
   Title: styled.span`
     flex: 1;
     text-align: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   `,
   Category: styled.span`
     width: 6rem;
@@ -83,12 +103,20 @@ const S = {
       font-weight: 400;
     }
   `,
-  DropdownIcon: styled.span`
-    transform: ratate(180deg);
+  DropdownIcon: styled.span<{ isOpen: boolean }>`
+    /* transform: ratate(180deg); */
+    transform: rotate(${(props) => (props.isOpen ? 0 : 180)}deg);
+    transition: transform 0.3s ease-in-out;
   `,
   Price: styled.span`
     font-weight: 600;
     color: var(--color-point-red);
+  `,
+  Details: styled.div<{ isOpen: boolean }>`
+    max-height: 0;
+    overflow: hidden;
+    display: ${(props) => (props.isOpen ? `block` : `none`)}
+    animation: ${(props) => (props.isOpen ? slideDown : slideUp)} 0.3s ease-in forwards;
   `,
   Contents: styled.div`
     width: 100%;

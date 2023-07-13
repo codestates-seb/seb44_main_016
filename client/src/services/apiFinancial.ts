@@ -30,6 +30,7 @@ export const APIfinancialRecord = {
     const response = await axios.get(
       `/api/financial-record/${financialRecordId}/article?page=${page}&size=${size}`
     );
-    return response.data;
+    const { data, pageData } = response.data;
+    return { data, pageData };
   },
 };
