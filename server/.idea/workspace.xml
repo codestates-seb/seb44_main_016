@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c9b0aefd-ee6a-43c0-bb56-89b96226a5f2" name="Changes" comment="" />
+    <list default="true" id="c9b0aefd-ee6a-43c0-bb56-89b96226a5f2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/zerohip/server/financialRecord/mapper/FinancialRecordMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zerohip/server/financialRecordArticle/dto/FinancialRecordArticleDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zerohip/server/financialRecordArticle/dto/FinancialRecordArticleDto.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -254,7 +258,7 @@
       <updated>1688347542289</updated>
       <workItem from="1688347543744" duration="66200000" />
       <workItem from="1688956196140" duration="54525000" />
-      <workItem from="1689212131908" duration="584000" />
+      <workItem from="1689212131908" duration="1032000" />
     </task>
     <servers />
   </component>
