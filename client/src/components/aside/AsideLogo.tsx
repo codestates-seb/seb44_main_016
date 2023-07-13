@@ -5,21 +5,21 @@ import SvgBox from '../aside/SvgBox';
 import svgs from '../../constants/svg';
 
 type Props = {
-  isTabClosed?: boolean;
+  className?: string;
   children?: JSX.Element; // <svg>
 };
 
 export default function Logo(props: Props) {
   return (
-    <S.LogoContainer href='/' isTabClosed={props.isTabClosed}>
+    <S.LogoContainer href='/' className={props.className}>
       <SvgBox>{svgs.logoSymbol}</SvgBox>
-      <span>{props.isTabClosed && svgs.logoText}</span>
+      <span>{props.className === 'tab-closed' ? svgs.logoText : <></>}</span>
     </S.LogoContainer>
   );
 }
 
 const S = {
-  LogoContainer: styled(Link)<{ isTabClosed: boolean | undefined }>`
+  LogoContainer: styled(Link)`
     width: 100%;
     height: 3.25rem;
     padding-left: 1rem;

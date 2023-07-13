@@ -37,11 +37,11 @@ export default function Aside(props: Props) {
   };
 
   return (
-    <S.AsideContainer isTabClosed={isTabClosed}>
+    <S.AsideContainer className={isTabClosed ? 'tab-closed' : ''}>
       <S.LeftOfAsideCover />
       <S.AsideInnerContainer>
         <S.Upper>
-          <AsideLogo isTabClosed={isTabClosed} />
+          <AsideLogo className={isTabClosed ? 'tab-closed' : ''} />
           <ol>
             <AsideButton leftIcon={svgs.home}>{isTabClosed && '홈'}</AsideButton>
             {props.isLoggedIn && (
@@ -77,7 +77,7 @@ export default function Aside(props: Props) {
           {props.isLoggedIn ? (
             <>
               {/* href='/user/mypage' */}
-              <AsideProfileBox isTabClosed={isTabClosed} />
+              <AsideProfileBox className={isTabClosed ? 'tab-closed' : ''} />
               {isTabClosed ? <S.SubmitBtn>글쓰기</S.SubmitBtn> : <AsideButton leftIcon={svgs.editor} />}
             </>
           ) : isTabClosed ? (
@@ -105,14 +105,18 @@ export default function Aside(props: Props) {
 
 const S = {
   ...CommonStyles,
-  AsideContainer: styled.aside<{ isTabClosed?: boolean | undefined }>`
-    width: ${(props) => (props.isTabClosed ? 'var(--aside-w)' : '5rem')};
+  AsideContainer: styled.aside`
+    width: 5rem;
     position: fixed;
     height: 100%;
     flex-shrink: 0;
     display: flex;
     align-items: flex-start;
     z-index: 999; // HomeHeader와 겹쳐져 Aside 오른쪽 테두리의 일부가 안 보는 버그 수정
+
+    &.tab-closed {
+      width: var(--aside-w);
+    }
   `,
   LeftOfAsideCover: styled.div`
     position: absolute;
