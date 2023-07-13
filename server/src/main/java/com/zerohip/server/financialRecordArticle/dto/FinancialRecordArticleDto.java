@@ -1,7 +1,7 @@
 package com.zerohip.server.financialRecordArticle.dto;
 
-import com.zerohip.server.common.img.dto.ImgDto;
-import com.zerohip.server.common.img.entity.Img;
+/*import com.zerohip.server.common.img.dto.ImgDto;
+import com.zerohip.server.common.img.entity.Img;*/
 import com.zerohip.server.common.scope.Scope;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

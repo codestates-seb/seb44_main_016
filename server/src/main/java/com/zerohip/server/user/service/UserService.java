@@ -1,3 +1,4 @@
+/*
 package com.zerohip.server.user.service;
 
 import com.zerohip.server.user.entity.User;
@@ -21,3 +22,4 @@ public interface UserService {
   // User 삭제
   void deleteUser(Long userId);
 }
+*/
