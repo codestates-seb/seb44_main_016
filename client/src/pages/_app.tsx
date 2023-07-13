@@ -7,6 +7,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Providers } from '../components/redux/provider';
 import Aside from '../components/Aside';
 import HomeHeader from '../components/HomeHeader';
+import Toast from '../components/Toast';
+import 'react-toastify/dist/ReactToastify.css';
 
 const queryClient = new QueryClient();
 
@@ -38,6 +40,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     <>
       {/*모든 ReactDOM에 margin: 0; padding: 0; box-sizing: border-box; 적용 */}
       <Providers>
+        <Toast />
         <QueryClientProvider client={queryClient}>
           <GlobalStyles />
           <S.RootScreen>

@@ -13,7 +13,6 @@ export default function NotFound() {
       <Head>
         <title>404 페이지</title>
       </Head>
-      <h1 className='blind'>페이지를 찾을 수 없습니다.</h1>
       <S.ContentBox>
         <S.AnimationBox>
           <Lottie loop animationData={notFoundAnimation} play style={{ width: 370, height: 360 }} />{' '}
@@ -41,7 +40,6 @@ const S = {
     justify-content: space-around;
     align-items: center;
     position: relative;
-    margin-top: 1rem;
   `,
   ContentBox: styled.div``,
   AnimationBox: styled.div`
