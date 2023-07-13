@@ -13,7 +13,7 @@ export default function Logo(props: Props) {
   return (
     <S.LogoContainer href='/' isTabClosed={props.isTabClosed}>
       <SvgBox>{svgs.logoSymbol}</SvgBox>
-      <span>{props.isTabClosed && svgs.logotext}</span>
+      <span>{props.isTabClosed && svgs.logoText}</span>
     </S.LogoContainer>
   );
 }
