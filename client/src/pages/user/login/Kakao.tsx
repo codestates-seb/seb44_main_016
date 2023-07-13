@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Kakao from '../../../../public/icon/kakao.svg';
 
