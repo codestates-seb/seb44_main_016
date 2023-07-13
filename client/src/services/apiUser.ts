@@ -2,8 +2,8 @@ import axios, { AxiosResponse } from 'axios';
 import { PostSignUp, LoginReqData } from '../types/user';
 import { tokenInstance } from './loginInstance';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-// const BASE_URL = 'https://zerohip-git-user-175-everland.vercel.app/api';
+// const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const BASE_URL = 'https://zerohip-git-user-175-everland.vercel.app/api';
 
 const apiUser = {
   /** 회원 가입 */
@@ -34,7 +34,7 @@ const apiUser = {
   /** 회원 탈퇴 */
   deleteUser: async () => {
     try {
-      await axios.delete(`/api/user/delete`); // api 삭제 - 토큰 담아 보냄 - 인스턴스로 교체
+      await axios.delete(`${BASE_URL}/api/user/delete`); // 토큰 담아 보냄 - 인스턴스로 교체
     } catch (err) {
       throw err;
     }
