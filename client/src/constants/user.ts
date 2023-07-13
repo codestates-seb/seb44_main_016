@@ -12,6 +12,7 @@ export const USER_UPDATE_MESSAGES = {
 };
 
 export const USER_DELETE_MESSAGES = {
-  PASSWORD_GUIDE: '회원 탈퇴를 원하시는 경우에 입력해주세요.',
-  PASSWORD_CONFIRM_GUIDE: '비밀번호를 다시 입력해주세요.',
+  PASSWORD_GUIDE: '회원 탈퇴를 원하시는 경우에 비밀번호를 입력해주세요.',
+  PASSWORD_CONFIRM_GUIDE: '확인을 위해 비밀번호를 다시 입력해주세요.',
+  POLICY_GUIDE: '탈퇴를 원하고 되돌릴 수 없음에 동의합니다.',
 };

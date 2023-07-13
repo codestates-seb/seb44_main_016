@@ -11,8 +11,6 @@ export default function GoogleOauth() {
     window.location.href = googleURL;
   };
 
-  const code = typeof window !== 'undefined' && new URL(window.location.href).searchParams.get('code');
-  console.log(code);
   return (
     <S.OauthLoginBtn type='button' aria-label='카카오 로그인 버튼' onClick={handleGoogleLogin}>
       <Google width='60' aria-hidden={true} />
