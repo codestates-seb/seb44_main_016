@@ -27,7 +27,7 @@ public class FeedArticleController {
         return ResponseEntity.ok(createdArticle);
     }
 
-    // 피드 게시글 조회(단건)
+    // 단일 피드 게시글 조회
     @GetMapping("/{feedArticleId}")
     public ResponseEntity<FeedArticleDto.FeedArticleResponse> getFeedArticle(@PathVariable("feedArticleId") Long feedArticleId) {
         FeedArticle feedArticle = feedArticleService.findFeedArticle(feedArticleId);
