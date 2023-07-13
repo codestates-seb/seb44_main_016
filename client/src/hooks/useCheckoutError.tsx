@@ -28,7 +28,9 @@ export default function useCheckboxError({
           </S.RadioBtnLabel>
           <S.PolicyGuide htmlFor={labelTitle}>{checkboxAgreement}</S.PolicyGuide>
         </S.Policy>
-        <S.Error isBackgroundWhite={isBackgroundWhite}>{agreementError && agreementError}</S.Error>
+        <S.Error isBackgroundWhite={isBackgroundWhite} htmlFor={labelTitle}>
+          {agreementError && agreementError}
+        </S.Error>
       </S.CheckboxContainer>
     ),
     isChecked,
@@ -65,9 +67,9 @@ const S = {
     color: #a4a7b5;
     margin-left: 0.7rem;
   `,
-  Error: styled.div<ErrorProps>`
+  Error: styled.label<ErrorProps>`
     padding-left: 20px;
-
+    display: inline-block;
     margin-top: 8px;
     color: ${(props) => (props.isBackgroundWhite ? 'var(--color-point-pink)' : 'var(--color-error-red)')};
 
