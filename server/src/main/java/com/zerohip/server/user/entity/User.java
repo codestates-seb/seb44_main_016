@@ -32,6 +32,7 @@ public class User extends Auditable {
     @Column
     private String nickname;
 
+    @Builder.Default
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
