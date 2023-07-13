@@ -3,20 +3,23 @@ import Link from 'next/link';
 
 type Props = {
   href?: string;
-  isTabClosed?: boolean;
+  className?: string;
 };
 
 export default function AsideProfileBox(props: Props) {
+  const [nickname, userId] = props.className === 'tab-closed' ? ['Waypil', '@waypil'] : ['', ''];
+  const hamburgerBtn = props.className === 'tab-closed' ? <span>…</span> : <></>;
+
   return (
     <S.ProfileBoxContainer href={props.href || ''}>
       <S.ProfileLeftDiv>
         <S.ProfileImg />
         <S.ProfileTexts>
-          <S.Nickname>{props.isTabClosed && 'Waypil'}</S.Nickname>
-          <span>{props.isTabClosed && '@waypil'}</span>
+          <S.Nickname>{nickname}</S.Nickname>
+          <span>{userId}</span>
         </S.ProfileTexts>
       </S.ProfileLeftDiv>
-      <S.ProfileRightDiv>{props.isTabClosed && <span>…</span>}</S.ProfileRightDiv>
+      <S.ProfileRightDiv>{hamburgerBtn}</S.ProfileRightDiv>
     </S.ProfileBoxContainer>
   );
 }

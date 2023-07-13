@@ -19,11 +19,19 @@ export default function HomeHeader() {
 
   return (
     <S.HomeHeaderContainer>
-      <S.HomeHeaderBtn href='/' onClick={handleClickHomeButton} isActive={isHomeButtonActive}>
+      <S.HomeHeaderBtn
+        href='/'
+        onClick={handleClickHomeButton}
+        className={isHomeButtonActive ? 'current-tab' : ''}
+      >
         홈
       </S.HomeHeaderBtn>
       {/* href='/?filterfollower=true' // 쿼리 미확정 */}
-      <S.HomeHeaderBtn href='' onClick={handleClickFollowerButton} isActive={isFollowerButtonActive}>
+      <S.HomeHeaderBtn
+        href=''
+        onClick={handleClickFollowerButton}
+        className={isFollowerButtonActive ? 'current-tab' : ''}
+      >
         팔로워
       </S.HomeHeaderBtn>
     </S.HomeHeaderContainer>
@@ -39,28 +47,32 @@ const S = {
     width: 100%;
     height: var(--header-h);
     background-color: white;
-    // border-right: 0.05rem solid var(--color-gray08);
     border-bottom: 0.05rem solid var(--color-gray08);
     display: flex;
     justify-content: center;
     align-items: flex-end;
     z-index: 998;
   `,
-  HomeHeaderBtn: styled(Link)<{ isActive: boolean }>`
+  HomeHeaderBtn: styled(Link)`
     width: 6rem;
     height: 75%;
     background-color: white;
     font-size: 1.25rem;
-    font-weight: ${(props) => props.isActive && 'bold'};
-    color: ${(props) => (props.isActive ? 'var(--color-primary)' : 'var(--color-gray03)')};
-    border-bottom: 3px solid ${(props) => (props.isActive ? 'var(--color-primary)' : 'transparent')};
+    color: var(--color-gray03);
+    border-bottom: 3px solid transparent;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    &.current-tab {
+      font-weight: bold;
+      color: var(--color-primary);
+      border-bottom: 3px solid var(--color-primary);
+    }
 
     &:hover {
       color: var(--color-primary);
     }
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
   `,
 };
