@@ -34,7 +34,7 @@ const apiUser = {
   /** 회원 탈퇴 */
   deleteUser: async () => {
     try {
-      await axios.delete(`/user/delete`); // 토큰 담아 보냄 - 인스턴스로 교체
+      await axios.delete(`/api/user/delete`); // api 삭제 - 토큰 담아 보냄 - 인스턴스로 교체
     } catch (err) {
       throw err;
     }
