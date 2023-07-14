@@ -82,7 +82,7 @@ class FinancialRecordServiceImplTest {
   // 가계부 전체 조회 테스트 메서드
   // '...'는 가변 인자(varags)로 메소드에 임의 개수의 동일타입의 매개변수를 전달
   void findFaRecsTest(FinancialRecord... faRecs) {
-    Page<FinancialRecord> result = financialRecordService.findFaRecs(0, 10);
+    Page<FinancialRecord> result = financialRecordService.findFaRecs(1, 10);
     log.info("result.getTotalElements() = {}", result.getTotalElements());
     List<FinancialRecord> resultContent = result.getContent();
     assertThat(resultContent.size()).isEqualTo(faRecs.length);

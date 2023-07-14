@@ -1,14 +1,13 @@
 package com.zerohip.server.feedArticle.entity;
 
-import com.zerohip.server.common.audit.Auditable;
 import com.zerohip.server.common.feedType.FeedType;
+import com.zerohip.server.common.audit.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "feedArticles")

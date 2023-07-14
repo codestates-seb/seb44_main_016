@@ -6,18 +6,22 @@ import java.util.List;
 
 public interface UserService {
 
-  // User 생성
-  User createUser(User user);
+    // User 생성
+    User createUser(User user);
 
-  // User 조회(단건)
-  User findUser(Long userId);
+    // User 조회(단건)
+    User findUserByUserId(Long userId);
 
-  // User 조회(전체)
-  List<User> findUsers();
+    User findUserByLoginId(String loginId);
 
-  // User 수정
-//  User updateUser(Long userId, User.Patch patchParam);
 
-  // User 삭제
-  void deleteUser(Long userId);
+    // User 조회(전체)
+    List<User> findUsers();
+
+    // User 수정
+    User updateUser(User user);
+
+    // User 삭제
+    void deleteUser(User user, String password);
+
 }

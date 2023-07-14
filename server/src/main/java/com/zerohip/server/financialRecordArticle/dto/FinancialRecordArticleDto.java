@@ -1,22 +1,16 @@
 package com.zerohip.server.financialRecordArticle.dto;
 
-import com.zerohip.server.common.audit.Auditable;
-import com.zerohip.server.common.img.dto.ImgDto;
-import com.zerohip.server.common.img.entity.Img;
+/*import com.zerohip.server.common.img.dto.ImgDto;
+import com.zerohip.server.common.img.entity.Img;*/
 import com.zerohip.server.common.scope.Scope;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 
 public class FinancialRecordArticleDto {
 

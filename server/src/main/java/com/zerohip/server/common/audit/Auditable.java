@@ -26,5 +26,3 @@ public abstract class Auditable {
   @Column(nullable = false)
   private LocalDateTime modifiedAt;
 }
-
-
