@@ -7,6 +7,7 @@ import Tab from '../../../../components/Tab';
 import FaRecHeader from './FaRecHeader';
 import FaRecArticle from './FaRecArticle';
 import { APIfinancialRecord } from '../../../../services/apiFinancial';
+import { convertToKoreanMonthDay } from '../../../../utils/convertToKoreanDate';
 
 export default function FinancialPage() {
   const router = useRouter();
@@ -38,7 +39,7 @@ export default function FinancialPage() {
     }
   }, [inView, hasNextPage]);
   console.log({ data, status, error, hasNextPage });
-  let lastDate: string | null = null;
+  const lastDate: string | null = null;
 
   return (
     <S.Container>
@@ -48,27 +49,19 @@ export default function FinancialPage() {
 
       {activeTab === '가계부' && data ? (
         <div id='article'>
-          {data.pages.map((pageData, i) => {
-            return pageData.data.map((el, i) => {
-              const date = new Date(el.faDate);
-              const year = date.getFullYear();
-              const month = (date.getMonth() + 1).toString().padStart(2, '0');
-              const day = date.getDate();
-              const hours = date.getHours().toString().padStart(2, '0');
-              const minutes = date.getMinutes().toString().padStart(2, '0');
-              const formattedDate = `${year}년 ${month}월 ${day}일`;
-              const formattedTime = `${hours}:${minutes}`;
-              let dateHeader = null;
+          {data.pages.map((pageData) => {
+            return pageData.data.map((el) => {
+              // const dateHeader = null;
 
-              if (lastDate !== formattedDate) {
-                dateHeader = <S.DateHeader>{formattedDate}</S.DateHeader>;
-                lastDate = formattedDate;
-              }
+              // if (lastDate !== date) {
+              //   dateHeader = <S.DateHeader>{dateMD}</S.DateHeader>;
+              //   lastDate = dateMD;
+              // }
 
               return (
                 <>
-                  {dateHeader}
-                  <FaRecArticle data={el} date={formattedTime} />
+                  {/* {dateHeader} */}
+                  <FaRecArticle data={el} />
                 </>
               );
             });

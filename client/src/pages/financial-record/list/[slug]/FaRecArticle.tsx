@@ -4,6 +4,7 @@ import SVGs from '../../../../constants/svg';
 import FaRecCarousel from './FaRecCarousel';
 import { useState } from 'react';
 import { keyframes } from '@emotion/react';
+import { numToStrWithSign } from '../../../../utils/numToStrWithSign';
 
 type FaRecArticleProps = {
   data: {
@@ -17,14 +18,7 @@ type FaRecArticleProps = {
     imgId: string[];
     userId: number;
   };
-  date: string;
 };
-
-function formatNumber(number: number): string {
-  const formattedNumber = Math.abs(number).toLocaleString();
-  const sign = number >= 0 ? '+' : '-';
-  return `${sign}${formattedNumber}`;
-}
 
 export default function FaRecArticle({ data, date }: FaRecArticleProps) {
   const { category, title, price, content, imgId } = data;
@@ -38,7 +32,7 @@ export default function FaRecArticle({ data, date }: FaRecArticleProps) {
         <S.FinancialText isIncome={isIncome}>{price >= 0 ? '수입' : '지출'}</S.FinancialText>
         <S.Category>{category}</S.Category>
         <S.Title>{title}</S.Title>
-        <S.FinancialText isIncome={isIncome}>{formatNumber(price)}</S.FinancialText>
+        <S.FinancialText isIncome={isIncome}>{numToStrWithSign(price)}</S.FinancialText>
         <S.ImgAndDate>
           <span>{!!imgId.length && <ImgIcon />}</span>
           <span>{date}</span>
