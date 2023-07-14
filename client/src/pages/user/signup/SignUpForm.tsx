@@ -147,7 +147,7 @@ export default function SignUpForm() {
                     searchItem={domainValue}
                     setSearchItem={setDomainValue}
                     placeholder='직접 입력'
-                    aria-label='이메일 도메인 입력 또는 찾기'
+                    ariaLabel='이메일 도메인 입력 또는 찾기'
                   />
                 </S.DomainBox>
               )}

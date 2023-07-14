@@ -9,8 +9,16 @@ interface SelectBoxProps {
   totalItem: string[];
   searchItem: string;
   setSearchItem: (value: string) => void;
+  ariaLabel?: string;
 }
-export default function SelectBox({ id, placeholder, totalItem, searchItem, setSearchItem }: SelectBoxProps) {
+export default function SelectBox({
+  id,
+  placeholder,
+  totalItem,
+  searchItem,
+  setSearchItem,
+  ariaLabel,
+}: SelectBoxProps) {
   const [previousFilteredItem, setPreviousFilteredItem] = useState<string[]>([]);
   const [isDropDownClicked, setIsDropDownClicked] = useState(false);
   const [isLayoutClicked, setIsLayoutClicked] = useState(false);
@@ -143,6 +151,7 @@ export default function SelectBox({ id, placeholder, totalItem, searchItem, setS
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             onBlur={handleBlur}
+            aria-label={ariaLabel}
           />
         ) : (
           <S.InputText
@@ -152,6 +161,7 @@ export default function SelectBox({ id, placeholder, totalItem, searchItem, setS
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             onBlur={handleBlur}
+            aria-label={ariaLabel}
           />
         )}
         <S.DropDownBtn
