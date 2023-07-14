@@ -102,6 +102,7 @@ export default function SelectBox({
       setIsDropDownClicked(false);
       setIsLayoutClicked(false);
       setIsOnceKeyboard(true);
+      setSelectedOptionIndex(-1);
     }
 
     if (e.key === 'Backspace' && searchItem == '') {
