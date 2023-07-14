@@ -9,6 +9,7 @@ import { SIGN_UP_MESSAGES } from '../../../constants/user';
 import SelectBox from '../../../components/SelectBox';
 import validation from '../../../utils/validationCheck';
 import apiUser from '../../../services/apiUser';
+import { EMAIL_DOMAIN } from '../../../constants/selectItems';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 
 export default function SignUpForm() {
@@ -142,8 +143,10 @@ export default function SignUpForm() {
                 <S.DomainBox>
                   <div>@</div>
                   <SelectBox
+                    totalItem={EMAIL_DOMAIN}
                     searchItem={domainValue}
                     setSearchItem={setDomainValue}
+                    placeholder='직접 입력'
                     aria-label='이메일 도메인 입력 또는 찾기'
                   />
                 </S.DomainBox>
