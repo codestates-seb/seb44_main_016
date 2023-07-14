@@ -118,7 +118,8 @@ export default function SelectBox({
   const handleDropBoxClick = () => {
     setIsDropDownClicked((prev) => !prev);
     setIsLayoutClicked((prev) => !prev);
-
+    console.log(isDropDownClicked);
+    console.log(isLayoutClicked);
     if (!searchItem && isOnce) {
       setIsDropDownClicked((prev) => !prev);
       setIsLayoutClicked((prev) => !prev);
@@ -127,6 +128,10 @@ export default function SelectBox({
     setSelectedOptionIndex(0);
     filteredItems = totalItem;
   };
+
+  useEffect(() => {
+    handleDropBoxClick();
+  }, []);
 
   const optionElements = filteredItems.map((el) => (
     <S.Li key={el} onClick={() => handleOptionClick(el)} className={searchItem === el ? 'selected' : ''}>

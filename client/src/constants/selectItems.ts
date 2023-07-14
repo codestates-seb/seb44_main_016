@@ -7,8 +7,6 @@ export const EMAIL_DOMAIN = [
   'outlook.com',
   'korea.kr',
   'hanmail.com',
-  'outlook.kr',
-  'outlook.com',
   'hotmail.com',
   'yahoo.com',
   'mango.com',
