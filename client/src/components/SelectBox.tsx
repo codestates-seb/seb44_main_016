@@ -97,6 +97,12 @@ export default function SelectBox({
       setSelectedOptionIndex(nextIndex);
       const selectedItem = previousFilteredItem[nextIndex];
       setSearchItem(selectedItem);
+    } else if (e.key === 'ArrowDown' && isOnceKeyboard && fixedOptionElements.length === 0) {
+      e.preventDefault();
+      setIsDropDownClicked(false);
+      setIsLayoutClicked(false);
+      setIsOnceKeyboard(true);
+      setSelectedOptionIndex(-1);
     } else if (e.key === 'Enter' && searchItem !== '') {
       e.preventDefault();
       setIsDropDownClicked(false);
@@ -108,6 +114,8 @@ export default function SelectBox({
     if (e.key === 'Backspace' && searchItem == '') {
       e.preventDefault();
       setIsOnceKeyboard(true);
+    } else if (e.key === 'Backspace' && searchItem) {
+      setSelectedOptionIndex(-1);
     } else if (e.key === 'Tab') {
       setIsOnceKeyboard(true);
       setIsDropDownClicked(false);
