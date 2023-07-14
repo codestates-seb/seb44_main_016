@@ -1,36 +1,53 @@
-import { useState, useEffect, useRef, ChangeEvent, KeyboardEvent, MouseEvent, FocusEvent } from 'react';
+import { useState, useEffect, useRef, ChangeEvent, KeyboardEvent, FocusEvent } from 'react';
 import CommonStyles from '../styles/CommonStyles';
 import styled from '@emotion/styled';
 import DropDown from '../../public/image/dropdown.svg';
 
-const DOMAIN = ['naver.com', 'gmail.com', 'daum.net', 'outlook.com', 'korea.kr'];
 interface SelectBoxProps {
+  id?: string;
+  placeholder: string;
+  totalItem: string[];
   searchItem: string;
   setSearchItem: (value: string) => void;
 }
-export default function SelectBox({ searchItem, setSearchItem }: SelectBoxProps) {
+export default function SelectBox({ id, placeholder, totalItem, searchItem, setSearchItem }: SelectBoxProps) {
+  const [previousFilteredItem, setPreviousFilteredItem] = useState<string[]>([]);
   const [isDropDownClicked, setIsDropDownClicked] = useState(false);
   const [isLayoutClicked, setIsLayoutClicked] = useState(false);
-  const [selectedOptionIndex, setSelectedOptionIndex] = useState(0);
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState(-1);
   const [isOnce, setIsOnce] = useState(true);
+  const [isOnceKeyboard, setIsOnceKeyboard] = useState(true);
+
   const inputRef = useRef(null);
+
   const handleBlur = (event: FocusEvent) => {
     if (event.target !== inputRef.current) {
       setIsDropDownClicked(false);
       setIsLayoutClicked(false);
     }
   };
+
   useEffect(() => {
     if (!searchItem && !isOnce) {
       setIsDropDownClicked(false);
       setIsLayoutClicked(false);
     }
-  }, [searchItem, isOnce]);
+    if (isOnceKeyboard) {
+      setPreviousFilteredItem(filteredItems);
+    }
+    if (!isOnceKeyboard && !searchItem) {
+      setIsDropDownClicked(false);
+      setIsLayoutClicked(false);
+      setSelectedOptionIndex(-1);
+      setIsOnceKeyboard(true);
+    }
+  }, [searchItem, isOnce, isOnceKeyboard]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const searchValue = e.target.value;
     setIsOnce(true);
     setSearchItem(searchValue);
+
     if (searchValue !== '') {
       setIsDropDownClicked(true);
       setIsLayoutClicked(true);
@@ -44,31 +61,52 @@ export default function SelectBox({ searchItem, setSearchItem }: SelectBoxProps)
     setSearchItem(el);
     setIsDropDownClicked(false);
     setIsLayoutClicked(false);
-    setSelectedOptionIndex(0);
+    setSelectedOptionIndex(-1);
   };
 
+  let filteredItems = totalItem.filter((el) => {
+    return el.startsWith(searchItem);
+  });
+
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (
+      (e.key === 'ArrowUp' && searchItem) ||
+      (e.key === 'ArrowDown' && searchItem) ||
+      (e.key === 'Enter' && searchItem)
+    ) {
+      setIsOnceKeyboard(false);
+    }
+
     if (e.key === 'ArrowUp' && selectedOptionIndex > 0) {
       e.preventDefault();
-      setSelectedOptionIndex((prevIndex) => prevIndex - 1);
-      setSearchItem(filteredItems[selectedOptionIndex]);
-    } else if (e.key === 'ArrowDown' && selectedOptionIndex < DOMAIN.length - 1) {
+      const previousIndex = selectedOptionIndex - 1;
+      setSelectedOptionIndex(previousIndex);
+      const selectedItem = previousFilteredItem[previousIndex];
+      setSearchItem(selectedItem);
+    } else if (e.key === 'ArrowDown' && selectedOptionIndex < totalItem.length - 1) {
       e.preventDefault();
-      setSelectedOptionIndex((prevIndex) => prevIndex + 1);
-      setSearchItem(filteredItems[selectedOptionIndex]);
+      let nextIndex = selectedOptionIndex + 1;
+      setSelectedOptionIndex(nextIndex);
+      const selectedItem = previousFilteredItem[nextIndex];
+      setSearchItem(selectedItem);
+      if (nextIndex === previousFilteredItem.length - 1) {
+        nextIndex = previousFilteredItem.length - 1;
+      }
     } else if (e.key === 'Enter' && searchItem !== '') {
       e.preventDefault();
       setIsDropDownClicked(false);
       setIsLayoutClicked(false);
-      setSelectedOptionIndex(0);
+      setIsOnceKeyboard(true);
+    }
+
+    if (e.key === 'Backspace' && searchItem == '') {
+      e.preventDefault();
+      setIsOnceKeyboard(true);
+      console.log(isOnceKeyboard);
     } else if (e.key === 'Tab') {
-      setIsDropDownClicked(false);
-      setIsLayoutClicked(false);
+      setIsOnceKeyboard(true);
     }
   };
-  let filteredItems = DOMAIN.filter((el) => {
-    return el.startsWith(searchItem);
-  });
 
   const handleDropBoxClick = () => {
     setIsDropDownClicked((prev) => !prev);
@@ -80,10 +118,16 @@ export default function SelectBox({ searchItem, setSearchItem }: SelectBoxProps)
       setIsOnce(false);
     }
     setSelectedOptionIndex(0);
-    filteredItems = DOMAIN;
+    filteredItems = totalItem;
   };
 
-  const optionElements = filteredItems.map((el, i) => (
+  const optionElements = filteredItems.map((el) => (
+    <S.Li key={el} onClick={() => handleOptionClick(el)} className={searchItem === el ? 'selected' : ''}>
+      {el}
+    </S.Li>
+  ));
+
+  const fixedOptionElements = previousFilteredItem.map((el) => (
     <S.Li key={el} onClick={() => handleOptionClick(el)} className={searchItem === el ? 'selected' : ''}>
       {el}
     </S.Li>
@@ -92,28 +136,43 @@ export default function SelectBox({ searchItem, setSearchItem }: SelectBoxProps)
   return (
     <S.SelectContainer>
       <S.InputBox>
-        <S.InputText
-          className='filter'
-          ref={inputRef}
-          placeholder='직접 입력'
-          id='domain'
-          value={searchItem}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          onBlur={handleBlur}
-        />
+        {id ? (
+          <S.InputText
+            ref={inputRef}
+            placeholder={placeholder}
+            id={id}
+            value={searchItem}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            onBlur={handleBlur}
+          />
+        ) : (
+          <S.InputText
+            ref={inputRef}
+            placeholder={placeholder}
+            value={searchItem}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            onBlur={handleBlur}
+          />
+        )}
         <S.DropDownBtn
           type='button'
           className={isDropDownClicked ? 'dropDownClicked' : ''}
           onClick={handleDropBoxClick}
-          aria-label='이메일 검색하기'
         >
           <DropDown aria-hidden={true} />{' '}
         </S.DropDownBtn>
         {isDropDownClicked && isLayoutClicked && (
           <>
             <S.Ul>
-              {optionElements.length > 0 ? optionElements : <S.Result>검색된 결과가 없습니다.</S.Result>}
+              {!isOnceKeyboard ? (
+                fixedOptionElements
+              ) : optionElements.length > 0 ? (
+                optionElements
+              ) : (
+                <S.Result>검색된 결과가 없습니다.</S.Result>
+              )}
             </S.Ul>
             <S.Layout onClick={handleDropBoxClick}></S.Layout>
           </>
@@ -170,9 +229,6 @@ const S = {
     margin: 0.3rem 0;
     cursor: pointer;
     &:hover,
-    .selected {
-      color: var(--color-primary);
-    }
     .selected {
       color: var(--color-primary);
     }
