@@ -118,8 +118,7 @@ export default function SelectBox({
   const handleDropBoxClick = () => {
     setIsDropDownClicked((prev) => !prev);
     setIsLayoutClicked((prev) => !prev);
-    console.log(isDropDownClicked);
-    console.log(isLayoutClicked);
+
     if (!searchItem && isOnce) {
       setIsDropDownClicked((prev) => !prev);
       setIsLayoutClicked((prev) => !prev);
