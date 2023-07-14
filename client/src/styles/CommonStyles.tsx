@@ -54,6 +54,11 @@ const CommonStyles = {
       top: 2.5rem;
       left: 2.5rem;
     }
+
+    &:active {
+      transform: scale(0.95);
+      transition: transform 0.2s;
+    }
     ${({ small }) =>
       small &&
       `
@@ -138,6 +143,11 @@ const CommonStyles = {
       top: 2.5rem;
       left: 2.5rem;
     }
+    &:active {
+      transform: scale(0.95);
+      transition: transform 0.2s;
+    }
+
     ${({ size }) =>
       size === 'small' &&
       `
