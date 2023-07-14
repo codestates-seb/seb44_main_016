@@ -32,6 +32,8 @@ export default function ArticleHeaderComponent(props: PropsFeed | PropsTimeline)
             color: var(--color-point-blue);
           `;
   }
+  
+  console.log(props.createdAt);
 
   return (
     <S.ArticleHeaderContainer>

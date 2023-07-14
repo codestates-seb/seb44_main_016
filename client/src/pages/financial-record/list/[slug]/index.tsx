@@ -31,37 +31,33 @@ export default function FinancialPage() {
       },
     }
   );
-
+  console.log(data);
   useEffect(() => {
     if (inView && hasNextPage) {
       console.log('fetching next page');
       fetchNextPage();
     }
   }, [inView, hasNextPage]);
-
   return (
     <S.Container>
       <FaRecHeader setActiveTab={setActiveTab} />
       <Tab tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
 
-      {activeTab === '가계부' && data ? (
+      {activeTab === '가계부' ? (
         <div id='article'>
-          {data.pages.flatMap((pageData) =>
+          {data?.pages.flatMap((pageData) =>
             pageData.data.map((el: FaRecData) => {
-              console.log(el); // 이 부분이 el의 값을 콘솔에 출력하는 부분입니다.
               return <FaRecArticle key={el.financialRecordArticleId} data={el} />;
             })
           )}
         </div>
       ) : (
         <div id='timeline'>
-          {/* {' '}
-          {data.pages.flatMap((pageData) =>
-            pageData.data.map((el: FaRecData) => {
-              console.log(el); // 이 부분이 el의 값을 콘솔에 출력하는 부분입니다.
-              return <SnsArticle key={el.financialRecordArticleId} data={el} />;
-            })
-          )} */}
+          {data?.pages.flatMap((pageData) =>
+            pageData.data.map((el: FaRecData) => (
+              <SnsArticle key={el.financialRecordArticleId} data={el} type='timeline' />
+            ))
+          )}
         </div>
       )}
 

@@ -7,6 +7,7 @@ import ArticleHeader from './sns-article/ArticleHeader';
 import ImgsCarousel from '../components/ImgsCarousel';
 import VoteForm from './sns-article/VoteForm';
 import Comments from './sns-article/Comments';
+import { FaRecData } from '../types/financialRecord';
 
 /* type은 추후 다른 파일로 분리하고 Import할 예정 */
 type PropsFeed = {
@@ -26,20 +27,7 @@ type PropsFeed = {
 };
 type PropsTimeline = {
   type: 'timeline';
-  data: {
-    financialRecordId: number;
-    category: string; // 사용
-    financialRecordDate: Date; // 사용
-    price: number; // 사용
-    title: string; // 사용
-    content: string; // 사용★
-    scope: number; // 사용
-    imageId: number;
-    userId: number;
-    voteId: number;
-    financialRecordArticleHashTagId: number;
-    imgId: string[];
-  };
+  data: FaRecData;
 };
 
 export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
@@ -63,7 +51,7 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
             `,
           ];
   } else {
-    date = data.financialRecordDate;
+    date = data.faDate;
     [labelText, Label] =
       data.price <= 0
         ? [
