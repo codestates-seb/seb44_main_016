@@ -14,9 +14,9 @@ spring:
           lob:
             non_contextual_creation: true
   datasource:
-    url: jdbc:mysql://db-zerohip.coprrm1yhque.ap-northeast-2.rds.amazonaws.com:3306/zerohip?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
-    username: admin
-    password: zerohip016
+    url: ${MYSQL_SECRET_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 logging:
