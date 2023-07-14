@@ -1,6 +1,7 @@
 package com.zerohip.server.security.handler;
 
 import com.zerohip.server.security.response.ErrorResponder;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -16,14 +17,18 @@ import java.io.IOException;
 @Component
 public class UserAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    // 토큰이 null 일 경우, nullPointerException 발생
     @Override
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException, ServletException {
 
         Exception exception = (Exception) request.getAttribute("exception");
-        ErrorResponder.sendErrorResponse(response, HttpStatus.UNAUTHORIZED);
+
+        // 토큰 만료 response 추가
+        if (request.getAttribute("exception") instanceof ExpiredJwtException) {
+            ErrorResponder.sendExpiredJwtExceptionError(response, HttpStatus.UNAUTHORIZED);
+        }
+        else ErrorResponder.sendErrorResponse(response, HttpStatus.UNAUTHORIZED);
 
         logExceptionMessage(authException, exception);
     }
