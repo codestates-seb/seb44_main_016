@@ -27,8 +27,7 @@ const TimelineArticleDummyA = {
   userId: 0,
   voteId: 0,
   financialRecordArticleHashTagId: 0,
-  imgSrcs: [
-    // 실제 API상에선 없음. Only 더미 데이터용. 실제 서버와 통신 시 관련 props 반드시 수정할 것.
+  imgId: [
     'https://images.unsplash.com/photo-1688574398156-92556aa3cf52?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80',
     'https://images.unsplash.com/photo-1682685797366-715d29e33f9d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
     'https://images.unsplash.com/photo-1682686581030-7fa4ea2b96c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
@@ -48,7 +47,7 @@ const TimelineArticleDummyB = {
   userId: 0,
   voteId: 0,
   financialRecordArticleHashTagId: 0,
-  imgSrcs: [], // 실제 API상에선 없음. Only 더미 데이터용. 실제 서버와 통신 시 관련 props 반드시 수정할 것.
+  imgId: [],
 };
 
 const feedArticleDummyA = {
@@ -62,8 +61,7 @@ const feedArticleDummyA = {
   userId: 0,
   voteId: 0,
   feedArticleHashtagId: 0,
-  imgSrcs: [
-    // 실제 API상에선 없음. Only 더미 데이터용. 실제 서버와 통신 시 관련 props 반드시 수정할 것.
+  imgId: [
     'https://images.unsplash.com/photo-1682686581030-7fa4ea2b96c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
     'https://images.unsplash.com/photo-1688574398156-92556aa3cf52?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80',
   ],
@@ -80,8 +78,7 @@ const feedArticleDummyB = {
   userId: 0,
   voteId: 0,
   feedArticleHashtagId: 0,
-  imgSrcs: [
-    // 실제 API상에선 없음. Only 더미 데이터용. 실제 서버와 통신 시 관련 props 반드시 수정할 것.
+  imgId: [
     'https://images.unsplash.com/photo-1688840170202-6e8fe4cf8ec9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
   ],
 };

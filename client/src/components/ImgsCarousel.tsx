@@ -7,14 +7,14 @@ import useRangeNumber from '../hooks/useRangeNumber';
 import svgs from '../constants/svg';
 
 type Props = {
-  imgSrcs: string[];
+  imgId: string[];
   width: string;
   height: string;
   rank?: number;
 };
 
 export default function ImgsCarousel(props: Props) {
-  const [isStart, isEnd, currentNum, setCurrentNum] = useRangeNumber(0, props.imgSrcs.length - 1); // 이미지 인덱스에 사용
+  const [isStart, isEnd, currentNum, setCurrentNum] = useRangeNumber(0, props.imgId.length - 1); // 이미지 인덱스에 사용
 
   return (
     <S.ImgContainer style={{ height: props.height }}>
@@ -28,7 +28,7 @@ export default function ImgsCarousel(props: Props) {
           transform: `translateX(calc(${props.width} * ${currentNum * -1}))`,
         }}
       >
-        {props.imgSrcs.map((imgSrc, i) => {
+        {props.imgId.map((imgSrc, i) => {
           return (
             <S.ImgBox key={i} style={{ width: props.width }}>
               <S.Img src={imgSrc} alt={`사용자가 올린 ${i + 1}번째 사진`} />

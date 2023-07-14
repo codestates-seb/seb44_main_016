@@ -21,7 +21,7 @@ type PropsFeed = {
     userId: number;
     voteId: number;
     feedArticleHashtagId: number;
-    imgSrcs: string[];
+    imgId: string[];
   };
 };
 type PropsTimeline = {
@@ -38,7 +38,7 @@ type PropsTimeline = {
     userId: number;
     voteId: number;
     financialRecordArticleHashTagId: number;
-    imgSrcs: string[];
+    imgId: string[];
   };
 };
 
@@ -95,8 +95,8 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
             Waypil
           </ArticleHeader>
         )}
-        {data.imgSrcs.length >= 1 ? (
-          <ImgsCarousel imgSrcs={data.imgSrcs} width={'var(--article-w)'} height={'30rem'} />
+        {data.imgId.length >= 1 ? (
+          <ImgsCarousel imgId={data.imgId} width={'var(--article-w)'} height={'30rem'} />
         ) : (
           <></>
         )}
