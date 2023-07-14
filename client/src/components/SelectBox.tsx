@@ -83,15 +83,12 @@ export default function SelectBox({ id, placeholder, totalItem, searchItem, setS
       setSelectedOptionIndex(previousIndex);
       const selectedItem = previousFilteredItem[previousIndex];
       setSearchItem(selectedItem);
-    } else if (e.key === 'ArrowDown' && selectedOptionIndex < totalItem.length - 1) {
+    } else if (e.key === 'ArrowDown' && selectedOptionIndex < previousFilteredItem.length - 1) {
       e.preventDefault();
-      let nextIndex = selectedOptionIndex + 1;
+      const nextIndex = selectedOptionIndex + 1;
       setSelectedOptionIndex(nextIndex);
       const selectedItem = previousFilteredItem[nextIndex];
       setSearchItem(selectedItem);
-      if (nextIndex === previousFilteredItem.length - 1) {
-        nextIndex = previousFilteredItem.length - 1;
-      }
     } else if (e.key === 'Enter' && searchItem !== '') {
       e.preventDefault();
       setIsDropDownClicked(false);
@@ -102,7 +99,6 @@ export default function SelectBox({ id, placeholder, totalItem, searchItem, setS
     if (e.key === 'Backspace' && searchItem == '') {
       e.preventDefault();
       setIsOnceKeyboard(true);
-      console.log(isOnceKeyboard);
     } else if (e.key === 'Tab') {
       setIsOnceKeyboard(true);
     }

@@ -11,4 +11,6 @@ export const EMAIL_DOMAIN = [
   'outlook.com',
   'hotmail.com',
   'yahoo.com',
+  'mango.com',
+  'mangolove.com'
 ];
