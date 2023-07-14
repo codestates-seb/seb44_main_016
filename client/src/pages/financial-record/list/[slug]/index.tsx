@@ -7,7 +7,8 @@ import Tab from '../../../../components/Tab';
 import FaRecHeader from './FaRecHeader';
 import FaRecArticle from './FaRecArticle';
 import { APIfinancialRecord } from '../../../../services/apiFinancial';
-import { convertToKoreanMonthDay } from '../../../../utils/convertToKoreanDate';
+import { FaRecData } from '../../../../types/financialRecord';
+import SnsArticle from '../../../../components/SnsArticle';
 
 export default function FinancialPage() {
   const router = useRouter();
@@ -30,7 +31,6 @@ export default function FinancialPage() {
       },
     }
   );
-  console.log(data);
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -38,37 +38,31 @@ export default function FinancialPage() {
       fetchNextPage();
     }
   }, [inView, hasNextPage]);
-  console.log({ data, status, error, hasNextPage });
-  const lastDate: string | null = null;
 
   return (
     <S.Container>
       <FaRecHeader setActiveTab={setActiveTab} />
       <Tab tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
-      {/* map 함수로 변경 예정 */}
 
       {activeTab === '가계부' && data ? (
         <div id='article'>
-          {data.pages.map((pageData) => {
-            return pageData.data.map((el) => {
-              // const dateHeader = null;
-
-              // if (lastDate !== date) {
-              //   dateHeader = <S.DateHeader>{dateMD}</S.DateHeader>;
-              //   lastDate = dateMD;
-              // }
-
-              return (
-                <>
-                  {/* {dateHeader} */}
-                  <FaRecArticle data={el} />
-                </>
-              );
-            });
-          })}
+          {data.pages.flatMap((pageData) =>
+            pageData.data.map((el: FaRecData) => {
+              console.log(el); // 이 부분이 el의 값을 콘솔에 출력하는 부분입니다.
+              return <FaRecArticle key={el.financialRecordArticleId} data={el} />;
+            })
+          )}
         </div>
       ) : (
-        <div id='timeline'>타임라인</div>
+        <div id='timeline'>
+          {/* {' '}
+          {data.pages.flatMap((pageData) =>
+            pageData.data.map((el: FaRecData) => {
+              console.log(el); // 이 부분이 el의 값을 콘솔에 출력하는 부분입니다.
+              return <SnsArticle key={el.financialRecordArticleId} data={el} />;
+            })
+          )} */}
+        </div>
       )}
 
       <S.AddWrap ref={ref}>

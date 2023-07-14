@@ -5,27 +5,20 @@ import FaRecCarousel from './FaRecCarousel';
 import { useState } from 'react';
 import { keyframes } from '@emotion/react';
 import { numToStrWithSign } from '../../../../utils/numToStrWithSign';
+import { FaRecData } from '../../../../types/financialRecord';
+import { convertToKoreanMonthDay } from '../../../../utils/convertToKoreanDate';
+import ImgsCarousel from '../../../../components/ImgsCarousel';
 
-type FaRecArticleProps = {
-  data: {
-    financialRecordId: number;
-    category: string;
-    faDate: number;
-    title: string;
-    price: number;
-    content: string;
-    scope: string;
-    imgId: string[];
-    userId: number;
-  };
-};
+interface FaRecArticleProps {
+  data: FaRecData;
+}
 
-export default function FaRecArticle({ data, date }: FaRecArticleProps) {
-  const { category, title, price, content, imgId } = data;
+export default function FaRecArticle({ data }: FaRecArticleProps) {
+  const { category, title, price, content, imgId, faDate } = data;
   const [isOpen, setIsOpen] = useState(false);
   const toggleDropdown = () => setIsOpen(!isOpen);
   const isIncome = price >= 0;
-
+  const date = new Date(faDate);
   return (
     <S.Article>
       <S.Header onClick={toggleDropdown}>
@@ -35,12 +28,12 @@ export default function FaRecArticle({ data, date }: FaRecArticleProps) {
         <S.FinancialText isIncome={isIncome}>{numToStrWithSign(price)}</S.FinancialText>
         <S.ImgAndDate>
           <span>{!!imgId.length && <ImgIcon />}</span>
-          <span>{date}</span>
+          <span>{convertToKoreanMonthDay(date)}</span>
         </S.ImgAndDate>
         <S.DropdownIcon isOpen={isOpen}>{SVGs.dropdown}</S.DropdownIcon>
       </S.Header>
       <S.Details isOpen={isOpen}>
-        {!!imgId.length && <FaRecCarousel imgId={imgId} title={title} />}
+        {!!imgId.length && <ImgsCarousel imgId={imgId} width={'100%'} height={'30rem'} />}
         <S.Contents>
           <div>{title}</div>
           <div>{content}</div>
