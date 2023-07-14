@@ -23,10 +23,9 @@ export default function FinancialPage() {
     ['faRecTimeline'],
     ({ pageParam = 1 }) => APIfinancialRecord.getRecordArticle(financialRecordId, pageParam, size),
     {
-      getNextPageParam: (lastPage, pages) => {
+      getNextPageParam: (lastPage) => {
         const nextPage = lastPage.pageData.page + 1;
-        console.log('Next Page:', nextPage);
-        return nextPage > lastPage.pageData.totalPage ? undefined : nextPage;
+        return nextPage > lastPage.pageData.totalPages ? undefined : nextPage;
       },
     }
   );
@@ -52,19 +51,24 @@ export default function FinancialPage() {
           {data.pages.map((pageData, i) => {
             return pageData.data.map((el, i) => {
               const date = new Date(el.faDate);
+              const year = date.getFullYear();
               const month = (date.getMonth() + 1).toString().padStart(2, '0');
-              const dateString = `${date.getFullYear()}. ${month}. ${date.getDate()}`;
+              const day = date.getDate();
+              const hours = date.getHours().toString().padStart(2, '0');
+              const minutes = date.getMinutes().toString().padStart(2, '0');
+              const formattedDate = `${year}년 ${month}월 ${day}일`;
+              const formattedTime = `${hours}:${minutes}`;
               let dateHeader = null;
 
-              if (lastDate !== dateString) {
-                dateHeader = <S.DateHeader>{dateString}</S.DateHeader>;
-                lastDate = dateString;
+              if (lastDate !== formattedDate) {
+                dateHeader = <S.DateHeader>{formattedDate}</S.DateHeader>;
+                lastDate = formattedDate;
               }
 
               return (
                 <>
                   {dateHeader}
-                  <FaRecArticle data={el} date={dateString} />
+                  <FaRecArticle data={el} date={formattedTime} />
                 </>
               );
             });
@@ -74,11 +78,11 @@ export default function FinancialPage() {
         <div id='timeline'>타임라인</div>
       )}
 
-      <div ref={ref}>
-        <button onClick={() => fetchNextPage()} disabled={!hasNextPage}>
-          버튼
-        </button>
-      </div>
+      <S.AddWrap ref={ref}>
+        <S.AddBtn onClick={() => fetchNextPage()} disabled={!hasNextPage}>
+          {!hasNextPage ? '마지막 페이지입니다.' : '더 보기'}
+        </S.AddBtn>
+      </S.AddWrap>
     </S.Container>
   );
 }
@@ -91,7 +95,15 @@ const S = {
   `,
   DateHeader: styled.div`
     font-size: var(--text-default);
-    margin: 0.625rem 0 1.25rem;
+    margin: 2rem 0 1.25rem;
     font-weight: 700;
+  `,
+  AddWrap: styled.div`
+    display: flex;
+    justify-content: center;
+  `,
+  AddBtn: styled.button`
+    text-align: center;
+    color: var(--color-primary);
   `,
 };
