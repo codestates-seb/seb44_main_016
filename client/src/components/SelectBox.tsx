@@ -101,6 +101,8 @@ export default function SelectBox({ id, placeholder, totalItem, searchItem, setS
       setIsOnceKeyboard(true);
     } else if (e.key === 'Tab') {
       setIsOnceKeyboard(true);
+      setIsDropDownClicked(false);
+      setIsLayoutClicked(false);
     }
   };
 
