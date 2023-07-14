@@ -1,6 +1,5 @@
 import React from 'react'; // useState 사용
 import styled from '@emotion/styled';
-import { css } from '@emotion/react';
 
 import CommonStyles from '../styles/CommonStyles';
 import useRangeNumber from '../hooks/useRangeNumber';
