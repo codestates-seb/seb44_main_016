@@ -52,6 +52,11 @@ export default function UserUpdate() {
     },
   ];
 
+  const handleMoveDeletePage = () => {
+    console.log('here');
+    router.push('/user/delete');
+  };
+
   return (
     <S.Container>
       <S.BackBox>
@@ -85,7 +90,9 @@ export default function UserUpdate() {
             회원 정보 수정
           </S.SubmitBtn>
         </S.SubmitBox>
-        <S.ModifyBtn type='button'>회원 탈퇴</S.ModifyBtn>
+        <S.ModifyBtn type='button' onClick={handleMoveDeletePage}>
+          회원 탈퇴
+        </S.ModifyBtn>
       </S.FormContainer>
     </S.Container>
   );

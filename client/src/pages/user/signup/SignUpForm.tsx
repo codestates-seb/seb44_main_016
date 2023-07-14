@@ -1,11 +1,10 @@
-// 'use client';
 import styled from '@emotion/styled';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import CommonStyles from '../../../styles/CommonStyles';
 import useInput from '../../../hooks/useComponents';
-import CheckboxAgreement from '../../../components/CheckboxAgreement';
+import useCheckboxError from '../../../hooks/useCheckoutError';
 import { SIGN_UP_MESSAGES } from '../../../constants/user';
 import SelectBox from '../../../components/SelectBox';
 import validation from '../../../utils/validationCheck';
@@ -14,12 +13,11 @@ import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/u
 
 export default function SignUpForm() {
   const router = useRouter();
-  const [IdInput, loginId, setLoginId] = useInput('text', '아이디', 'loginId');
-  const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw');
-  const [PwConfirmInput, password, setPassword] = useInput('password', '비밀번호 확인', 'pwConfirm');
-  const [nicknameInput, nickname, setNickname] = useInput('text', '닉네임', 'nickname');
-  const [emailInput, emailValue, setEmailValue] = useInput('text', '이메일', 'email');
-  const [isClickedProps, RefusalAnimation] = useRefusalAni();
+  const [IdInput, loginId] = useInput('text', '아이디', 'loginId');
+  const [PwInput, pwValue] = useInput('password', '비밀번호', 'pw');
+  const [PwConfirmInput, password] = useInput('password', '비밀번호 확인', 'pwConfirm');
+  const [nicknameInput, nickname] = useInput('text', '닉네임', 'nickname');
+  const [emailInput, emailValue] = useInput('text', '이메일', 'email');
   const [domainValue, setDomainValue] = useState('');
   const [error, setError] = useState({
     loginId: '',
@@ -29,31 +27,26 @@ export default function SignUpForm() {
     email: '',
     policy: '',
   });
-
-  const { CheckboxComponent, isChecked, setIsChecked } = CheckboxAgreement({
+  const [isClickedProps, RefusalAnimation] = useRefusalAni();
+  const { CheckboxComponent, isChecked } = useCheckboxError({
     labelTitle: '전체동의',
-    checkboxAgreement: SIGN_UP_MESSAGES.POLICY_GUIDE,
+    checkboxAgreement: SIGN_UP_MESSAGES.POLICY_EXPLAIN,
     agreementError: error.policy,
     isBackgroundWhite: true,
   });
 
   useEffect(() => {
     const newError = {
-      loginId: loginId
-        ? validation.loginId(loginId || '')
-        : '다른 사용자와 겹치지 않도록 아이디를 입력해주세요. (4~10자)',
-      password: pwValue
-        ? validation.password(pwValue || '')
-        : '영문 소문자와 숫자, 특수기호(!@#$%^&*())를 모두 포함하여 입력해주세요. (8~16자)',
+      loginId: loginId ? validation.loginId(loginId || '') : SIGN_UP_MESSAGES.LOGIN_ID_GUIDE,
+      password: pwValue ? validation.password(pwValue || '') : SIGN_UP_MESSAGES.PASSWORD_GUIDE,
       passwordConfirm: password
         ? validation.passwordMatch(pwValue || '', password || '')
-        : '확인을 위해 비밀번호를 다시 입력해주세요.',
-      nickname: nickname
-        ? validation.nickname(nickname || '')
-        : '닉네임을 입력해주세요. 마이 페이지에서 변경 가능합니다.',
-      email: domainValue && emailValue ? validation.email(domainValue || '') : '이메일을 입력해주세요.',
-      policy: isChecked ? '' : '필수 약관에 동의해주세요.',
+        : SIGN_UP_MESSAGES.PASSWORD_CONFIRM_GUIDE,
+      nickname: nickname ? validation.nickname(nickname || '') : SIGN_UP_MESSAGES.NICKNAME_GUIDE,
+      email: domainValue && emailValue ? validation.email(domainValue || '') : SIGN_UP_MESSAGES.EMAIL_GUIDE,
+      policy: isChecked ? '' : SIGN_UP_MESSAGES.POLICY_GUIDE,
     };
+
     setError(newError);
   }, [loginId, pwValue, password, nickname, domainValue, isChecked]);
 
@@ -123,20 +116,12 @@ export default function SignUpForm() {
     }
 
     const res = await mutateAsync();
-    console.log(res); //
 
     if (res.field === '아이디') {
       setError({ ...error, loginId: res.reason });
       return;
     }
 
-    setLoginId('');
-    setPwValue('');
-    setPassword('');
-    setNickname('');
-    setEmailValue('');
-    setDomainValue('');
-    setIsChecked(false);
     router.push('/user/login');
   };
 

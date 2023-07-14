@@ -6,7 +6,7 @@ import SnsArticle from '../components/SnsArticle';
 const TimelineArticleDummyA = {
   financialRecordId: 0, // 지출/수입이 속한 가계부 ID
   category: '생활비',
-  financialRecordDate: new Date(),
+  financialRecordDate: new Date('2023-12-23T12:34:56.789Z'),
   title: '이마트 장 (식재료 위주)',
   price: -29_710, // 지출
   content: `산악회 여러분~~ 안뇽하세용~~!
@@ -39,7 +39,7 @@ const TimelineArticleDummyA = {
 const TimelineArticleDummyB = {
   financialRecordId: 0, // 지출/수입이 속한 가계부 ID
   category: '',
-  financialRecordDate: new Date(),
+  financialRecordDate: new Date('2023-12-23T12:34:56.789Z'),
   price: 2_761_000, // 수입
   title: '',
   content: `오늘은 월급날, 후훗. from 아무도 안 보는 혼자만의 공☆간`,
@@ -56,8 +56,8 @@ const feedArticleDummyA = {
   feedType: 1, // 절약 팁 enum
   content:
     '절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁! 절약 팁!',
-  createdAt: new Date(),
-  modifiedAt: new Date(),
+  createdAt: new Date('2023-12-23T12:34:56.789Z'),
+  modifiedAt: new Date('2023-12-23T12:34:56.789Z'),
   imageId: 0,
   userId: 0,
   voteId: 0,
@@ -74,8 +74,8 @@ const feedArticleDummyB = {
   feedType: 2, // 허락해줘! enum
   content:
     '허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘! 허락해줘!',
-  createdAt: new Date(),
-  modifiedAt: new Date(),
+  createdAt: new Date('2023-12-23T12:34:56.789Z'),
+  modifiedAt: new Date('2023-12-23T12:34:56.789Z'),
   imageId: 0,
   userId: 0,
   voteId: 0,

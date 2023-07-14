@@ -3,25 +3,25 @@ import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import Logo from '../../../../../public/image/logo.svg';
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../components/redux/store';
 import CommonStyles from '../../../../styles/CommonStyles';
-import Link from 'next/link';
 import Lottie from 'react-lottie-player';
 import deleteAnimation from '../../../../animation/delete.json';
 import Loading from '../../../../components/Loading';
+import { toast } from 'react-toastify';
 
 export default function GoodBye() {
   const router = useRouter();
   const [showMessage, setShowMessage] = useState(false);
-  const accessToken = useSelector<RootState>((state) => state.authnReducer.login);
-  console.log(accessToken);
+  // const nickname = useSelector<RootState>((state) => state.authnReducer.login.nickname);
+  const nickname = '마마망'; // temp
 
   useEffect(() => {
     const previousUrl = localStorage.getItem('deletePageURL');
     const isFromDeletePage = previousUrl && previousUrl.includes('/user/delete');
+
     if (!isFromDeletePage) {
-      // router.push('/'); // 코드 수정 때마다 페이지 이동하기 때문에, 완성 전까지 주석처리
+      toast.error('잘못된 요청입니다');
+      router.push('/');
       return;
     }
     localStorage.removeItem('deletePageURL');
@@ -35,6 +35,11 @@ export default function GoodBye() {
     return () => {
       clearTimeout(timer);
     };
+  }, []);
+
+  useEffect(() => {
+    history.pushState(null, '', location.href);
+    window.addEventListener('popstate', () => history.pushState(null, '', location.href));
   }, []);
 
   return (
@@ -53,7 +58,7 @@ export default function GoodBye() {
           </S.AnimationBox>
           <S.GoodByeBox>
             <S.GoodByeComment>
-              <span style={{ color: 'var(--color-primary)' }}> {'마마망'}</span>
+              <span style={{ color: 'var(--color-primary)' }}> {nickname}</span>
               <span>님의 탈퇴가 정상적으로 처리되었습니다.</span>
             </S.GoodByeComment>
             <S.NextTimeComment>다음에 또 이용해주세요!</S.NextTimeComment>
