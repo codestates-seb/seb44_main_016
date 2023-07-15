@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import CloseBtn from '../../../../../public/image/closeBtn.svg';
+import CloseBtn from '../../../../public/image/closeBtn.svg';
 import ModalList from './FollowList';
 
 export default function FollowModal() {

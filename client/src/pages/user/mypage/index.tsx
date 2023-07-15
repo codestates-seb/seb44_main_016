@@ -3,13 +3,13 @@ import styled from '@emotion/styled';
 import Image from 'next/image';
 import Head from 'next/head';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../../components/redux/store';
+import { RootState } from '../../../components/redux/store';
 import { keyframes, css } from '@emotion/react';
 import { useEffect, useState } from 'react';
-import CommonStyles from '../../../../styles/CommonStyles';
-import useInput, { useCheckboxInput } from '../../../../hooks/useComponents';
+import CommonStyles from '../../../styles/CommonStyles';
+import useInput, { useCheckboxInput } from '../../../hooks/useComponents';
 import FollowModal from './FollowModal';
-import withAuth from '../../../../components/WithAuth';
+import withAuth from '../../../components/WithAuth';
 
 function MyPage() {
   const router = useRouter();

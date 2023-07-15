@@ -67,17 +67,6 @@ const S = {
       font-weight: 600;
     }
   `,
-  // UserDeleteBtn: styled.button`
-  //   display: flex;
-  //   align-items: center;
-  //   font-size: 0.93rem;
-  //   font-weight: 400;
-  //   color: var(--color-gray06);
-
-  //   &:hover {
-  //     color: var(--color-gray07);
-  //   }
-  // `,
 };
 
 const imageStyle = {
