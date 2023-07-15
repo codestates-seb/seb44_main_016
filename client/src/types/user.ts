@@ -17,3 +17,9 @@ export interface LoginResData {
   accessToken?: string | null;
   isLoggedIn: boolean;
 }
+
+export interface UserUpdateReqData {
+  imgUrl?: string | null;
+  nickname?: string | null;
+  password?: string | null;
+}
