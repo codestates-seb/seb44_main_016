@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
+import AsideHamburgerBtn from './AsideHamburgerBtn';
+
 type Props = {
   href?: string;
   className?: string;
@@ -8,7 +10,7 @@ type Props = {
 
 export default function AsideProfileBox(props: Props) {
   const [nickname, userId] = props.className === 'tab-closed' ? ['Waypil', '@waypil'] : ['', ''];
-  const hamburgerBtn = props.className === 'tab-closed' ? <span>…</span> : <></>;
+  const hamburgerBtn = props.className === 'tab-closed' ? <AsideHamburgerBtn /> : <></>;
 
   return (
     <S.ProfileBoxContainer href={props.href || ''}>
@@ -34,17 +36,11 @@ const S = {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    &:hover {
-      filter: brightness(0.9);
-    }
   `,
   ProfileLeftDiv: styled.div`
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    &:hover {
-      filter: brightness(0.9);
-    }
   `,
   ProfileRightDiv: styled.div`
     height: 100%;
