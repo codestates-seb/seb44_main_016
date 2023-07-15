@@ -147,7 +147,7 @@ const SVGs = {
     </svg>
   ),
   dropdown: (
-    <svg xmlns='http://www.w3.org/2000/svg' width='15' height='9' viewBox='0 0 15 9' fill='none'>
+    <svg xmlns='http://www.w3.org/2000/svg' width='15' height='11' viewBox='0 0 15 11' fill='none'>
       <path d='M14 8L7.5 2L1 8' stroke='#B3B3B3' strokeWidth='2' strokeLinecap='round' />
     </svg>
   ),
