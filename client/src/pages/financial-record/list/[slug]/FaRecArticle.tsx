@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import ImgIcon from '../../../../../public/images/icon/img.svg';
 import SVGs from '../../../../constants/svg';
-import FaRecCarousel from './FaRecCarousel';
+// import FaRecCarousel from './FaRecCarousel';
 import { useState } from 'react';
 import { keyframes } from '@emotion/react';
 import { numToStrWithSign } from '../../../../utils/numToStrWithSign';
@@ -10,15 +10,21 @@ import { convertToKoreanMonthDay } from '../../../../utils/convertToKoreanDate';
 import ImgsCarousel from '../../../../components/ImgsCarousel';
 
 interface FaRecArticleProps {
-  data: FaRecData;
+  category: string;
+  faDate: Date;
+  title: string;
+  price: number;
+  content: string;
+  imgId: string[];
 }
 
-export default function FaRecArticle({ data }: FaRecArticleProps) {
-  const { category, title, price, content, imgId, faDate } = data;
+export default function FaRecArticle(props: FaRecArticleProps) {
+  const { title, price, content, imgId, faDate, category } = props;
   const [isOpen, setIsOpen] = useState(false);
   const toggleDropdown = () => setIsOpen(!isOpen);
   const isIncome = price >= 0;
   const date = new Date(faDate);
+
   return (
     <S.Article>
       <S.Header onClick={toggleDropdown}>
@@ -27,13 +33,17 @@ export default function FaRecArticle({ data }: FaRecArticleProps) {
         <S.Title>{title}</S.Title>
         <S.FinancialText isIncome={isIncome}>{numToStrWithSign(price)}</S.FinancialText>
         <S.ImgAndDate>
-          <span>{!!imgId.length && <ImgIcon />}</span>
+          <span>{imgId !== undefined && imgId.length >= 1 ? <ImgIcon /> : <></>}</span>
           <span>{convertToKoreanMonthDay(date)}</span>
         </S.ImgAndDate>
         <S.DropdownIcon isOpen={isOpen}>{SVGs.dropdown}</S.DropdownIcon>
       </S.Header>
       <S.Details isOpen={isOpen}>
-        {!!imgId.length && <ImgsCarousel imgId={imgId} width={'100%'} height={'30rem'} />}
+        {imgId !== undefined && imgId.length >= 1 ? (
+          <ImgsCarousel imgId={imgId} width={'100%'} height={'30rem'} />
+        ) : (
+          <></>
+        )}
         <S.Contents>
           <div>{title}</div>
           <div>{content}</div>
