@@ -1,24 +1,17 @@
 spring:
+  datasource:
+    datasource:
+      url: ${MYSQL_SECRET_URL}
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
   jpa:
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL8InnoDBDialect
     hibernate:
       ddl-auto: create
-    show-sql: true
     properties:
       hibernate:
         format_sql: true
-        use_sql_comments: true
-        dialect: org.hibernate.dialect.H2Dialect
-        jdbc:
-          lob:
-            non_contextual_creation: true
-  datasource:
-    url: ${MYSQL_SECRET_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
+    show-sql: true
+    open-in-view: true
 logging:
   level:
     org:
