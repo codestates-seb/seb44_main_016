@@ -31,9 +31,8 @@ type PropsTimeline = {
 };
 
 export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
-  let date, labelText, Label;
+  let labelText, Label;
   if (type === 'feed') {
-    date = data.createdAt;
     [labelText, Label] =
       data.feedType === 1
         ? [
@@ -51,7 +50,6 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
             `,
           ];
   } else {
-    date = data.faDate;
     [labelText, Label] =
       data.price <= 0
         ? [
@@ -75,11 +73,11 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
       <Label>{labelText}</Label>
       <S.Box>
         {type === 'feed' ? (
-          <ArticleHeader type={type} createdAt={date}>
+          <ArticleHeader type={type} createdAt={data.createdAt}>
             Waypil
           </ArticleHeader>
         ) : (
-          <ArticleHeader type={type} createdAt={date} category={data.category} price={data.price}>
+          <ArticleHeader type={type} faDate={data.faDate} category={data.category} price={data.price}>
             Waypil
           </ArticleHeader>
         )}

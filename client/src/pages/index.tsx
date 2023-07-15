@@ -2,11 +2,13 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import SnsArticle from '../components/SnsArticle';
+import { FaRecData } from '../types/financialRecord';
 
-const TimelineArticleDummyA = {
+const TimelineArticleDummyA: FaRecData = {
   financialRecordId: 0, // 지출/수입이 속한 가계부 ID
+  financialRecordArticleId: 0,
   category: '생활비',
-  financialRecordDate: new Date('2023-12-23T12:34:56.789Z'),
+  faDate: new Date('2023-12-23T12:34:56.789Z'),
   title: '이마트 장 (식재료 위주)',
   price: -29_710, // 지출
   content: `산악회 여러분~~ 안뇽하세용~~!
@@ -22,11 +24,8 @@ const TimelineArticleDummyA = {
   
   #닭가슴살 안 사려고 했는데 결국 사버렸네용... ㅠㅠ
   자나 깨나 #충동구매 조심~! (≧▽≦)`,
-  scope: 2, // 타임라인에도
-  imageId: 0,
+  scope: '가계부 타임라인', // 타임라인에도
   userId: 0,
-  voteId: 0,
-  financialRecordArticleHashTagId: 0,
   imgId: [
     'https://images.unsplash.com/photo-1688574398156-92556aa3cf52?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80',
     'https://images.unsplash.com/photo-1682685797366-715d29e33f9d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
@@ -35,18 +34,16 @@ const TimelineArticleDummyA = {
   ],
 };
 
-const TimelineArticleDummyB = {
+const TimelineArticleDummyB: FaRecData = {
   financialRecordId: 0, // 지출/수입이 속한 가계부 ID
+  financialRecordArticleId: 1,
   category: '',
-  financialRecordDate: new Date('2023-12-23T12:34:56.789Z'),
+  faDate: new Date('2023-12-23T12:34:56.789Z'),
   price: 2_761_000, // 수입
   title: '',
   content: `오늘은 월급날, 후훗. from 아무도 안 보는 혼자만의 공☆간`,
-  scope: 2, // 타임라인에도
-  imageId: 0,
+  scope: '가계부 타임라인', // 타임라인에도
   userId: 0,
-  voteId: 0,
-  financialRecordArticleHashTagId: 0,
   imgId: [],
 };
 

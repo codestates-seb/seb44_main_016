@@ -47,7 +47,17 @@ export default function FinancialPage() {
         <div id='article'>
           {data?.pages.flatMap((pageData) =>
             pageData.data.map((el: FaRecData) => {
-              return <FaRecArticle key={el.financialRecordArticleId} data={el} />;
+              return (
+                <FaRecArticle
+                  key={el.financialRecordArticleId}
+                  category={el.category}
+                  faDate={el.faDate}
+                  title={el.title}
+                  price={el.price}
+                  content={el.content}
+                  imgId={el.imgId}
+                />
+              );
             })
           )}
         </div>
