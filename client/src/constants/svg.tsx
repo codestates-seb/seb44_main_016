@@ -147,7 +147,7 @@ const SVGs = {
     </svg>
   ),
   dropdown: (
-    <svg xmlns='http://www.w3.org/2000/svg' width='15' height='9' viewBox='0 0 15 9' fill='none'>
+    <svg xmlns='http://www.w3.org/2000/svg' width='15' height='11' viewBox='0 0 15 11' fill='none'>
       <path d='M14 8L7.5 2L1 8' stroke='#B3B3B3' strokeWidth='2' strokeLinecap='round' />
     </svg>
   ),
@@ -176,6 +176,22 @@ const SVGs = {
     <svg xmlns='http://www.w3.org/2000/svg' width='49' height='49' viewBox='0 0 49 49' fill='none'>
       <circle cx='24.5' cy='24.5' r='24.5' fill='black' fillOpacity='0.5' />
       <path d='M21 16L29 24.5L21 33' stroke='white' strokeWidth='3' strokeLinecap='round' />
+    </svg>
+  ),
+  ellipsis: (
+    <svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'>
+      <path
+        d='M10.6153 7.26923C11.38 7.26923 11.9999 6.64932 11.9999 5.88462C11.9999 5.11991 11.38 4.5 10.6153 4.5C9.85063 4.5 9.23071 5.11991 9.23071 5.88462C9.23071 6.64932 9.85063 7.26923 10.6153 7.26923Z'
+        fill='#666666'
+      />
+      <path
+        d='M6.00009 7.26923C6.7648 7.26923 7.38471 6.64932 7.38471 5.88462C7.38471 5.11991 6.7648 4.5 6.00009 4.5C5.23539 4.5 4.61548 5.11991 4.61548 5.88462C4.61548 6.64932 5.23539 7.26923 6.00009 7.26923Z'
+        fill='#666666'
+      />
+      <path
+        d='M1.38462 7.26923C2.14932 7.26923 2.76923 6.64932 2.76923 5.88462C2.76923 5.11991 2.14932 4.5 1.38462 4.5C0.619913 4.5 0 5.11991 0 5.88462C0 6.64932 0.619913 7.26923 1.38462 7.26923Z'
+        fill='#666666'
+      />
     </svg>
   ),
 };

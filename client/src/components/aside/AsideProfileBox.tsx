@@ -1,54 +1,52 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
+import AsideHamburgerBtn from './AsideHamburgerBtn';
+
 type Props = {
   href?: string;
   className?: string;
 };
 
 export default function AsideProfileBox(props: Props) {
-  const [nickname, userId] = props.className === 'tab-closed' ? ['Waypil', '@waypil'] : ['', ''];
-  const hamburgerBtn = props.className === 'tab-closed' ? <span>…</span> : <></>;
+  const [nickname, userId] =
+    props.className === 'tab-closed' ? ['일이삼사오육칠팔구십', '@waypil'] : ['', ''];
+  const hamburgerBtn = props.className === 'tab-closed' ? <AsideHamburgerBtn /> : <></>;
 
   return (
-    <S.ProfileBoxContainer href={props.href || ''}>
-      <S.ProfileLeftDiv>
+    <S.ProfileBoxContainer>
+      <S.ProfileLeftBtn href='/user/mypage/1'>
         <S.ProfileImg />
         <S.ProfileTexts>
           <S.Nickname>{nickname}</S.Nickname>
           <span>{userId}</span>
         </S.ProfileTexts>
-      </S.ProfileLeftDiv>
+      </S.ProfileLeftBtn>
       <S.ProfileRightDiv>{hamburgerBtn}</S.ProfileRightDiv>
     </S.ProfileBoxContainer>
   );
 }
 
 const S = {
-  ProfileBoxContainer: styled(Link)`
+  ProfileBoxContainer: styled.div`
     width: 100%;
     height: 3.25rem;
     color: black;
     background-color: white;
     padding-left: 1.25rem;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    &:hover {
-      filter: brightness(0.9);
-    }
   `,
-  ProfileLeftDiv: styled.div`
+  ProfileLeftBtn: styled(Link)`
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    &:hover {
-      filter: brightness(0.9);
-    }
   `,
   ProfileRightDiv: styled.div`
     height: 100%;
-    padding-right: 1rem;
     display: flex;
     align-items: start;
     justify-content: space-between;

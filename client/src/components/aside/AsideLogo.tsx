@@ -9,7 +9,7 @@ type Props = {
   children?: JSX.Element; // <svg>
 };
 
-export default function Logo(props: Props) {
+export default function AsideLogo(props: Props) {
   return (
     <S.LogoContainer href='/' className={props.className}>
       <SvgBox>{svgs.logoSymbol}</SvgBox>
