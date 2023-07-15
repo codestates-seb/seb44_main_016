@@ -55,14 +55,16 @@ const S = {
     }
   `,
 
-  ItemTitle: styled.h2`
+  ItemTitle: styled.div`
     font-size: 0.75rem;
     color: var(--color-primary);
     margin-bottom: 0.75rem;
+    font-weight: 600;
   `,
 
-  ItemName: styled.div`
+  ItemName: styled.h2`
     font-size: 1rem;
+    font-weight: 400;
   `,
 
   ItemShareUser: styled.h3`
