@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { FaRecData } from '../types/financialRecord';
 
 export const APIfinancialRecord = {
   getRecordList: async () => {
@@ -48,6 +49,9 @@ export const APIfinancialRecord = {
         `/api/financial-record/${financialRecordId}/article?page=${page}&size=${size}`
       );
       const { data, pageData } = res.data;
+      data.forEach((item: FaRecData) => {
+        item.faDate = new Date(item.faDate);
+      });
       return { data, pageData };
     } catch (err) {
       console.error(err.response.data);

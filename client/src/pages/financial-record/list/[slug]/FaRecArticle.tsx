@@ -23,7 +23,6 @@ export default function FaRecArticle(props: FaRecArticleProps) {
   const [isOpen, setIsOpen] = useState(false);
   const toggleDropdown = () => setIsOpen(!isOpen);
   const isIncome = price >= 0;
-  const date = new Date(faDate);
 
   return (
     <S.Article>
@@ -34,7 +33,7 @@ export default function FaRecArticle(props: FaRecArticleProps) {
         <S.FinancialText isIncome={isIncome}>{numToStrWithSign(price)}</S.FinancialText>
         <S.ImgAndDate>
           <span>{imgId !== undefined && imgId.length >= 1 ? <ImgIcon /> : <></>}</span>
-          <span>{convertToKoreanMonthDay(date)}</span>
+          <span>{convertToKoreanMonthDay(faDate)}</span>
         </S.ImgAndDate>
         <S.DropdownIcon isOpen={isOpen}>{SVGs.dropdown}</S.DropdownIcon>
       </S.Header>
