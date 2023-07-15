@@ -17,6 +17,10 @@ export default function ListItem({ item }: Props) {
     <Link href={`/financial-record/list/${financialRecordId}`}>
       <S.ItemWrap>
         <div>
+          <S.ItemTitle>가계부명</S.ItemTitle>
+          <S.ItemName>{financialRecordName}</S.ItemName>
+        </div>
+        <div>
           <S.ItemShareUser>공유하는 유저</S.ItemShareUser>
           <S.ItemUserList>
             {users?.map((el) => (
@@ -25,10 +29,6 @@ export default function ListItem({ item }: Props) {
               </li>
             ))}
           </S.ItemUserList>
-        </div>
-        <div>
-          <S.ItemTitle>가계부명</S.ItemTitle>
-          <S.ItemName>{financialRecordName}</S.ItemName>
         </div>
       </S.ItemWrap>
     </Link>
@@ -55,7 +55,7 @@ const S = {
     }
   `,
 
-  ItemTitle: styled.h3`
+  ItemTitle: styled.h2`
     font-size: 0.75rem;
     color: var(--color-primary);
     margin-bottom: 0.75rem;
@@ -65,7 +65,7 @@ const S = {
     font-size: 1rem;
   `,
 
-  ItemShareUser: styled.h4`
+  ItemShareUser: styled.h3`
     font-size: 0.75rem;
     color: var(--color-primary);
     margin-bottom: 0.75rem;
