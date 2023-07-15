@@ -9,26 +9,31 @@ interface PaginationProps {
 }
 
 export default function Pagination({ currentPage, totalPages, handlePageChange }: PaginationProps) {
-  const [pages, setPages] = useState<number[]>([]);
+  const [pageGroup, setPageGroup] = useState<number>(1);
 
   useEffect(() => {
-    let startPage = Math.max(1, currentPage - 2);
-    let endPage = Math.min(totalPages, currentPage + 2);
+    setPageGroup(Math.ceil(currentPage / 5));
+  }, [currentPage]);
 
-    if (currentPage - startPage < 2) {
-      endPage = Math.min(totalPages, endPage + (2 - (currentPage - startPage)));
-    }
-    if (endPage - currentPage < 2) {
-      startPage = Math.max(1, startPage - (2 - (endPage - currentPage)));
-    }
+  const pages = Array.from(
+    { length: Math.min(5, totalPages - (pageGroup - 1) * 5) },
+    (_, i) => 5 * (pageGroup - 1) + (i + 1)
+  );
 
-    setPages(Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i));
-  }, [currentPage, totalPages]);
+  const handlePrevGroup = () => {
+    setPageGroup((current) => Math.max(1, current - 1));
+    handlePageChange(5 * (pageGroup - 2) + 5);
+  };
+
+  const handleNextGroup = () => {
+    setPageGroup((current) => Math.min(Math.ceil(totalPages / 5), current + 1));
+    handlePageChange(5 * pageGroup + 1);
+  };
 
   return (
     <S.Pagination>
       <button
-        onClick={() => handlePageChange(currentPage - 1)}
+        onClick={() => handlePageChange(1)}
         disabled={currentPage === 1}
         aria-label='첫 페이지로 이동하기'
         className='arrow'
@@ -36,7 +41,7 @@ export default function Pagination({ currentPage, totalPages, handlePageChange }
         {SVGs.page.first}
       </button>
       <button
-        onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
+        onClick={handlePrevGroup}
         disabled={currentPage === 1}
         aria-label='이전 페이지로 이동하기'
         className='arrow'
@@ -55,7 +60,7 @@ export default function Pagination({ currentPage, totalPages, handlePageChange }
         </button>
       ))}
       <button
-        onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages))}
+        onClick={handleNextGroup}
         disabled={currentPage === totalPages}
         aria-label='다음 페이지로 이동하기'
         className='arrow'
@@ -63,7 +68,7 @@ export default function Pagination({ currentPage, totalPages, handlePageChange }
         {SVGs.page.next}
       </button>
       <button
-        onClick={() => handlePageChange(currentPage + 1)}
+        onClick={() => handlePageChange(totalPages)}
         disabled={currentPage === totalPages}
         aria-label='마지막 페이지로 이동하기'
         className='arrow'
@@ -78,6 +83,7 @@ const S = {
   Pagination: styled.div`
     display: flex;
     align-items: center;
+    margin: 1.5rem 0 0;
     gap: 10px;
     & > button {
       width: 25px;
@@ -92,6 +98,7 @@ const S = {
       align-items: center;
       justify-content: center;
 
+      padding-top: 2px;
       &:hover:not(.arrow, .currentPage) {
         color: var(--color-primary);
       }

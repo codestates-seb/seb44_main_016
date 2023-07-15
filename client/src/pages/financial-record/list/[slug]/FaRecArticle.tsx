@@ -32,7 +32,7 @@ export default function FaRecArticle(props: FaRecArticleProps) {
         <S.Title>{title}</S.Title>
         <S.FinancialText isIncome={isIncome}>{numToStrWithSign(price)}</S.FinancialText>
         <S.ImgAndDate>
-          <span>{imgId !== undefined && imgId.length >= 1 ? <ImgIcon /> : <></>}</span>
+          <span>{imgId !== undefined && imgId.length >= 1 ? SVGs.imgIcon : <></>}</span>
           <span>{convertToKoreanMonthDay(faDate)}</span>
         </S.ImgAndDate>
         <S.DropdownIcon isOpen={isOpen}>{SVGs.dropdown}</S.DropdownIcon>

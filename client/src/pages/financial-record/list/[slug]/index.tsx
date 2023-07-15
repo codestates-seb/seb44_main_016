@@ -22,7 +22,7 @@ export default function FinancialPage() {
   };
   const tabs = ['가계부', '타임라인'];
   const [page, setPage] = useState(1);
-  const size = 4;
+  const size = 1;
 
   /* 페이지네이션 */
   const {
@@ -121,6 +121,9 @@ const S = {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    &#timeline {
+      gap: 1.875rem;
+    }
   `,
   DateHeader: styled.div`
     font-size: var(--text-default);
