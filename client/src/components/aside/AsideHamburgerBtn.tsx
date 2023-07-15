@@ -65,8 +65,8 @@ const S = {
     right: 1.5rem;
     width: 0px;
     height: 0px;
-    border-top: 36px solid white;
-    border-left: 24px solid transparent;
+    border-top: 1.5rem solid white;
+    border-left: 1.5rem solid transparent;
     border-right: 0px solid transparent;
   `,
   LinkBtnList: styled.ol`
