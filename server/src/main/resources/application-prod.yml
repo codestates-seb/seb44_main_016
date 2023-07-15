@@ -1,9 +1,8 @@
 spring:
   datasource:
-    datasource:
-      url: ${MYSQL_SECRET_URL}
-      username: ${DB_USERNAME}
-      password: ${DB_PASSWORD}
+    url: ${MYSQL_SECRET_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: create
