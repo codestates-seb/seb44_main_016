@@ -68,7 +68,6 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
           ];
   }
 
-
   return (
     <S.SnsArticleContainer>
       <Label>{labelText}</Label>
