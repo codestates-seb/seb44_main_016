@@ -9,7 +9,8 @@ type Props = {
 };
 
 export default function AsideProfileBox(props: Props) {
-  const [nickname, userId] = props.className === 'tab-closed' ? ['Waypil', '@waypil'] : ['', ''];
+  const [nickname, userId] =
+    props.className === 'tab-closed' ? ['일이삼사오육칠팔구십', '@waypil'] : ['', ''];
   const hamburgerBtn = props.className === 'tab-closed' ? <AsideHamburgerBtn /> : <></>;
 
   return (

@@ -13,14 +13,17 @@ export default function AsideHamburgerBtn() {
       {isHamburgerOpened ? (
         <>
           <S.Backdrop onMouseDown={() => setIsHamburgerOpened(false)} />
-          <S.LinkBtnList>
-            <S.LinkBtn href='/user/update' onClick={() => setIsHamburgerOpened(false)}>
-              회원정보 수정
-            </S.LinkBtn>
-            <S.LinkBtn href='' onClick={() => setIsHamburgerOpened(false)}>
-              로그아웃
-            </S.LinkBtn>
-          </S.LinkBtnList>
+          <S.HamburgerModal>
+            <S.Triangle />
+            <S.LinkBtnList>
+              <S.LinkBtn href='/user/update' onClick={() => setIsHamburgerOpened(false)}>
+                회원정보 수정
+              </S.LinkBtn>
+              <S.LinkBtn href='' onClick={() => setIsHamburgerOpened(false)}>
+                로그아웃
+              </S.LinkBtn>
+            </S.LinkBtnList>
+          </S.HamburgerModal>
         </>
       ) : (
         <></>
@@ -53,22 +56,56 @@ const S = {
       }
     }
   `,
+  HamburgerModal: styled.div`
+    filter: drop-shadow(0px 2px 2px var(--color-gray06)); // 그림자
+  `,
+  Triangle: styled.div`
+    position: absolute;
+    top: -1.5rem;
+    right: 1.5rem;
+    width: 0px;
+    height: 0px;
+    border-top: 36px solid white;
+    border-left: 24px solid transparent;
+    border-right: 0px solid transparent;
+  `,
   LinkBtnList: styled.ol`
-    top: 0rem;
-    right: 1rem;
+    position: absolute;
+    top: -6rem;
+    right: 6.5rem;
     transform: translate(80%, -20%);
     border-radius: 1rem;
-    overflow: hidden;
-    position: absolute;
-
-    box-shadow: 0px 0.1rem 0.2rem rgba(0, 0, 0, 0.5);
 
     overflow: hidden;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+
+    &:last-child::after {
+      content: '';
+      position: absolute;
+      border-style: solid;
+      border-width: 1rem 1rem 0;
+      border-color: white transparent;
+      display: block;
+      width: 0;
+      z-index: 1;
+      bottom: -1rem;
+      right: 0rem;
+    }
+    &:last-child::after {
+      content: '';
+      position: absolute;
+      border-style: solid;
+      border-width: 1rem 1rem 0;
+      border-color: white transparent;
+      display: block;
+      width: 0;
+      z-index: 1;
+      bottom: -1rem;
+      right: 0rem;
+    }
   `,
   LinkBtn: styled(Link)`
     white-space: nowrap;
@@ -77,7 +114,6 @@ const S = {
 
     font-weight: 500;
     background-color: white;
-    border-bottom: 0.05rem solid var(--color-gray08);
 
     display: flex;
     justify-content: center;
