@@ -33,6 +33,7 @@ server:
 #  address:
 #    admin: admin@gmail.com
 jwt:
-  key: neverland123123123123123123123123123123 # 배포 전 환경변수 포맷 후 ec2 인스턴스에 변수 등록
-  access-token-expiration-minutes: 40
-  refresh-token-expiration-minutes: 420
+  key: ${JWT_KEY}
+  access-token-expiration-minutes: ${JWT_ACCESS_TOKEN}
+  refresh-token-expiration-minutes: ${JWT_REFRESH_TOKEN}
+
