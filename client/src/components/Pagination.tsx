@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import SVGs from '../constants/svg';
+import styled from '@emotion/styled';
 
 interface PaginationProps {
   currentPage: number;
@@ -24,20 +26,22 @@ export default function Pagination({ currentPage, totalPages, handlePageChange }
   }, [currentPage, totalPages]);
 
   return (
-    <div>
+    <S.Pagination>
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
         aria-label='첫 페이지로 이동하기'
+        className='arrow'
       >
-        &laquo;
+        {SVGs.page.first}
       </button>
       <button
         onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
         disabled={currentPage === 1}
         aria-label='이전 페이지로 이동하기'
+        className='arrow'
       >
-        &lt;
+        {SVGs.page.prev}
       </button>
       {pages.map((el) => (
         <button
@@ -45,6 +49,7 @@ export default function Pagination({ currentPage, totalPages, handlePageChange }
           onClick={() => handlePageChange(el)}
           disabled={el === currentPage}
           aria-label={`${el}번째 페이지로 이동하기`}
+          className={el === currentPage ? 'currentPage' : ''}
         >
           {el}
         </button>
@@ -53,16 +58,54 @@ export default function Pagination({ currentPage, totalPages, handlePageChange }
         onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages))}
         disabled={currentPage === totalPages}
         aria-label='다음 페이지로 이동하기'
+        className='arrow'
       >
-        &gt;
+        {SVGs.page.next}
       </button>
       <button
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         aria-label='마지막 페이지로 이동하기'
+        className='arrow'
       >
-        &raquo;
+        {SVGs.page.last}
       </button>
-    </div>
+    </S.Pagination>
   );
 }
+
+const S = {
+  Pagination: styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    & > button {
+      width: 25px;
+      height: 25px;
+      border-radius: var(--rounded-full);
+      overflow: hidden;
+      line-height: 1;
+      transition-duration: 0.3s;
+      font-weight: 400;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover:not(.arrow, .currentPage) {
+        color: var(--color-primary);
+      }
+      &.arrow:hover {
+        background: rgba(0, 0, 0, 0.1);
+      }
+      &:active {
+        transform: scale(0.95);
+      }
+
+      &.currentPage {
+        background: var(--color-primary);
+        color: var(--color-white);
+      }
+    }
+  `,
+};
