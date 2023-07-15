@@ -33,9 +33,7 @@ const S = {
   HamburgerBtn: styled.button`
     width: 2rem;
     height: 2rem;
-    top: -0.25rem;
-    right: 0.5rem;
-    position: absolute;
+    margin-right: 0.5rem;
 
     display: flex;
     justify-content: center;

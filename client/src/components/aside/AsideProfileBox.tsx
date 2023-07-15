@@ -13,21 +13,21 @@ export default function AsideProfileBox(props: Props) {
   const hamburgerBtn = props.className === 'tab-closed' ? <AsideHamburgerBtn /> : <></>;
 
   return (
-    <S.ProfileBoxContainer href={props.href || ''}>
-      <S.ProfileLeftDiv>
+    <S.ProfileBoxContainer>
+      <S.ProfileLeftBtn href='/user/mypage/1'>
         <S.ProfileImg />
         <S.ProfileTexts>
           <S.Nickname>{nickname}</S.Nickname>
           <span>{userId}</span>
         </S.ProfileTexts>
-      </S.ProfileLeftDiv>
-      {hamburgerBtn}
+      </S.ProfileLeftBtn>
+      <S.ProfileRightDiv>{hamburgerBtn}</S.ProfileRightDiv>
     </S.ProfileBoxContainer>
   );
 }
 
 const S = {
-  ProfileBoxContainer: styled(Link)`
+  ProfileBoxContainer: styled.div`
     width: 100%;
     height: 3.25rem;
     color: black;
@@ -38,14 +38,14 @@ const S = {
     align-items: center;
     justify-content: space-between;
   `,
-  ProfileLeftDiv: styled.div`
+  ProfileLeftBtn: styled(Link)`
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 0.5rem;
   `,
   ProfileRightDiv: styled.div`
     height: 100%;
-    padding-right: 1rem;
     display: flex;
     align-items: start;
     justify-content: space-between;
