@@ -14,7 +14,7 @@ type PropsTimeline = {
   category: string;
   price: number;
   profileImg?: string;
-  createdAt: Date;
+  faDate: Date;
   children: string;
 };
 
@@ -32,8 +32,6 @@ export default function ArticleHeaderComponent(props: PropsFeed | PropsTimeline)
             color: var(--color-point-blue);
           `;
   }
-  
-  console.log(props.createdAt);
 
   return (
     <S.ArticleHeaderContainer>
@@ -42,7 +40,7 @@ export default function ArticleHeaderComponent(props: PropsFeed | PropsTimeline)
           <S.ProfileImg />
         </S.ProfileImgButton>
         <S.Nickname>{props.children}</S.Nickname>
-        {props.type === 'feed' || <S.DateText>{convertToKoreanDate(props.createdAt)}</S.DateText>}
+        {props.type === 'timeline' ? <S.DateText>{convertToKoreanDate(props.faDate)}</S.DateText> : <></>}
       </S.LeftDiv>
       <S.RightDiv>
         {props.type === 'feed' ? (
