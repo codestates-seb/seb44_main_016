@@ -2,14 +2,14 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
+import svgs from '../../constants/svg';
+
 export default function AsideHamburgerBtn() {
   const [isHamburgerOpened, setIsHamburgerOpened] = React.useState(false);
 
   return (
     <>
-      <S.HamburgerBtn onClick={() => setIsHamburgerOpened(true)}>
-        <span>…</span>
-      </S.HamburgerBtn>
+      <S.HamburgerBtn onClick={() => setIsHamburgerOpened(true)}>{svgs.ellipsis}</S.HamburgerBtn>
       {isHamburgerOpened ? (
         <>
           <S.Backdrop onMouseDown={() => setIsHamburgerOpened(false)} />
@@ -31,16 +31,38 @@ export default function AsideHamburgerBtn() {
 
 const S = {
   HamburgerBtn: styled.button`
-    & > span:hover {
-      font-weight: bold;
+    width: 2rem;
+    height: 2rem;
+    top: -0.25rem;
+    right: 0.5rem;
+    position: absolute;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      & > svg {
+        filter: brightness(0);
+      }
+      &::before {
+        content: '';
+        position: absolute;
+        width: 2rem;
+        height: 2rem;
+        border-radius: var(--rounded-full);
+        background-color: var(--color-gray08);
+      }
     }
   `,
   LinkBtnList: styled.ol`
+    top: 0rem;
+    right: 1rem;
+    transform: translate(80%, -20%);
     border-radius: 1rem;
     overflow: hidden;
     position: absolute;
 
-    background-color: #0f0;
     box-shadow: 0px 0.1rem 0.2rem rgba(0, 0, 0, 0.5);
 
     overflow: hidden;

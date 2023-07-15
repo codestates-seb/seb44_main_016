@@ -21,7 +21,7 @@ export default function AsideProfileBox(props: Props) {
           <span>{userId}</span>
         </S.ProfileTexts>
       </S.ProfileLeftDiv>
-      <S.ProfileRightDiv>{hamburgerBtn}</S.ProfileRightDiv>
+      {hamburgerBtn}
     </S.ProfileBoxContainer>
   );
 }
@@ -33,6 +33,7 @@ const S = {
     color: black;
     background-color: white;
     padding-left: 1.25rem;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
