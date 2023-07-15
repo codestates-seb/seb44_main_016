@@ -1,4 +1,3 @@
-/*
 package com.zerohip.server.common.img.service;
 
 import com.zerohip.server.common.article.Article;
@@ -17,4 +16,3 @@ public interface ImgService {
   void deleteImg(Long imgId);
   Img findVerifiedImg(Long imgId);
 }
-*/

@@ -1,4 +1,3 @@
-/*
 package com.zerohip.server.common.img.dto;
 
 import lombok.AllArgsConstructor;
@@ -40,4 +39,3 @@ public class ImgDto {
     private Long financialRecordArticleId;
   }
 }
-*/
