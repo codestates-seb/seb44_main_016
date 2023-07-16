@@ -10,8 +10,7 @@ import { USER_UPDATE_MESSAGES } from '../../../constants/user';
 import ImageUpload from '../../../../public/image/imageUpload.svg';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 import BackBtnBox from '../../../components/BackBtn';
-import getNewError from '../signup/inputValidationError';
-import UpdateInputForm from './UpdateInputForm';
+import getNewError from '../../../utils/inputValidationError';
 
 export default function UserUpdate() {
   const router = useRouter();
@@ -107,9 +106,15 @@ export default function UserUpdate() {
           </S.ImageUploadBtn>
         </S.UserImg>
         {inputData.map((el) => (
-          <UpdateInputForm key={el.label.text} el={el} />
+          <S.InputBox>
+            <S.LabelBox>
+              <S.Label htmlFor={el.label.htmlFor}>{el.label.text}</S.Label>
+              <S.Guide htmlFor={el.label.htmlFor}>{el.guide}</S.Guide>
+            </S.LabelBox>
+            <S.InputField>{el.component}</S.InputField>
+            <S.Error htmlFor={el.label.htmlFor}>{el.error} </S.Error>
+          </S.InputBox>
         ))}
-
         <S.SubmitBox {...isClickedProps}>
           <S.SubmitBtn large onClick={handleUpdateUserSubmit}>
             회원 정보 수정

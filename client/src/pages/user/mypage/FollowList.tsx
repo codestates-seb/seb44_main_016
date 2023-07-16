@@ -12,15 +12,15 @@ export default function ModalList({ title, userInfo }: ModalListProps) {
       <S.UserInfo>
         <S.UserImgInfoBox>
           <S.UserImgBox>
-            <S.UserImg src={userInfo.imgId} alt='유저 프로필 사진' />
+            <S.UserImg src={userInfo?.imgId} alt='유저 프로필 사진' />
           </S.UserImgBox>
           <S.UserNickNameIdBox>
             <S.UserNickname>
-              <div>{userInfo.nickname}</div>
+              <div>{userInfo?.nickname}</div>
             </S.UserNickname>
             <S.UserId>
               <div>@</div>
-              <div>{userInfo.loginId}</div>
+              <div>{userInfo?.loginId}</div>
             </S.UserId>
           </S.UserNickNameIdBox>
         </S.UserImgInfoBox>

@@ -26,8 +26,8 @@ type PropsFeed = {
     voteId: number;
     feedArticleHashtagId: number;
     imgId: string[];
-    profileImg: string; // 추가
-    userNickname: string; // 추가
+    profileImg?: string; // 추가
+    userNickname?: string; // 추가
   };
 };
 type PropsTimeline = {
@@ -45,8 +45,8 @@ type PropsTimeline = {
     voteId: number;
     financialRecordArticleHashTagId: number;
     imgId: string[];
-    profileImg: string; // 추가
-    userNickname: string; // 추가
+    profileImg?: string; // 추가
+    userNickname?: string; // 추가
   };
 };
 

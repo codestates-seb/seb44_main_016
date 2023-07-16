@@ -7,7 +7,7 @@ type PropsFeed = {
   type: 'feed';
   profileImg?: string;
   createdAt: Date;
-  children: string;
+  children?: string;
 };
 type PropsTimeline = {
   type: 'timeline';
@@ -15,7 +15,7 @@ type PropsTimeline = {
   price: number;
   profileImg?: string;
   createdAt: Date;
-  children: string;
+  children?: string;
 };
 
 export default function ArticleHeaderComponent(props: PropsFeed | PropsTimeline) {

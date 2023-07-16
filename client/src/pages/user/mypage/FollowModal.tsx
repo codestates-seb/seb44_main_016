@@ -17,7 +17,7 @@ export default function FollowModal({ title, list }: FollowModalProps) {
   return (
     <S.FollowerContainer onClick={openModalHandler}>
       <S.ButtonNameBtn type='button'>
-        {title} <S.FollowerNum>{list.length}</S.FollowerNum>
+        {title} <S.FollowerNum>{list?.length}</S.FollowerNum>
       </S.ButtonNameBtn>
       {isOpen ? (
         <S.ModalBackdrop onClick={openModalHandler}>
@@ -27,7 +27,7 @@ export default function FollowModal({ title, list }: FollowModalProps) {
               <CloseBtn onClick={openModalHandler} />
             </S.ModalTop>
             <S.ModalFollowerBox>
-              {list.map((el) => (
+              {list?.map((el) => (
                 <ModalList key={el.loginId} title={title} userInfo={el} />
               ))}
             </S.ModalFollowerBox>

@@ -122,7 +122,7 @@ export default function signUp(req: NextApiRequest, res: NextApiResponse) {
         userId: 0,
         voteId: 0,
         feedArticleHashtagId: 0,
-        imgSrcs: ['https://kr.cukpang.com/uploads/13753/20230601155955779.jpeg'],
+        imgId: ['https://kr.cukpang.com/uploads/13753/20230601155955779.jpeg'],
       },
       {
         feedArticleId: 2,
@@ -138,7 +138,7 @@ export default function signUp(req: NextApiRequest, res: NextApiResponse) {
         userId: 0,
         voteId: 0,
         feedArticleHashtagId: 0,
-        imgSrcs: [],
+        imgId: [],
       },
       {
         feedArticleId: 1,
@@ -152,7 +152,7 @@ export default function signUp(req: NextApiRequest, res: NextApiResponse) {
         userId: 0,
         voteId: 0,
         feedArticleHashtagId: 0,
-        imgSrcs: [
+        imgId: [
           'https://images.unsplash.com/photo-1682686581030-7fa4ea2b96c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
           'https://images.unsplash.com/photo-1688574398156-92556aa3cf52?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80',
         ],

@@ -16,20 +16,6 @@ export interface SignUpError {
   policy: string;
 }
 
-export interface UserInputLabel {
-  htmlFor: string;
-  text: string;
-  required?: boolean;
-}
-
-export interface UserInput {
-  label: UserInputLabel;
-  component: React.ReactNode;
-  error: string;
-  subComponent?: boolean;
-  guide?: string;
-}
-
 export interface PostSignUp {
   email: string | null;
   loginId: string | null;

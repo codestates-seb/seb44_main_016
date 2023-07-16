@@ -10,5 +10,5 @@ export interface FeedArticle {
   userId: number;
   voteId: number;
   feedArticleHashtagId: number;
-  imgSrcs: string[];
+  imgId: string[];
 }

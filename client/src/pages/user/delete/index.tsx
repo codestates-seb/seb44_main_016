@@ -10,8 +10,7 @@ import useInput from '../../../hooks/useComponents';
 import useCheckboxError from '../../../hooks/useCheckoutError';
 import apiUser from '../../../services/apiUser';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
-import getNewError from '../signup/inputValidationError';
-import DeleteInputForm from './DeleteInputForms';
+import getNewError from '../../../utils/inputValidationError';
 import BackBtnBox from '../../../components/BackBtn';
 
 export default function UserDelete() {
@@ -84,7 +83,13 @@ export default function UserDelete() {
         </S.WarningMessage>
         <input name='username' autoComplete='사용자명' style={{ display: 'none' }} />
         {inputData.map((el) => (
-          <DeleteInputForm key={el.label.text} el={el} />
+          <S.InputBox key={el.label.text}>
+            <S.LabelBox>
+              <S.Label htmlFor={el.label.htmlFor}>{el.label.text}</S.Label>
+            </S.LabelBox>
+            <S.InputField>{el.component}</S.InputField>
+            <S.Error htmlFor={el.label.htmlFor}>{el.error}</S.Error>
+          </S.InputBox>
         ))}
         <S.CheckboxBox>{CheckboxComponent}</S.CheckboxBox>
         <S.SubmitBox {...isClickedProps}>
