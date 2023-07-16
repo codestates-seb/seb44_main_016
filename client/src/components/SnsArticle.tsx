@@ -25,6 +25,8 @@ type PropsFeed = {
     voteId: number;
     feedArticleHashtagId: number;
     imgSrcs: string[];
+    profileImg: string; // 추가
+    userNickname: string; // 추가
   };
 };
 type PropsTimeline = {
@@ -42,6 +44,8 @@ type PropsTimeline = {
     voteId: number;
     financialRecordArticleHashTagId: number;
     imgSrcs: string[];
+    profileImg: string; // 추가
+    userNickname: string; // 추가
   };
 };
 
@@ -92,12 +96,18 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
       <Label>{labelText}</Label>
       <S.Box>
         {type === 'feed' ? (
-          <ArticleHeader type={type} createdAt={date}>
-            Waypil
+          <ArticleHeader type={type} createdAt={new Date(date)} profileImg={data.profileImg}>
+            {data.userNickname}
           </ArticleHeader>
         ) : (
-          <ArticleHeader type={type} createdAt={date} category={data.category} price={data.price}>
-            Waypil
+          <ArticleHeader
+            type={type}
+            createdAt={new Date(date)}
+            category={data.category}
+            price={data.price}
+            profileImg={data.profileImg}
+          >
+            {data.userNickname}
           </ArticleHeader>
         )}
         {data.imgSrcs.length >= 1 ? (
@@ -137,7 +147,7 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
             <S.UDBtn>수정</S.UDBtn>
             <S.UDBtn>삭제</S.UDBtn>
           </S.UDForm>
-          <Comments />
+          {/* <Comments /> 후순위 기능*/}
         </S.ArtileMain>
       </S.Box>
     </S.SnsArticleContainer>
@@ -233,6 +243,7 @@ const S = {
   `,
   ContextText: styled.p`
     line-height: 125%;
+    overflow-wrap: break-word;
   `,
   /* ↓ ArtileMain 내부 컴포넌트 ↓ */
   UDForm: styled.div`

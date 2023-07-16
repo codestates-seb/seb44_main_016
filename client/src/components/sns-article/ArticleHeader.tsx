@@ -52,7 +52,7 @@ export default function ArticleHeaderComponent(props: PropsFeed | PropsTimeline)
     <S.ArticleHeaderContainer>
       <S.LeftDiv>
         <S.ProfileImgButton>
-          <S.ProfileImg />
+          <S.ProfileImg src={props.profileImg} alt='유저 프로필 이미지' />
         </S.ProfileImgButton>
         <S.Nickname>{props.children}</S.Nickname>
         {props.type === 'feed' || <S.DateText>{getKoreanDate(props.createdAt)}</S.DateText>}
@@ -112,7 +112,7 @@ const S = {
   ProfileImg: styled.img`
     width: 100%;
     height: 100%;
-    background-color: black;
+    object-fit: cover;
   `,
   CategoryText: styled.span`
     height: 0.6rem;
