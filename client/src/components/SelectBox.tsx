@@ -97,7 +97,10 @@ export default function SelectBox({
       setSelectedOptionIndex(nextIndex);
       const selectedItem = previousFilteredItem[nextIndex];
       setSearchItem(selectedItem);
-    } else if (e.key === 'ArrowDown' && isOnceKeyboard && fixedOptionElements.length === 0) {
+    } else if (
+      (e.key === 'ArrowDown' && isOnceKeyboard && fixedOptionElements.length === 0) ||
+      (e.key === 'ArrowUp' && isOnceKeyboard && fixedOptionElements.length === 0)
+    ) {
       e.preventDefault();
       setIsDropDownClicked(false);
       setIsLayoutClicked(false);
@@ -165,6 +168,7 @@ export default function SelectBox({
             onKeyDown={handleKeyDown}
             onBlur={handleBlur}
             aria-label={ariaLabel}
+            autoComplete='off'
           />
         ) : (
           <S.InputText
@@ -175,6 +179,7 @@ export default function SelectBox({
             onKeyDown={handleKeyDown}
             onBlur={handleBlur}
             aria-label={ariaLabel}
+            autoComplete='off'
           />
         )}
         <S.DropDownBtn
@@ -216,13 +221,18 @@ const S = {
   DropDownBtn: styled.button`
     z-index: 5;
     position: absolute;
-    top: 50%;
-    right: 1.25rem;
-    transform: translateY(-50%);
+    top: 0;
+    right: 0;
     cursor: pointer;
     transition: transform 0.3s;
+    border-radius: 50%;
+    height: 100%;
+    width: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     &.dropDownClicked {
-      transform: scaleY(-1) translateY(5px);
+      transform: scaleY(-1);
     }
   `,
   SelectContainer: styled.div`
