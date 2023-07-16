@@ -23,10 +23,12 @@ export default function AsideButton(props: Props) {
         <SvgBox>{props.leftIcon || <></>}</SvgBox>
         {props.children ? <S.Text>{props.children}</S.Text> : <></>}
       </S.AsideInnerButtonLeft>
-      {props.children && (
+      {props.rightIcon ? (
         <S.AsideInnerButtonRight onClick={props.onClick || props.onClickRight}>
           <SvgBox isReverse={!props.isReverse}>{props.rightIcon || <></>}</SvgBox>
         </S.AsideInnerButtonRight>
+      ) : (
+        <></>
       )}
     </S.AsideButtonContainer>
   );
@@ -64,5 +66,14 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &:hover::before {
+      content: '';
+      position: absolute;
+      width: 2rem;
+      height: 2rem;
+      border-radius: var(--rounded-full);
+      background-color: var(--color-gray08);
+    }
   `,
 };

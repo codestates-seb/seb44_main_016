@@ -39,7 +39,7 @@ export default function FaRecHeader({ setActiveTab, data }: FaRecHeaderProps) {
               >
                 가계부 편집
               </S.LinkBtn>
-              <S.LinkBtn href='/' size='small'>
+              <S.LinkBtn href='/editor' size='small'>
                 가계부 작성
               </S.LinkBtn>
             </S.LinkWrap>

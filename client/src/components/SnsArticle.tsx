@@ -81,11 +81,7 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
             Waypil
           </ArticleHeader>
         )}
-        {data.imgId.length >= 1 ? (
-          <ImgsCarousel imgId={data.imgId} width={'var(--article-w)'} height={'30rem'} />
-        ) : (
-          <></>
-        )}
+        {data.imgId.length >= 1 ? <ImgsCarousel imgId={data.imgId} width={'var(--article-w)'} /> : <></>}
         <S.ArtileMain>
           {type !== 'feed' && data.title !== '' ? <S.TitleText>{data.title}</S.TitleText> : <></>}
           <S.ContextText>{data.content}</S.ContextText>
