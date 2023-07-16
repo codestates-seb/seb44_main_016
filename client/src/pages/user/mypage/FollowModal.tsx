@@ -12,7 +12,7 @@ interface FollowModalProps {
 export default function FollowModal({ title, list }: FollowModalProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const openModalHandler = () => setIsOpen((prev) => !prev);
+  const openModalHandler = () => setIsOpen(!isOpen);
 
   return (
     <S.FollowerContainer onClick={openModalHandler}>
