@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import Head from 'next/head';
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
 import CommonStyles from '../../../styles/CommonStyles';
 import useInput from '../../../hooks/useComponents';
@@ -15,8 +16,8 @@ import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/u
 
 export default function UserDelete() {
   const router = useRouter();
-  const [PwInput, pwValue] = useInput('password', '비밀번호', 'pw');
-  const [PwConfirmInput, password] = useInput('password', '비밀번호 확인', 'pwConfirm');
+  const [PwInput, pwValue] = useInput('password', '비밀번호', 'pw', 'current-password');
+  const [PwConfirmInput, password] = useInput('password', '비밀번호 확인', 'pwConfirm', 'current-password');
   const [error, setError] = useState({
     password: '',
     passwordConfirm: '',
@@ -65,6 +66,7 @@ export default function UserDelete() {
 
     if (error.password || error.passwordConfirm || error.policy) {
       RefusalAnimation();
+      toast.error('에러 메시지를 확인해주세요.');
       return;
     }
 
