@@ -17,6 +17,9 @@ interface FaRecArticleProps {
 }
 
 export default function FaRecArticle(props: FaRecArticleProps) {
+  if (!props) {
+    return null;
+  }
   const { title, price, content, imgId, faDate, category } = props;
   const [isOpen, setIsOpen] = useState(false);
   const toggleDropdown = () => setIsOpen(!isOpen);
@@ -33,16 +36,12 @@ export default function FaRecArticle(props: FaRecArticleProps) {
         <S.FinancialText isIncome={isIncome}>{numToStrWithSign(price)}</S.FinancialText>
         <S.ImgAndDate>
           <span>{imgId !== undefined && imgId.length >= 1 ? SVGs.imgIcon : <></>}</span>
-          <span>{convertToKoreanMonthDay(faDate)}</span>
+          <span>{faDate ? convertToKoreanMonthDay(faDate) : ''}</span>
         </S.ImgAndDate>
         <S.DropdownIcon isOpen={isOpen}>{SVGs.dropdown}</S.DropdownIcon>
       </S.Header>
       <S.Details isOpen={isOpen}>
-        {imgId !== undefined && imgId.length >= 1 ? (
-          <ImgsCarousel imgId={imgId} width={'100%'} height={'30rem'} />
-        ) : (
-          <></>
-        )}
+        {imgId !== undefined && imgId.length >= 1 ? <ImgsCarousel imgId={imgId} width={'100%'} /> : <></>}
         <S.Contents>
           <div>{title}</div>
           <div>{content}</div>

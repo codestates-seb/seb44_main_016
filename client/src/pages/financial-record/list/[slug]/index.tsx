@@ -24,28 +24,27 @@ export default function FinancialPage() {
   const [page, setPage] = useState(1);
   const size = 4;
 
+  // 데이터 요청
   const {
     data: faRecData,
-    error: faReecError,
+    error: faRecError,
+    isError: isFaRecError,
     isLoading: isFaRecLoading,
   } = useQuery(['faRecHeader'], () => APIfinancialRecord.getFaRec(financialRecordId));
-
-  /* 페이지네이션 */
   const {
     data: articleData,
     error: articleError,
+    isError: isArticleError,
     isLoading: isArticleLoading,
   } = useQuery(
     ['faRecArticles', page],
     () => APIfinancialRecord.getRecordArticle(financialRecordId, page, size),
     { keepPreviousData: true }
   );
-
-  /* 무한스크롤 */
   const {
     data: timelineData,
-    status: timelineStatus,
     error: timelineError,
+    isError: isTimelineError,
     isLoading: IsTimelineLoading,
     fetchNextPage,
     hasNextPage,
@@ -61,10 +60,30 @@ export default function FinancialPage() {
   );
   useEffect(() => {
     if (inView && hasNextPage) {
-      console.log('fetching next page');
       fetchNextPage();
     }
   }, [inView, hasNextPage]);
+
+  if (isFaRecError || isArticleError || isTimelineError) {
+    const errorMessage =
+      (faRecError as Error).message || (articleError as Error).message || (timelineError as Error).message;
+    return (
+      // <S.ErrorWrap>
+      <S.ErrorText>
+        {' '}
+        {errorMessage} 오류가 발생하였습니다.
+        <br />
+        다시 시도 해 주세요.
+      </S.ErrorText>
+      // </S.ErrorWrap>
+    );
+  }
+
+  // In case data is still loading
+  if (isFaRecLoading || isArticleLoading || IsTimelineLoading) {
+    return <Loading />;
+  }
+
   return (
     <S.Container>
       <FaRecHeader setActiveTab={setActiveTab} data={faRecData} />
@@ -72,25 +91,19 @@ export default function FinancialPage() {
 
       {activeTab === '가계부' ? (
         <S.ContentWrap id='article'>
-          {isArticleLoading ? (
-            <div>
-              <Loading />
-            </div>
-          ) : (
-            articleData.data.map((el: FaRecData) => {
-              return (
-                <FaRecArticle
-                  key={el.financialRecordArticleId}
-                  category={el.category}
-                  faDate={el.faDate}
-                  title={el.title}
-                  price={el.price}
-                  content={el.content}
-                  imgId={el.imgId}
-                />
-              );
-            })
-          )}
+          {articleData.data.map((el: FaRecData) => {
+            return (
+              <FaRecArticle
+                key={el.financialRecordArticleId}
+                category={el.category}
+                faDate={el.faDate}
+                title={el.title}
+                price={el.price}
+                content={el.content}
+                imgId={el.imgId}
+              />
+            );
+          })}
           <Pagination
             currentPage={page}
             totalPages={articleData?.pageData.totalPages || 1}
@@ -101,9 +114,11 @@ export default function FinancialPage() {
         <>
           <S.ContentWrap id='timeline'>
             {timelineData?.pages.flatMap((pageData) =>
-              pageData.data.map((el: FaRecData) => (
-                <SnsArticle key={el.financialRecordArticleId} data={el} type='timeline' />
-              ))
+              pageData.data
+                .filter((el: FaRecData) => el.scope === '가계부 타임라인')
+                .map((filteredEl: FaRecData) => (
+                  <SnsArticle key={filteredEl.financialRecordArticleId} data={filteredEl} type='timeline' />
+                ))
             )}
           </S.ContentWrap>
           <S.AddWrap ref={ref}>
@@ -140,9 +155,24 @@ const S = {
   AddWrap: styled.div`
     display: flex;
     justify-content: center;
+    margin: 1rem 0;
   `,
   AddBtn: styled.button`
     text-align: center;
     color: var(--color-primary);
+  `,
+  ErrorWrap: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `,
+  ErrorText: styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-m);
+    height: 100%;
+    color: var(--color-primary);
+    text-align: center;
   `,
 };
