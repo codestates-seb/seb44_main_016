@@ -1,22 +1,34 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
+import { FollowUsersInfoData } from '../../../types/user';
 
-export default function ModalList() {
+interface ModalListProps {
+  title: string;
+  userInfo: FollowUsersInfoData;
+}
+
+export default function ModalList({ title, userInfo }: ModalListProps) {
   return (
     <S.ModalFollowerBox>
       <S.UserInfo>
-        <S.UserPicIdBox>
-          <S.UserPic>
-            <Image src='/image/mango2.png' alt='유저 프로필 사진' width={44} height={44} style={imageStyle} />
-          </S.UserPic>
-          <S.UserId>
-            <div>manng35</div>
-          </S.UserId>
-        </S.UserPicIdBox>
-        <S.UserFollow>
-          <S.UserFollowBtn type='button'>구독하기</S.UserFollowBtn>
-        </S.UserFollow>
+        <S.UserImgInfoBox>
+          <S.UserImgBox>
+            <S.UserImg src={userInfo.imgId} alt='유저 프로필 사진' />
+          </S.UserImgBox>
+          <S.UserNickNameIdBox>
+            <S.UserNickname>
+              <div>{userInfo.nickname}</div>
+            </S.UserNickname>
+            <S.UserId>
+              <div>@</div>
+              <div>{userInfo.loginId}</div>
+            </S.UserId>
+          </S.UserNickNameIdBox>
+        </S.UserImgInfoBox>
+        <S.UserFollowBox>
+          {title === '구독됨' && !userInfo.isAlsoFollowed && (
+            <S.UserFollowBtn type='button'>구독하기</S.UserFollowBtn>
+          )}
+        </S.UserFollowBox>
       </S.UserInfo>
     </S.ModalFollowerBox>
   );
@@ -27,35 +39,62 @@ const S = {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 0.5rem 0rem;
+    padding: 0.53rem 0rem;
   `,
   UserInfo: styled.div`
     display: flex;
     width: 100%;
     justify-content: space-between;
   `,
-  UserPicIdBox: styled.div`
+  UserImgInfoBox: styled.div`
     display: flex;
+    width: 100%;
   `,
-  UserPic: styled.div`
+  UserImgBox: styled.div`
     width: 44px;
     height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+  `,
+  UserImg: styled.img`
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    cursor: 'pointer';
+  `,
+  UserNickNameIdBox: styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin-left: 0.4rem;
+    padding-left: 0.8rem;
+  `,
+  UserNickname: styled.div`
     display: flex;
     align-items: center;
-    border-radius: 50%;
+    margin-bottom: 0.2rem;
+    color: var(--color-gray03);
+    font-size: 0.98rem;
+    font-weight: 600;
+    &:hover {
+      font-weight: 700;
+    }
   `,
   UserId: styled.div`
     display: flex;
     align-items: center;
-    margin: 0 0.9rem 0 0.6rem;
-    color: var(--color-gray03);
-    font-size: 0.95rem;
+    margin-right: 0.2rem;
+    color: var(--color-point-light-blue);
+    font-size: 0.9rem;
     font-weight: 400;
-    &:hover {
-      font-weight: 500;
+    div:first-of-type {
+      font-weight: 600;
+      margin-right: 0.1rem;
     }
   `,
-  UserFollow: styled.div`
+  UserFollowBox: styled.div`
     display: flex;
     align-items: center;
   `,
@@ -63,14 +102,9 @@ const S = {
     font-size: 0.93rem;
     color: var(--color-primary);
     font-weight: 500;
+    flex-shrink: 0;
     &:hover {
       font-weight: 600;
     }
   `,
-};
-
-const imageStyle = {
-  borderRadius: '50%',
-  left: '20%',
-  cursor: 'pointer',
 };
