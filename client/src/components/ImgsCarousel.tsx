@@ -11,13 +11,13 @@ import CommonStyles from '../styles/CommonStyles';
 type Props = {
   imgId: string[];
   width: string;
-  height: string;
+  // height: string;
   rank?: number;
 };
 
 export default function ImgsCarousel(props: Props) {
   return (
-    <S.ImgContainer style={{ height: props.height }}>
+    <S.ImgContainer>
       {props.rank && (
         <S.RankIndicator>
           <S.RankText>{`${props.rank}위`}</S.RankText>
@@ -56,8 +56,9 @@ const S = {
   ImgContainer: styled.div`
     position: relative;
     width: 100%;
+    height: var(--imgcarousel-h);
     overflow: hidden;
-    background-color: #f0f3f8;
+    background-color: #f8f9fc;
     & .swiper-initialized {
       height: 100%;
     }
