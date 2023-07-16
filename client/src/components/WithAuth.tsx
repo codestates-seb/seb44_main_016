@@ -23,7 +23,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   useEffect(() => {
     if (!refreshToken) {
       // access 추가 예정
-      toast('로그인 먼저 해주세요.');
+      toast.error('로그인 먼저 해주세요.');
       router.push('/user/login');
     }
   }, []);
