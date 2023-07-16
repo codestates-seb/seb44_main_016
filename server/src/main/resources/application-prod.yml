@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: ${MYSQL_SECRET_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    open-in-view: true
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
+server:
+  servlet:
+    encoding:
+      force-response: true
+#mail:
+#  address:
+#    admin: admin@gmail.com
+jwt:
+  key: ${JWT_KEY}
+  access-token-expiration-minutes: ${JWT_ACCESS_TOKEN}
+  refresh-token-expiration-minutes: ${JWT_REFRESH_TOKEN}
+

@@ -1,21 +1,6 @@
 import styled from '@emotion/styled';
-
-/* Util 함수는 추후 다른 파일로 분리하고 Import할 예정 */
-function getKoreanDate(date: Date) {
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const hours = date.getHours().toString().padStart(2, '0'); // 한 자릿수라면 앞에 0 추가
-  const minutes = date.getMinutes().toString().padStart(2, '0'); // 한 자릿수라면 앞에 0 추가
-
-  const formattedDate = `${year}년 ${month}월 ${day}일 ${hours}:${minutes}`;
-  return formattedDate;
-}
-function formatNumber(number: number): string {
-  const formattedNumber = Math.abs(number).toLocaleString();
-  const sign = number >= 0 ? '+' : '-';
-  return `${sign}${formattedNumber}`;
-}
+import { numToStrWithSign } from '../../utils/numToStrWithSign';
+import { convertToKoreanDate } from '../../utils/convertToKoreanDate';
 
 /* type은 추후 다른 파일로 분리하고 Import할 예정 */
 type PropsFeed = {
@@ -55,15 +40,15 @@ export default function ArticleHeaderComponent(props: PropsFeed | PropsTimeline)
           <S.ProfileImg src={props.profileImg} alt='유저 프로필 이미지' />
         </S.ProfileImgButton>
         <S.Nickname>{props.children}</S.Nickname>
-        {props.type === 'feed' || <S.DateText>{getKoreanDate(props.createdAt)}</S.DateText>}
+        {props.type === 'feed' || <S.DateText>{convertToKoreanDate(props.createdAt)}</S.DateText>}
       </S.LeftDiv>
       <S.RightDiv>
         {props.type === 'feed' ? (
-          <S.DateText>{getKoreanDate(props.createdAt)}</S.DateText>
+          <S.DateText>{convertToKoreanDate(props.createdAt)}</S.DateText>
         ) : (
           <>
             {props.category === '' ? <></> : <S.CategoryText>{props.category}</S.CategoryText>}
-            <PriceText>{formatNumber(props.price)}</PriceText>
+            <PriceText>{numToStrWithSign(props.price)}</PriceText>
           </>
         )}
       </S.RightDiv>

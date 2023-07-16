@@ -83,6 +83,7 @@ const GlobalStyles = () => (
         --header-h : 5rem;
         --main-w : calc(var(--app-max-w) - var(--aside-w));
         --article-w : 45rem;
+        --imgcarousel-h : 23rem;
       }
 
       li {
