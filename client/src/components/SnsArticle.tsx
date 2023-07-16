@@ -5,7 +5,7 @@ import CommonStyles from '../styles/CommonStyles';
 
 import ArticleHeader from './sns-article/ArticleHeader';
 import VoteForm from './sns-article/VoteForm';
-import Comments from './sns-article/Comments';
+// import Comments from './sns-article/Comments';
 
 import useRangeNumber from '../hooks/useRangeNumber';
 

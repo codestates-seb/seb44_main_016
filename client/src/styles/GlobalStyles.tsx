@@ -29,6 +29,7 @@ const GlobalStyles = () => (
         --color-primary : #6264CA;
         --color-primary-hover : #858cdc;
         --color-point-purple: #7f7ad9;
+        --color-point-light-blue: #929cd6;
         --color-point-red : #FF451A;
         --color-point-pink-red: #ee5353;
         --color-point-pink : #d95784;
