@@ -1,9 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
-import { PostSignUp, LoginReqData } from '../types/user';
+import { PostSignUp, LoginReqData, UserUpdateReqData } from '../types/user';
 import { tokenInstance } from './loginInstance';
 
-// const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-const BASE_URL = 'https://zerohip-git-user-175-everland.vercel.app/api';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const apiUser = {
   /** 회원 가입 */
@@ -36,7 +35,29 @@ const apiUser = {
     try {
       await axios.delete(`${BASE_URL}/user/delete`); // 토큰 담아 보냄 - 인스턴스로 교체
     } catch (err) {
-      throw err;
+      throw err.response;
+    }
+  },
+
+  /** 회원 정보 불러오기 */
+  getUser: async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/user/mypage`); // 토큰 담아 보냄 - 인스턴스로 교체
+      return res.data;
+    } catch (err) {
+      throw err.response;
+    }
+  },
+
+  /** 회원 정보 수정 */
+  updateUser: async (userUpdateData: UserUpdateReqData) => {
+    try {
+      const res = await axios.patch(`${BASE_URL}/user/update`, userUpdateData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      }); // 토큰 담아 보냄 - 인스턴스로 교체
+      return res;
+    } catch (err) {
+      throw err.response;
     }
   },
 };
