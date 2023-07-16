@@ -51,7 +51,9 @@ export default function EditorPage() {
     setTitle(e.target.value);
   };
   const handleChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
+    const enteredContents = e.target.value;
+    const processedContents = enteredContents.replaceAll('<br>', '\r\n');
+    setContent(processedContents);
   };
   const handleChangeScope = (id: number) => {
     setScope(id);

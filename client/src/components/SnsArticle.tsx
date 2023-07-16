@@ -154,6 +154,7 @@ const S = {
   `,
   ContextText: styled.p`
     line-height: 125%;
+    white-space: pre-wrap; // 줄바꿈 & text-wrap 적용
   `,
   /* ↓ ArtileMain 내부 컴포넌트 ↓ */
   UDForm: styled.div`
