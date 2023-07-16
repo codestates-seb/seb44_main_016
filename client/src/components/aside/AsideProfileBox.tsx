@@ -9,13 +9,12 @@ type Props = {
 };
 
 export default function AsideProfileBox(props: Props) {
-  const [nickname, userId] =
-    props.className === 'tab-closed' ? ['일이삼사오육칠팔구십', '@waypil'] : ['', ''];
+  const [nickname, userId] = props.className === 'tab-closed' ? ['마마망', '@doyu'] : ['', ''];
   const hamburgerBtn = props.className === 'tab-closed' ? <AsideHamburgerBtn /> : <></>;
 
   return (
     <S.ProfileBoxContainer>
-      <S.ProfileLeftBtn href='/user/mypage/1'>
+      <S.ProfileLeftBtn href='/user/mypage'>
         <S.ProfileImg />
         <S.ProfileTexts>
           <S.Nickname>{nickname}</S.Nickname>

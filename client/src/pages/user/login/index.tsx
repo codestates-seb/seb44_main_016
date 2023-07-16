@@ -14,6 +14,7 @@ import { useAppDispatch } from '../../../components/redux/hooks';
 import { login } from '../../../components/redux/authnReducer';
 import { setCookie } from 'cookies-next';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
+import { toast } from 'react-toastify';
 
 export default function Login() {
   const [IdInput, loginId, setLoginId] = useInput('text', '아이디', 'loginId', 'username');
@@ -63,7 +64,7 @@ export default function Login() {
       setError('');
       setLoginId('');
       setPwValue('');
-      alert(`${nickname}님, 환영합니다!`);
+      toast(`${nickname}님, 환영합니다!`);
       router.push(`/`);
     } else if (res.status === 401) {
       setError(res.data.message);
