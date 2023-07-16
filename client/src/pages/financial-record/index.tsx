@@ -2,11 +2,11 @@ import CommonStyles from '../../styles/CommonStyles';
 import styled from '@emotion/styled';
 import { PAGE_NAMES } from '../../constants/pageNames';
 import ListItem from './ListItem';
-import SearchIcon from '../../../public/images/icon/search.svg';
 import { useQuery } from '@tanstack/react-query';
 import { Metadata } from 'next';
 import { APIfinancialRecord } from '../../services/apiFinancial';
 import useInput from '../../hooks/useComponents';
+import SVGs from '../../constants/svg';
 
 export const metadata: Metadata = {
   title: '가계부 목록',
@@ -40,9 +40,7 @@ export default function FinancialListPage() {
       <S.FormWrap>
         <S.InputWrap>
           {searchInput}
-          <S.Button>
-            <SearchIcon />
-          </S.Button>
+          <S.Button>{SVGs.searchFarec}</S.Button>
         </S.InputWrap>
         <S.SubmitBtn>새 가계부 만들기</S.SubmitBtn>
       </S.FormWrap>
