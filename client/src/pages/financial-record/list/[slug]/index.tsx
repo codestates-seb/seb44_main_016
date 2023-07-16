@@ -22,13 +22,19 @@ export default function FinancialPage() {
   };
   const tabs = ['가계부', '타임라인'];
   const [page, setPage] = useState(1);
-  const size = 10;
+  const size = 4;
+
+  const {
+    data: faRecData,
+    error: faReecError,
+    isLoading: isFaRecLoading,
+  } = useQuery(['faRecHeader'], () => APIfinancialRecord.getFaRec(financialRecordId));
 
   /* 페이지네이션 */
   const {
     data: articleData,
     error: articleError,
-    isLoading,
+    isLoading: isArticleLoading,
   } = useQuery(
     ['faRecArticles', page],
     () => APIfinancialRecord.getRecordArticle(financialRecordId, page, size),
@@ -38,9 +44,10 @@ export default function FinancialPage() {
   /* 무한스크롤 */
   const {
     data: timelineData,
-    status,
+    status: timelineStatus,
+    error: timelineError,
+    isLoading: IsTimelineLoading,
     fetchNextPage,
-    error,
     hasNextPage,
   } = useInfiniteQuery(
     ['faRecTimeline'],
@@ -60,12 +67,12 @@ export default function FinancialPage() {
   }, [inView, hasNextPage]);
   return (
     <S.Container>
-      <FaRecHeader setActiveTab={setActiveTab} />
+      <FaRecHeader setActiveTab={setActiveTab} data={faRecData} />
       <Tab tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
 
       {activeTab === '가계부' ? (
         <S.ContentWrap id='article'>
-          {isLoading ? (
+          {isArticleLoading ? (
             <div>
               <Loading />
             </div>

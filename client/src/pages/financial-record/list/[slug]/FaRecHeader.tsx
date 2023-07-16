@@ -1,12 +1,20 @@
 import styled from '@emotion/styled';
 import CommonStyles from '../../../../styles/CommonStyles';
 import { useRouter } from 'next/router';
+import { FaRecHeaderData } from '../../../../types/financialRecord';
 
 interface FaRecHeaderProps {
+  data: FaRecHeaderData;
   setActiveTab: (value: string) => void;
 }
 
-export default function FaRecHeader({ setActiveTab }: FaRecHeaderProps) {
+export default function FaRecHeader({ setActiveTab, data }: FaRecHeaderProps) {
+  if (!data) {
+    return null;
+  }
+
+  const { financialRecordName, memo, articleCount, faRecTimeline, imgId, isBookmark, users } = data;
+
   const router = useRouter();
   const faRecId = router.query.slug;
   const handleButtonClick = (tabName: string) => {
@@ -17,14 +25,11 @@ export default function FaRecHeader({ setActiveTab }: FaRecHeaderProps) {
     <>
       <S.Container>
         <S.ImgBox>
-          <img
-            src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlX16ekpWJwSiFBtYqm_BIzS2E8gs2Iqf_87SbY3zQx4u59Zv-mjMUGmT9K0xOsgDICn0&usqp=CAU'
-            alt=''
-          />
+          <img src={imgId} alt={`${financialRecordName} 프로필 사진`} />
         </S.ImgBox>
         <S.ContentBox>
           <div>
-            <S.FaRecName>가계부</S.FaRecName>
+            <S.FaRecName>{financialRecordName}</S.FaRecName>
             <S.LinkWrap>
               <S.LinkBtn
                 href='/financial-record/edit/[slug]'
@@ -42,21 +47,18 @@ export default function FaRecHeader({ setActiveTab }: FaRecHeaderProps) {
           <S.ButtonWrap>
             <S.aLink href='#article' onClick={() => handleButtonClick('가계부')}>
               게시물
-              <span>59</span>
+              <span>{articleCount}</span>
             </S.aLink>
             <S.aLink href='#timeline' onClick={() => handleButtonClick('타임라인')}>
               타임라인
-              <span>30</span>
+              <span>{faRecTimeline}</span>
             </S.aLink>
             <S.Button type='button'>
               멤버
-              <span>6</span>
+              <span>{users.length}</span>
             </S.Button>
           </S.ButtonWrap>
-          <S.DescContainer>
-            가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부
-            설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명가게부 설명
-          </S.DescContainer>
+          <S.DescContainer>{memo}</S.DescContainer>
         </S.ContentBox>
       </S.Container>
     </>
