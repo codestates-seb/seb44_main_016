@@ -1,13 +1,11 @@
 import styled from '@emotion/styled';
-import ImgIcon from '../../../../../public/images/icon/img.svg';
 import SVGs from '../../../../constants/svg';
-// import FaRecCarousel from './FaRecCarousel';
 import { useState } from 'react';
 import { keyframes } from '@emotion/react';
 import { numToStrWithSign } from '../../../../utils/numToStrWithSign';
-import { FaRecData } from '../../../../types/financialRecord';
 import { convertToKoreanMonthDay } from '../../../../utils/convertToKoreanDate';
 import ImgsCarousel from '../../../../components/ImgsCarousel';
+import Category from '../../../../components/Category';
 
 interface FaRecArticleProps {
   category: string;
@@ -28,7 +26,9 @@ export default function FaRecArticle(props: FaRecArticleProps) {
     <S.Article>
       <S.Header onClick={toggleDropdown}>
         <S.FinancialText isIncome={isIncome}>{price >= 0 ? '수입' : '지출'}</S.FinancialText>
-        <S.Category>{category}</S.Category>
+        <S.CategoryWrap>
+          <Category category={category} />
+        </S.CategoryWrap>
         <S.Title>{title}</S.Title>
         <S.FinancialText isIncome={isIncome}>{numToStrWithSign(price)}</S.FinancialText>
         <S.ImgAndDate>
@@ -91,7 +91,7 @@ const S = {
     text-overflow: ellipsis;
     overflow: hidden;
   `,
-  Category: styled.span`
+  CategoryWrap: styled.span`
     width: 6rem;
     white-space: nowrap;
     overflow: hidden;
