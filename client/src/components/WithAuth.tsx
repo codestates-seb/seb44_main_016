@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
 import apiUser from '../services/apiUser';
 
-const withAuth = (Component: ComponentType) => async (props: object) => {
+const withAuth = (Component: ComponentType) => (props: object) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 

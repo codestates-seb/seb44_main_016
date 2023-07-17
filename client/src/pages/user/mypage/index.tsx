@@ -10,6 +10,7 @@ import withAuth from '../../../components/WithAuth';
 import apiUser from '../../../services/apiUser';
 import Loading from '../../../components/Loading';
 import { FeedArticle } from '../../../types/feed';
+
 function MyPage() {
   const router = useRouter();
   const { isLoading, error, data, isSuccess } = useQuery(['myPageInfo'], apiUser.getUser);
@@ -24,7 +25,8 @@ function MyPage() {
       {isLoading ? (
         <Loading />
       ) : (
-        isSuccess && (
+        isSuccess &&
+        data && (
           <S.Container>
             <S.UserProfileContainer>
               <Head>
