@@ -1,5 +1,7 @@
 package com.zerohip.server.security.provider;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zerohip.server.security.auth.NeverLandUserDetailsService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -14,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.security.auth.Subject;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Calendar;
@@ -25,7 +28,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class JwtTokenizer {
 
-    private NeverLandUserDetailsService userDetailsService;
+    private final NeverLandUserDetailsService userDetailsService;
 
     // application.yml 파일에서 로드할 JWT 정보
     @Getter
@@ -151,4 +154,5 @@ public class JwtTokenizer {
 
         return new UsernamePasswordAuthenticationToken(userDetails, token, userDetails.getAuthorities());
     }
+
 }

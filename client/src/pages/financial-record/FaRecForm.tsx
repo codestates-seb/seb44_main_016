@@ -38,8 +38,8 @@ export default function FaRecForm({
     { id: 'faName', name: '가계부 이름' },
     { id: 'faDesc', name: '가계부 설명' },
   ];
-  const [nameInput, faRecName, setFaRecName] = useInput('text', inputData[0].name, inputData[0].id);
-  const [descInput, faRecDesc, setFaRecDesc] = useInput('text', inputData[1].name, inputData[1].id);
+  const [nameInput, faRecName, setFaRecName] = useInput('text', inputData[0].name, inputData[0].id, 'on');
+  const [descInput, faRecDesc, setFaRecDesc] = useInput('text', inputData[1].name, inputData[1].id, 'on');
 
   const [errors, setErrors] = useState({
     faRecName: '',

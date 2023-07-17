@@ -1,15 +1,22 @@
-const withTwin = require('./withTwin.js');
-
 /**
  * @type {import('next').NextConfig}
  */
-module.exports = withTwin({
+module.exports = {
   // reactStrictMode: true,
   experimental: {
     scrollRestoration: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'source.boringavatars.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
   webpack: (config) => {
-    // SVG 설정
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
@@ -17,4 +24,4 @@ module.exports = withTwin({
     });
     return config;
   },
-});
+};

@@ -61,6 +61,9 @@ public class AuthService {
         RefreshToken findRefreshToken = findVerifiedJwtToken(user.getLoginId());
 
         refreshTokenRepository.delete(findRefreshToken);
+
+//        RefreshToken findRefreshToken = refreshTokenRepository.findByToken(refreshToken);
+//        refreshTokenRepository.delete(findRefreshToken);
     }
 
 

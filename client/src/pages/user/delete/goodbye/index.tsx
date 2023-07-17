@@ -1,18 +1,18 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
+import { toast } from 'react-toastify';
 import Logo from '../../../../../public/image/logo.svg';
 import { useState, useEffect } from 'react';
 import CommonStyles from '../../../../styles/CommonStyles';
 import Lottie from 'react-lottie-player';
 import deleteAnimation from '../../../../animation/delete.json';
 import Loading from '../../../../components/Loading';
-import { toast } from 'react-toastify';
 
 export default function GoodBye() {
   const router = useRouter();
   const [showMessage, setShowMessage] = useState(false);
-  // const nickname = useSelector<RootState>((state) => state.authnReducer.login.nickname);
+  // const nickname = useSelector<RootState>((state) => state.authnReducer.login.nickname); 서버 연결 후
   const nickname = '마마망'; // temp
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function GoodBye() {
           </S.AnimationBox>
           <S.GoodByeBox>
             <S.GoodByeComment>
-              <span style={{ color: 'var(--color-primary)' }}> {nickname}</span>
+              <S.NicknameBox> {nickname}</S.NicknameBox>
               <span>님의 탈퇴가 정상적으로 처리되었습니다.</span>
             </S.GoodByeComment>
             <S.NextTimeComment>다음에 또 이용해주세요!</S.NextTimeComment>
@@ -109,7 +109,10 @@ const S = {
   GoodByeComment: styled.div`
     font-size: 1.8rem;
     margin: 1rem auto 0.7rem auto;
-    font-weight: 500;
+    font-weight: 600;
+  `,
+  NicknameBox: styled.span`
+    color: var(--color-primary);
   `,
   NextTimeComment: styled.div`
     font-size: 1.4rem;

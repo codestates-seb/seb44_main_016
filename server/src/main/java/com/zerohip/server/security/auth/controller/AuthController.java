@@ -4,6 +4,7 @@ import com.zerohip.server.security.auth.serivce.AuthService;
 import com.zerohip.server.security.response.ErrorResponder;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,15 +23,17 @@ public class AuthController {
 
         String newAccessToken = authService.createAccessToken(refreshToken);
 
-        if (newAccessToken != null) {
-            response.setHeader("Authorization", "Bearer " + newAccessToken);
+        if (newAccessToken == null) {
+            ErrorResponder.sendExpiredJwtExceptionError(response, HttpStatus.UNAUTHORIZED);
         }
-        ErrorResponder.sendExpiredJwtExceptionError(response, HttpStatus.UNAUTHORIZED);
+            response.setHeader("Authorization", "Bearer " + newAccessToken);
     }
 
     @DeleteMapping("/logout")
-    public void logout(@CookieValue("Refresh") String refreshToken) {
+    public ResponseEntity<?> logout(@CookieValue("Refresh") String refreshToken) {
 
         authService.deleteRefreshToken(refreshToken);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

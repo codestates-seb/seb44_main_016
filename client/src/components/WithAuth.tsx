@@ -6,6 +6,7 @@ import { useAppDispatch } from './redux/hooks';
 import { useSelector } from 'react-redux';
 import { RootState } from './redux/store';
 import { login } from './redux/authnReducer';
+import { toast } from 'react-toastify';
 
 const withAuth = (Component: ComponentType) => (props: object) => {
   const router = useRouter();
@@ -22,7 +23,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   useEffect(() => {
     if (!refreshToken) {
       // access 추가 예정
-      alert('로그인 먼저 해주세요.');
+      toast.error('로그인 먼저 해주세요.');
       router.push('/user/login');
     }
   }, []);
