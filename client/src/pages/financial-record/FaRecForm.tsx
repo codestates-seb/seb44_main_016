@@ -11,6 +11,8 @@ import InputField from '../../components/InputField';
 import { getRandomImageUrl } from '../../utils/randomImg';
 import { RANDOM_IMG_URLS } from '../../constants/faRecImgUrls';
 import FilePlusLabel from '../../components/FilePlusLabel';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 type PageType = 'create' | 'edit';
 
@@ -34,6 +36,7 @@ export default function FaRecForm({
   initialFaRecDesc,
   initialImage,
 }: FaRecFormProps) {
+  const router = useRouter();
   const inputData: InputData[] = [
     { id: 'faName', name: '가계부 이름' },
     { id: 'faDesc', name: '가계부 설명' },
@@ -72,10 +75,15 @@ export default function FaRecForm({
     pageType === 'create' ? APIfinancialRecord.createFaRec : APIfinancialRecord.updateFaRec,
     {
       onSuccess: (data) => {
-        console.log('response-data', data);
+        const successMessage =
+          pageType === 'create' ? '가계부 생성에 성공하였습니다.' : '가계부 수정에 성공하였습니다.';
+        toast.success(successMessage);
+        router.push(`/financial-record`);
       },
       onError: (error) => {
-        console.error(error);
+        const errorMessage =
+          pageType === 'create' ? '가계부 생성을 실패하였습니다.' : '가계부 수정을 실패하였습니다.';
+        toast.error(errorMessage);
       },
     }
   );

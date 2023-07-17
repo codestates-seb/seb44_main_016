@@ -1,4 +1,4 @@
-/** 12345를 집어넣으면 "+12,345" 반환, -98765를 집어넣으면 "-98,765" 반환 */
+/** 주어진 Date 객체를 한국어 날짜 형식(n년 n월 n일 nn시:nn분)으로 변환  */
 export function convertToKoreanDate(date: Date) {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -8,4 +8,13 @@ export function convertToKoreanDate(date: Date) {
 
   const formattedDate = `${year}년 ${month}월 ${day}일 ${hours}:${minutes}`;
   return formattedDate;
+}
+
+/** 주어진 Date 객체를 한국어 날짜 형식(n월 n일)으로 변환  */
+export function convertToKoreanMonthDay(date: Date) {
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  const formattedDay = `${month}월 ${day}일`;
+  return formattedDay;
 }

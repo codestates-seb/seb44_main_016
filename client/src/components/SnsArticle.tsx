@@ -7,7 +7,6 @@ import ArticleHeader from './sns-article/ArticleHeader';
 import ImgsCarousel from '../components/ImgsCarousel';
 import VoteForm from './sns-article/VoteForm';
 // import Comments from './sns-article/Comments';
-
 import { FeedArticleResType, FaRecData } from '../types/article';
 
 /* type은 추후 다른 파일로 분리하고 Import할 예정 */
