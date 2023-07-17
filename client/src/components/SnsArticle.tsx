@@ -8,54 +8,23 @@ import ImgsCarousel from '../components/ImgsCarousel';
 import VoteForm from './sns-article/VoteForm';
 // import Comments from './sns-article/Comments';
 
-import useRangeNumber from '../hooks/useRangeNumber';
-
-import svgs from '../constants/svg';
+import { FeedArticleResType, FaRecData } from '../types/article';
 
 /* type은 추후 다른 파일로 분리하고 Import할 예정 */
 type PropsFeed = {
   type: 'feed';
-  data: {
-    feedArticleId: number;
-    feedType: number; // 사용
-    content: string; // 사용
-    createdAt: Date; // 사용
-    modifiedAt: Date;
-    imageId: number;
-    userId: number;
-    voteId: number;
-    feedArticleHashtagId: number;
-    imgId: string[];
-    profileImg?: string; // 추가
-    userNickname?: string; // 추가
-  };
+  data: FeedArticleResType;
 };
 type PropsTimeline = {
   type: 'timeline';
-  data: {
-    financialRecordId: number;
-    category: string; // 사용
-    financialRecordDate: Date; // 사용
-    price: number; // 사용
-    title: string; // 사용
-    content: string; // 사용★
-    scope: number; // 사용
-    imageId: number;
-    userId: number;
-    voteId: number;
-    financialRecordArticleHashTagId: number;
-    imgId: string[];
-    profileImg?: string; // 추가
-    userNickname?: string; // 추가
-  };
+  data: FaRecData;
 };
 
 export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
-  let date, labelText, Label;
+  let labelText, Label;
   if (type === 'feed') {
-    date = data.createdAt;
     [labelText, Label] =
-      data.feedType === 1
+      data.feedType === '절약팁'
         ? [
             '절약 팁',
             styled(S.LabelTemplate)`
@@ -71,7 +40,6 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
             `,
           ];
   } else {
-    date = data.financialRecordDate;
     [labelText, Label] =
       data.price <= 0
         ? [
@@ -95,21 +63,25 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
       <Label>{labelText}</Label>
       <S.Box>
         {type === 'feed' ? (
-          <ArticleHeader type={type} createdAt={new Date(date)} profileImg={data.profileImg}>
-            {data.userNickname}
+          <ArticleHeader type={type} createdAt={data.createdAt} profileImg={data.user.profileImgPath}>
+            {data.user.nickname}
           </ArticleHeader>
         ) : (
           <ArticleHeader
             type={type}
-            createdAt={new Date(date)}
+            faDate={data.faDate}
             category={data.category}
             price={data.price}
-            profileImg={data.profileImg}
+            profileImg={data.user.profileImgPath}
           >
-            {data.userNickname}
+            {data.user.nickname}
           </ArticleHeader>
         )}
-        {data.imgId.length >= 1 ? <ImgsCarousel imgId={data.imgId} width={'var(--article-w)'} /> : <></>}
+        {data.imgPath.length >= 1 ? (
+          <ImgsCarousel imgPath={data.imgPath} width={'var(--article-w)'} />
+        ) : (
+          <></>
+        )}
         <S.ArtileMain>
           {type !== 'feed' && data.title !== '' ? <S.TitleText>{data.title}</S.TitleText> : <></>}
           <S.ContextText>{data.content}</S.ContextText>
