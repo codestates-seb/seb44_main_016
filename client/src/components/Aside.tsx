@@ -62,7 +62,7 @@ export default function Aside(props: Props) {
                 {isBookmarkedFaRecListOpened && isTabClosed && (
                   <ol>
                     <AsideButton isSmall={true}>{isTabClosed && 'XXX의 가계부'}</AsideButton>
-                    <AsideButton isSmall={true}>{isTabClosed && '♡ 데이트 통장 ♥'}</AsideButton>
+                    <AsideButton isSmall={true}>{isTabClosed && '집사 일기'}</AsideButton>
                     <AsideButton isSmall={true}>{isTabClosed && '산악회 곗돈 장부'}</AsideButton>
                   </ol>
                 )}
