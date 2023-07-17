@@ -7,23 +7,35 @@ import CommonStyles from '../../../styles/CommonStyles';
 import useInput from '../../../hooks/useComponents';
 import Image from 'next/image';
 import { USER_UPDATE_MESSAGES } from '../../../constants/user';
-import ImageUpload from '../../../../public/image/imageUpload.svg';
+import ImageUpload from '../../../../public/images/icon/imageUpload.svg';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 import BackBtnBox from '../../../components/BackBtn';
 import getNewError from '../../../utils/inputValidationError';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import apiUser from '../../../services/apiUser';
 
 export default function UserUpdate() {
   const router = useRouter();
-  // const nickname = useSelector<RootState>((state) => state.authnReducer.login.nickname);
-  const originalNickname = '마마망'; // temp
+  const {
+    isLoading: isMyInfoLoading,
+    error: myInfoError,
+    data: myInfoData,
+  } = useQuery(['myInfo'], apiUser.getMyInfo);
+  const originalNickname = myInfoData ? myInfoData.nickname : '';
+
   const [nicknameInput, nickname] = useInput('text', originalNickname, 'nickname', 'nickname');
   const [PwInput, pwValue] = useInput('password', '비밀번호', 'pw', 'current-password');
   const [PwConfirmInput, password] = useInput('password', '비밀번호 확인', 'pwConfirm', 'current-password');
+
+  const [isAvatar, setIsAvatar] = useState(true);
+  const [changeAvatarNumber, setChangeAvatarNumber] = useState(null);
+
   const [error, setError] = useState({
     nickname: '',
     password: '',
     passwordConfirm: '',
   });
+
   const [isClickedProps, RefusalAnimation] = useRefusalAni();
 
   useEffect(() => {
@@ -61,7 +73,17 @@ export default function UserUpdate() {
     },
   ];
 
-  const handleUpdateUserSubmit = (e: React.FormEvent) => {
+  const requestBody = {
+    nickname: nickname ? nickname : '',
+    password: pwValue ? pwValue : '',
+    profileImgPath: isAvatar
+      ? `https://source.boringavatars.com/beam/150/${nickname}${changeAvatarNumber}`
+      : '',
+  };
+
+  const { mutateAsync } = useMutation(() => apiUser.updateMyInfo(requestBody));
+
+  const handleUpdateUserSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (
       (nickname && error.nickname) ||
@@ -75,7 +97,6 @@ export default function UserUpdate() {
       toast.error('에러 메시지를 확인해주세요.');
       return;
     }
-    console.log('pass');
 
     if (!nickname && !password && !pwValue) {
       // 이미지 추가
@@ -83,10 +104,10 @@ export default function UserUpdate() {
       toast.error('수정할 정보가 없습니다.');
       return;
     }
-    toast.success('회원 정보가 수정되었습니다.');
 
-    // const res = await mutateAsync();
-    // router.push(`/user/mypage`);
+    await mutateAsync();
+    toast.success('회원 정보가 수정되었습니다.');
+    router.push(`/user/mypage`);
   };
 
   const handleMoveDeletePage = () => {
