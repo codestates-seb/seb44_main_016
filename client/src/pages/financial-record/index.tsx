@@ -29,7 +29,7 @@ export type RecordData = {
 };
 
 export default function FinancialListPage() {
-  const { data, error, isError, isSuccess, isLoading } = useQuery<RecordData[]>(
+  const { data, error, isError, isLoading } = useQuery<RecordData[]>(
     ['recordList'],
     APIfinancialRecord.getRecordList
   );
@@ -37,7 +37,7 @@ export default function FinancialListPage() {
   const [searchInput, search] = useInput('text', '검색어를 입력해주세요', 'faRecSearch', 'on');
   const [isSearching, setIsSearching] = useState(false);
 
-  const handleSearch = (e: MouseEvent) => {
+  const handleSearch = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsSearching(true);
   };
@@ -72,7 +72,7 @@ export default function FinancialListPage() {
         <S.LinkBtn href='/financial-record/create'>새 가계부 만들기</S.LinkBtn>
       </S.FormWrap>
       <S.FaRecList>
-        {isSuccess && displayData.map((el) => <ListItem key={el.financialRecordId} item={el} />)}
+        {displayData && displayData.map((el) => <ListItem key={el.financialRecordId} item={el} />)}
       </S.FaRecList>
     </S.ListWrap>
   );

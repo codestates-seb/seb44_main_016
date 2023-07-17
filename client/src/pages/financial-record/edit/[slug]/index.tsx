@@ -4,6 +4,7 @@ import { APIfinancialRecord } from '../../../../services/apiFinancial';
 import { Metadata } from 'next';
 import Loading from '../../../../components/Loading';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 type reFacData = {
   financialRecordId: number;
@@ -18,20 +19,20 @@ export const metadata: Metadata = {
 };
 
 export default function FaRecEditPage() {
-  // test용 임의 지정
-  const financialRecordId = 2;
-
+  const router = useRouter();
+  const financialRecordId = router.query.slug ? Number(router.query.slug) : 0;
+  console.log(financialRecordId);
   const { isLoading, isError, error, data, isSuccess } = useQuery<reFacData>(
     ['reFac'],
     () => APIfinancialRecord.getFaRec(financialRecordId),
     { staleTime: 1000 * 60 * 30 }
   );
 
-  let financialRecordName, financialRecordDescription, imgId;
+  let financialRecordName, financialRecordDescription, imgPath;
   if (data) {
     financialRecordName = data.financialRecordName;
     financialRecordDescription = data.financialRecordDescription;
-    imgId = data.imgId;
+    imgPath = data.imgPath;
   }
   if (isLoading) {
     return <Loading />;
@@ -50,7 +51,7 @@ export default function FaRecEditPage() {
           financialRecordId={financialRecordId}
           initialFaRecName={financialRecordName}
           initialFaRecDesc={financialRecordDescription}
-          initialImage={imgId}
+          initialImage={imgPath}
         />
       )}
     </>

@@ -7,7 +7,7 @@ import Tab from '../../../../components/Tab';
 import FaRecHeader from './FaRecHeader';
 import FaRecArticle from './FaRecArticle';
 import { APIfinancialRecord } from '../../../../services/apiFinancial';
-import { FaRecData } from '../../../../types/financialRecord';
+import { FaRecData } from '../../../../types/article';
 import SnsArticle from '../../../../components/SnsArticle';
 import Loading from '../../../../components/Loading';
 import Pagination from '../../../../components/Pagination';
@@ -28,7 +28,7 @@ export default function FinancialPage() {
 
   // 데이터 요청
   const {
-    data: faRecData,
+    data: FaRecData,
     error: faRecError,
     isError: isFaRecError,
     isLoading: isFaRecLoading,

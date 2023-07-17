@@ -7,29 +7,12 @@ import ArticleHeader from './sns-article/ArticleHeader';
 import ImgsCarousel from '../components/ImgsCarousel';
 import VoteForm from './sns-article/VoteForm';
 // import Comments from './sns-article/Comments';
-import { FaRecData } from '../types/financialRecord';
-
-import useRangeNumber from '../hooks/useRangeNumber';
-
-import svgs from '../constants/svg';
+import { FeedArticleResType, FaRecData } from '../types/article';
 
 /* type은 추후 다른 파일로 분리하고 Import할 예정 */
 type PropsFeed = {
   type: 'feed';
-  data: {
-    feedArticleId: number;
-    feedType: number; // 사용
-    content: string; // 사용
-    createdAt: Date; // 사용
-    modifiedAt: Date;
-    imageId: number;
-    userId: number;
-    voteId: number;
-    feedArticleHashtagId: number;
-    imgPath: string[];
-    profileImg?: string; // 추가
-    userNickname?: string; // 추가
-  };
+  data: FeedArticleResType;
 };
 type PropsTimeline = {
   type: 'timeline';
@@ -40,7 +23,7 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
   let labelText, Label;
   if (type === 'feed') {
     [labelText, Label] =
-      data.feedType === 1
+      data.feedType === '절약팁'
         ? [
             '절약 팁',
             styled(S.LabelTemplate)`
@@ -79,8 +62,8 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
       <Label>{labelText}</Label>
       <S.Box>
         {type === 'feed' ? (
-          <ArticleHeader type={type} createdAt={data.createdAt} profileImg={data.profileImg}>
-            {data.userNickname}
+          <ArticleHeader type={type} createdAt={data.createdAt} profileImg={data.user.profileImgPath}>
+            {data.user.nickname}
           </ArticleHeader>
         ) : (
           <ArticleHeader
@@ -156,7 +139,7 @@ const S = {
   `,
   ContextText: styled.p`
     line-height: 125%;
-    overflow-wrap: break-word;
+    white-space: pre-wrap; // 줄바꿈 & text-wrap 적용
   `,
   /* ↓ ArtileMain 내부 컴포넌트 ↓ */
   UDForm: styled.div`
