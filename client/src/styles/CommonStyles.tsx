@@ -240,13 +240,14 @@ const CommonStyles = {
       border: 4px solid var(--color-primary);
     }
   `,
-
-  BlindTitle: styled.h2`
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
+  ErrorText: styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--text-m);
+    height: 100%;
+    color: var(--color-primary);
+    text-align: center;
   `,
 };
 

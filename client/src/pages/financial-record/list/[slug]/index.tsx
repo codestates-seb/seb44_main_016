@@ -1,101 +1,163 @@
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import FaRecHeader from './FaRecHeader';
-import { useState } from 'react';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
+import { useInView } from 'react-intersection-observer';
 import Tab from '../../../../components/Tab';
+import FaRecHeader from './FaRecHeader';
 import FaRecArticle from './FaRecArticle';
-import { useQuery } from '@tanstack/react-query';
+import { APIfinancialRecord } from '../../../../services/apiFinancial';
+import { FaRecData } from '../../../../types/article';
+import SnsArticle from '../../../../components/SnsArticle';
+import Loading from '../../../../components/Loading';
+import Pagination from '../../../../components/Pagination';
+import CommonStyles from '../../../../styles/CommonStyles';
+import { toast } from 'react-toastify';
 
 export default function FinancialPage() {
+  const router = useRouter();
+  const { ref, inView } = useInView();
+  const financialRecordId = router.query.slug ? Number(router.query.slug) : 0;
   const [activeTab, setActiveTab] = useState<string>('가계부');
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
   };
   const tabs = ['가계부', '타임라인'];
+  const [page, setPage] = useState(1);
+  const size = 2;
 
-  // const [data, isLoading, error] = useQuery(['faRecArticle']);
-  // const dummy = [
-  //   {
-  //     financialRecordId: 1,
-  //     category: '식비',
-  //     faDate: 1657686000000,
-  //     title: '초밥',
-  //     price: -20000,
-  //     content: '완전 끝내주는 초밥 오마카세를 먹으러 다녀왔다 너무너무마싰다~',
-  //     scope: '가계부 타임라인',
-  //     imgId: [
-  //       'https://images.unsplash.com/photo-1563612116625-3012372fccce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=741&q=80',
-  //       'https://images.unsplash.com/photo-1583623025817-d180a2221d0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80',
-  //     ],
-  //     userId: 2,
-  //   },
-  //   {
-  //     financialRecordId: 2,
-  //     category: '식비',
-  //     faDate: 1657772400000,
-  //     title: '스테이크',
-  //     price: -45000,
-  //     content: '고기의 진수를 느낄 수 있는 스테이크 집에서 저녁을 즐겼다. 맛있어서 기분이 좋아졌다~',
-  //     scope: '가계부 게시글',
-  //     imgId: [
-  //       'https://images.unsplash.com/photo-1615937657715-bc7b4b7962c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
-  //     ],
-  //     userId: 2,
-  //   },
-  //   {
-  //     financialRecordId: 3,
-  //     category: '식비',
-  //     faDate: 1657772400000,
-  //     title: '스테이크',
-  //     price: -45000,
-  //     content: '고기의 진수를 느낄 수 있는 스테이크 집에서 저녁을 즐겼다. 맛있어서 기분이 좋아졌다~',
-  //     scope: '가계부 게시글',
-  //     imgId: [
-  //       'https://images.unsplash.com/photo-1615937657715-bc7b4b7962c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
-  //     ],
-  //     userId: 2,
-  //   },
-  // ];
-  const lastDate: string | null = null;
+  // 데이터 요청
+  const {
+    data: faRecData,
+    error: faRecError,
+    isError: isFaRecError,
+    isLoading: isFaRecLoading,
+  } = useQuery(['faRecHeader'], () => APIfinancialRecord.getFaRec(financialRecordId));
+  const {
+    data: articleData,
+    error: articleError,
+    isError: isArticleError,
+    isLoading: isArticleLoading,
+  } = useQuery(
+    ['faRecArticles', page],
+    () => APIfinancialRecord.getRecordArticle(financialRecordId, page, size),
+    { keepPreviousData: true }
+  );
+  const {
+    data: timelineData,
+    error: timelineError,
+    isError: isTimelineError,
+    isLoading: IsTimelineLoading,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery(
+    ['faRecTimeline'],
+    ({ pageParam = 1 }) => APIfinancialRecord.getRecordArticle(financialRecordId, pageParam, size),
+    {
+      getNextPageParam: (lastPage) => {
+        const nextPage = lastPage.pageData.page + 1;
+        return nextPage > lastPage.pageData.totalPages ? undefined : nextPage;
+      },
+    }
+  );
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage]);
+
+  if (isFaRecError || isArticleError || isTimelineError) {
+    const errorMessage =
+      (faRecError as Error).message || (articleError as Error).message || (timelineError as Error).message;
+    toast.error(`${errorMessage} 에러가 발생하였습니다.`);
+    toast.info('잠시 후에 다시 시도해주세요.');
+  }
+
+  if (isFaRecLoading || isArticleLoading || IsTimelineLoading) {
+    return <Loading />;
+  }
 
   return (
     <S.Container>
-      <FaRecHeader setActiveTab={setActiveTab} />
+      <FaRecHeader setActiveTab={setActiveTab} data={faRecData} />
       <Tab tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
-      {/* map 함수로 변경 예정 */}
-      {/* {activeTab === '가계부' ? (
-        dummy.map((data, i) => {
-          const date = new Date(data.faDate);
-          const month = (date.getMonth() + 1).toString().padStart(2, '0');
-          const dateString = `${date.getFullYear()}. ${month}. ${date.getDate()}`;
-          let dateHeader = null;
 
-          if (lastDate !== dateString) {
-            dateHeader = <S.DateHeader>{dateString}</S.DateHeader>;
-            lastDate = dateString;
-          }
-
-          return (
-            <div key={i} id='article'>
-              {dateHeader}
-              <FaRecArticle data={data} />
-            </div>
-          );
-        })
+      {activeTab === '가계부' ? (
+        <S.ContentWrap id='article'>
+          {articleData.data.map((el: FaRecData) => {
+            return (
+              <FaRecArticle
+                key={el.financialRecordArticleId}
+                category={el.category}
+                faDate={new Date(el.faDate)}
+                title={el.title}
+                price={el.price}
+                content={el.content}
+                imgPath={el.imgPath}
+              />
+            );
+          })}
+          <Pagination
+            currentPage={page}
+            totalPages={articleData?.pageData.totalPages || 1}
+            handlePageChange={setPage}
+          />
+        </S.ContentWrap>
       ) : (
-        <div id='timeline'>타임라인</div>
-      )} */}
+        <>
+          <S.ContentWrap id='timeline'>
+            {timelineData?.pages.flatMap((pageData) =>
+              pageData.data
+                .filter((el: FaRecData) => el.scope === '가계부 타임라인')
+                .map((filteredEl: FaRecData) => (
+                  <SnsArticle key={filteredEl.financialRecordArticleId} data={filteredEl} type='timeline' />
+                ))
+            )}
+          </S.ContentWrap>
+          <S.AddWrap ref={ref}>
+            <S.AddBtn onClick={() => fetchNextPage()} disabled={!hasNextPage}>
+              {!hasNextPage ? '마지막 페이지입니다.' : '더 보기'}
+            </S.AddBtn>
+          </S.AddWrap>
+        </>
+      )}
     </S.Container>
   );
 }
 const S = {
+  ...CommonStyles,
   Container: styled.div`
     padding: 1.875rem;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
   `,
-  DateHeader: styled.h2`
+  ContentWrap: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    &#timeline {
+      gap: 1.875rem;
+    }
+  `,
+  DateHeader: styled.div`
     font-size: var(--text-default);
-    margin: 0.625rem 0 1.25rem;
+    margin: 2rem 0 1.25rem;
+    font-weight: 700;
+  `,
+  AddWrap: styled.div`
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+  `,
+  AddBtn: styled.button`
+    text-align: center;
+    color: var(--color-primary);
+  `,
+  ErrorWrap: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
   `,
 };

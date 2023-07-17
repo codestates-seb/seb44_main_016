@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 import SnsArticle from '../components/SnsArticle';
+
 import { FeedArticleResType, FaRecData } from '../types/article';
 
 const TimelineArticleDummyA: FaRecData = {
@@ -11,6 +12,7 @@ const TimelineArticleDummyA: FaRecData = {
   faDate: '2023-12-23T12:34:56.789Z',
   title: '이마트 장 (식재료 위주)',
   price: -29_710, // 지출
+
   content:
     '산악회 여러분~~ 안뇽하세용~~!\r\n어제 깜빡하고 못 적어서 지금 적어올려용~!\r\n\r\n* 소단량가슴살 300g : 4,550원\r\n* 브로콜리(2입/봉) : 2,780원\r\n* 파프리카(3입/봉) : 5,460원\r\n* 국산 볶음땅콩 150g : 4,820원\r\n* 적양배추 1/2 : 10,800원\r\n* 양상추 : 1,280원\r\n\r\n#닭가슴살 안 사려고 했는데 결국 사버렸네용... ㅠㅠ\r\n자나 깨나 #충동구매 조심~! (≧▽≦)',
   scope: '가계부 타임라인',
