@@ -7,6 +7,8 @@ import AsideLogo from '../components/aside/AsideLogo';
 import AsideProfileBox from '../components/aside/AsideProfileBox';
 
 import svgs from '../constants/svg';
+import { useWindowType } from '../hooks/useWindowSize';
+import { ScreenEnum } from '../constants/enums';
 
 /* type은 추후 다른 파일로 분리하고 Import할 예정 */
 type Props = {
@@ -14,9 +16,14 @@ type Props = {
 };
 
 export default function Aside(props: Props) {
+  const windowType = useWindowType();
+
   const [isSearchTabOpened, setIsSearchTabOpened] = React.useState(false);
   const [isNoticeTabOpened, setIsNoticeTabOpened] = React.useState(false);
   const isTabClosed = !isSearchTabOpened && !isNoticeTabOpened;
+
+  const asideClsName = !isTabClosed || windowType !== ScreenEnum.DESKTOP ? 'shrink' : '';
+  const isShrink = asideClsName === 'shrink';
 
   const [isBookmarkedFaRecListOpened, setIsBookmarkedFaRecListOpened] = React.useState(true);
 
@@ -37,40 +44,56 @@ export default function Aside(props: Props) {
   };
 
   return (
-    <S.AsideContainer className={isTabClosed ? 'tab-closed' : ''}>
+    <S.AsideContainer className={asideClsName}>
       <S.LeftOfAsideCover />
       <S.AsideInnerContainer>
         <S.Upper>
-          <AsideLogo className={isTabClosed ? 'tab-closed' : ''} />
+          <AsideLogo className={asideClsName} />
           <ol>
-            <AsideButton leftIcon={svgs.home}>{isTabClosed && '홈'}</AsideButton>
+            <AsideButton leftIcon={svgs.home} className={asideClsName}>
+              홈
+            </AsideButton>
             {props.isLoggedIn && (
               <>
-                <AsideButton onClick={handleOpenOrCloseNoticeTab} leftIcon={svgs.notice}>
-                  {isTabClosed && '알림'}
+                <AsideButton
+                  onClick={handleOpenOrCloseNoticeTab}
+                  leftIcon={svgs.notice}
+                  className={asideClsName}
+                >
+                  알림
                 </AsideButton>
                 {/* href='/financial-record' */}
                 <AsideButton
-                  className={isTabClosed ? 'tab-closed' : ''}
                   leftIcon={svgs.faRec}
                   rightIcon={svgs.dropdown}
                   isReverse={isBookmarkedFaRecListOpened}
                   onClickRight={handleOpenOrCloseBookmarkedFaRecList}
+                  className={asideClsName}
                 >
-                  {isTabClosed && '내 가계부'}
+                  내 가계부
                 </AsideButton>
-                {isBookmarkedFaRecListOpened && isTabClosed && (
+                {isBookmarkedFaRecListOpened || isShrink ? (
+                  <></>
+                ) : (
                   <ol>
-                    <AsideButton isSmall={true}>{isTabClosed && 'XXX의 가계부'}</AsideButton>
-                    <AsideButton isSmall={true}>{isTabClosed && '♡ 데이트 통장 ♥'}</AsideButton>
-                    <AsideButton isSmall={true}>{isTabClosed && '산악회 곗돈 장부'}</AsideButton>
+                    <AsideButton isSmall={true} className={asideClsName}>
+                      XXX의 가계부
+                    </AsideButton>
+                    <AsideButton isSmall={true} className={asideClsName}>
+                      ♡ 데이트 통장 ♥
+                    </AsideButton>
+                    <AsideButton isSmall={true} className={asideClsName}>
+                      '산악회 곗돈 장부
+                    </AsideButton>
                   </ol>
                 )}
               </>
             )}
-            <AsideButton leftIcon={svgs.ranking}>{isTabClosed && '명예의 전당'}</AsideButton>
-            <AsideButton onClick={handleOpenOrCloseSearchTab} leftIcon={svgs.search}>
-              {isTabClosed && '검색'}
+            <AsideButton leftIcon={svgs.ranking} className={asideClsName}>
+              명예의 전당
+            </AsideButton>
+            <AsideButton onClick={handleOpenOrCloseSearchTab} leftIcon={svgs.search} className={asideClsName}>
+              검색
             </AsideButton>
           </ol>
         </S.Upper>
@@ -78,10 +101,10 @@ export default function Aside(props: Props) {
           {props.isLoggedIn ? (
             <>
               {/* href='/user/mypage' */}
-              <AsideProfileBox className={isTabClosed ? 'tab-closed' : ''} />
-              {isTabClosed ? <S.SubmitBtn>글쓰기</S.SubmitBtn> : <AsideButton leftIcon={svgs.editor} />}
+              <AsideProfileBox className={asideClsName} />
+              {isShrink ? <AsideButton leftIcon={svgs.editor} /> : <S.SubmitBtn>글쓰기</S.SubmitBtn>}
             </>
-          ) : isTabClosed ? (
+          ) : isShrink ? (
             <S.LinkBtn href='/user/login'>로그인</S.LinkBtn>
           ) : (
             <AsideButton href='/user/login' leftIcon={svgs.person} />
@@ -107,7 +130,7 @@ export default function Aside(props: Props) {
 const S = {
   ...CommonStyles,
   AsideContainer: styled.aside`
-    width: 5rem;
+    width: var(--aside-w);
     position: fixed;
     height: 100%;
     flex-shrink: 0;
@@ -115,8 +138,8 @@ const S = {
     align-items: flex-start;
     z-index: 999; // HomeHeader와 겹쳐져 Aside 오른쪽 테두리의 일부가 안 보는 버그 수정
 
-    &.tab-closed {
-      width: var(--aside-w);
+    &.shrink {
+      width: var(--aside-shrink-w);
     }
   `,
   LeftOfAsideCover: styled.div`

@@ -9,11 +9,14 @@ import Aside from '../components/Aside';
 import HomeHeader from '../components/HomeHeader';
 import Toast from '../components/Toast';
 import 'react-toastify/dist/ReactToastify.css';
+import { useWindowType } from '../hooks/useWindowSize';
+import { ScreenEnum } from '../constants/enums';
 
 const queryClient = new QueryClient();
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
+  const windowType = useWindowType();
 
   let isShowNav = true;
   let isShowHeader = false;
@@ -49,7 +52,11 @@ const App = ({ Component, pageProps }: AppProps) => {
                 {isShowNav && <Aside isLoggedIn={true} />}
                 <S.SubPage>
                   {isShowHeader && <HomeHeader />}
-                  <S.Main isShowNav={isShowNav} isShowHeader={isShowHeader}>
+                  <S.Main
+                    isShowNav={isShowNav}
+                    isShowHeader={isShowHeader}
+                    isDesktopScreen={windowType === ScreenEnum.DESKTOP}
+                  >
                     <Component {...pageProps} />
                   </S.Main>
                 </S.SubPage>
@@ -92,12 +99,12 @@ const S = {
     height: 100%;
   `,
 
-  Main: styled.main<{ isShowNav: boolean; isShowHeader: boolean }>`
+  Main: styled.main<{ isShowNav: boolean; isShowHeader: boolean; isDesktopScreen: boolean }>`
     width: auto;
-    height: 100%;
-    height: ${(props) => props.isShowHeader && 'calc(100% - var(--header-h));'};
+    height: ${(props) => (props.isShowHeader ? 'calc(100% - var(--header-h));' : '100%')};
     margin-top: ${(props) => props.isShowHeader && '5rem'};
-    margin-left: ${(props) => props.isShowNav && 'var(--aside-w)'};
+    margin-left: ${(props) =>
+      props.isShowNav ? (props.isDesktopScreen ? 'var(--aside-w)' : 'var(--aside-shrink-w)') : 0};
     display: flex;
     flex-direction: column;
   `,

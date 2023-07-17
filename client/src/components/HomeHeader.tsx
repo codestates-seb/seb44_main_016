@@ -3,8 +3,12 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 
 import CommonStyles from '../styles/CommonStyles';
+import { ScreenEnum } from '../constants/enums';
+import { useWindowType } from '../hooks/useWindowSize';
 
 export default function HomeHeader() {
+  const windowType = useWindowType();
+
   const [isHomeButtonActive, setIsHomeButtonActive] = React.useState(true);
   const [isFollowerButtonActive, setIsFollowerButtonActive] = React.useState(false);
 
@@ -18,7 +22,7 @@ export default function HomeHeader() {
   };
 
   return (
-    <S.HomeHeaderContainer>
+    <S.HomeHeaderContainer isDesktopScreen={windowType === ScreenEnum.DESKTOP}>
       <S.HomeHeaderBtn
         href='/'
         onClick={handleClickHomeButton}
@@ -40,9 +44,9 @@ export default function HomeHeader() {
 
 const S = {
   ...CommonStyles,
-  HomeHeaderContainer: styled.header`
+  HomeHeaderContainer: styled.header<{ isDesktopScreen: boolean }>`
     position: fixed;
-    padding-left: var(--aside-w);
+    padding-left: ${(props) => (props.isDesktopScreen ? 'var(--aside-w)' : 'var(--aside-shrink-w)')};
     max-width: var(--app-max-w);
     width: 100%;
     height: var(--header-h);

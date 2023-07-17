@@ -101,8 +101,9 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
 const S = {
   ...CommonStyles,
   SnsArticleContainer: styled.article`
-    width: var(--article-w);
+    width: 100%;
     filter: drop-shadow(0px 3px 3px var(--color-gray07)); // 그림자
+    padding: 0 7%;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -141,6 +142,7 @@ const S = {
   ContextText: styled.p`
     line-height: 125%;
     white-space: pre-wrap; // 줄바꿈 & text-wrap 적용
+    overflow-wrap: break-word;
   `,
   /* ↓ ArtileMain 내부 컴포넌트 ↓ */
   UDForm: styled.div`

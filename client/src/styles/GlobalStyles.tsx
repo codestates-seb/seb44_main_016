@@ -79,6 +79,7 @@ const GlobalStyles = () => (
         /* width & height */
         --app-max-w: 1140px;
         --aside-w : 15.5rem;  // 15rem~15.625rem
+        --aside-shrink-w : 5rem;
         --aside-tab-w: 22rem;
         --header-h : 5rem;
         --main-w : calc(var(--app-max-w) - var(--aside-w));

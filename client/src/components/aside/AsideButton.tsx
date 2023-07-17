@@ -22,14 +22,14 @@ export default function AsideButton(props: Props) {
     <S.AsideButtonContainer isSmall={props.isSmall}>
       <S.AsideInnerButtonLeft href={props.href || ''} onClick={props.onClick}>
         <SvgBox>{props.leftIcon || <></>}</SvgBox>
-        {props.children ? <S.Text>{props.children}</S.Text> : <></>}
+        {props.className === 'shrink' ? <></> : <S.Text>{props.children}</S.Text>}
       </S.AsideInnerButtonLeft>
-      {props.className === 'tab-closed' ? (
+      {props.className === 'shrink' || props.rightIcon === undefined ? (
+        <></>
+      ) : (
         <S.AsideInnerButtonRight onClick={props.onClick || props.onClickRight}>
           <SvgBox isReverse={!props.isReverse}>{props.rightIcon || <></>}</SvgBox>
         </S.AsideInnerButtonRight>
-      ) : (
-        <></>
       )}
     </S.AsideButtonContainer>
   );

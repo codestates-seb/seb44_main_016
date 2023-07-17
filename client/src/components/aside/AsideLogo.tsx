@@ -13,7 +13,7 @@ export default function AsideLogo(props: Props) {
   return (
     <S.LogoContainer href='/' className={props.className}>
       <SvgBox>{svgs.logoSymbol}</SvgBox>
-      <span>{props.className === 'tab-closed' ? svgs.logoText : <></>}</span>
+      <span>{props.className == 'shrink' ? <></> : svgs.logoText}</span>
     </S.LogoContainer>
   );
 }
