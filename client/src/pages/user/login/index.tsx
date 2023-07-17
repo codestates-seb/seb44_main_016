@@ -12,7 +12,7 @@ import Oauth from './OAuth';
 import apiUser from '../../../services/apiUser';
 import { useAppDispatch } from '../../../components/redux/hooks';
 import { login } from '../../../components/redux/authnReducer';
-import { setCookie } from 'cookies-next';
+import { setCookie, getCookie } from 'cookies-next';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 import { toast } from 'react-toastify';
 
@@ -53,13 +53,13 @@ export default function Login() {
     const res = await mutateAsync();
 
     if (res.status === 200) {
-      // const accessToken = res.headers.Authorization; 나중에 서버 연결 후
-      const accessToken = 'temp-access-token-from-header';
-      const { nickname, loginId } = res.data.user;
-      // const refreshToken = getCookie('refreshToken'); 나중에 서버 연결 후
-      setCookie('refreshToken', 'im-refresh-token');
+      const accessToken = res.headers.Authorization; // 나중에 서버 연결 후
+      // const accessToken = 'temp-access-token-from-header';
+      const { nickname } = res.data.user;
+      const refreshToken = getCookie('refreshToken'); // 나중에 서버 연결 후
+      setCookie('refreshToken', refreshToken);
 
-      dispatch(login({ accessToken, loginId, nickname, isLoggedIn: true }));
+      dispatch(login({ accessToken, nickname, isLoggedIn: true }));
 
       setError('');
       setLoginId('');

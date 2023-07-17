@@ -32,7 +32,7 @@ export interface LoginResData {
   userId?: number | null;
   loginId?: number | null;
   nickname?: string | null;
-  accessToken?: string | null;
+  accessToken?: string | null | unknown;
   isLoggedIn: boolean;
 }
 

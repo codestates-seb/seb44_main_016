@@ -60,6 +60,15 @@ const apiUser = {
       throw err.response;
     }
   },
+
+  getNewRefresh: async (accessToken: string) => {
+    try {
+      const res = await axios.delete(`${BASE_URL}/auth/refresh`); // 토큰 담아 보냄 - 인스턴스로 교체
+      return res;
+    } catch (err) {
+      throw err.response;
+    }
+  },
 };
 
 export default apiUser;
