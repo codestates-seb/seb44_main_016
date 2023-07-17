@@ -15,15 +15,15 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   const dispatch = useAppDispatch();
 
   const accessToken = useSelector<RootState>((state) => state.authnReducer.login.accessToken);
+  // const refreshToken = getCookie('refreshToken');
+  const refreshToken = 'temporary';
 
-  const refreshToken = getCookie('refreshToken');
-
-  /** refresh 토큰으로 새 refresh 토큰과 access 토큰을 발급받는 api 추가 예정 */
+  /** refresh 토큰으로 새 access 토큰을 발급받는 api */
   useEffect(() => {
-    if (accessToken && typeof accessToken === 'string') {
+    if (refreshToken && typeof refreshToken === 'string') {
       const fetchData = async () => {
         try {
-          const { mutateAsync } = useMutation(() => apiUser.getNewRefresh(accessToken));
+          const { mutateAsync } = useMutation(() => apiUser.getNewRefresh(refreshToken));
           const res = await mutateAsync();
           const newAccessToken = res.headers.Authorization;
           dispatch(login({ accessToken: newAccessToken, isLoggedIn: true }));
