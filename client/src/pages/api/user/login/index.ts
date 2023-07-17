@@ -10,7 +10,7 @@ export default function logIn(req: NextApiRequest, res: NextApiResponse) {
   const salt = Math.floor(Math.random() * 100);
 
   if (user && user.password === password) {
-    const accessToken = '임시어세스토큰' + salt;
+    // const accessToken = '임시어세스토큰' + salt;
     const refreshToken = '임시리프레시토큰' + salt;
 
     const { password: _password, ...userInfo } = user;
