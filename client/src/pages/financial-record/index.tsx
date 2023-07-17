@@ -8,6 +8,7 @@ import { APIfinancialRecord } from '../../services/apiFinancial';
 import useInput from '../../hooks/useComponents';
 import SVGs from '../../constants/svg';
 import Loading from '../../components/Loading';
+import { useState } from 'react';
 
 export const metadata: Metadata = {
   title: '가계부 목록',
@@ -33,7 +34,18 @@ export default function FinancialListPage() {
     APIfinancialRecord.getRecordList
   );
 
-  const [searchInput] = useInput('text', '검색어를 입력해주세요', 'faRecSearch', 'on');
+  const [searchInput, search] = useInput('text', '검색어를 입력해주세요', 'faRecSearch', 'on');
+  const [isSearching, setIsSearching] = useState(false);
+
+  const handleSearch = (e: MouseEvent) => {
+    e.preventDefault();
+    setIsSearching(true);
+  };
+  let displayData = data;
+
+  if (isSearching && search) {
+    displayData = data?.filter((el) => el.financialRecordName?.includes(search));
+  }
   if (isError) {
     return (
       <S.ErrorText>
@@ -55,12 +67,12 @@ export default function FinancialListPage() {
       <S.FormWrap>
         <S.InputWrap>
           {searchInput}
-          <S.Button>{SVGs.searchFarec}</S.Button>
+          <S.Button onClick={handleSearch}>{SVGs.searchFarec}</S.Button>
         </S.InputWrap>
-        <S.SubmitBtn>새 가계부 만들기</S.SubmitBtn>
+        <S.LinkBtn href='/financial-record/create'>새 가계부 만들기</S.LinkBtn>
       </S.FormWrap>
       <S.FaRecList>
-        {isSuccess && data.map((el) => <ListItem key={el.financialRecordId} item={el} />)}
+        {isSuccess && displayData.map((el) => <ListItem key={el.financialRecordId} item={el} />)}
       </S.FaRecList>
     </S.ListWrap>
   );
