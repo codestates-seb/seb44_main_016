@@ -2,15 +2,17 @@ export interface FaRecData {
   financialRecordId: number;
   financialRecordArticleId: number;
   category: string;
-  faDate: Date;
+  faDate: string;
   title: string;
   price: number;
   content: string;
   scope: string;
-  imgId: string[];
-  userId: number;
-  profileImg?: string;
-  userNickname?: string;
+  user: {
+    userId: number;
+    profileImgPath: string;
+    nickname: string;
+  };
+  imgPath: string[];
 }
 
 export interface FaRecUser {
@@ -24,7 +26,7 @@ export interface FaRecHeaderData {
   memo: string;
   articleCount: number;
   faRecTimeline: number;
-  imgId: string;
+  imgPath: string;
   isBookmark: boolean;
   users: FaRecUser[];
 }

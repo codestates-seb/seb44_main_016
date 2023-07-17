@@ -13,7 +13,7 @@ export default function FaRecHeader({ setActiveTab, data }: FaRecHeaderProps) {
     return null;
   }
 
-  const { financialRecordName, memo, articleCount, faRecTimeline, imgId, isBookmark, users } = data;
+  const { financialRecordName, memo, articleCount, faRecTimeline, imgPath, isBookmark, users } = data;
 
   const router = useRouter();
   const faRecId = router.query.slug;
@@ -25,7 +25,7 @@ export default function FaRecHeader({ setActiveTab, data }: FaRecHeaderProps) {
     <>
       <S.Container>
         <S.ImgBox>
-          <img src={imgId} alt={`${financialRecordName} 프로필 사진`} />
+          <img src={imgPath} alt={`${financialRecordName} 프로필 사진`} />
         </S.ImgBox>
         <S.ContentBox>
           <div>

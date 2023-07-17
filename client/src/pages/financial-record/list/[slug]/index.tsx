@@ -89,11 +89,11 @@ export default function FinancialPage() {
               <FaRecArticle
                 key={el.financialRecordArticleId}
                 category={el.category}
-                faDate={el.faDate}
+                faDate={new Date(el.faDate)}
                 title={el.title}
                 price={el.price}
                 content={el.content}
-                imgId={el.imgId}
+                imgPath={el.imgPath}
               />
             );
           })}

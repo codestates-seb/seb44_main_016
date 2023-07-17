@@ -26,7 +26,7 @@ type PropsFeed = {
     userId: number;
     voteId: number;
     feedArticleHashtagId: number;
-    imgId: string[];
+    imgPath: string[];
     profileImg?: string; // 추가
     userNickname?: string; // 추가
   };
@@ -88,12 +88,16 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
             faDate={data.faDate}
             category={data.category}
             price={data.price}
-            profileImg={data.profileImg}
+            profileImg={data.user.profileImgPath}
           >
-            {data.userNickname}
+            {data.user.nickname}
           </ArticleHeader>
         )}
-        {data.imgId.length >= 1 ? <ImgsCarousel imgId={data.imgId} width={'var(--article-w)'} /> : <></>}
+        {data.imgPath.length >= 1 ? (
+          <ImgsCarousel imgPath={data.imgPath} width={'var(--article-w)'} />
+        ) : (
+          <></>
+        )}
         <S.ArtileMain>
           {type !== 'feed' && data.title !== '' ? <S.TitleText>{data.title}</S.TitleText> : <></>}
           <S.ContextText>{data.content}</S.ContextText>

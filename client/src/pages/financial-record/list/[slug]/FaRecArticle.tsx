@@ -13,14 +13,14 @@ interface FaRecArticleProps {
   title: string;
   price: number;
   content: string;
-  imgId: string[];
+  imgPath: string[];
 }
 
 export default function FaRecArticle(props: FaRecArticleProps) {
   if (!props) {
     return null;
   }
-  const { title, price, content, imgId, faDate, category } = props;
+  const { title, price, content, imgPath, faDate, category } = props;
   const [isOpen, setIsOpen] = useState(false);
   const toggleDropdown = () => setIsOpen(!isOpen);
   const isIncome = price >= 0;
@@ -35,13 +35,17 @@ export default function FaRecArticle(props: FaRecArticleProps) {
         <S.Title>{title}</S.Title>
         <S.FinancialText isIncome={isIncome}>{numToStrWithSign(price)}</S.FinancialText>
         <S.ImgAndDate>
-          <span>{imgId !== undefined && imgId.length >= 1 ? SVGs.imgIcon : <></>}</span>
+          <span>{imgPath !== undefined && imgPath.length >= 1 ? SVGs.imgIcon : <></>}</span>
           <span>{faDate ? convertToKoreanMonthDay(faDate) : ''}</span>
         </S.ImgAndDate>
         <S.DropdownIcon isOpen={isOpen}>{SVGs.dropdown}</S.DropdownIcon>
       </S.Header>
       <S.Details isOpen={isOpen}>
-        {imgId !== undefined && imgId.length >= 1 ? <ImgsCarousel imgId={imgId} width={'100%'} /> : <></>}
+        {imgPath !== undefined && imgPath.length >= 1 ? (
+          <ImgsCarousel imgPath={imgPath} width={'100%'} />
+        ) : (
+          <></>
+        )}
         <S.Contents>
           <div>{title}</div>
           <div>{content}</div>

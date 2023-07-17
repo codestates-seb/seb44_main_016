@@ -9,7 +9,7 @@ import 'swiper/css/navigation';
 import CommonStyles from '../styles/CommonStyles';
 
 type Props = {
-  imgId: string[];
+  imgPath: string[];
   width: string;
   // height: string;
   rank?: number;
@@ -39,7 +39,7 @@ export default function ImgsCarousel(props: Props) {
       >
         <S.ImgSlideBtn className='swiper-button-next' type='button' />
         <S.ImgSlideBtn className='swiper-button-prev' type='button' />
-        {props.imgId.map((imgSrc, i) => {
+        {props.imgPath.map((imgSrc, i) => {
           return (
             <SwiperSlide key={i}>
               <S.Img src={imgSrc} alt={`사용자가 올린 ${i + 1}번째 사진`} />
