@@ -1,41 +1,35 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import CloseBtn from '../../../../../public/image/closeBtn.svg';
+import { useState } from 'react';
+import CloseBtn from '../../../../public/image/closeBtn.svg';
 import ModalList from './FollowList';
+import { FollowUsersInfoData } from '../../../types/user';
 
-export default function FollowModal() {
+interface FollowModalProps {
+  title: string;
+  list: FollowUsersInfoData[];
+}
+
+export default function FollowModal({ title, list }: FollowModalProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const openModalHandler = () => {
-    setIsOpen(!isOpen);
-  };
+
+  const openModalHandler = () => setIsOpen(!isOpen);
 
   return (
     <S.FollowerContainer onClick={openModalHandler}>
       <S.ButtonNameBtn type='button'>
-        구독함 <S.FollowerNum>11</S.FollowerNum>
+        {title} <S.FollowerNum>{list?.length}</S.FollowerNum>
       </S.ButtonNameBtn>
       {isOpen ? (
         <S.ModalBackdrop onClick={openModalHandler}>
           <S.ModalView onClick={(e) => e.stopPropagation()}>
             <S.ModalTop>
-              <S.Title>구독함</S.Title>
+              <S.Title>{title}</S.Title>
               <CloseBtn onClick={openModalHandler} />
             </S.ModalTop>
             <S.ModalFollowerBox>
-              <ModalList />
-              <ModalList />
-              <ModalList />
-              <ModalList />
-              <ModalList />
-              <ModalList />
-              <ModalList />
-              <ModalList />
-              <ModalList />
-              <ModalList />
-              <ModalList />
-              <ModalList />
+              {list?.map((el) => (
+                <ModalList key={el.loginId} title={title} userInfo={el} />
+              ))}
             </S.ModalFollowerBox>
           </S.ModalView>
         </S.ModalBackdrop>
@@ -61,7 +55,7 @@ const S = {
     border-radius: 10px;
     background-color: #ffffff;
     width: 383px;
-    height: 352px;
+    height: 355px;
     > span.close-btn {
       margin-top: 5px;
       cursor: pointer;
@@ -107,11 +101,11 @@ const S = {
   `,
   ModalFollowerBox: styled.div`
     width: 100%;
-    height: 302px;
+    height: calc(100% - 50px);
     overflow: scroll;
     overflow-x: hidden;
     justify-content: space-between;
-    padding: 0rem 1.5rem;
+    padding: 0rem 1.65rem 0 1.5rem;
   `,
   UserInfo: styled.div`
     display: flex;
@@ -136,11 +130,5 @@ const S = {
     display: flex;
     align-items: center;
     color: var(--color-primary);
-  `,
-  UserDelete: styled.div`
-    display: flex;
-    align-items: center;
-    font-size: 0.98rem;
-    font-weight: 500;
   `,
 };

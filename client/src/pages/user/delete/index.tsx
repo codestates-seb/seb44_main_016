@@ -3,20 +3,20 @@ import { useEffect } from 'react';
 import Head from 'next/head';
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
 import CommonStyles from '../../../styles/CommonStyles';
 import useInput from '../../../hooks/useComponents';
-import { USER_DELETE_MESSAGES } from '../../../constants/user';
-import BackBtn from '../../../../public/image/back2.svg';
 import useCheckboxError from '../../../hooks/useCheckoutError';
-import validation from '../../../utils/validationCheck';
 import apiUser from '../../../services/apiUser';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
+import getNewError from '../../../utils/inputValidationError';
+import BackBtnBox from '../../../components/BackBtn';
 
 export default function UserDelete() {
   const router = useRouter();
-  const [PwInput, pwValue] = useInput('password', '비밀번호', 'pw');
-  const [PwConfirmInput, password] = useInput('password', '비밀번호 확인', 'pwConfirm');
+  const [PwInput, pwValue] = useInput('password', '비밀번호', 'pw', 'current-password');
+  const [PwConfirmInput, password] = useInput('password', '비밀번호 확인', 'pwConfirm', 'current-password');
   const [error, setError] = useState({
     password: '',
     passwordConfirm: '',
@@ -50,13 +50,7 @@ export default function UserDelete() {
   const { mutateAsync } = useMutation(() => apiUser.deleteUser());
 
   useEffect(() => {
-    const newError = {
-      password: pwValue ? '' : USER_DELETE_MESSAGES.PASSWORD_GUIDE,
-      passwordConfirm: password
-        ? validation.passwordMatch(pwValue || '', password || '')
-        : USER_DELETE_MESSAGES.PASSWORD_CONFIRM_GUIDE,
-      policy: isChecked ? '' : USER_DELETE_MESSAGES.POLICY_GUIDE,
-    };
+    const newError = getNewError.delete({ pwValue, password, isChecked });
     setError(newError);
   }, [pwValue, password, isChecked]);
 
@@ -65,6 +59,7 @@ export default function UserDelete() {
 
     if (error.password || error.passwordConfirm || error.policy) {
       RefusalAnimation();
+      toast.error('에러 메시지를 확인해주세요.');
       return;
     }
 
@@ -79,11 +74,7 @@ export default function UserDelete() {
       <Head>
         <title>제로힙 회원 탈퇴 페이지</title>
       </Head>
-      <S.BackBox>
-        <button type='button' aria-label='뒤로 가기' onClick={() => router.back()}>
-          <BackBtn width='25' fill='#b8b7c2' aria-hidden={true} />
-        </button>
-      </S.BackBox>
+      <BackBtnBox />
       <S.FormContainer>
         <S.WarningMessage>
           {`회원 탈퇴를 할 경우, ${'마마망'}님의 회원 정보, 가계부, 구독 목록 등`}

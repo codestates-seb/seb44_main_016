@@ -1,53 +1,60 @@
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import Image from 'next/image';
 import Head from 'next/head';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../components/redux/store';
-import { keyframes, css } from '@emotion/react';
-import { useEffect, useState } from 'react';
-import CommonStyles from '../../../../styles/CommonStyles';
-import useInput, { useCheckboxInput } from '../../../../hooks/useComponents';
+import { useQuery } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
+import CommonStyles from '../../../styles/CommonStyles';
+import SnsArticle from '../../../components/SnsArticle';
 import FollowModal from './FollowModal';
-import withAuth from '../../../../components/WithAuth';
-
+import withAuth from '../../../components/WithAuth';
+import apiUser from '../../../services/apiUser';
+import Loading from '../../../components/Loading';
+import { FeedArticle } from '../../../types/feed';
 function MyPage() {
   const router = useRouter();
+  const { isLoading, error, data, isSuccess } = useQuery(['myPageInfo'], apiUser.getUser);
+
+  if (error) {
+    toast.error('오류가 발생했습니다.');
+    toast.info('잠시 후에 다시 시도해주세요.');
+  }
 
   return (
-    <S.Container>
-      <S.UserProfileContainer>
-        <Head>
-          <title>제로힙 마이페이지</title>
-        </Head>
-        <h1 className='blind'>마이페이지</h1>
-
-        <S.UserImg>
-          <Image
-            src='/image/mango.png'
-            alt='프로필 사진'
-            priority={true}
-            width={150}
-            height={150}
-            style={imageStyle}
-          />
-        </S.UserImg>
-        <S.UserName>
-          <S.Nickname>마마망</S.Nickname>
-        </S.UserName>
-        <S.ModifyBtnBox>
-          <FollowModal />
-          <FollowModal />
-          <S.ModifyBtn type='button'>설정</S.ModifyBtn>
-        </S.ModifyBtnBox>
-      </S.UserProfileContainer>
-      <S.UserArticleContainer>
-        <S.ArticleContainer>
-          <h2 className='blind'>내가 쓴 글</h2>
-          {'공통 컴포넌트 trunk에 머지되면 사용 예정'}
-        </S.ArticleContainer>
-      </S.UserArticleContainer>
-    </S.Container>
+    <>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        isSuccess && (
+          <S.Container>
+            <S.UserProfileContainer>
+              <Head>
+                <title>제로힙 마이페이지</title>
+              </Head>
+              <h1 className='blind'>마이페이지</h1>
+              <S.UserImg>
+                <img src={data?.imgId} alt='프로필 사진' />
+              </S.UserImg>
+              <S.UserName>
+                <S.Nickname>{data.nickname}</S.Nickname>
+              </S.UserName>
+              <S.ModifyBtnBox>
+                <FollowModal title='구독함' list={data.followingList} />
+                <FollowModal title='구독됨' list={data.followerList} />
+                <S.ModifyBtn type='button' onClick={() => router.push('/user/update')}>
+                  설정
+                </S.ModifyBtn>
+              </S.ModifyBtnBox>
+            </S.UserProfileContainer>
+            <S.UserArticleContainer>
+              <h2 className='blind'>내가 쓴 글</h2>
+              {data.myContents.map((el: FeedArticle) => {
+                return <SnsArticle key={el.feedArticleId} type='feed' data={el} />;
+              })}
+            </S.UserArticleContainer>
+          </S.Container>
+        )
+      )}
+    </>
   );
 }
 
@@ -98,7 +105,6 @@ const S = {
     overflow: hidden;
     background-color: white;
     z-index: 1;
-
     &:hover {
       color: var(--color-primary);
       background-color: white;
@@ -117,7 +123,6 @@ const S = {
       background: #dee2f1;
       transition: 0.7s;
     }
-
     &:hover::before {
       top: 2.5rem;
       left: 2.5rem;
@@ -125,7 +130,12 @@ const S = {
     font-size: 1.1rem;
     font-weight: 500;
   `,
-  UserArticleContainer: styled.div``,
+  UserArticleContainer: styled.section`
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 3rem;
+  `,
 
   ModalBackdrop: styled.div`
     position: fixed;
@@ -152,16 +162,6 @@ const S = {
       color: #4000c7;
     }
   `,
-  ArticleContainer: styled.article`
-    /* 임시 */
-    height: 2000px;
-  `,
-};
-
-const imageStyle = {
-  borderRadius: '50%',
-  left: '20%',
-  cursor: 'pointer',
 };
 
 export default withAuth(MyPage);
