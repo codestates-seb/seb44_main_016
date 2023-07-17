@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import styled from '@emotion/styled';
-import Logo from '../../../../public/image/logo.svg';
+import Logo from '../../../../public/images/logo.svg';
 import SignUpForm from './SignUpForm';
 import { useRouter } from 'next/router';
 

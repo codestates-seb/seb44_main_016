@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { toast } from 'react-toastify';
-import Logo from '../../../../../public/image/logo.svg';
+import Logo from '../../../../../public/images/logo.svg';
 import { useState, useEffect } from 'react';
 import CommonStyles from '../../../../styles/CommonStyles';
 import Lottie from 'react-lottie-player';

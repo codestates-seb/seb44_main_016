@@ -21,6 +21,7 @@ export interface PostSignUp {
   loginId: string | null;
   password: string | null;
   nickname: string | null;
+  profileImgPath: string | null;
 }
 
 export interface LoginReqData {
@@ -32,12 +33,12 @@ export interface LoginResData {
   userId?: number | null;
   loginId?: number | null;
   nickname?: string | null;
-  accessToken?: string | null;
+  accessToken?: string | null | unknown;
   isLoggedIn: boolean;
 }
 
 export interface UserUpdateReqData {
-  imgUrl?: string | null;
+  profileImgPath?: string | null;
   nickname?: string | null;
   password?: string | null;
 }
