@@ -11,7 +11,7 @@ export const useMutateLogOut = (mutateFunction: () => Promise<void>) => {
   const { mutate, data } = useMutation(['logout'], mutateFunction, {
     onSuccess: () => {
       dispatch(logout());
-      router.push('/user/login');
+      router.push('/');
       toast.success('로그아웃 되었습니다.');
     },
   });
