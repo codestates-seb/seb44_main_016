@@ -16,7 +16,7 @@ export default function EditorPage() {
   const [articleType, setArticleType] = React.useState(0); // 가계부/절약팁/허락해줘 (라디오 버튼)
   /* ↓ 'articleType=가계부'일 경우에만 표시 ↓ */
   const [faRecId, setFaRecId] = React.useState(0); // 가계부의 고유번호
-  const [faDate, setFaDate] = React.useState(new Date('2023-12-23T12:34:56.789Z')); // 날짜+시간
+  const [faDate, setFaDate] = React.useState(new Date()); // 날짜+시간
   const [category, setCategory] = React.useState(''); // 카테고리명
   const [price, setPrice] = React.useState(0); // 금액
   const [faType, setFaType] = React.useState(0); // 지출/수입 (라디오 버튼)
@@ -51,7 +51,9 @@ export default function EditorPage() {
     setTitle(e.target.value);
   };
   const handleChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
+    const enteredContents = e.target.value;
+    const processedContents = enteredContents.replaceAll('<br>', '\r\n');
+    setContent(processedContents);
   };
   const handleChangeScope = (id: number) => {
     setScope(id);

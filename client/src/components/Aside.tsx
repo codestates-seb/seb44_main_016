@@ -51,6 +51,7 @@ export default function Aside(props: Props) {
                 </AsideButton>
                 {/* href='/financial-record' */}
                 <AsideButton
+                  className={isTabClosed ? 'tab-closed' : ''}
                   leftIcon={svgs.faRec}
                   rightIcon={svgs.dropdown}
                   isReverse={isBookmarkedFaRecListOpened}

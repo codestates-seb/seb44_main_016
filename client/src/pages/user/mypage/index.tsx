@@ -9,8 +9,7 @@ import FollowModal from './FollowModal';
 import withAuth from '../../../components/WithAuth';
 import apiUser from '../../../services/apiUser';
 import Loading from '../../../components/Loading';
-import { FeedArticle } from '../../../types/feed';
-
+import { FeedArticleResType } from '../../../types/article';
 function MyPage() {
   const router = useRouter();
   const { isLoading, error, data, isSuccess } = useQuery(['myPageInfo'], apiUser.getUser);
@@ -49,7 +48,7 @@ function MyPage() {
             </S.UserProfileContainer>
             <S.UserArticleContainer>
               <h2 className='blind'>내가 쓴 글</h2>
-              {data.myContents.map((el: FeedArticle) => {
+              {data.myContents.map((el: FeedArticleResType) => {
                 return <SnsArticle key={el.feedArticleId} type='feed' data={el} />;
               })}
             </S.UserArticleContainer>
