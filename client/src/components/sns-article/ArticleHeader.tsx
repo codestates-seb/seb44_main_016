@@ -6,7 +6,7 @@ import { convertToKoreanDate } from '../../utils/convertToKoreanDate';
 type PropsFeed = {
   type: 'feed';
   profileImg?: string;
-  createdAt: Date;
+  createdAt: string;
   children?: string;
 };
 type PropsTimeline = {
@@ -14,7 +14,7 @@ type PropsTimeline = {
   category: string;
   price: number;
   profileImg?: string;
-  createdAt: Date;
+  faDate: string;
   children?: string;
 };
 
@@ -40,11 +40,15 @@ export default function ArticleHeaderComponent(props: PropsFeed | PropsTimeline)
           <S.ProfileImg src={props.profileImg} alt='유저 프로필 이미지' />
         </S.ProfileImgButton>
         <S.Nickname>{props.children}</S.Nickname>
-        {props.type === 'feed' || <S.DateText>{convertToKoreanDate(props.createdAt)}</S.DateText>}
+        {props.type === 'feed' ? (
+          <></>
+        ) : (
+          <S.DateText>{convertToKoreanDate(new Date(props.faDate))}</S.DateText>
+        )}
       </S.LeftDiv>
       <S.RightDiv>
         {props.type === 'feed' ? (
-          <S.DateText>{convertToKoreanDate(props.createdAt)}</S.DateText>
+          <S.DateText>{convertToKoreanDate(new Date(props.createdAt))}</S.DateText>
         ) : (
           <>
             {props.category === '' ? <></> : <S.CategoryText>{props.category}</S.CategoryText>}
