@@ -7,7 +7,7 @@ type PropsFeed = {
   type: 'feed';
   profileImg?: string;
   createdAt: Date;
-  children: string;
+  children?: string;
 };
 type PropsTimeline = {
   type: 'timeline';
@@ -15,7 +15,7 @@ type PropsTimeline = {
   price: number;
   profileImg?: string;
   faDate: Date;
-  children: string;
+  children?: string;
 };
 
 export default function ArticleHeaderComponent(props: PropsFeed | PropsTimeline) {
@@ -37,7 +37,7 @@ export default function ArticleHeaderComponent(props: PropsFeed | PropsTimeline)
     <S.ArticleHeaderContainer>
       <S.LeftDiv>
         <S.ProfileImgButton>
-          <S.ProfileImg />
+          <S.ProfileImg src={props.profileImg} alt='유저 프로필 이미지' />
         </S.ProfileImgButton>
         <S.Nickname>{props.children}</S.Nickname>
         {props.type === 'timeline' ? <S.DateText>{convertToKoreanDate(props.faDate)}</S.DateText> : <></>}
@@ -97,7 +97,7 @@ const S = {
   ProfileImg: styled.img`
     width: 100%;
     height: 100%;
-    background-color: black;
+    object-fit: cover;
   `,
   CategoryText: styled.span`
     height: 0.6rem;

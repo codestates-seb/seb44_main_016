@@ -14,6 +14,9 @@ export const recordArticle = [
       'https://images.unsplash.com/photo-1583623025817-d180a2221d0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80',
     ],
     userId: 2,
+    profileImg:
+      'https://i.namu.wiki/i/VxdEKDNZCp9hAW5TU5-3MZTePLGSdlYKzEZUyVLDB-Cyo950Ee19yaOL8ayxgJzEfMYfzfLcRYuwkmKEs2cg0w.webp',
+    userNickname: '햄구맘',
   },
   {
     financialRecordId: 1,
@@ -28,6 +31,9 @@ export const recordArticle = [
       'https://images.unsplash.com/photo-1615937657715-bc7b4b7962c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
     ],
     userId: 2,
+    profileImg:
+      'https://i.namu.wiki/i/VxdEKDNZCp9hAW5TU5-3MZTePLGSdlYKzEZUyVLDB-Cyo950Ee19yaOL8ayxgJzEfMYfzfLcRYuwkmKEs2cg0w.webp',
+    userNickname: '햄구맘',
   },
   {
     financialRecordId: 1,
@@ -40,6 +46,9 @@ export const recordArticle = [
     scope: '가계부 타임라인',
     imgId: [],
     userId: 2,
+    profileImg:
+      'https://i.namu.wiki/i/VxdEKDNZCp9hAW5TU5-3MZTePLGSdlYKzEZUyVLDB-Cyo950Ee19yaOL8ayxgJzEfMYfzfLcRYuwkmKEs2cg0w.webp',
+    userNickname: '햄구맘',
   },
   {
     financialRecordId: 1,
@@ -54,6 +63,9 @@ export const recordArticle = [
       'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1176&q=80',
     ],
     userId: 2,
+    profileImg:
+      'https://i.namu.wiki/i/VxdEKDNZCp9hAW5TU5-3MZTePLGSdlYKzEZUyVLDB-Cyo950Ee19yaOL8ayxgJzEfMYfzfLcRYuwkmKEs2cg0w.webp',
+    userNickname: '햄구맘',
   },
   {
     financialRecordId: 1,
@@ -66,6 +78,9 @@ export const recordArticle = [
     scope: '가계부 타임라인',
     imgId: [],
     userId: 2,
+    profileImg:
+      'https://i.namu.wiki/i/VxdEKDNZCp9hAW5TU5-3MZTePLGSdlYKzEZUyVLDB-Cyo950Ee19yaOL8ayxgJzEfMYfzfLcRYuwkmKEs2cg0w.webp',
+    userNickname: '햄구맘',
   },
   {
     financialRecordId: 1,
@@ -81,6 +96,9 @@ export const recordArticle = [
       'https://images.unsplash.com/photo-1591160690555-5debfba289f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80',
     ],
     userId: 2,
+    profileImg:
+      'https://i.namu.wiki/i/VxdEKDNZCp9hAW5TU5-3MZTePLGSdlYKzEZUyVLDB-Cyo950Ee19yaOL8ayxgJzEfMYfzfLcRYuwkmKEs2cg0w.webp',
+    userNickname: '햄구맘',
   },
   {
     financialRecordId: 1,
@@ -93,6 +111,9 @@ export const recordArticle = [
     scope: '가계부 타임라인',
     imgId: [],
     userId: 2,
+    profileImg:
+      'https://i.namu.wiki/i/VxdEKDNZCp9hAW5TU5-3MZTePLGSdlYKzEZUyVLDB-Cyo950Ee19yaOL8ayxgJzEfMYfzfLcRYuwkmKEs2cg0w.webp',
+    userNickname: '햄구맘',
   },
 
   {
@@ -109,6 +130,9 @@ export const recordArticle = [
       'https://images.unsplash.com/photo-1545580492-8859ba8323f0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80',
     ],
     userId: 2,
+    profileImg:
+      'https://i.namu.wiki/i/VxdEKDNZCp9hAW5TU5-3MZTePLGSdlYKzEZUyVLDB-Cyo950Ee19yaOL8ayxgJzEfMYfzfLcRYuwkmKEs2cg0w.webp',
+    userNickname: '햄구맘',
   },
   {
     financialRecordId: 1,
@@ -124,6 +148,9 @@ export const recordArticle = [
       'https://images.unsplash.com/photo-1475353152807-97f4e3315977?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
     ],
     userId: 2,
+    profileImg:
+      'https://i.namu.wiki/i/VxdEKDNZCp9hAW5TU5-3MZTePLGSdlYKzEZUyVLDB-Cyo950Ee19yaOL8ayxgJzEfMYfzfLcRYuwkmKEs2cg0w.webp',
+    userNickname: '햄구맘',
   },
   {
     financialRecordId: 1,
@@ -138,8 +165,10 @@ export const recordArticle = [
       'https://images.unsplash.com/photo-1618944752770-f7a92ed4dd16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80',
     ],
     userId: 2,
+    profileImg:
+      'https://i.namu.wiki/i/VxdEKDNZCp9hAW5TU5-3MZTePLGSdlYKzEZUyVLDB-Cyo950Ee19yaOL8ayxgJzEfMYfzfLcRYuwkmKEs2cg0w.webp',
+    userNickname: '햄구맘',
   },
-  ////
   {
     financialRecordId: 1,
     financialRecordArticleId: 6,
@@ -153,6 +182,9 @@ export const recordArticle = [
       'https://images.unsplash.com/photo-1495147466023-ac5c588e2e94?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80',
     ],
     userId: 2,
+    profileImg:
+      'https://i.namu.wiki/i/VxdEKDNZCp9hAW5TU5-3MZTePLGSdlYKzEZUyVLDB-Cyo950Ee19yaOL8ayxgJzEfMYfzfLcRYuwkmKEs2cg0w.webp',
+    userNickname: '햄구맘',
   },
   {
     financialRecordId: 1,
@@ -167,6 +199,9 @@ export const recordArticle = [
       'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1026&q=80',
     ],
     userId: 2,
+    profileImg:
+      'https://i.namu.wiki/i/VxdEKDNZCp9hAW5TU5-3MZTePLGSdlYKzEZUyVLDB-Cyo950Ee19yaOL8ayxgJzEfMYfzfLcRYuwkmKEs2cg0w.webp',
+    userNickname: '햄구맘',
   },
   {
     financialRecordId: 1,
@@ -181,6 +216,9 @@ export const recordArticle = [
       'https://images.unsplash.com/photo-1491841573634-28140fc7ced7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
     ],
     userId: 2,
+    profileImg:
+      'https://i.namu.wiki/i/VxdEKDNZCp9hAW5TU5-3MZTePLGSdlYKzEZUyVLDB-Cyo950Ee19yaOL8ayxgJzEfMYfzfLcRYuwkmKEs2cg0w.webp',
+    userNickname: '햄구맘',
   },
   {
     financialRecordId: 1,
@@ -195,6 +233,9 @@ export const recordArticle = [
       'https://images.unsplash.com/photo-1590189182193-1fd44f2b4048?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
     ],
     userId: 2,
+    profileImg:
+      'https://i.namu.wiki/i/VxdEKDNZCp9hAW5TU5-3MZTePLGSdlYKzEZUyVLDB-Cyo950Ee19yaOL8ayxgJzEfMYfzfLcRYuwkmKEs2cg0w.webp',
+    userNickname: '햄구맘',
   },
   {
     financialRecordId: 1,
@@ -207,6 +248,9 @@ export const recordArticle = [
     scope: '가계부 타임라인',
     imgId: ['https://image.edaily.co.kr/images/photo/files/NP/S/2022/11/PS22112801166.jpg'],
     userId: 2,
+    profileImg:
+      'https://i.namu.wiki/i/VxdEKDNZCp9hAW5TU5-3MZTePLGSdlYKzEZUyVLDB-Cyo950Ee19yaOL8ayxgJzEfMYfzfLcRYuwkmKEs2cg0w.webp',
+    userNickname: '햄구맘',
   },
   {
     financialRecordId: 1,
@@ -219,6 +263,9 @@ export const recordArticle = [
     scope: '가계부 게시글',
     imgId: ['https://blog.kakaocdn.net/dn/bcOiIk/btseT1XwQHL/frw5KjTFECKzzk5EdPHcGK/img.jpg'],
     userId: 2,
+    profileImg:
+      'https://i.namu.wiki/i/VxdEKDNZCp9hAW5TU5-3MZTePLGSdlYKzEZUyVLDB-Cyo950Ee19yaOL8ayxgJzEfMYfzfLcRYuwkmKEs2cg0w.webp',
+    userNickname: '햄구맘',
   },
 ];
 

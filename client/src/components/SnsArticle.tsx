@@ -6,8 +6,12 @@ import CommonStyles from '../styles/CommonStyles';
 import ArticleHeader from './sns-article/ArticleHeader';
 import ImgsCarousel from '../components/ImgsCarousel';
 import VoteForm from './sns-article/VoteForm';
-import Comments from './sns-article/Comments';
+// import Comments from './sns-article/Comments';
 import { FaRecData } from '../types/financialRecord';
+
+import useRangeNumber from '../hooks/useRangeNumber';
+
+import svgs from '../constants/svg';
 
 /* type은 추후 다른 파일로 분리하고 Import할 예정 */
 type PropsFeed = {
@@ -23,6 +27,8 @@ type PropsFeed = {
     voteId: number;
     feedArticleHashtagId: number;
     imgId: string[];
+    profileImg?: string; // 추가
+    userNickname?: string; // 추가
   };
 };
 type PropsTimeline = {
@@ -73,12 +79,18 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
       <Label>{labelText}</Label>
       <S.Box>
         {type === 'feed' ? (
-          <ArticleHeader type={type} createdAt={data.createdAt}>
-            Waypil
+          <ArticleHeader type={type} createdAt={new Date(date)} profileImg={data.profileImg}>
+            {data.userNickname}
           </ArticleHeader>
         ) : (
-          <ArticleHeader type={type} faDate={data.faDate} category={data.category} price={data.price}>
-            Waypil
+          <ArticleHeader
+            type={type}
+            faDate={data.faDate}
+            category={data.category}
+            price={data.price}
+            profileImg={data.profileImg}
+          >
+            {data.userNickname}
           </ArticleHeader>
         )}
         {data.imgId.length >= 1 ? <ImgsCarousel imgId={data.imgId} width={'var(--article-w)'} /> : <></>}
@@ -91,7 +103,7 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
             <S.UDBtn>수정</S.UDBtn>
             <S.UDBtn>삭제</S.UDBtn>
           </S.UDForm>
-          <Comments />
+          {/* <Comments /> 후순위 기능*/}
         </S.ArtileMain>
       </S.Box>
     </S.SnsArticleContainer>
@@ -140,6 +152,7 @@ const S = {
   `,
   ContextText: styled.p`
     line-height: 125%;
+    overflow-wrap: break-word;
   `,
   /* ↓ ArtileMain 내부 컴포넌트 ↓ */
   UDForm: styled.div`

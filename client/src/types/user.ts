@@ -1,3 +1,21 @@
+export interface ValidationValues {
+  loginId?: string | null;
+  pwValue?: string | null;
+  password?: string | null;
+  nickname?: string | null;
+  domainValue?: string | null;
+  emailValue?: string | null;
+  isChecked?: boolean | null;
+}
+export interface SignUpError {
+  loginId: string;
+  password: string;
+  passwordConfirm: string;
+  nickname: string;
+  email: string;
+  policy: string;
+}
+
 export interface PostSignUp {
   email: string | null;
   loginId: string | null;
@@ -16,4 +34,17 @@ export interface LoginResData {
   nickname?: string | null;
   accessToken?: string | null;
   isLoggedIn: boolean;
+}
+
+export interface UserUpdateReqData {
+  imgUrl?: string | null;
+  nickname?: string | null;
+  password?: string | null;
+}
+
+export interface FollowUsersInfoData {
+  imgId: string;
+  isAlsoFollowed: boolean;
+  loginId: string;
+  nickname: string;
 }

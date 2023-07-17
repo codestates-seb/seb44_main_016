@@ -6,7 +6,7 @@ export default function NaverOauth() {
   const clientSecret = process.env.NEXT_PUBLIC_NAVER_CLIENT_SECRET;
   const redirectURI = 'http://localhost:3000/oauth/naver';
 
-  const naverAuthURL = `https://nid.naver.com/oauth2.0/authrize?client_id=${clientId}&response_type=code&redirect_url=${redirectURI}&state=${clientSecret}`;
+  const naverAuthURL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId}&state=${clientSecret}&redirect_uri=${redirectURI}`;
 
   const handleNaverLogin = () => {
     window.location.href = naverAuthURL;

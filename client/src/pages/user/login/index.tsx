@@ -14,10 +14,11 @@ import { useAppDispatch } from '../../../components/redux/hooks';
 import { login } from '../../../components/redux/authnReducer';
 import { setCookie } from 'cookies-next';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
+import { toast } from 'react-toastify';
 
 export default function Login() {
-  const [IdInput, loginId, setLoginId] = useInput('text', '아이디', 'loginId');
-  const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw');
+  const [IdInput, loginId, setLoginId] = useInput('text', '아이디', 'loginId', 'username');
+  const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw', 'current-password');
   const [error, setError] = useState('');
   const [isClickedProps, RefusalAnimation] = useRefusalAni();
 
@@ -50,21 +51,20 @@ export default function Login() {
     }
 
     const res = await mutateAsync();
-    // console.log(res);
 
     if (res.status === 200) {
-      // const accessToken = res.headers.Authorization;
+      // const accessToken = res.headers.Authorization; 나중에 서버 연결 후
       const accessToken = 'temp-access-token-from-header';
-      const { nickname, userId, loginId } = res.data.user;
+      const { nickname, loginId } = res.data.user;
       // const refreshToken = getCookie('refreshToken'); 나중에 서버 연결 후
       setCookie('refreshToken', 'im-refresh-token');
 
-      dispatch(login({ userId, accessToken, loginId, nickname, isLoggedIn: true }));
+      dispatch(login({ accessToken, loginId, nickname, isLoggedIn: true }));
 
       setError('');
       setLoginId('');
       setPwValue('');
-      alert(`${nickname}님, 환영합니다!`);
+      toast(`${nickname}님, 환영합니다!`);
       router.push(`/`);
     } else if (res.status === 401) {
       setError(res.data.message);
@@ -85,10 +85,9 @@ export default function Login() {
           <S.inputBox>{IdInput}</S.inputBox>
           <S.inputBox>{PwInput}</S.inputBox>
           <S.Error> {error && error}</S.Error>
-
           <S.LoginBox {...isClickedProps}>
             <S.SubmitBtn large onClick={handleLoginSubmit}>
-              <h1>로그인</h1>
+              로그인
             </S.SubmitBtn>
           </S.LoginBox>
         </S.LoginFormBox>
@@ -105,7 +104,6 @@ export default function Login() {
 
 const S = {
   ...CommonStyles,
-
   LoginContainer: styled.div`
     width: 100%;
     height: 100%;
@@ -117,8 +115,6 @@ const S = {
   HomeBtnBox: styled.button`
     margin: 0 0.7rem 2.5rem 0;
   `,
-  LogoBtn: styled.button``,
-
   LoginWrapper: styled.div`
     width: 28%;
     height: 80%;
@@ -149,11 +145,8 @@ const S = {
     width: 60%;
     margin: 0.8rem 0 3rem 0;
     ${isClickedStyled}
-
-    h1 {
-      font-size: 1.1rem;
-      font-weight: 500;
-    }
+    font-size: 1.1rem;
+    font-weight: 500;
   `,
   Guide: styled.div`
     width: 100%;

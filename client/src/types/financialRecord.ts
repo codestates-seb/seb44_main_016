@@ -9,6 +9,8 @@ export interface FaRecData {
   scope: string;
   imgId: string[];
   userId: number;
+  profileImg?: string;
+  userNickname?: string;
 }
 
 export interface FaRecUser {

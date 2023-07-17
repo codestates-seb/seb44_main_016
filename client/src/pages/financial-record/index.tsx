@@ -33,7 +33,7 @@ export default function FinancialListPage() {
     APIfinancialRecord.getRecordList
   );
 
-  const [searchInput] = useInput('text', '검색어를 입력해주세요', 'faRecSearch');
+  const [searchInput] = useInput('text', '검색어를 입력해주세요', 'faRecSearch', 'on');
   if (isError) {
     return (
       <S.ErrorText>

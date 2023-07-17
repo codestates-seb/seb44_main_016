@@ -1,26 +1,35 @@
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import { keyframes, css } from '@emotion/react';
+import { useEffect } from 'react';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import CommonStyles from '../../../styles/CommonStyles';
 import useInput from '../../../hooks/useComponents';
 import Image from 'next/image';
 import { USER_UPDATE_MESSAGES } from '../../../constants/user';
-import BackBtn from '../../../../public/image/back2.svg';
 import ImageUpload from '../../../../public/image/imageUpload.svg';
-import Link from 'next/link';
+import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
+import BackBtnBox from '../../../components/BackBtn';
+import getNewError from '../../../utils/inputValidationError';
 
 export default function UserUpdate() {
   const router = useRouter();
-  const [nicknameInput, nickname, setNickname] = useInput('text', '마마망', 'nickname');
-  const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw');
-  const [PwConfirmInput, password, setPassword] = useInput('password', '비밀번호 확인', 'pwConfirm');
+  // const nickname = useSelector<RootState>((state) => state.authnReducer.login.nickname);
+  const originalNickname = '마마망'; // temp
+  const [nicknameInput, nickname] = useInput('text', originalNickname, 'nickname', 'nickname');
+  const [PwInput, pwValue] = useInput('password', '비밀번호', 'pw', 'current-password');
+  const [PwConfirmInput, password] = useInput('password', '비밀번호 확인', 'pwConfirm', 'current-password');
   const [error, setError] = useState({
-    nickname: '아이디를 입력해주세요.',
-    password: '아이디를 입력해주세요.',
-    passwordConfirm: '아이디를 입력해주세요.',
+    nickname: '',
+    password: '',
+    passwordConfirm: '',
   });
-  const [isClicked, setIsClicked] = useState(false);
+  const [isClickedProps, RefusalAnimation] = useRefusalAni();
+
+  useEffect(() => {
+    const newError = getNewError.update({ nickname, pwValue, password });
+    setError(newError);
+  }, [nickname, pwValue, password]);
 
   const inputData = [
     {
@@ -52,18 +61,41 @@ export default function UserUpdate() {
     },
   ];
 
+  const handleUpdateUserSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (
+      (nickname && error.nickname) ||
+      (pwValue && !password) ||
+      (password && !pwValue) ||
+      (pwValue && error.password) ||
+      (password && error.passwordConfirm)
+    ) {
+      // 이미지 추가
+      RefusalAnimation();
+      toast.error('에러 메시지를 확인해주세요.');
+      return;
+    }
+    console.log('pass');
+
+    if (!nickname && !password && !pwValue) {
+      // 이미지 추가
+      RefusalAnimation();
+      toast.error('수정할 정보가 없습니다.');
+      return;
+    }
+    toast.success('회원 정보가 수정되었습니다.');
+
+    // const res = await mutateAsync();
+    // router.push(`/user/mypage`);
+  };
+
   const handleMoveDeletePage = () => {
-    console.log('here');
     router.push('/user/delete');
   };
 
   return (
     <S.Container>
-      <S.BackBox>
-        <button type='button' aria-label='뒤로 가기' onClick={() => router.back()}>
-          <BackBtn width='25' fill='#b8b7c2' aria-hidden={true} />
-        </button>
-      </S.BackBox>
+      <BackBtnBox />
       <S.FormContainer>
         <S.UserImg>
           <div>
@@ -77,16 +109,14 @@ export default function UserUpdate() {
           <S.InputBox>
             <S.LabelBox>
               <S.Label htmlFor={el.label.htmlFor}>{el.label.text}</S.Label>
-              <S.Guide>{el.guide}</S.Guide>
+              <S.Guide htmlFor={el.label.htmlFor}>{el.guide}</S.Guide>
             </S.LabelBox>
             <S.InputField>{el.component}</S.InputField>
-            <S.Error>{el.error} </S.Error>
+            <S.Error htmlFor={el.label.htmlFor}>{el.error} </S.Error>
           </S.InputBox>
         ))}
-
-        <S.SubmitBox isClicked={isClicked ? 'true' : undefined}>
-          <S.SubmitBtn large>
-            {/* <S.SubmitBtn large onClick={handleSubmit}> 추후 사용 예정  */}
+        <S.SubmitBox {...isClickedProps}>
+          <S.SubmitBtn large onClick={handleUpdateUserSubmit}>
             회원 정보 수정
           </S.SubmitBtn>
         </S.SubmitBox>
@@ -96,28 +126,6 @@ export default function UserUpdate() {
       </S.FormContainer>
     </S.Container>
   );
-}
-
-const bounce = keyframes`
-  0% {
-    transform: translateX(0);
-  }
-  30% {
-    transform: translateX(-10px);
-  }
-  50% {
-    transform: translateX(10px);
-  }
-  70% {
-    transform: translateX(-10px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-`;
-
-interface SubmitBoxProps {
-  isClicked?: string | undefined;
 }
 
 const S = {
@@ -157,35 +165,29 @@ const S = {
   SubmitBox: styled.div<SubmitBoxProps>`
     width: 45%;
     margin: 2.7rem 0 4rem 0;
-    ${({ isClicked }) =>
-      isClicked &&
-      css`
-        animation: ${bounce} 1s infinite;
-      `}
+    ${isClickedStyled}
   `,
-  Error: styled.div`
-    padding-left: 20px;
+  Error: styled.label`
+    padding-left: 0.5rem;
     font-size: 0.98rem;
-    margin-top: 8px;
-    font-weight: 400;
     color: var(--color-error-red);
   `,
   InputBox: styled.div`
-    width: 45%;
+    width: 51%;
   `,
   LabelBox: styled.div`
-    margin-bottom: 0.7rem;
+    margin-top: 1rem;
   `,
   Label: styled.label`
     font-weight: 600;
     font-size: 1rem;
     display: inline-block;
   `,
-  Guide: styled.span`
+  Guide: styled.label`
     font-size: 0.94rem;
     color: var(--color-point-gray);
     display: inline-block;
-    margin: 2rem 0 0 0.7rem;
+    margin: 1rem 0 0 0.7rem;
   `,
   ModifyBtn: styled.button`
     position: relative;
