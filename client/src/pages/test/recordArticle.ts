@@ -164,10 +164,12 @@ export const recordArticle = [
       'https://images.unsplash.com/photo-1635934893139-fe44eae280a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1163&q=80',
       'https://images.unsplash.com/photo-1475353152807-97f4e3315977?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
     ],
-    userId: 2,
-    profileImg:
-      'https://i.namu.wiki/i/VxdEKDNZCp9hAW5TU5-3MZTePLGSdlYKzEZUyVLDB-Cyo950Ee19yaOL8ayxgJzEfMYfzfLcRYuwkmKEs2cg0w.webp',
-    userNickname: '햄구맘',
+    user: {
+      userId: 2,
+      profileImgPath:
+        'https://i.namu.wiki/i/VxdEKDNZCp9hAW5TU5-3MZTePLGSdlYKzEZUyVLDB-Cyo950Ee19yaOL8ayxgJzEfMYfzfLcRYuwkmKEs2cg0w.webp',
+      nickname: '햄구맘',
+    },
   },
   {
     financialRecordId: 1,
