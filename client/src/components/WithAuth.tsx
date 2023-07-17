@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { ComponentType } from 'react';
 import { useRouter } from 'next/router';
-import { getCookie } from 'cookies-next';
 import { useAppDispatch } from './redux/hooks';
 import { useSelector } from 'react-redux';
 import { RootState } from './redux/store';
