@@ -7,6 +7,7 @@ import { Metadata } from 'next';
 import { APIfinancialRecord } from '../../services/apiFinancial';
 import useInput from '../../hooks/useComponents';
 import SVGs from '../../constants/svg';
+import Loading from '../../components/Loading';
 
 export const metadata: Metadata = {
   title: '가계부 목록',
@@ -27,16 +28,30 @@ export type RecordData = {
 };
 
 export default function FinancialListPage() {
-  const { isLoading, error, data, isSuccess } = useQuery<RecordData[]>(
+  const { data, error, isError, isSuccess, isLoading } = useQuery<RecordData[]>(
     ['recordList'],
     APIfinancialRecord.getRecordList
   );
 
   const [searchInput] = useInput('text', '검색어를 입력해주세요', 'faRecSearch');
+  if (isError) {
+    return (
+      <S.ErrorText>
+        {' '}
+        {(error as Error).message} 오류가 발생하였습니다.
+        <br />
+        다시 시도 해 주세요.
+      </S.ErrorText>
+    );
+  }
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <S.ListWrap>
-      <S.BlindTitle>{PAGE_NAMES.FINANCIAL_RECORD_LIST}</S.BlindTitle>
+      <h1 className='blind'>{PAGE_NAMES.FINANCIAL_RECORD_LIST}</h1>
       <S.FormWrap>
         <S.InputWrap>
           {searchInput}
@@ -45,13 +60,7 @@ export default function FinancialListPage() {
         <S.SubmitBtn>새 가계부 만들기</S.SubmitBtn>
       </S.FormWrap>
       <S.FaRecList>
-        {isLoading ? (
-          <p>로딩 중입니다.</p>
-        ) : error ? (
-          <p>오류가 발생했습니다</p>
-        ) : (
-          isSuccess && data.map((el) => <ListItem key={el.financialRecordId} item={el} />)
-        )}
+        {isSuccess && data.map((el) => <ListItem key={el.financialRecordId} item={el} />)}
       </S.FaRecList>
     </S.ListWrap>
   );

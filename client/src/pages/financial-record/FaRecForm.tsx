@@ -11,6 +11,7 @@ import InputField from '../../components/InputField';
 import { getRandomImageUrl } from '../../utils/randomImg';
 import { RANDOM_IMG_URLS } from '../../constants/faRecImgUrls';
 import FilePlusLabel from '../../components/FilePlusLabel';
+import { toast } from 'react-toastify';
 
 type PageType = 'create' | 'edit';
 
@@ -72,10 +73,10 @@ export default function FaRecForm({
     pageType === 'create' ? APIfinancialRecord.createFaRec : APIfinancialRecord.updateFaRec,
     {
       onSuccess: (data) => {
-        console.log('response-data', data);
+        toast.success('가계부 생성에 성공하였습니다.');
       },
       onError: (error) => {
-        console.error(error);
+        toast.error('가계부 생성을 실패하였습니다.');
       },
     }
   );

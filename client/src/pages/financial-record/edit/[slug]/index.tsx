@@ -2,6 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import FaRecForm from '../../FaRecForm';
 import { APIfinancialRecord } from '../../../../services/apiFinancial';
 import { Metadata } from 'next';
+import Loading from '../../../../components/Loading';
+import { toast } from 'react-toastify';
 
 type reFacData = {
   financialRecordId: number;
@@ -19,7 +21,7 @@ export default function FaRecEditPage() {
   // test용 임의 지정
   const financialRecordId = 2;
 
-  const { isLoading, error, data, isSuccess } = useQuery<reFacData>(
+  const { isLoading, isError, error, data, isSuccess } = useQuery<reFacData>(
     ['reFac'],
     () => APIfinancialRecord.getFaRec(financialRecordId),
     { staleTime: 1000 * 60 * 30 }
@@ -31,12 +33,17 @@ export default function FaRecEditPage() {
     financialRecordDescription = data.financialRecordDescription;
     imgId = data.imgId;
   }
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (isError) {
+    toast.error(`${error} 에러가 발생하였습니다.`);
+    toast.info('잠시 후에 다시 시도해주세요.');
+  }
 
   return (
     <>
       <h1 className='blind'>가계부 수정 페이지</h1>
-      {isLoading && <p>아직 로딩 중입니다.</p>}
-      {error && <p>에러가 발생하였습니다.</p>}
       {isSuccess && (
         <FaRecForm
           pageType='edit'

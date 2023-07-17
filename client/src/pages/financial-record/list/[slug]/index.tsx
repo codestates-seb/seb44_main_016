@@ -11,6 +11,8 @@ import { FaRecData } from '../../../../types/financialRecord';
 import SnsArticle from '../../../../components/SnsArticle';
 import Loading from '../../../../components/Loading';
 import Pagination from '../../../../components/Pagination';
+import CommonStyles from '../../../../styles/CommonStyles';
+import { toast } from 'react-toastify';
 
 export default function FinancialPage() {
   const router = useRouter();
@@ -67,19 +69,10 @@ export default function FinancialPage() {
   if (isFaRecError || isArticleError || isTimelineError) {
     const errorMessage =
       (faRecError as Error).message || (articleError as Error).message || (timelineError as Error).message;
-    return (
-      // <S.ErrorWrap>
-      <S.ErrorText>
-        {' '}
-        {errorMessage} 오류가 발생하였습니다.
-        <br />
-        다시 시도 해 주세요.
-      </S.ErrorText>
-      // </S.ErrorWrap>
-    );
+    toast.error(`${errorMessage} 에러가 발생하였습니다.`);
+    toast.info('잠시 후에 다시 시도해주세요.');
   }
 
-  // In case data is still loading
   if (isFaRecLoading || isArticleLoading || IsTimelineLoading) {
     return <Loading />;
   }
@@ -132,6 +125,7 @@ export default function FinancialPage() {
   );
 }
 const S = {
+  ...CommonStyles,
   Container: styled.div`
     padding: 1.875rem;
     display: flex;
@@ -165,14 +159,5 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-  `,
-  ErrorText: styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: var(--text-m);
-    height: 100%;
-    color: var(--color-primary);
-    text-align: center;
   `,
 };
