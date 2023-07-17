@@ -6,6 +6,7 @@ import SvgBox from './SvgBox';
 
 /* type은 추후 다른 파일로 분리하고 Import할 예정 */
 type Props = {
+  className?: string;
   href?: string;
   leftIcon?: JSX.Element; // <svg>
   rightIcon?: JSX.Element; // <svg>
@@ -23,7 +24,7 @@ export default function AsideButton(props: Props) {
         <SvgBox>{props.leftIcon || <></>}</SvgBox>
         {props.children ? <S.Text>{props.children}</S.Text> : <></>}
       </S.AsideInnerButtonLeft>
-      {props.rightIcon ? (
+      {props.className === 'tab-closed' ? (
         <S.AsideInnerButtonRight onClick={props.onClick || props.onClickRight}>
           <SvgBox isReverse={!props.isReverse}>{props.rightIcon || <></>}</SvgBox>
         </S.AsideInnerButtonRight>
