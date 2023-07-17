@@ -106,7 +106,7 @@ export default function SignUpForm() {
     password,
     nickname,
   };
-
+  console.log(error);
   const { mutateAsync } = useMutation(() => apiUser.postSignUp(requestBody));
 
   const handleSignUpSubmit = async (e: React.FormEvent) => {
