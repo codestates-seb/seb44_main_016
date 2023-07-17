@@ -32,7 +32,9 @@ export default function FinancialPage() {
     error: faRecError,
     isError: isFaRecError,
     isLoading: isFaRecLoading,
-  } = useQuery(['faRecHeader'], () => APIfinancialRecord.getFaRec(financialRecordId));
+  } = useQuery(['faRecHeader'], () => APIfinancialRecord.getFaRec(financialRecordId), {
+    staleTime: 1000 * 60 * 30,
+  });
   const {
     data: articleData,
     error: articleError,
@@ -41,7 +43,7 @@ export default function FinancialPage() {
   } = useQuery(
     ['faRecArticles', page],
     () => APIfinancialRecord.getRecordArticle(financialRecordId, page, size),
-    { keepPreviousData: true }
+    { keepPreviousData: true, staleTime: 1000 * 60 * 10 }
   );
   const {
     data: timelineData,
@@ -58,6 +60,7 @@ export default function FinancialPage() {
         const nextPage = lastPage.pageData.page + 1;
         return nextPage > lastPage.pageData.totalPages ? undefined : nextPage;
       },
+      staleTime: 1000 * 60 * 10,
     }
   );
   useEffect(() => {
