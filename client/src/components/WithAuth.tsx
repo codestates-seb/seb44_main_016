@@ -19,12 +19,22 @@ const withAuth = (Component: ComponentType) => async (props: object) => {
   const refreshToken = getCookie('refreshToken');
 
   /** refresh 토큰으로 새 refresh 토큰과 access 토큰을 발급받는 api 추가 예정 */
-  if (accessToken && typeof accessToken === 'string') {
-    const { mutateAsync } = useMutation(() => apiUser.getNewRefresh(accessToken));
-    const res = await mutateAsync();
-    const newAccessToken = res.headers.Authorization;
-    dispatch(login({ accessToken: newAccessToken, isLoggedIn: true }));
-  }
+  useEffect(() => {
+    if (accessToken && typeof accessToken === 'string') {
+      const fetchData = async () => {
+        try {
+          const { mutateAsync } = useMutation(() => apiUser.getNewRefresh(accessToken));
+          const res = await mutateAsync();
+          const newAccessToken = res.headers.Authorization;
+          dispatch(login({ accessToken: newAccessToken, isLoggedIn: true }));
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      fetchData();
+    }
+  }, []);
 
   useEffect(() => {
     if (!refreshToken && !accessToken) {
