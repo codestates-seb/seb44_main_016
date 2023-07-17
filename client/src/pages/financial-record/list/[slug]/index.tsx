@@ -28,7 +28,7 @@ export default function FinancialPage() {
 
   // 데이터 요청
   const {
-    data: FaRecData,
+    data: faRecData,
     error: faRecError,
     isError: isFaRecError,
     isLoading: isFaRecLoading,

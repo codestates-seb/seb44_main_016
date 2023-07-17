@@ -6,11 +6,11 @@ import Loading from '../../../../components/Loading';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 
-type reFacData = {
+type FaRecData = {
   financialRecordId: number;
   financialRecordName: string;
-  financialRecordDescription: string;
-  imgId: string;
+  memo: string;
+  imgPath: string;
 };
 
 export const metadata: Metadata = {
@@ -22,16 +22,16 @@ export default function FaRecEditPage() {
   const router = useRouter();
   const financialRecordId = router.query.slug ? Number(router.query.slug) : 0;
   console.log(financialRecordId);
-  const { isLoading, isError, error, data, isSuccess } = useQuery<reFacData>(
+  const { isLoading, isError, error, data, isSuccess } = useQuery<FaRecData>(
     ['reFac'],
     () => APIfinancialRecord.getFaRec(financialRecordId),
     { staleTime: 1000 * 60 * 30 }
   );
 
-  let financialRecordName, financialRecordDescription, imgPath;
+  let financialRecordName, memo, imgPath;
   if (data) {
     financialRecordName = data.financialRecordName;
-    financialRecordDescription = data.financialRecordDescription;
+    memo = data.memo;
     imgPath = data.imgPath;
   }
   if (isLoading) {
@@ -50,7 +50,7 @@ export default function FaRecEditPage() {
           pageType='edit'
           financialRecordId={financialRecordId}
           initialFaRecName={financialRecordName}
-          initialFaRecDesc={financialRecordDescription}
+          initialFaRecDesc={memo}
           initialImage={imgPath}
         />
       )}

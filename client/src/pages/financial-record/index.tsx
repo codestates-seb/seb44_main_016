@@ -41,24 +41,11 @@ export default function FinancialListPage() {
     e.preventDefault();
     setIsSearching(true);
   };
+
   let displayData = data;
 
   if (isSearching && search) {
     displayData = data?.filter((el) => el.financialRecordName?.includes(search));
-  }
-  if (isError) {
-    return (
-      <S.ErrorText>
-        {' '}
-        {(error as Error).message} 오류가 발생하였습니다.
-        <br />
-        다시 시도 해 주세요.
-      </S.ErrorText>
-    );
-  }
-
-  if (isLoading) {
-    return <Loading />;
   }
 
   return (
@@ -71,9 +58,23 @@ export default function FinancialListPage() {
         </S.InputWrap>
         <S.LinkBtn href='/financial-record/create'>새 가계부 만들기</S.LinkBtn>
       </S.FormWrap>
-      <S.FaRecList>
-        {displayData && displayData.map((el) => <ListItem key={el.financialRecordId} item={el} />)}
-      </S.FaRecList>
+      {isError ? (
+        <S.ErrorText>
+          {' '}
+          {(error as Error).message} 오류가 발생하였습니다.
+          <br />
+          다시 시도 해 주세요.
+        </S.ErrorText>
+      ) : isLoading ? (
+        <Loading />
+      ) : displayData && displayData.length > 0 ? (
+        <S.FaRecList>
+          {Array.isArray(displayData) &&
+            displayData?.map((el) => <ListItem key={el.financialRecordId} item={el} />)}
+        </S.FaRecList>
+      ) : (
+        <S.ErrorText>리스트가 비어있습니다.</S.ErrorText>
+      )}
     </S.ListWrap>
   );
 }

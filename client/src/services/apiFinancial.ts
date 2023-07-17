@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { FaRecData } from '../types/financialRecord';
+import financialRecord from '../pages/api/financial-record/index';
 
 export const APIfinancialRecord = {
   getRecordList: async () => {
     try {
+      // const res = await axios.get('/financial-record');
       const res = await axios.get('/data/recordList.json');
       return res.data;
     } catch (err) {
@@ -12,7 +13,8 @@ export const APIfinancialRecord = {
   },
   createFaRec: async (formData: FormData) => {
     try {
-      const res = await axios.post('/api/financial-record/', formData, {
+      // const res = await axios.post('/api/financial-record/', formData, {
+      const res = await axios.post('/financial-record/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
