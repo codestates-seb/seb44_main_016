@@ -79,7 +79,7 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
       <Label>{labelText}</Label>
       <S.Box>
         {type === 'feed' ? (
-          <ArticleHeader type={type} createdAt={new Date(date)} profileImg={data.profileImg}>
+          <ArticleHeader type={type} createdAt={data.createdAt} profileImg={data.profileImg}>
             {data.userNickname}
           </ArticleHeader>
         ) : (
