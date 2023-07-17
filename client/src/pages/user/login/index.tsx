@@ -6,7 +6,7 @@ import { useMutation } from '@tanstack/react-query';
 import { RootState } from '../../../components/redux/store';
 import styled from '@emotion/styled';
 import useInput from '../../../hooks/useComponents';
-import Logo from '../../../../public/image/logo.svg';
+import Logo from '../../../../public/images/logo.svg';
 import CommonStyles from '../../../styles/CommonStyles';
 import Oauth from './OAuth';
 import apiUser from '../../../services/apiUser';

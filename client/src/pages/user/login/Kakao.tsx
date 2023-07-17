@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import Kakao from '../../../../public/icon/kakao.svg';
+import Kakao from '../../../../public/images/icon/kakao.svg';
 
 export default function KakaoOauth() {
   const apiKey = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
