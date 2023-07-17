@@ -10,9 +10,10 @@ import withAuth from '../../../components/WithAuth';
 import apiUser from '../../../services/apiUser';
 import Loading from '../../../components/Loading';
 import { FeedArticleResType } from '../../../types/article';
+
 function MyPage() {
   const router = useRouter();
-  const { isLoading, error, data, isSuccess } = useQuery(['myPageInfo'], apiUser.getUser);
+  const { isLoading, error, data, isSuccess } = useQuery(['myInfo'], apiUser.getMyInfo);
 
   if (error) {
     toast.error('오류가 발생했습니다.');

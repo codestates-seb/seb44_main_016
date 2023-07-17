@@ -41,7 +41,7 @@ const apiUser = {
   },
 
   /** 회원 탈퇴 */
-  deleteUser: async () => {
+  deleteMyInfo: async () => {
     try {
       await axios.delete(`${BASE_URL}/user/delete`); // 토큰 담아 보냄 - 인스턴스로 교체
     } catch (err) {
@@ -50,7 +50,7 @@ const apiUser = {
   },
 
   /** 회원 정보 불러오기 */
-  getUser: async () => {
+  getMyInfo: async () => {
     try {
       const res = await axios.get(`${BASE_URL}/user/mypage`); // 토큰 담아 보냄 - 인스턴스로 교체
       return res.data;
@@ -60,7 +60,7 @@ const apiUser = {
   },
 
   /** 회원 정보 수정 */
-  updateUser: async (userUpdateData: UserUpdateReqData) => {
+  updateMyInfo: async (userUpdateData: UserUpdateReqData) => {
     try {
       const res = await axios.patch(`${BASE_URL}/user/update`, userUpdateData, {
         headers: { 'Content-Type': 'multipart/form-data' },

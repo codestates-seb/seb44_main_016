@@ -47,7 +47,7 @@ export default function UserDelete() {
     },
   ];
 
-  const { mutateAsync } = useMutation(() => apiUser.deleteUser());
+  const { mutateAsync } = useMutation(() => apiUser.deleteMyInfo());
 
   useEffect(() => {
     const newError = getNewError.delete({ pwValue, password, isChecked });
