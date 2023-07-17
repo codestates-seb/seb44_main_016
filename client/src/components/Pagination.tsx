@@ -42,8 +42,8 @@ export default function Pagination({ currentPage, totalPages, handlePageChange }
       </button>
       <button
         onClick={handlePrevGroup}
-        disabled={currentPage === 1}
-        aria-label='이전 페이지 그룹으로 이동하기'
+        disabled={currentPage === 1 || pageGroup === 1}
+        aria-label='이전 페이지로 이동하기'
         className='arrow'
       >
         {SVGs.page.prev}
@@ -61,7 +61,7 @@ export default function Pagination({ currentPage, totalPages, handlePageChange }
       ))}
       <button
         onClick={handleNextGroup}
-        disabled={currentPage === totalPages || currentPage % 5 !== 0}
+        disabled={currentPage === totalPages || pageGroup >= Math.ceil(totalPages / 5)}
         aria-label='다음 페이지로 이동하기'
         className='arrow'
       >
@@ -70,7 +70,7 @@ export default function Pagination({ currentPage, totalPages, handlePageChange }
       <button
         onClick={() => handlePageChange(totalPages)}
         disabled={currentPage === totalPages}
-        aria-label='마지막 페이지 그룹으로 이동하기'
+        aria-label='마지막 페이지로 이동하기'
         className='arrow'
       >
         {SVGs.page.last}
