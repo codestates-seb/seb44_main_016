@@ -76,9 +76,9 @@ export default function UserUpdate() {
   const requestBody = {
     nickname: nickname ? nickname : '',
     password: pwValue ? pwValue : '',
-    profileImgPath: isAvatar
-      ? `https://source.boringavatars.com/beam/150/${nickname}${changeAvatarNumber}`
-      : '',
+    // profileImgPath: isAvatar
+    //   ? `https://source.boringavatars.com/beam/150/${nickname}${changeAvatarNumber}`
+    //   : '',
   };
 
   const { mutateAsync } = useMutation(() => apiUser.updateMyInfo(requestBody));
