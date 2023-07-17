@@ -10,6 +10,8 @@ import InputNaturalNumber from './InputNaturalNumber';
 import RadioSet from './RadioSet';
 import ImgsUploader from './ImgsUploader';
 
+import { CATEGORY } from '../../constants/category';
+
 export default function EditorPage() {
   // 일부 값들은 Enum으로 바꾸는 걸 권장
 
@@ -120,7 +122,7 @@ export default function EditorPage() {
             {/* 카테고리 */}
             <SelectOption
               legend='지출 카테고리'
-              options={['식비', '교통비', '교육비', '여가비']}
+              options={CATEGORY.flatMap((cate) => cate.name)}
               handler={handleChangeCategory}
               disabled={faType !== 0}
             />
