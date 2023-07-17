@@ -30,6 +30,16 @@ const apiUser = {
     }
   },
 
+  /** 로그아웃 */
+  getLogout: async (): Promise<AxiosResponse> => {
+    try {
+      const res = await axios.get(`${BASE_URL}/user/logout`);
+      return res;
+    } catch (err) {
+      return err.response;
+    }
+  },
+
   /** 회원 탈퇴 */
   deleteUser: async () => {
     try {
