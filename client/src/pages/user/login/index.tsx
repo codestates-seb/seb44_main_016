@@ -49,7 +49,8 @@ export default function Login() {
     if (res.status === 200) {
       const accessToken = res.headers.Authorization; // 나중에 서버 연결 후
       // const accessToken = 'temp-access-token-from-header';
-      const { nickname } = res.data.user;
+      const { nickname } = res.data;
+      console.log('here');
       dispatch(login({ accessToken, nickname, isLoggedIn: true }));
 
       setLoginId('');
