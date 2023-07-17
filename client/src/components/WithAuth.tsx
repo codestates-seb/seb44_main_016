@@ -14,6 +14,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   const dispatch = useAppDispatch();
 
   const accessToken = useSelector<RootState>((state) => state.authnReducer.login.accessToken);
+  console.log(accessToken);
   // const refreshToken = getCookie('refreshToken');
   const refreshToken = 'temporary';
 
