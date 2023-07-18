@@ -2,18 +2,18 @@ import styled from '@emotion/styled';
 import CommonStyles from '../../../../styles/CommonStyles';
 import { useRouter } from 'next/router';
 import { FaRecHeaderData } from '../../../../types/financialRecord';
+import Loading from '../../../../components/Loading';
 
 interface FaRecHeaderProps {
   data: FaRecHeaderData;
   setActiveTab: (value: string) => void;
+  isLoading: boolean;
+  isSuccess: boolean;
+  isError: boolean;
 }
 
-export default function FaRecHeader({ setActiveTab, data }: FaRecHeaderProps) {
-  if (!data) {
-    return null;
-  }
-
-  const { financialRecordName, memo, articleCount, faRecTimeline, imgPath, isBookmark, users } = data;
+export default function FaRecHeader({ setActiveTab, isLoading, isError, data }: FaRecHeaderProps) {
+  const { financialRecordName, memo, articleCount, faRecTimeline, imgPath } = data;
 
   const router = useRouter();
   const faRecId = router.query.slug;
@@ -24,42 +24,50 @@ export default function FaRecHeader({ setActiveTab, data }: FaRecHeaderProps) {
   return (
     <>
       <S.Container>
-        <S.ImgBox>
-          <img src={imgPath} alt={`${financialRecordName} 프로필 사진`} />
-        </S.ImgBox>
-        <S.ContentBox>
-          <div>
-            <S.FaRecName>{financialRecordName}</S.FaRecName>
-            <S.LinkWrap>
-              <S.LinkBtn
-                href='/financial-record/edit/[slug]'
-                as={`/financial-record/edit/${faRecId}`}
-                color='--color-point-lilac'
-                size='small'
-              >
-                가계부 편집
-              </S.LinkBtn>
-              <S.LinkBtn href={`/editor?farecid=${faRecId}`} size='small'>
-                가계부 작성
-              </S.LinkBtn>
-            </S.LinkWrap>
-          </div>
-          <S.ButtonWrap>
-            <S.aLink href='#article' onClick={() => handleButtonClick('가계부')}>
-              게시물
-              <span>{articleCount}</span>
-            </S.aLink>
-            <S.aLink href='#timeline' onClick={() => handleButtonClick('타임라인')}>
-              타임라인
-              <span>{faRecTimeline}</span>
-            </S.aLink>
-            <S.Button type='button'>
-              멤버
-              <span>{users.length}</span>
-            </S.Button>
-          </S.ButtonWrap>
-          <S.DescContainer>{memo}</S.DescContainer>
-        </S.ContentBox>
+        {isError ? (
+          <div>에러가 발생 하였습니다. 다시 시도해주세요.</div>
+        ) : isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <S.ImgBox>
+              <img src={imgPath} alt={`${financialRecordName} 프로필 사진`} />
+            </S.ImgBox>
+            <S.ContentBox>
+              <div>
+                <S.FaRecName>{financialRecordName}</S.FaRecName>
+                <S.LinkWrap>
+                  <S.LinkBtn
+                    href='/financial-record/edit/[slug]'
+                    as={`/financial-record/edit/${faRecId}`}
+                    color='--color-point-lilac'
+                    size='small'
+                  >
+                    가계부 편집
+                  </S.LinkBtn>
+                  <S.LinkBtn href={`/editor?farecid=${faRecId}`} size='small'>
+                    가계부 작성
+                  </S.LinkBtn>
+                </S.LinkWrap>
+              </div>
+              <S.ButtonWrap>
+                <S.aLink href='#article' onClick={() => handleButtonClick('가계부')}>
+                  게시물
+                  <span>{articleCount}</span>
+                </S.aLink>
+                <S.aLink href='#timeline' onClick={() => handleButtonClick('타임라인')}>
+                  타임라인
+                  <span>{faRecTimeline}</span>
+                </S.aLink>
+                <S.Button type='button'>
+                  멤버
+                  {/* <span>{users.length}</span> */}
+                </S.Button>
+              </S.ButtonWrap>
+              <S.DescContainer>{memo}</S.DescContainer>
+            </S.ContentBox>
+          </>
+        )}
       </S.Container>
     </>
   );

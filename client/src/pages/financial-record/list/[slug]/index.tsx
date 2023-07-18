@@ -13,6 +13,7 @@ import Loading from '../../../../components/Loading';
 import Pagination from '../../../../components/Pagination';
 import CommonStyles from '../../../../styles/CommonStyles';
 import { toast } from 'react-toastify';
+import ErrorComponent from '../../../../components/ErrorComponent';
 
 export default function FinancialPage() {
   const router = useRouter();
@@ -25,15 +26,17 @@ export default function FinancialPage() {
   const tabs = ['가계부', '타임라인'];
   const [page, setPage] = useState(1);
   const size = 2;
-
+  console.log(financialRecordId);
   // 데이터 요청
   const {
     data: faRecData,
     error: faRecError,
     isError: isFaRecError,
+    isSuccess: isFaRecSuccess,
     isLoading: isFaRecLoading,
   } = useQuery(['faRecHeader'], () => APIfinancialRecord.getFaRec(financialRecordId), {
     staleTime: 1000 * 60 * 30,
+    enabled: !!financialRecordId,
   });
   const {
     data: articleData,
@@ -43,7 +46,7 @@ export default function FinancialPage() {
   } = useQuery(
     ['faRecArticles', page],
     () => APIfinancialRecord.getRecordArticle(financialRecordId, page, size),
-    { keepPreviousData: true, staleTime: 1000 * 60 * 10 }
+    { keepPreviousData: true, staleTime: 1000 * 60 * 10, enabled: !!financialRecordId }
   );
   const {
     data: timelineData,
@@ -57,24 +60,27 @@ export default function FinancialPage() {
     ({ pageParam = 1 }) => APIfinancialRecord.getRecordArticle(financialRecordId, pageParam, size),
     {
       getNextPageParam: (lastPage) => {
-        const nextPage = lastPage.pageData.page + 1;
-        return nextPage > lastPage.pageData.totalPages ? undefined : nextPage;
+        const nextPage = lastPage.pageData?.page + 1;
+        return nextPage > lastPage.pageData?.totalPages ? undefined : nextPage;
       },
       staleTime: 1000 * 60 * 10,
+      enabled: !!financialRecordId,
     }
   );
+
   useEffect(() => {
     if (inView && hasNextPage) {
       fetchNextPage();
     }
   }, [inView, hasNextPage]);
 
-  if (isFaRecError || isArticleError || isTimelineError) {
-    const errorMessage =
-      (faRecError as Error).message || (articleError as Error).message || (timelineError as Error).message;
-    toast.error(`${errorMessage} 에러가 발생하였습니다.`);
-    toast.info('잠시 후에 다시 시도해주세요.');
-  }
+  // if (isFaRecError || isArticleError || isTimelineError) {
+  //   const errorMessage =
+  //     (faRecError as Error)?.message || (articleError as Error)?.message || (timelineError as Error)?.message;
+  //   toast.error(`${errorMessage} 에러가 발생하였습니다.`);
+  //   toast.info('잠시 후에 다시 시도해주세요.');
+  //   return <ErrorComponent message={errorMessage} />;
+  // }
 
   if (isFaRecLoading || isArticleLoading || IsTimelineLoading) {
     return <Loading />;
@@ -82,40 +88,58 @@ export default function FinancialPage() {
 
   return (
     <S.Container>
-      <FaRecHeader setActiveTab={setActiveTab} data={faRecData} />
+      <FaRecHeader
+        setActiveTab={setActiveTab}
+        isLoading={isFaRecLoading}
+        isSuccess={isFaRecSuccess}
+        isError={isFaRecError}
+        data={faRecData}
+      />
       <Tab tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
 
       {activeTab === '가계부' ? (
         <S.ContentWrap id='article'>
-          {articleData.data.map((el: FaRecData) => {
-            return (
-              <FaRecArticle
-                key={el.financialRecordArticleId}
-                category={el.category}
-                faDate={new Date(el.faDate)}
-                title={el.title}
-                price={el.price}
-                content={el.content}
-                imgPath={el.imgPath}
-              />
-            );
-          })}
-          <Pagination
-            currentPage={page}
-            totalPages={articleData?.pageData.totalPages || 1}
-            handlePageChange={setPage}
-          />
+          {isArticleError ? (
+            <ErrorComponent message={faRecError} />
+          ) : articleData?.data?.length > 0 ? (
+            articleData.data.map((el: FaRecData) => {
+              return (
+                <FaRecArticle
+                  key={el.financialRecordArticleId}
+                  category={el.category}
+                  faDate={new Date(el.faDate)}
+                  title={el.title}
+                  price={el.price}
+                  content={el.content}
+                  imgPath={el.imgPath}
+                />
+              );
+            })
+          ) : (
+            <S.ErrorText>가계부가 비어있습니다.</S.ErrorText>
+          )}
+          {!isArticleError && articleData?.data?.length > 0 && (
+            <Pagination
+              currentPage={page}
+              totalPages={articleData?.pageData.totalPages || 1}
+              handlePageChange={setPage}
+            />
+          )}
         </S.ContentWrap>
       ) : (
         <>
           <S.ContentWrap id='timeline'>
-            {timelineData?.pages.flatMap((pageData) =>
-              pageData.data
-                .filter((el: FaRecData) => el.scope === '가계부 타임라인')
-                .map((filteredEl: FaRecData) => (
+            {timelineData?.pages.flatMap((pageData) => {
+              const filteredData = pageData.data?.filter((el: FaRecData) => el.scope === '가계부 타임라인');
+
+              return filteredData?.length > 0 ? (
+                filteredData?.map((filteredEl: FaRecData) => (
                   <SnsArticle key={filteredEl.financialRecordArticleId} data={filteredEl} type='timeline' />
                 ))
-            )}
+              ) : (
+                <S.ErrorText>타임라인이 비어있습니다.</S.ErrorText>
+              );
+            })}
           </S.ContentWrap>
           <S.AddWrap ref={ref}>
             <S.AddBtn onClick={() => fetchNextPage()} disabled={!hasNextPage}>

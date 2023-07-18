@@ -9,6 +9,7 @@ import useInput from '../../hooks/useComponents';
 import SVGs from '../../constants/svg';
 import Loading from '../../components/Loading';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 export const metadata: Metadata = {
   title: '가계부 목록',
@@ -47,7 +48,6 @@ export default function FinancialListPage() {
   if (isSearching && search) {
     displayData = data?.filter((el) => el.financialRecordName?.includes(search));
   }
-
   return (
     <S.ListWrap>
       <h1 className='blind'>{PAGE_NAMES.FINANCIAL_RECORD_LIST}</h1>
@@ -58,6 +58,7 @@ export default function FinancialListPage() {
         </S.InputWrap>
         <S.LinkBtn href='/financial-record/create'>새 가계부 만들기</S.LinkBtn>
       </S.FormWrap>
+
       {isError ? (
         <S.ErrorText>
           {' '}
@@ -87,6 +88,7 @@ const S = {
     flex-direction: column;
     padding: 1.875rem;
     width: 100%;
+    height: 100%;
   `,
 
   FormWrap: styled.form`

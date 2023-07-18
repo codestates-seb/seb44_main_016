@@ -18,6 +18,9 @@ export default function financialRecordEdit(req: NextApiRequest, res: NextApiRes
   if (pageOfRecords.length > 0) {
     res.status(200).json({ data: pageOfRecords, pageData: pageData });
   } else {
-    res.status(404).json({ message: 'Record not found' });
+    res.status(200).json({
+      data: [],
+      pageData: { page: Math.ceil(page), totalPages: Math.ceil(recordArticle.length / size) },
+    });
   }
 }
