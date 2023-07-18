@@ -39,7 +39,7 @@ const TimelineArticleDummyB: FaRecData = {
   user: {
     userId: 1, // BigInt
     profileImgPath: 'https://source.boringavatars.com/beam/150/waypil',
-    nickname: 'Waypil',
+    nickname: '갈라파고스섬바다거북',
   },
   imgPath: [],
 };
@@ -50,7 +50,7 @@ const feedArticleDummyA: FeedArticleResType = {
   user: {
     userId: 2, // BigInt
     profileImgPath: 'https://source.boringavatars.com/beam/150/갈라파고스바다거북',
-    nickname: '갈라파고스바다거북',
+    nickname: '갈라파고스섬바다거북',
   },
   content: `          이 장난감은 고무줄 같은 것을 이용해서 나비가 날아갈 준비를 해놓고, 손 안에 넣어두거나 또는 책 안에 나비를 넣어두고 확! 펼치면 나비들이 진짜 살아 움직이는 것처럼 날아 움직이는 거라는 데요. 가격이 아래 링크를 들어가보면 아시다시피 3만원에 육박한답니다..! 
     링크 (https://kr.cukpang.com/kr/?id=9fwyHKVX&mp=1&fbclid=PAAaarWxOKFhda4w-0xFAa55qxsNGONEr9my3fWeRLxdjsBWM7e0d_UHK4wrw_aem_th_AZKXmF2qBNIduj_NvWRbIkwoRowGJJUv0Hz_x0ploWvEo85DiRWAfTxqpu7XURFV8dbRH-36EiU7IVM4HqKxA_n&external_browser_redirect=true)
