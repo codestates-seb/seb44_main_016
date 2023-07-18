@@ -52,11 +52,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                 {isShowNav && <Aside isLoggedIn={true} windowType={windowType} />}
                 <S.SubPage>
                   {isShowHeader && <HomeHeader windowType={windowType} />}
-                  <S.Main
-                    isShowNav={isShowNav}
-                    isShowHeader={isShowHeader}
-                    isDesktopScreen={windowType === ScreenEnum.DESKTOP}
-                  >
+                  <S.Main isShowNav={isShowNav} isShowHeader={isShowHeader} windowType={windowType}>
                     <Component {...pageProps} />
                   </S.Main>
                 </S.SubPage>
@@ -99,12 +95,16 @@ const S = {
     height: 100%;
   `,
 
-  Main: styled.main<{ isShowNav: boolean; isShowHeader: boolean; isDesktopScreen: boolean }>`
+  Main: styled.main<{ isShowNav: boolean; isShowHeader: boolean; windowType: ScreenEnum }>`
     width: auto;
     height: ${(props) => (props.isShowHeader ? 'calc(100% - var(--header-h));' : '100%')};
     margin-top: ${(props) => props.isShowHeader && '5rem'};
     margin-left: ${(props) =>
-      props.isShowNav ? (props.isDesktopScreen ? 'var(--aside-w)' : 'var(--aside-shrink-w)') : 0};
+      props.windowType === ScreenEnum.DESKTOP
+        ? 'var(--aside-w)'
+        : props.windowType === ScreenEnum.TABLET
+        ? 'var(--aside-shrink-w)'
+        : '0'};
     display: flex;
     flex-direction: column;
   `,
