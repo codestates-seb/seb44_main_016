@@ -13,6 +13,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +41,7 @@ public class FinancialRecordArticle extends Auditable implements Article {
   private String content;
   @NotNull
   @Column(nullable = false, unique = false, updatable = true)
-  private Date faDate;
+  private LocalDate faDate;
   @NotBlank
   @Size(min = 1, max = 10)
   @Column(nullable = false, unique = false, updatable = true, length = 10)
@@ -70,7 +71,7 @@ public class FinancialRecordArticle extends Auditable implements Article {
 //  @OneToMany(mappedBy = "financialRecordArticle", cascade = CascadeType.ALL, orphanRemoval = true)
 //  private List<Img> imgList = new ArrayList<>();
 
-  public FinancialRecordArticle(String title, String content, Date faDate, String category, int price, Scope scope, FinancialRecord financialRecord) {
+  public FinancialRecordArticle(String title, String content, LocalDate faDate, String category, int price, Scope scope, FinancialRecord financialRecord) {
     this.title = title;
     this.content = content;
     this.faDate = faDate;
