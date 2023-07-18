@@ -23,7 +23,7 @@ export default function HomeHeader(props: Props) {
   };
 
   return (
-    <S.HomeHeaderContainer isDesktopScreen={props.windowType === ScreenEnum.DESKTOP}>
+    <S.HomeHeaderContainer windowType={props.windowType}>
       <S.HomeHeaderBtn
         href='/'
         onClick={handleClickHomeButton}
@@ -45,9 +45,14 @@ export default function HomeHeader(props: Props) {
 
 const S = {
   ...CommonStyles,
-  HomeHeaderContainer: styled.header<{ isDesktopScreen: boolean }>`
+  HomeHeaderContainer: styled.header<{ windowType: ScreenEnum }>`
     position: fixed;
-    padding-left: ${(props) => (props.isDesktopScreen ? 'var(--aside-w)' : 'var(--aside-shrink-w)')};
+    padding-left: ${(props) =>
+      props.windowType === ScreenEnum.DESKTOP
+        ? 'var(--aside-w)'
+        : props.windowType === ScreenEnum.TABLET
+        ? 'var(--aside-shrink-w)'
+        : '0'};
     max-width: var(--app-max-w);
     width: 100%;
     height: var(--header-h);
