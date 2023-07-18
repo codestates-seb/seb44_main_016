@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import Google from '../../../../public/icon/google.svg';
+import Google from '../../../../public/images/icon/google.svg';
 
 export default function GoogleOauth() {
   const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;

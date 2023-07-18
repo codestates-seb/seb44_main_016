@@ -1,25 +1,23 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useMutation } from '@tanstack/react-query';
 import { RootState } from '../../../components/redux/store';
 import styled from '@emotion/styled';
 import useInput from '../../../hooks/useComponents';
-import Logo from '../../../../public/image/logo.svg';
+import Logo from '../../../../public/images/logo.svg';
 import CommonStyles from '../../../styles/CommonStyles';
 import Oauth from './OAuth';
 import apiUser from '../../../services/apiUser';
 import { useAppDispatch } from '../../../components/redux/hooks';
 import { login } from '../../../components/redux/authnReducer';
-import { setCookie } from 'cookies-next';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 import { toast } from 'react-toastify';
 
 export default function Login() {
   const [IdInput, loginId, setLoginId] = useInput('text', '아이디', 'loginId', 'username');
   const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw', 'current-password');
-  const [error, setError] = useState('');
   const [isClickedProps, RefusalAnimation] = useRefusalAni();
 
   const router = useRouter();
@@ -37,15 +35,11 @@ export default function Login() {
     if (isLoggedIn) router.push('/');
   }, []);
 
-  useEffect(() => {
-    if ((!loginId && !pwValue) || (loginId && pwValue)) setError('');
-  }, [loginId, pwValue]);
-
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!loginId || !pwValue) {
-      setError('아이디나 비밀번호를 입력해주세요.');
+      toast.error('아이디나 비밀번호를 입력해주세요.');
       RefusalAnimation();
       return;
     }
@@ -53,21 +47,18 @@ export default function Login() {
     const res = await mutateAsync();
 
     if (res.status === 200) {
-      // const accessToken = res.headers.Authorization; 나중에 서버 연결 후
-      const accessToken = 'temp-access-token-from-header';
-      const { nickname, loginId } = res.data.user;
-      // const refreshToken = getCookie('refreshToken'); 나중에 서버 연결 후
-      setCookie('refreshToken', 'im-refresh-token');
+      const accessToken = res.headers.Authorization; // 나중에 서버 연결 후
+      // const accessToken = 'temp-access-token-from-header';
+      const { nickname } = res.data;
+      console.log('here');
+      dispatch(login({ accessToken, nickname, isLoggedIn: true }));
 
-      dispatch(login({ accessToken, loginId, nickname, isLoggedIn: true }));
-
-      setError('');
       setLoginId('');
       setPwValue('');
       toast(`${nickname}님, 환영합니다!`);
       router.push(`/`);
     } else if (res.status === 401) {
-      setError(res.data.message);
+      toast.error(res.data.message);
     }
     return;
   };
@@ -84,7 +75,6 @@ export default function Login() {
         <S.LoginFormBox>
           <S.inputBox>{IdInput}</S.inputBox>
           <S.inputBox>{PwInput}</S.inputBox>
-          <S.Error> {error && error}</S.Error>
           <S.LoginBox {...isClickedProps}>
             <S.SubmitBtn large onClick={handleLoginSubmit}>
               로그인
@@ -131,19 +121,14 @@ const S = {
     align-items: center;
   `,
   inputBox: styled.div`
-    width: 100%;
+    width: 94%;
     &:first-of-type {
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.9rem;
     }
-  `,
-  Error: styled.div`
-    color: var(--color-error-red);
-    margin-top: 0.8rem;
-    min-height: 21px;
   `,
   LoginBox: styled.div<SubmitBoxProps>`
     width: 60%;
-    margin: 0.8rem 0 3rem 0;
+    margin: 2.3rem 0 3rem 0;
     ${isClickedStyled}
     font-size: 1.1rem;
     font-weight: 500;

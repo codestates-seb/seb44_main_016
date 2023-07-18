@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import CommonStyles from '../styles/CommonStyles';
-import BackBtn from '../../public/image/back2.svg';
+import BackBtn from '../../public/images/icon/back2.svg';
 
 export default function BackBtnBox() {
   const router = useRouter();
