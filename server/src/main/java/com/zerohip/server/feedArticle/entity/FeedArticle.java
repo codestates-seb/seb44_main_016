@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "feedArticles")
@@ -25,7 +26,7 @@ public class FeedArticle extends Auditable {
     @Column(nullable = false)
     private FeedType feedType;
 
-    //@Size -> 본문 문자열 크기 정하고 나서 사용
+    @Size(max = 10000)
     @Column(nullable = false)
     private String content;
 
@@ -37,5 +38,5 @@ public class FeedArticle extends Auditable {
     private List<FeedArticleImg> images = new ArrayList<>();
      */
 
-    //해시태그, 댓글, 유저, 투표(절약/플렉스) 추가적으로 작성 필요
+    //댓글, 유저, 투표(절약/플렉스) 추가적으로 작성 필요
 }
