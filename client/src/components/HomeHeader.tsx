@@ -4,11 +4,12 @@ import Link from 'next/link';
 
 import CommonStyles from '../styles/CommonStyles';
 import { ScreenEnum } from '../constants/enums';
-import { useWindowType } from '../hooks/useWindowSize';
 
-export default function HomeHeader() {
-  const windowType = useWindowType();
+type Props = {
+  windowType: ScreenEnum;
+};
 
+export default function HomeHeader(props: Props) {
   const [isHomeButtonActive, setIsHomeButtonActive] = React.useState(true);
   const [isFollowerButtonActive, setIsFollowerButtonActive] = React.useState(false);
 
@@ -22,7 +23,7 @@ export default function HomeHeader() {
   };
 
   return (
-    <S.HomeHeaderContainer isDesktopScreen={windowType === ScreenEnum.DESKTOP}>
+    <S.HomeHeaderContainer isDesktopScreen={props.windowType === ScreenEnum.DESKTOP}>
       <S.HomeHeaderBtn
         href='/'
         onClick={handleClickHomeButton}
