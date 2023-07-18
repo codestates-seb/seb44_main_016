@@ -25,8 +25,8 @@ export const APIfinancialRecord = {
   },
   getFaRec: async (financialRecordId: number) => {
     try {
-      const res = await axios.get(`/financial-record/${financialRecordId}`);
-      // const res = await axios.get(`/data/recordHeader.json`);
+      // const res = await axios.get(`/financial-record/${financialRecordId}`);
+      const res = await axios.get(`/data/recordHeader.json`);
       return res.data;
     } catch (err) {
       return err.response;
@@ -48,9 +48,10 @@ export const APIfinancialRecord = {
   },
   getRecordArticle: async (financialRecordId: number, page: number, size: number) => {
     try {
-      // const res = await axios.get(
-      //   `/api/financial-record/${financialRecordId}/article?page=${page}&size=${size}`
-      const res = await axios.get(`/financial-record/${financialRecordId}/article?page=${page}&size=${size}`);
+      const res = await axios.get(
+        `/api/financial-record/${financialRecordId}/article?page=${page}&size=${size}`
+      );
+      // const res = await axios.get(`/financial-record/${financialRecordId}/article?page=${page}&size=${size}`);
       const { data, pageData } = res.data;
 
       return { data, pageData };
