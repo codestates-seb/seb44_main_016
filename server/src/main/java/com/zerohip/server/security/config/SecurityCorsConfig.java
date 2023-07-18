@@ -23,7 +23,8 @@ public class SecurityCorsConfig {
         configuration.addAllowedOriginPattern("https://www.zerohip.co.kr");
         configuration.addAllowedOriginPattern("http://3.39.235.244:8080/h2");
         configuration.addAllowedMethod("*");
-        configuration.addExposedHeader("*");    // 응답 헤더 노출
+        configuration.addExposedHeader("Authorization");  // 응답 헤더 노출
+        configuration.addExposedHeader("Refresh");
         configuration.addAllowedHeader("*");    // 클라이언트가 서버에 요청을 보낼 때, 헤더에 토큰 등을 담아 요청하는걸 허용
 
         source.registerCorsConfiguration("/**", configuration);
