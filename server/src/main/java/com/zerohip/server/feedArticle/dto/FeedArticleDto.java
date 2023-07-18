@@ -19,8 +19,7 @@ public class FeedArticleDto {
     @AllArgsConstructor
     public static class post{
         @NotBlank
-        //@Size(max = 추후 지정) -> @NotBlank와 함께 사용하면 조금 더 정확할 것 같음.
-        //@Size(min = 1, max = ???)를 사용하면 @NotBlank는 없어도 될 것 같기도.. 고민 필요
+        @Size(max = 10000)
         private String content;
         @NotNull
         private FeedType feedType;
@@ -34,8 +33,7 @@ public class FeedArticleDto {
     public static class FeedArticleResponse {
         private Long feedArticleId;
         @NotNull
-        //@Size(max = 추후 지정) -> @NotBlank와 함께 사용하면 조금 더 정확할 것 같음.
-        //@Size(min = 1, max = ???)를 사용하면 @NotBlank는 없어도 될 것 같기도.. 고민 필요
+        @Size(max = 10000)
         private String content;
         @NotNull
         private FeedType feedType;
@@ -43,7 +41,7 @@ public class FeedArticleDto {
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
 
-        //이미지, 댓글, 해시태그, 유저, 투표, 유저Id
+        //이미지, 댓글, 유저(userId, profileImgPath, nickName), 투표
     }
 
     //전체 피드게시글 죄회 - 피드 게시글의 정보를 리스트로 담아서 조회
@@ -57,7 +55,7 @@ public class FeedArticleDto {
     @AllArgsConstructor
     public static class Patch {
         @NotBlank
-        //@Size(max = 추후 지정) -> @NotBlank와 함께 사용하면 조금 더 정확할 것 같음.
+        @Size(max = 10000)
         private String content;
         @NotNull
         private FeedType feedType;
