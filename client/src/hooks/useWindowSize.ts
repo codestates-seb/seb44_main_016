@@ -5,7 +5,7 @@ import { ScreenEnum } from '../constants/enums';
 export const useWindowType = () => {
   const [width, height] = useWindowSize();
 
-  if (width < 480) {
+  if (width < 600) {
     return ScreenEnum.MOBILE;
   } else if (width < 900) {
     return ScreenEnum.TABLET;

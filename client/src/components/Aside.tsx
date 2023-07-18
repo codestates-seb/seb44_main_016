@@ -13,16 +13,15 @@ import { ScreenEnum } from '../constants/enums';
 /* type은 추후 다른 파일로 분리하고 Import할 예정 */
 type Props = {
   isLoggedIn: boolean;
+  windowType: ScreenEnum;
 };
 
 export default function Aside(props: Props) {
-  const windowType = useWindowType();
-
   const [isSearchTabOpened, setIsSearchTabOpened] = React.useState(false);
   const [isNoticeTabOpened, setIsNoticeTabOpened] = React.useState(false);
   const isTabClosed = !isSearchTabOpened && !isNoticeTabOpened;
 
-  const asideClsName = !isTabClosed || windowType !== ScreenEnum.DESKTOP ? 'shrink' : '';
+  const asideClsName = !isTabClosed || props.windowType !== ScreenEnum.DESKTOP ? 'shrink' : '';
   const isShrink = asideClsName === 'shrink';
 
   const [isBookmarkedFaRecListOpened, setIsBookmarkedFaRecListOpened] = React.useState(true);

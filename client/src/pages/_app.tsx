@@ -49,7 +49,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           <S.RootScreen>
             <S.AppContainer maxWidth={maxWidth}>
               <S.FlexPage bgColor={bgColor}>
-                {isShowNav && <Aside isLoggedIn={true} />}
+                {isShowNav && <Aside isLoggedIn={true} windowType={windowType} />}
                 <S.SubPage>
                   {isShowHeader && <HomeHeader />}
                   <S.Main
