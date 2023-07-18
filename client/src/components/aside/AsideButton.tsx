@@ -20,16 +20,23 @@ type Props = {
 export default function AsideButton(props: Props) {
   const isShrinkOrMobile = ['shrink', 'mobile'].includes(props.className || '');
 
+  const onClickLeft = (e: MouseEvent) => {
+    e.preventDefault(); // 알림/검색 버튼을 누르면 화면이 맨 위로 스크롤되는 버그 수정
+    if (props.onClick) {
+      props.onClick();
+    }
+  };
+
   return (
     <S.AsideButtonContainer isSmall={props.isSmall}>
-      <S.AsideInnerButtonLeft href={props.href || 'javascript:'} onClick={props.onClick}>
+      <S.AsideInnerButtonLeft href={props.href || ''} onClick={onClickLeft}>
         <SvgBox>{props.leftIcon || <></>}</SvgBox>
         {isShrinkOrMobile ? <></> : <S.Text>{props.children}</S.Text>}
       </S.AsideInnerButtonLeft>
       {isShrinkOrMobile || props.rightIcon === undefined ? (
         <></>
       ) : (
-        <S.AsideInnerButtonRight onClick={props.onClick || props.onClickRight}>
+        <S.AsideInnerButtonRight onClick={onClickLeft || props.onClickRight}>
           <SvgBox isReverse={!props.isReverse}>{props.rightIcon || <></>}</SvgBox>
         </S.AsideInnerButtonRight>
       )}
