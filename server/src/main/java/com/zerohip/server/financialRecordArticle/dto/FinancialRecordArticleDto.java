@@ -9,6 +9,7 @@ import lombok.Getter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -22,7 +23,7 @@ public class FinancialRecordArticleDto {
     @Size(max = 2000)
     private String content;
     @NotNull
-    private Date faDate;
+    private LocalDate faDate;
     @NotBlank
     private String category;
     @NotNull
@@ -48,7 +49,7 @@ public class FinancialRecordArticleDto {
     @Size(max = 2000)
     private String content;
     @NotNull
-    private Date faDate;
+    private LocalDate faDate;
     @NotBlank
     @Size(min = 1, max = 10)
     private String category;
@@ -70,7 +71,7 @@ public class FinancialRecordArticleDto {
     @Size(max = 2000)
     private String content;
     @NotNull
-    private Date faDate;
+    private LocalDate faDate;
     @NotBlank
     private String category;
     @NotNull
