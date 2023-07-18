@@ -20,7 +20,7 @@ type Props = {
 export default function AsideButton(props: Props) {
   const isShrinkOrMobile = ['shrink', 'mobile'].includes(props.className || '');
 
-  const onClickLeft = (e: MouseEvent) => {
+  const onClickLeft = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault(); // 알림/검색 버튼을 누르면 화면이 맨 위로 스크롤되는 버그 수정
     if (props.onClick) {
       props.onClick();
@@ -36,7 +36,7 @@ export default function AsideButton(props: Props) {
       {isShrinkOrMobile || props.rightIcon === undefined ? (
         <></>
       ) : (
-        <S.AsideInnerButtonRight onClick={onClickLeft || props.onClickRight}>
+        <S.AsideInnerButtonRight onClick={props.onClick || props.onClickRight}>
           <SvgBox isReverse={!props.isReverse}>{props.rightIcon || <></>}</SvgBox>
         </S.AsideInnerButtonRight>
       )}
