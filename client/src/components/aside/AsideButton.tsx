@@ -22,7 +22,7 @@ export default function AsideButton(props: Props) {
 
   return (
     <S.AsideButtonContainer isSmall={props.isSmall}>
-      <S.AsideInnerButtonLeft href={props.href || ''} onClick={props.onClick}>
+      <S.AsideInnerButtonLeft href={props.href || 'javascript:'} onClick={props.onClick}>
         <SvgBox>{props.leftIcon || <></>}</SvgBox>
         {isShrinkOrMobile ? <></> : <S.Text>{props.children}</S.Text>}
       </S.AsideInnerButtonLeft>
