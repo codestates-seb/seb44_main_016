@@ -10,10 +10,12 @@ type Props = {
 };
 
 export default function AsideLogo(props: Props) {
+  const isShrinkOrMobile = ['shrink', 'mobile'].includes(props.className || '');
+
   return (
     <S.LogoContainer href='/' className={props.className}>
       <SvgBox>{svgs.logoSymbol}</SvgBox>
-      <span>{props.className == 'shrink' ? <></> : svgs.logoText}</span>
+      <span>{isShrinkOrMobile ? <></> : svgs.logoText}</span>
     </S.LogoContainer>
   );
 }

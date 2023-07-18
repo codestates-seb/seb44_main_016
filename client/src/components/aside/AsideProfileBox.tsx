@@ -9,11 +9,13 @@ type Props = {
 };
 
 export default function AsideProfileBox(props: Props) {
+  const isShrinkOrMobile = ['shrink', 'mobile'].includes(props.className || '');
+
   let nickname = '';
   let loginId = '';
   let hamburgerBtn = <></>;
 
-  if (props.className !== 'shrink') {
+  if (!isShrinkOrMobile) {
     nickname = '마마망';
     loginId = '@doyu';
     hamburgerBtn = <AsideHamburgerBtn />;

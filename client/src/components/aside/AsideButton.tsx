@@ -18,13 +18,15 @@ type Props = {
 };
 
 export default function AsideButton(props: Props) {
+  const isShrinkOrMobile = ['shrink', 'mobile'].includes(props.className || '');
+
   return (
     <S.AsideButtonContainer isSmall={props.isSmall}>
       <S.AsideInnerButtonLeft href={props.href || ''} onClick={props.onClick}>
         <SvgBox>{props.leftIcon || <></>}</SvgBox>
-        {props.className === 'shrink' ? <></> : <S.Text>{props.children}</S.Text>}
+        {isShrinkOrMobile ? <></> : <S.Text>{props.children}</S.Text>}
       </S.AsideInnerButtonLeft>
-      {props.className === 'shrink' || props.rightIcon === undefined ? (
+      {isShrinkOrMobile || props.rightIcon === undefined ? (
         <></>
       ) : (
         <S.AsideInnerButtonRight onClick={props.onClick || props.onClickRight}>

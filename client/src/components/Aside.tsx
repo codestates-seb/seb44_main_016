@@ -10,6 +10,17 @@ import svgs from '../constants/svg';
 import { useWindowType } from '../hooks/useWindowSize';
 import { ScreenEnum } from '../constants/enums';
 
+function getClsName(isTabClosed: boolean, windowType: ScreenEnum) {
+  let asideClsName = '';
+  if (!isTabClosed || windowType !== ScreenEnum.DESKTOP) {
+    asideClsName = 'shrink';
+  }
+  if (windowType === ScreenEnum.MOBILE) {
+    asideClsName = 'mobile';
+  }
+  return asideClsName;
+}
+
 /* type은 추후 다른 파일로 분리하고 Import할 예정 */
 type Props = {
   isLoggedIn: boolean;
@@ -17,14 +28,13 @@ type Props = {
 };
 
 export default function Aside(props: Props) {
+  const [isBookmarkedFaRecListOpened, setIsBookmarkedFaRecListOpened] = React.useState(true);
   const [isSearchTabOpened, setIsSearchTabOpened] = React.useState(false);
   const [isNoticeTabOpened, setIsNoticeTabOpened] = React.useState(false);
   const isTabClosed = !isSearchTabOpened && !isNoticeTabOpened;
 
-  const asideClsName = !isTabClosed || props.windowType !== ScreenEnum.DESKTOP ? 'shrink' : '';
-  const isShrink = asideClsName === 'shrink';
-
-  const [isBookmarkedFaRecListOpened, setIsBookmarkedFaRecListOpened] = React.useState(true);
+  const asideClsName = getClsName(isTabClosed, props.windowType);
+  const isShrinkOrMobile = ['shrink', 'mobile'].includes(asideClsName || '');
 
   const handleOpenOrCloseBookmarkedFaRecList = () => {
     setIsBookmarkedFaRecListOpened((prevBool) => !prevBool);
@@ -49,7 +59,7 @@ export default function Aside(props: Props) {
         <S.Upper>
           <AsideLogo className={asideClsName} />
           <ol>
-            <AsideButton leftIcon={svgs.home} className={asideClsName}>
+            <AsideButton leftIcon={svgs.home} className={asideClsName} href='/'>
               홈
             </AsideButton>
             {props.isLoggedIn && (
@@ -71,7 +81,7 @@ export default function Aside(props: Props) {
                 >
                   내 가계부
                 </AsideButton>
-                {isBookmarkedFaRecListOpened || isShrink ? (
+                {isBookmarkedFaRecListOpened || isShrinkOrMobile ? (
                   <></>
                 ) : (
                   <ol>
@@ -101,9 +111,13 @@ export default function Aside(props: Props) {
             <>
               {/* href='/user/mypage' */}
               <AsideProfileBox className={asideClsName} />
-              {isShrink ? <AsideButton leftIcon={svgs.editor} /> : <S.SubmitBtn>글쓰기</S.SubmitBtn>}
+              {isShrinkOrMobile ? (
+                <AsideButton leftIcon={svgs.editor} />
+              ) : (
+                <S.LinkBtn href={'/editor'}>글쓰기</S.LinkBtn>
+              )}
             </>
-          ) : isShrink ? (
+          ) : isShrinkOrMobile ? (
             <S.LinkBtn href='/user/login'>로그인</S.LinkBtn>
           ) : (
             <AsideButton href='/user/login' leftIcon={svgs.person} />
@@ -139,6 +153,10 @@ const S = {
 
     &.shrink {
       width: var(--aside-shrink-w);
+    }
+    &.mobile {
+      width: 100%;
+      height: 5rem;
     }
   `,
   LeftOfAsideCover: styled.div`
