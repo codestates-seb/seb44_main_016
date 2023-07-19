@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -24,6 +25,7 @@ public class FeedArticle extends Article {
     private FeedType feedType;
 
     @Size(max = 2_000)
+    @NotNull
     @Column(nullable = false, length = 2_000)
     private String content;
 

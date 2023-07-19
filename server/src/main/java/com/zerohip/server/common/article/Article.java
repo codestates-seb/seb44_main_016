@@ -20,7 +20,7 @@ public abstract class Article extends Auditable {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)
-  private Long id;
+  private Long articleId;
 
   private String content;
 
