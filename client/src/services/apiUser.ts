@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { PostSignUp, LoginReqData, UserUpdateReqData } from '../types/user';
-import { tokenInstance } from './loginInstance';
+import { instance } from './loginInstance';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -32,18 +32,15 @@ const apiUser = {
 
   /** 로그아웃 */
   deleteLogout: async () => {
-    try {
-      const res = await axios.delete(`${BASE_URL}/user/logout`);
-      return res;
-    } catch (err) {
-      return err.response;
-    }
+    const res = await instance.delete(`${BASE_URL}/auth/logout`);
+    console.log(res);
+    return res;
   },
 
   /** 회원 탈퇴 */
   deleteMyInfo: async () => {
     try {
-      await axios.delete(`${BASE_URL}/user/delete`); // 토큰 담아 보냄 - 인스턴스로 교체
+      await instance.delete(`${BASE_URL}/user/delete`); // 토큰 담아 보냄 - 인스턴스로 교체
     } catch (err) {
       throw err.response;
     }
@@ -51,18 +48,14 @@ const apiUser = {
 
   /** 회원 정보 불러오기 */
   getMyInfo: async () => {
-    try {
-      const res = await axios.get(`${BASE_URL}/user/mypage`); // 토큰 담아 보냄 - 인스턴스로 교체
-      return res.data;
-    } catch (err) {
-      throw err.response;
-    }
+    const res = await instance.get(`${BASE_URL}/user/mypage`); // 토큰 담아 보냄 - 인스턴스로 교체
+    return res.data;
   },
 
   /** 회원 정보 수정 */
-  updateMyInfo: async (userUpdateData: UserUpdateReqData) => {
+  updateMyInfo: async (userUpdateData: FormData) => {
     try {
-      const res = await axios.patch(`${BASE_URL}/user/update`, userUpdateData, {
+      const res = await instance.patch(`${BASE_URL}/user/update`, userUpdateData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       }); // 토큰 담아 보냄 - 인스턴스로 교체
       return res;
@@ -71,9 +64,9 @@ const apiUser = {
     }
   },
 
-  getNewRefresh: async (accessToken: string) => {
+  getNewRefresh: async () => {
     try {
-      const res = await axios.delete(`${BASE_URL}/auth/refresh`); // 토큰 담아 보냄 - 인스턴스로 교체
+      const res = await instance.delete(`${BASE_URL}/auth/refresh`); // 토큰 담아 보냄 - 인스턴스로 교체
       return res;
     } catch (err) {
       throw err.response;

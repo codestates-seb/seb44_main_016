@@ -44,8 +44,20 @@ export interface UserUpdateReqData {
 }
 
 export interface FollowUsersInfoData {
+  userId: number;
   imgId: string;
   isAlsoFollowed: boolean;
   loginId: string;
   nickname: string;
 }
+
+export interface GetUserInfoData {
+  userId: string;
+  loginId: string;
+  nickname: string;
+  profileImgPath: string;
+  followingList: FollowUsersInfoData[];
+  followerList: FollowUsersInfoData[];
+}
+
+// export interface MyInFoResData {} // api 작성되면
