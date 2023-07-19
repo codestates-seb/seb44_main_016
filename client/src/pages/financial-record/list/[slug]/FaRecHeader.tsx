@@ -3,6 +3,7 @@ import CommonStyles from '../../../../styles/CommonStyles';
 import { useRouter } from 'next/router';
 import { FaRecHeaderData } from '../../../../types/financialRecord';
 import Loading from '../../../../components/Loading';
+import ErrorComponent from '../../../../components/ErrorComponent';
 
 interface FaRecHeaderProps {
   data: FaRecHeaderData;
@@ -10,10 +11,11 @@ interface FaRecHeaderProps {
   isLoading: boolean;
   isSuccess: boolean;
   isError: boolean;
+  error: Error;
 }
 
-export default function FaRecHeader({ setActiveTab, isLoading, isError, data }: FaRecHeaderProps) {
-  const { financialRecordName, memo, articleCount, faRecTimeline, users, imgPath } = data;
+export default function FaRecHeader({ setActiveTab, isLoading, isError, error, data }: FaRecHeaderProps) {
+  const { financialRecordName, memo, articleCount, faRecTimeline, users, imgPath } = data || {};
 
   const router = useRouter();
   const faRecId = router.query.slug;
@@ -25,7 +27,7 @@ export default function FaRecHeader({ setActiveTab, isLoading, isError, data }: 
     <>
       <S.Container>
         {isError ? (
-          <div>에러가 발생 하였습니다. 다시 시도해주세요.</div>
+          <ErrorComponent message={error.message} />
         ) : isLoading ? (
           <Loading />
         ) : (

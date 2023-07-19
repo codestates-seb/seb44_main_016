@@ -101,6 +101,7 @@ export default function FinancialPage() {
         isLoading={isFaRecLoading}
         isSuccess={isFaRecSuccess}
         isError={isFaRecError}
+        error={faRecError}
         data={faRecData}
       />
       <Tab tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
@@ -120,6 +121,8 @@ export default function FinancialPage() {
                   price={el.price}
                   content={el.content}
                   imgPath={el.imgPath}
+                  faRecId={el.financialRecordId}
+                  articleId={el.financialRecordArticleId}
                 />
               );
             })

@@ -14,13 +14,15 @@ interface FaRecArticleProps {
   price: number;
   content: string;
   imgPath: string[];
+  faRecId: number;
+  articleId: number;
 }
 
 export default function FaRecArticle(props: FaRecArticleProps) {
   if (!props) {
     return null;
   }
-  const { title, price, content, imgPath, faDate, category } = props;
+  const { title, price, content, imgPath, faDate, category, faRecId, articleId } = props;
   const [isOpen, setIsOpen] = useState(false);
   const toggleDropdown = () => setIsOpen(!isOpen);
   const isIncome = price >= 0;
@@ -36,7 +38,7 @@ export default function FaRecArticle(props: FaRecArticleProps) {
         <S.FinancialText isIncome={isIncome}>{numToStrWithSign(price)}</S.FinancialText>
         <S.ImgAndDate>
           <span>{imgPath !== undefined && imgPath.length >= 1 ? SVGs.imgIcon : <></>}</span>
-          <span>{faDate ? convertToKoreanDate(faDate) : ''}</span>
+          <span>{faDate ? convertToKoreanMonthDay(faDate) : ''}</span>
         </S.ImgAndDate>
         <S.DropdownIcon isOpen={isOpen}>{SVGs.dropdown}</S.DropdownIcon>
       </S.Header>
@@ -47,8 +49,10 @@ export default function FaRecArticle(props: FaRecArticleProps) {
           <></>
         )}
         <S.Contents>
-          <div>{title}</div>
-          <div>{convertToKoreanDate(faDate)}</div>
+          <div>
+            <span>{title}</span>
+            <span>{convertToKoreanDate(faDate)}</span>
+          </div>
           <div>{content}</div>
 
           <S.ContentBtnWrap>
@@ -170,8 +174,20 @@ const S = {
     flex-direction: column;
     gap: 1.25rem;
 
-    & > div:nth-of-type(1) {
-      font-weight: 600;
+    & > div {
+      display: flex;
+
+      &:nth-of-type(1) {
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      & > span:nth-of-type(1) {
+        font-weight: 600;
+      }
+      & > span:nth-of-type(2) {
+        color: var(--color-gray03);
+        font-size: var(--text-s);
+      }
     }
   `,
   ContentBtnWrap: styled.div`
