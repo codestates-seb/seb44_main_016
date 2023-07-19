@@ -10,7 +10,6 @@ import com.zerohip.server.financialRecordArticle.dto.FinancialRecordArticleDto;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import com.zerohip.server.financialRecordArticle.repository.FinancialRecordArticleRepository;
 import com.zerohip.server.user.entity.User;
-import com.zerohip.server.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,7 +26,6 @@ import java.util.Optional;
 public class FinancialRecordArticleServiceImpl implements FinancialRecordArticleService {
   // 결합도 관련해서 고민이 필요해 보임
   private final FinancialRecordService financialRecordService;
-  private final UserService userService;
   private final FinancialRecordArticleRepository repository;
 
   @Override
@@ -117,11 +115,7 @@ public class FinancialRecordArticleServiceImpl implements FinancialRecordArticle
     // article to FinancialRecordArticle
     FinancialRecordArticle faRecArticle = (FinancialRecordArticle) article;
 
-    // 로그인한 유저와 게시글 작성자 비교
-    User findUser = userService.findUserByLoginId(author.getLoginId());
-    User findUserAtfaRecArticle = userService.findUserByLoginId(faRecArticle.getUser().getLoginId());
-
-    if(!findUser.equals(findUserAtfaRecArticle)) {
+    if(!author.getLoginId().equals(faRecArticle.getUser().getLoginId())) {
       throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
     }
   }
