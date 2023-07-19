@@ -1,13 +1,14 @@
 package com.zerohip.server.feedArticle.entity;
 
+import com.zerohip.server.common.article.Article;
 import com.zerohip.server.common.feedType.FeedType;
-import com.zerohip.server.common.audit.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "feedArticles")
@@ -15,18 +16,15 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FeedArticle extends Auditable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long feedArticleId;
+public class FeedArticle extends Article {
 
     //feedType - 절약팁, 허락해줘 선택
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private FeedType feedType;
 
-    //@Size -> 본문 문자열 크기 정하고 나서 사용
-    @Column(nullable = false)
+    @Size(max = 2_000)
+    @Column(nullable = false, length = 2_000)
     private String content;
 
     //피드게시글 작성시간은 Auditable 상속받기 때문에 아예 필드변수 없어도 ok.
