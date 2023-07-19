@@ -34,7 +34,7 @@ public class FinancialRecordArticleServiceImpl implements FinancialRecordArticle
     VerifiedAuthor(author, faRecArticle);
 
     // 해당 가계부가 존재하는지 확인 -> 없으면 예외를 발생시키고 있으면 해당 가계부를 반환
-    FinancialRecord faRec = financialRecordService.findFaRec(faRecArticle.getFinancialRecord().getFinancialRecordId());
+    FinancialRecord faRec = financialRecordService.findFaRec(author, faRecArticle.getFinancialRecord().getFinancialRecordId());
 
     // FinancialRecordArticle과 FinancialRecord의 관계를 설정
     faRecArticle.setFinancialRecord(faRec);
