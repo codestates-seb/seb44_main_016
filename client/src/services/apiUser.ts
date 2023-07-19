@@ -40,7 +40,7 @@ const apiUser = {
   /** 회원 탈퇴 */
   deleteMyInfo: async () => {
     try {
-      await instance.delete(`${BASE_URL}/user/delete`); // 토큰 담아 보냄 - 인스턴스로 교체
+      await instance.delete(`${BASE_URL}/user/delete`); 
     } catch (err) {
       throw err.response;
     }
@@ -48,7 +48,7 @@ const apiUser = {
 
   /** 회원 정보 불러오기 */
   getMyInfo: async () => {
-    const res = await instance.get(`${BASE_URL}/user/mypage`); // 토큰 담아 보냄 - 인스턴스로 교체
+    const res = await instance.get(`${BASE_URL}/user/mypage`); 
     return res.data;
   },
 
@@ -57,7 +57,7 @@ const apiUser = {
     try {
       const res = await instance.patch(`${BASE_URL}/user/update`, userUpdateData, {
         headers: { 'Content-Type': 'multipart/form-data' },
-      }); // 토큰 담아 보냄 - 인스턴스로 교체
+      }); 
       return res;
     } catch (err) {
       throw err.response;
@@ -66,7 +66,7 @@ const apiUser = {
 
   getNewRefresh: async () => {
     try {
-      const res = await instance.delete(`${BASE_URL}/auth/refresh`); // 토큰 담아 보냄 - 인스턴스로 교체
+      const res = await instance.delete(`${BASE_URL}/auth/refresh`);
       return res;
     } catch (err) {
       throw err.response;
