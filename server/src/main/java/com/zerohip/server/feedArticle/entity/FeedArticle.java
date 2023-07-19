@@ -48,5 +48,5 @@ public class FeedArticle extends Article {
         this.voteCount--;
     }
 
-    // 댓글, 유저, 투표(절약/플렉스) 추가적으로 작성 필요
+    // 댓글, 유저
 }
