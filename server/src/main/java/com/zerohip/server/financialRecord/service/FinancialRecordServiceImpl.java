@@ -42,6 +42,10 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
   public FinancialRecord findFaRec(User author, Long faRecId) {
     // 해당 가계부가 존재하는지 확인 후 없으면 예외를 발생시키고 있으면 해당 가계부를 반환
     FinancialRecord findFaRec = repository.findById(faRecId).orElseThrow(() -> new IllegalArgumentException("해당 가계부가 존재하지 않습니다."));
+
+    // 전체 게시글 및 타임라인 수 조회
+    findFaRec.setTotalCount(countTotal(findFaRec));
+    findFaRec.setTimeLineCount(countTimeLine(findFaRec));
     VerifiedAuthor(author, findFaRec);
     return findVerifiedFaRec(faRecId);
   }
@@ -87,14 +91,12 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
     return findFaRec;
   }
 
-  private int countTotal(Long faRecId) {
-    FinancialRecord findFaRec = findVerifiedFaRec(faRecId);
-    return findFaRec.getFinancialRecordArticles().size();
+  private int countTotal(FinancialRecord faRec) {
+    return faRec.getFinancialRecordArticles().size();
   }
 
-  private int countTimeLine(Long faRecId) {
-    FinancialRecord findFaRec = findVerifiedFaRec(faRecId);
-    List<FinancialRecordArticle> articleList = findFaRec.getFinancialRecordArticles();
+  private int countTimeLine(FinancialRecord faRec) {
+    List<FinancialRecordArticle> articleList = faRec.getFinancialRecordArticles();
     int count = 0;
     for (FinancialRecordArticle article : articleList) {
       Scope scope = article.getScope();
