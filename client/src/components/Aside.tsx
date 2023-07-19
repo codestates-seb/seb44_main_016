@@ -2,7 +2,7 @@ import React from 'react'; // useState 사용
 import styled from '@emotion/styled';
 
 import CommonStyles from '../styles/CommonStyles';
-import AsideButton from '../components/aside/AsideButton';
+import AsideBtn from '../components/aside/AsideBtn';
 import AsideLogo from '../components/aside/AsideLogo';
 import AsideProfileBox from '../components/aside/AsideProfileBox';
 
@@ -57,20 +57,16 @@ export default function Aside(props: Props) {
       <S.AsideInnerContainer className={asideClsName}>
         <S.Upper className={asideClsName}>
           {isMobile ? <></> : <AsideLogo className={asideClsName} />}
-          <AsideButton leftIcon={svgs.home} className={asideClsName} href='/'>
+          <AsideBtn leftIcon={svgs.home} className={asideClsName} href='/'>
             홈
-          </AsideButton>
+          </AsideBtn>
           {props.isLoggedIn && (
             <>
-              <AsideButton
-                onClick={handleOpenOrCloseNoticeTab}
-                leftIcon={svgs.notice}
-                className={asideClsName}
-              >
+              <AsideBtn onClick={handleOpenOrCloseNoticeTab} leftIcon={svgs.notice} className={asideClsName}>
                 알림
-              </AsideButton>
+              </AsideBtn>
               {/* href='/financial-record' */}
-              <AsideButton
+              <AsideBtn
                 leftIcon={svgs.faRec}
                 rightIcon={svgs.dropdown}
                 isReverse={isBookmarkedFaRecListOpened}
@@ -78,30 +74,30 @@ export default function Aside(props: Props) {
                 className={asideClsName}
               >
                 내 가계부
-              </AsideButton>
+              </AsideBtn>
               {isBookmarkedFaRecListOpened || isShrinkOrMobile ? (
                 <></>
               ) : (
                 <ol>
-                  <AsideButton isSmall={true} className={asideClsName}>
+                  <AsideBtn isSmall={true} className={asideClsName}>
                     XXX의 가계부
-                  </AsideButton>
-                  <AsideButton isSmall={true} className={asideClsName}>
+                  </AsideBtn>
+                  <AsideBtn isSmall={true} className={asideClsName}>
                     ♡ 데이트 통장 ♥
-                  </AsideButton>
-                  <AsideButton isSmall={true} className={asideClsName}>
+                  </AsideBtn>
+                  <AsideBtn isSmall={true} className={asideClsName}>
                     '산악회 곗돈 장부
-                  </AsideButton>
+                  </AsideBtn>
                 </ol>
               )}
             </>
           )}
-          <AsideButton leftIcon={svgs.ranking} className={asideClsName}>
+          <AsideBtn leftIcon={svgs.ranking} className={asideClsName}>
             명예의 전당
-          </AsideButton>
-          <AsideButton onClick={handleOpenOrCloseSearchTab} leftIcon={svgs.search} className={asideClsName}>
+          </AsideBtn>
+          <AsideBtn onClick={handleOpenOrCloseSearchTab} leftIcon={svgs.search} className={asideClsName}>
             검색
-          </AsideButton>
+          </AsideBtn>
         </S.Upper>
         {isMobile ? (
           <></>
@@ -115,7 +111,7 @@ export default function Aside(props: Props) {
                   isMobile ? (
                     <></>
                   ) : (
-                    <AsideButton leftIcon={svgs.editor} />
+                    <AsideBtn leftIcon={svgs.editor} />
                   )
                 ) : (
                   <S.LinkBtn href={'/editor'}>글쓰기</S.LinkBtn>
@@ -124,7 +120,7 @@ export default function Aside(props: Props) {
             ) : isShrinkOrMobile ? (
               <S.LinkBtn href='/user/login'>로그인</S.LinkBtn>
             ) : (
-              <AsideButton href='/user/login' leftIcon={svgs.person} />
+              <AsideBtn href='/user/login' leftIcon={svgs.person} />
             )}
           </S.Lower>
         )}
@@ -132,13 +128,13 @@ export default function Aside(props: Props) {
       {isNoticeTabOpened && (
         <S.TabContainer>
           알림
-          <S.CloseTabButton onClick={handleCloseTab}>×</S.CloseTabButton>
+          <S.CloseTabBtn onClick={handleCloseTab}>×</S.CloseTabBtn>
         </S.TabContainer>
       )}
       {isSearchTabOpened && (
         <S.TabContainer>
           검색
-          <S.CloseTabButton onClick={handleCloseTab}>×</S.CloseTabButton>
+          <S.CloseTabBtn onClick={handleCloseTab}>×</S.CloseTabBtn>
         </S.TabContainer>
       )}
     </S.AsideContainer>
@@ -256,7 +252,7 @@ const S = {
       }
     }
   `,
-  CloseTabButton: styled.button`
+  CloseTabBtn: styled.button`
     position: absolute;
     top: 0rem;
     right: 1rem;

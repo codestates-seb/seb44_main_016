@@ -17,7 +17,7 @@ type Props = {
   onClickRight?: () => void;
 };
 
-export default function AsideButton(props: Props) {
+export default function AsideBtn(props: Props) {
   const isShrinkOrMobile = ['shrink', 'mobile'].includes(props.className || '');
 
   const onClickLeft = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -28,24 +28,24 @@ export default function AsideButton(props: Props) {
   };
 
   return (
-    <S.AsideButtonContainer isSmall={props.isSmall}>
-      <S.AsideInnerButtonLeft href={props.href || ''} onClick={onClickLeft}>
+    <S.AsideBtnContainer isSmall={props.isSmall}>
+      <S.AsideInnerBtnLeft href={props.href || ''} onClick={onClickLeft}>
         <SvgBox>{props.leftIcon || <></>}</SvgBox>
         {isShrinkOrMobile ? <></> : <S.Text>{props.children}</S.Text>}
-      </S.AsideInnerButtonLeft>
+      </S.AsideInnerBtnLeft>
       {isShrinkOrMobile || props.rightIcon === undefined ? (
         <></>
       ) : (
-        <S.AsideInnerButtonRight onClick={props.onClick || props.onClickRight}>
+        <S.AsideInnerBtnRight onClick={props.onClick || props.onClickRight}>
           <SvgBox isReverse={!props.isReverse}>{props.rightIcon || <></>}</SvgBox>
-        </S.AsideInnerButtonRight>
+        </S.AsideInnerBtnRight>
       )}
-    </S.AsideButtonContainer>
+    </S.AsideBtnContainer>
   );
 }
 
 const S = {
-  AsideButtonContainer: styled.div<{ isSmall?: boolean }>`
+  AsideBtnContainer: styled.div<{ isSmall?: boolean }>`
     width: 100%;
     height: ${(props) => (props.isSmall ? '2.75rem' : '3.25rem')};
     font-size: ${(props) => (props.isSmall ? '0.9rem' : '1rem')};
@@ -59,7 +59,7 @@ const S = {
       filter: brightness(0.9);
     }
   `,
-  AsideInnerButtonLeft: styled(Link)`
+  AsideInnerBtnLeft: styled(Link)`
     width: 100%;
     height: 100%;
     padding: 0rem 1rem;
@@ -69,7 +69,7 @@ const S = {
     gap: 0.5rem;
   `,
   Text: styled.span``,
-  AsideInnerButtonRight: styled.button`
+  AsideInnerBtnRight: styled.button`
     width: ${(props) => props.onClick && '3rem'};
     height: 100%;
     flex-shrink: 0;
