@@ -1,22 +1,20 @@
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { RootState } from '../components/redux/store';
+import { store } from '../components/redux/store';
 import { setCookie, getCookie, deleteCookie } from 'cookies-next';
 
 /** INSTANCE WITH TOKEN */
-export const tokenInstance = axios.create({
-  baseURL: process.env.BASE_URL,
+export const instance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
 });
 
 /** REQUEST INTERCEPTORS */
-tokenInstance.interceptors.request.use(
+instance.interceptors.request.use(
   (config) => {
-    const accessToken = useSelector<RootState>((state) => state.authnReducer.login.accessToken);
-
+    // const accessToken = store.getState().authnReducer.login.accessToken;
+    const accessToken = 'test'; // accessToken 만료 test용
     if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
+      config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
-
     return config;
   },
   (error) => {
@@ -25,33 +23,34 @@ tokenInstance.interceptors.request.use(
 );
 
 /** RESPONSE INTERCEPTORS */
-tokenInstance.interceptors.response.use(
+instance.interceptors.response.use(
   (response) => {
+    // console.log('리스펀스!');
     return response;
   },
   async (error) => {
     try {
-      const { message, response, config } = error;
+      console.log(error);
+      const { status, message, response, config } = error;
       const originalRequest = config;
 
-      if (message === 'Network Error' || response?.data?.errorCode === '400') {
-        // 백엔드 상의 후 변경이나 확정 필요
-        const refreshToken = getCookie('refreshToken');
+      if (status === '401') {
+        console.log('액세스 없음! 받아와야 함 ');
+
         /** GET : NEW ACCESS TOKEN */
-        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/auth/user/token`, {
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/auth/refresh`, {
           headers: {
             'Content-Type': 'application/json',
-            refreshToken: refreshToken,
           },
         });
         /** CHANGE ACCESS TOKEN */
-        originalRequest.headers.Authorization = response.headers.authorization;
-        setCookie('accessToken', response.headers.authorization);
+        originalRequest.headers['Authorization'] = res.headers['Authorization'];
+        getCookie('Refresh');
         return axios(originalRequest);
       }
     } catch (error) {
-      deleteCookie('accessToken');
-      deleteCookie('refreshToken');
+      console.log('둘 다 없음! 로그아웃됨 ');
+
       window.location.href = '/';
       return false;
     }
