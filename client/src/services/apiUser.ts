@@ -34,7 +34,7 @@ const apiUser = {
   deleteLogout: async () => {
     const res = await instance.delete(`${BASE_URL}/auth/logout`);
     console.log(res);
-    return res;
+    return Promise.resolve();
   },
 
   /** 회원 탈퇴 */
