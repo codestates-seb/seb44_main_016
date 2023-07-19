@@ -248,6 +248,7 @@ const CommonStyles = {
     height: 100%;
     color: var(--color-primary);
     text-align: center;
+    margin: 3rem 0;
   `,
 };
 

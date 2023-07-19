@@ -71,16 +71,16 @@ export default function FaRecForm({
     });
   };
 
-  const { mutate, isError, isSuccess } = useMutation(
+  const { mutate } = useMutation(
     pageType === 'create' ? APIfinancialRecord.createFaRec : APIfinancialRecord.updateFaRec,
     {
-      onSuccess: (data) => {
+      onSuccess: () => {
         const successMessage =
           pageType === 'create' ? '가계부 생성에 성공하였습니다.' : '가계부 수정에 성공하였습니다.';
         toast.success(successMessage);
         router.push(`/financial-record`);
       },
-      onError: (error) => {
+      onError: () => {
         const errorMessage =
           pageType === 'create' ? '가계부 생성을 실패하였습니다.' : '가계부 수정을 실패하였습니다.';
         toast.error(errorMessage);

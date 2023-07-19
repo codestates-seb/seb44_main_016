@@ -85,6 +85,9 @@ const S = {
     align-items: center;
     margin: 1.5rem 0 0;
     gap: 10px;
+    @media screen and (max-width: 480px) {
+      gap: 6px;
+    }
     & > button {
       width: 25px;
       height: 25px;
@@ -112,6 +115,11 @@ const S = {
       &.currentPage {
         background: var(--color-primary);
         color: var(--color-white);
+      }
+
+      @media screen and (max-width: 480px) {
+        width: 20px;
+        height: 20px;
       }
     }
   `,

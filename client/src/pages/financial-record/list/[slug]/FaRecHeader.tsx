@@ -2,18 +2,19 @@ import styled from '@emotion/styled';
 import CommonStyles from '../../../../styles/CommonStyles';
 import { useRouter } from 'next/router';
 import { FaRecHeaderData } from '../../../../types/financialRecord';
+import Loading from '../../../../components/Loading';
+import ErrorComponent from '../../../../components/ErrorComponent';
 
 interface FaRecHeaderProps {
   data: FaRecHeaderData;
   setActiveTab: (value: string) => void;
+  isLoading: boolean;
+  isError: boolean;
+  error: string;
 }
 
-export default function FaRecHeader({ setActiveTab, data }: FaRecHeaderProps) {
-  if (!data) {
-    return null;
-  }
-
-  const { financialRecordName, memo, articleCount, faRecTimeline, imgPath, isBookmark, users } = data;
+export default function FaRecHeader({ setActiveTab, isLoading, isError, error, data }: FaRecHeaderProps) {
+  const { financialRecordName, memo, articleCount, faRecTimeline, users, imgPath } = data || {};
 
   const router = useRouter();
   const faRecId = router.query.slug;
@@ -24,42 +25,50 @@ export default function FaRecHeader({ setActiveTab, data }: FaRecHeaderProps) {
   return (
     <>
       <S.Container>
-        <S.ImgBox>
-          <img src={imgPath} alt={`${financialRecordName} 프로필 사진`} />
-        </S.ImgBox>
-        <S.ContentBox>
-          <div>
-            <S.FaRecName>{financialRecordName}</S.FaRecName>
-            <S.LinkWrap>
-              <S.LinkBtn
-                href='/financial-record/edit/[slug]'
-                as={`/financial-record/edit/${faRecId}`}
-                color='--color-point-lilac'
-                size='small'
-              >
-                가계부 편집
-              </S.LinkBtn>
-              <S.LinkBtn href='/editor' size='small'>
-                가계부 작성
-              </S.LinkBtn>
-            </S.LinkWrap>
-          </div>
-          <S.ButtonWrap>
-            <S.aLink href='#article' onClick={() => handleButtonClick('가계부')}>
-              게시물
-              <span>{articleCount}</span>
-            </S.aLink>
-            <S.aLink href='#timeline' onClick={() => handleButtonClick('타임라인')}>
-              타임라인
-              <span>{faRecTimeline}</span>
-            </S.aLink>
-            <S.Button type='button'>
-              멤버
-              <span>{users.length}</span>
-            </S.Button>
-          </S.ButtonWrap>
-          <S.DescContainer>{memo}</S.DescContainer>
-        </S.ContentBox>
+        {isError ? (
+          <ErrorComponent message={error} />
+        ) : isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <S.ImgBox>
+              <img src={imgPath} alt={`${financialRecordName} 프로필 사진`} />
+            </S.ImgBox>
+            <S.ContentBox>
+              <div>
+                <S.FaRecName>{financialRecordName}</S.FaRecName>
+                <S.LinkWrap>
+                  <S.LinkBtn
+                    href='/financial-record/edit/[slug]'
+                    as={`/financial-record/edit/${faRecId}`}
+                    color='--color-point-lilac'
+                    size='small'
+                  >
+                    가계부 편집
+                  </S.LinkBtn>
+                  <S.LinkBtn href={`/editor?farecid=${faRecId}`} size='small'>
+                    가계부 작성
+                  </S.LinkBtn>
+                </S.LinkWrap>
+              </div>
+              <S.ButtonWrap>
+                <S.aLink href='#article' onClick={() => handleButtonClick('가계부')}>
+                  게시물
+                  <span>{articleCount}</span>
+                </S.aLink>
+                <S.aLink href='#timeline' onClick={() => handleButtonClick('타임라인')}>
+                  타임라인
+                  <span>{faRecTimeline}</span>
+                </S.aLink>
+                <S.Button type='button'>
+                  멤버
+                  <span>{users && users.length}</span>
+                </S.Button>
+              </S.ButtonWrap>
+              <S.DescContainer>{memo}</S.DescContainer>
+            </S.ContentBox>
+          </>
+        )}
       </S.Container>
     </>
   );
@@ -72,12 +81,17 @@ const S = {
     width: 100%;
     align-items: center;
     padding: 3.125rem 0.625rem;
+
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+      align-items: center;
+      padding: 3.125rem 0;
+    }
   `,
 
   ImgBox: styled.div`
     width: 9.375rem;
     height: 9.375rem;
-    min-width: 150px;
     border-radius: var(--rounded-full);
     overflow: hidden;
     & > img {
@@ -96,14 +110,28 @@ const S = {
     display: flex;
     flex-direction: column;
 
+    @media screen and (max-width: 768px) {
+      margin: 1.6rem 0 0 0;
+    }
+
     & > div {
       display: flex;
       align-items: center;
       margin-bottom: 1.75rem;
+      @media screen and (max-width: 768px) {
+        margin-bottom: 1rem;
+        justify-content: center;
+      }
     }
 
     & > div:nth-of-type(1) {
       justify-content: space-between;
+      @media screen and (max-width: 768px) {
+        flex-direction: column;
+        & > div {
+          margin: 1rem 0 0 0;
+        }
+      }
     }
   `,
   LinkWrap: styled.div`
@@ -128,6 +156,20 @@ const S = {
   ButtonWrap: styled.div`
     display: flex;
     gap: 2rem;
+    & > * {
+      line-height: 1.2;
+    }
+    @media screen and (max-width: 768px) {
+      & > * {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        & > span {
+          margin-left: 0;
+          text-align: center;
+        }
+      }
+    }
   `,
   Button: styled.button`
     &:hover {
