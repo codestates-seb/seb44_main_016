@@ -5,30 +5,41 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import CommonStyles from '../../../styles/CommonStyles';
 import useInput from '../../../hooks/useComponents';
-import Image from 'next/image';
 import { USER_UPDATE_MESSAGES } from '../../../constants/user';
-import ImageUpload from '../../../../public/images/icon/imageUpload.svg';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 import BackBtnBox from '../../../components/BackBtn';
 import getNewError from '../../../utils/inputValidationError';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import apiUser from '../../../services/apiUser';
+import Loading from '../../../components/Loading';
+import ProfileImgUpdate from './ProfileImg';
+import { RootState } from '../../../components/redux/store';
+import { changeImgSrc } from '../../../components/redux/currentImgReducer';
+import { useAppDispatch } from '../../../components/redux/hooks';
+import { useSelector } from 'react-redux';
 
 export default function UserUpdate() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+
   const {
     isLoading: isMyInfoLoading,
     error: myInfoError,
     data: myInfoData,
   } = useQuery(['myInfo'], apiUser.getMyInfo);
+
+  if (myInfoError) {
+    toast.error('오류가 발생했습니다.');
+    toast.info('다시 시도해주세요.');
+  }
+
+  const currentImgSrc = useSelector<RootState>((state) => state.currentImgReducer.currentImgSrc);
   const originalNickname = myInfoData ? myInfoData.nickname : '';
 
   const [nicknameInput, nickname] = useInput('text', originalNickname, 'nickname', 'nickname');
   const [PwInput, pwValue] = useInput('password', '비밀번호', 'pw', 'current-password');
   const [PwConfirmInput, password] = useInput('password', '비밀번호 확인', 'pwConfirm', 'current-password');
-
-  const [isAvatar, setIsAvatar] = useState(true);
-  const [changeAvatarNumber, setChangeAvatarNumber] = useState(null);
+  const formData = new FormData();
 
   const [error, setError] = useState({
     nickname: '',
@@ -73,15 +84,7 @@ export default function UserUpdate() {
     },
   ];
 
-  const requestBody = {
-    nickname: nickname ? nickname : '',
-    password: pwValue ? pwValue : '',
-    // profileImgPath: isAvatar
-    //   ? `https://source.boringavatars.com/beam/150/${nickname}${changeAvatarNumber}`
-    //   : '',
-  };
-
-  const { mutateAsync } = useMutation(() => apiUser.updateMyInfo(requestBody));
+  const { mutateAsync } = useMutation(apiUser.updateMyInfo);
 
   const handleUpdateUserSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -92,21 +95,24 @@ export default function UserUpdate() {
       (pwValue && error.password) ||
       (password && error.passwordConfirm)
     ) {
-      // 이미지 추가
       RefusalAnimation();
       toast.error('에러 메시지를 확인해주세요.');
       return;
     }
 
-    if (!nickname && !password && !pwValue) {
-      // 이미지 추가
+    if (!currentImgSrc && !nickname && !password && !pwValue) {
       RefusalAnimation();
       toast.error('수정할 정보가 없습니다.');
       return;
     }
 
-    await mutateAsync();
+    formData.append('nickname', nickname ? nickname : '');
+    formData.append('password', pwValue ? pwValue : '');
+    formData.append('profileImgPath', typeof currentImgSrc === 'string' ? currentImgSrc : '');
+
+    await mutateAsync(formData);
     toast.success('회원 정보가 수정되었습니다.');
+    dispatch(changeImgSrc({ currentImgSrc: '', isAvatar: false }));
     router.push(`/user/mypage`);
   };
 
@@ -115,37 +121,38 @@ export default function UserUpdate() {
   };
 
   return (
-    <S.Container>
-      <BackBtnBox />
-      <S.FormContainer>
-        <S.UserImg>
-          <div>
-            <Image src='/image/mango.png' alt='프로필 사진' width={150} height={150} style={imageStyle} />
-          </div>
-          <S.ImageUploadBtn type='button' aria-label='이미지 업로드 버튼'>
-            <ImageUpload />
-          </S.ImageUploadBtn>
-        </S.UserImg>
-        {inputData.map((el) => (
-          <S.InputBox>
-            <S.LabelBox>
-              <S.Label htmlFor={el.label.htmlFor}>{el.label.text}</S.Label>
-              <S.Guide htmlFor={el.label.htmlFor}>{el.guide}</S.Guide>
-            </S.LabelBox>
-            <S.InputField>{el.component}</S.InputField>
-            <S.Error htmlFor={el.label.htmlFor}>{el.error} </S.Error>
-          </S.InputBox>
-        ))}
-        <S.SubmitBox {...isClickedProps}>
-          <S.SubmitBtn large onClick={handleUpdateUserSubmit}>
-            회원 정보 수정
-          </S.SubmitBtn>
-        </S.SubmitBox>
-        <S.ModifyBtn type='button' onClick={handleMoveDeletePage}>
-          회원 탈퇴
-        </S.ModifyBtn>
-      </S.FormContainer>
-    </S.Container>
+    <>
+      {isMyInfoLoading ? (
+        <Loading />
+      ) : (
+        myInfoData && (
+          <S.Container>
+            <BackBtnBox />
+            <S.FormContainer>
+              <ProfileImgUpdate data={myInfoData} />
+              {inputData.map((el) => (
+                <S.InputBox key={el.label.text}>
+                  <S.LabelBox>
+                    <S.Label htmlFor={el.label.htmlFor}>{el.label.text}</S.Label>
+                    <S.Guide htmlFor={el.label.htmlFor}>{el.guide}</S.Guide>
+                  </S.LabelBox>
+                  <S.InputField>{el.component}</S.InputField>
+                  <S.Error htmlFor={el.label.htmlFor}>{el.error} </S.Error>
+                </S.InputBox>
+              ))}
+              <S.SubmitBox {...isClickedProps}>
+                <S.SubmitBtn large onClick={handleUpdateUserSubmit}>
+                  회원 정보 수정
+                </S.SubmitBtn>
+              </S.SubmitBox>
+              <S.ModifyBtn type='button' onClick={handleMoveDeletePage}>
+                회원 탈퇴
+              </S.ModifyBtn>
+            </S.FormContainer>
+          </S.Container>
+        )
+      )}
+    </>
   );
 }
 
@@ -222,9 +229,4 @@ const S = {
       font-weight: 400;
     }
   `,
-};
-
-const imageStyle = {
-  borderRadius: '50%',
-  cursor: 'pointer',
 };
