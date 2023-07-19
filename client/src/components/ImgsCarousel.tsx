@@ -61,6 +61,8 @@ const S = {
     height: var(--imgcarousel-h);
     overflow: hidden;
     background-color: #f8f9fc;
+    border-bottom: 0.05rem solid var(--color-gray08);
+
     & .swiper-initialized {
       height: 100%;
     }
