@@ -27,7 +27,11 @@ public class Vote {
     @Column(nullable = false)
     private int voteCount;
 
+    public Vote(FeedArticle feedArticle, User user, VoteType voteType) {
+    }
+
     public Vote() {
+
     }
 
     public Long getId() {
