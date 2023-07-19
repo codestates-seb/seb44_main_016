@@ -3,9 +3,17 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 
 import svgs from '../../constants/svg';
+import { useMutateLogOut } from '../../hooks/useLogout';
+import apiUser from '../../services/apiUser';
 
 export default function AsideHamburgerBtn() {
   const [isHamburgerOpened, setIsHamburgerOpened] = React.useState(false);
+  const { LogOutMutate } = useMutateLogOut(apiUser.deleteLogout);
+
+  const handleLogout = () => {
+    setIsHamburgerOpened(false);
+    LogOutMutate();
+  };
 
   return (
     <>
@@ -19,7 +27,7 @@ export default function AsideHamburgerBtn() {
               <S.LinkBtn href='/user/update' onClick={() => setIsHamburgerOpened(false)}>
                 회원정보 수정
               </S.LinkBtn>
-              <S.LinkBtn href='' onClick={() => setIsHamburgerOpened(false)}>
+              <S.LinkBtn href='' onClick={handleLogout}>
                 로그아웃
               </S.LinkBtn>
             </S.LinkBtnList>

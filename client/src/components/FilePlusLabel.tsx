@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import PlusIcon from '../../public/images/icon/plus.svg';
+import SVGs from '../constants/svg';
 
 type Props = {
   htmlFor: string;
@@ -7,7 +7,7 @@ type Props = {
 export default function FilePlusLabel({ htmlFor }: Props) {
   return (
     <S.FileLabelBtn htmlFor={htmlFor} aria-label='사진 추가하기 버튼'>
-      <PlusIcon />
+      {SVGs.plus}
     </S.FileLabelBtn>
   );
 }

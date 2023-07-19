@@ -7,7 +7,6 @@ import ArticleHeader from './sns-article/ArticleHeader';
 import ImgsCarousel from '../components/ImgsCarousel';
 import VoteForm from './sns-article/VoteForm';
 // import Comments from './sns-article/Comments';
-
 import { FeedArticleResType, FaRecData } from '../types/article';
 import { useWindowType, useWindowSize } from '../hooks/useWindowSize';
 import { ScreenEnum } from '../constants/enums';

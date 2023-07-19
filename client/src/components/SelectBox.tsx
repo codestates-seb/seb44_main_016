@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, ChangeEvent, KeyboardEvent, FocusEvent } from 'react';
 import CommonStyles from '../styles/CommonStyles';
 import styled from '@emotion/styled';
-import DropDown from '../../public/image/dropdown.svg';
+import DropDown from '../../public/images/icon/dropdown.svg';
 
 interface SelectBoxProps {
   id?: string;

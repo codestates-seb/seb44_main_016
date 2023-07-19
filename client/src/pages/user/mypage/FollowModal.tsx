@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
-import CloseBtn from '../../../../public/image/closeBtn.svg';
+import CloseBtn from '../../../../public/images/icon/closeBtn.svg';
 import ModalList from './FollowList';
 import { FollowUsersInfoData } from '../../../types/user';
 

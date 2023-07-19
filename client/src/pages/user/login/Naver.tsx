@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import Naver from '../../../../public/icon/naver.svg';
+import Naver from '../../../../public/images/icon/naver.svg';
 
 export default function NaverOauth() {
   const clientId = process.env.NEXT_PUBLIC_NAVER_CLIENT_ID;

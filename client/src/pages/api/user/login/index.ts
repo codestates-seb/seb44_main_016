@@ -20,6 +20,7 @@ export default function logIn(req: NextApiRequest, res: NextApiResponse) {
       refreshToken,
       user: userInfo,
     };
+    // test
     // res.setHeader('Authorization', accessToken);
     res.status(200).json(response);
   } else {
