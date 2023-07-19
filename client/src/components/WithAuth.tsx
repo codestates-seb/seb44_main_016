@@ -9,45 +9,44 @@ import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
 import { getCookie } from 'cookies-next';
 import apiUser from '../services/apiUser';
-import useAccessToken from '../hooks/useAccessToken';
 
 const withAuth = (Component: ComponentType) => (props: object) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   // let accessToken = useAccessToken();
-  let accessToken: any = null; //test
-  console.log(accessToken);
-  console.log('access 토큰이 존재함');
+  // let accessToken: any = null; //test
+  // console.log(accessToken);
+  // console.log('access 토큰이 존재함');
 
-  /** refresh 토큰으로 새 access 토큰을 발급받는 api */
-  const { mutate, isError, isSuccess } = useMutation(apiUser.getNewRefresh, {
-    onSuccess: (data) => {
-      accessToken = data.headers.authorization;
-      console.log(accessToken);
-      console.log('access 토큰이 교체됨');
+  // /** refresh 토큰으로 새 access 토큰을 발급받는 api */
+  // const { mutate, isError, isSuccess } = useMutation(apiUser.getNewRefresh, {
+  //   onSuccess: (data) => {
+  //     accessToken = data.headers.authorization;
+  //     console.log(accessToken);
+  //     console.log('access 토큰이 교체됨');
 
-      dispatch(login({ accessToken: accessToken, isLoggedIn: true }));
-    },
-    onError: (err) => {
-      console.error(err);
-    },
-  });
+  //     dispatch(login({ accessToken: accessToken, isLoggedIn: true }));
+  //   },
+  //   onError: (err) => {
+  //     console.error(err);
+  //   },
+  // });
 
-  useEffect(() => {
-    if (!accessToken) {
-      mutate();
-      if (isError) {
-        console.log('access 토큰이 없음');
-        toast.error('로그인 먼저 해주세요.');
-        router.push('/user/login');
-        dispatch(logout());
-      } else if (isSuccess) {
-        console.log('다시 받아옴');
-        return;
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!accessToken) {
+  //     mutate();
+  //     if (isError) {
+  //       console.log('access 토큰이 없음');
+  //       toast.error('로그인 먼저 해주세요.');
+  //       router.push('/user/login');
+  //       dispatch(logout());
+  //     } else if (isSuccess) {
+  //       console.log('다시 받아옴');
+  //       return;
+  //     }
+  //   }
+  // }, []);
 
   return <Component {...props} />;
 };
