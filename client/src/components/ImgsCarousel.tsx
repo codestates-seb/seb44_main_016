@@ -7,17 +7,19 @@ import 'swiper/css'; // Import Swiper styles
 import 'swiper/css/navigation';
 
 import CommonStyles from '../styles/CommonStyles';
+import { ScreenEnum } from '../constants/enums';
 
 type Props = {
   imgPath: string[];
   width: string;
   // height: string;
   rank?: number;
+  windowType: ScreenEnum;
 };
 
 export default function ImgsCarousel(props: Props) {
   return (
-    <S.ImgContainer>
+    <S.ImgContainer className={props.windowType}>
       {props.rank && (
         <S.RankIndicator>
           <S.RankText>{`${props.rank}위`}</S.RankText>
@@ -73,6 +75,9 @@ const S = {
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+    &.mobile {
+      height: 70vw;
     }
   `,
   Img: styled.img`

@@ -102,7 +102,6 @@ export default function Aside(props: Props) {
           <AsideButton onClick={handleOpenOrCloseSearchTab} leftIcon={svgs.search} className={asideClsName}>
             검색
           </AsideButton>
-          {isMobile ? <AsideButton leftIcon={svgs.editor} /> : <></>}
         </S.Upper>
         {isMobile ? (
           <></>
@@ -163,6 +162,7 @@ const S = {
     &.mobile {
       width: 100%;
       height: var(--aside-mobile-h);
+      max-height: 15vw;
       bottom: 0;
 
       & a,

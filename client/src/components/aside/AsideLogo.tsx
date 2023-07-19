@@ -28,7 +28,7 @@ const S = {
     margin: 2rem 0rem;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 16px; // 폰트 사이즈와 상관 없이 크기 고정
     & svg {
       transform: scale(1.25);
     }

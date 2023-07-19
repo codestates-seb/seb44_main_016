@@ -55,7 +55,9 @@ const S = {
         : '0'};
     max-width: var(--app-max-w);
     width: 100%;
-    height: var(--header-h);
+    height: ${(props) => (props.windowType === ScreenEnum.MOBILE ? '12.5vw' : 'var(--header-h)')};
+    max-height: var(--header-h);
+    min-height: 3rem;
     background-color: white;
     border-bottom: 0.05rem solid var(--color-gray08);
     display: flex;
@@ -65,11 +67,12 @@ const S = {
   `,
   HomeHeaderBtn: styled(Link)`
     width: 6rem;
-    height: 75%;
+    height: 100%; // 75%;
     background-color: white;
     font-size: 1.25rem;
     color: var(--color-gray03);
-    border-bottom: 3px solid transparent;
+    padding-top: 0.2rem;
+    border-bottom: 0.2rem solid transparent;
 
     &.current-tab {
       font-weight: bold;

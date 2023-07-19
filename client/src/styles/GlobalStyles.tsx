@@ -3,7 +3,23 @@ import { Global } from '@emotion/react';
 const GlobalStyles = () => (
   <Global
     styles={`
-    @import url('https://webfontworld.github.io/pretendard/Pretendard.css');
+      @import url('https://webfontworld.github.io/pretendard/Pretendard.css');
+
+      @media screen and (max-width: 1024px)  {
+        :root {
+          font-size: 14px;
+        }
+      }
+      @media screen and (max-width: 768px)  {
+        :root {
+          font-size: 13px;
+        }
+      }
+      @media screen and (max-width: 480px)  {
+        :root {
+          font-size: 12px;
+        }
+      }
 
       * {
         margin: 0;
