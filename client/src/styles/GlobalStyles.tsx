@@ -182,7 +182,7 @@ const GlobalStyles = () => (
         }
         
       }
-      @media screen and (max-width:468px)  {
+      @media screen and (max-width:480px)  {
         :root {
           font-size:12px;
         }
