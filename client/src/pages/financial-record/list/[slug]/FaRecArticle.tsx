@@ -51,7 +51,7 @@ export default function FaRecArticle(props: FaRecArticleProps) {
         <S.Contents>
           <div>
             <span>{title}</span>
-            <span>{convertToKoreanDate(faDate)}</span>
+            <span>{faDate && convertToKoreanDate(faDate)}</span>
           </div>
           <div>{content}</div>
 

@@ -3,7 +3,11 @@ import React from 'react';
 import CommonStyles from '../styles/CommonStyles';
 import Head from 'next/head';
 
-export default function ErrorComponent({ message }) {
+interface ErrorComponentProps {
+  message: string;
+}
+
+export default function ErrorComponent({ message }: ErrorComponentProps) {
   const handleRetry = () => {
     window.location.reload();
   };

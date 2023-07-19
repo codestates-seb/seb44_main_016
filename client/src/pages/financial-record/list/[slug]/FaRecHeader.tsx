@@ -9,9 +9,8 @@ interface FaRecHeaderProps {
   data: FaRecHeaderData;
   setActiveTab: (value: string) => void;
   isLoading: boolean;
-  isSuccess: boolean;
   isError: boolean;
-  error: Error;
+  error: string;
 }
 
 export default function FaRecHeader({ setActiveTab, isLoading, isError, error, data }: FaRecHeaderProps) {
@@ -27,7 +26,7 @@ export default function FaRecHeader({ setActiveTab, isLoading, isError, error, d
     <>
       <S.Container>
         {isError ? (
-          <ErrorComponent message={error.message} />
+          <ErrorComponent message={error} />
         ) : isLoading ? (
           <Loading />
         ) : (
@@ -63,7 +62,7 @@ export default function FaRecHeader({ setActiveTab, isLoading, isError, error, d
                 </S.aLink>
                 <S.Button type='button'>
                   멤버
-                  <span>{users.length}</span>
+                  <span>{users && users.length}</span>
                 </S.Button>
               </S.ButtonWrap>
               <S.DescContainer>{memo}</S.DescContainer>

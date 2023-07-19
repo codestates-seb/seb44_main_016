@@ -99,9 +99,8 @@ export default function FinancialPage() {
       <FaRecHeader
         setActiveTab={setActiveTab}
         isLoading={isFaRecLoading}
-        isSuccess={isFaRecSuccess}
         isError={isFaRecError}
-        error={faRecError}
+        error={(faRecError as Error).message}
         data={faRecData}
       />
       <Tab tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
@@ -109,7 +108,7 @@ export default function FinancialPage() {
       {activeTab === '가계부' ? (
         <S.ContentWrap id='article'>
           {isArticleError ? (
-            <ErrorComponent message={faRecError} />
+            <ErrorComponent message={(faRecError as Error).message} />
           ) : articleData?.data?.length > 0 ? (
             articleData.data.map((el: FaRecData) => {
               return (
