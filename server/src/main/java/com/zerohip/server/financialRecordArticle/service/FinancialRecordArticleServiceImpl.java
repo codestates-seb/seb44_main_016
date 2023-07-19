@@ -1,19 +1,20 @@
 package com.zerohip.server.financialRecordArticle.service;
 
+import com.zerohip.server.common.article.Article;
+import com.zerohip.server.common.exception.BusinessLogicException;
+import com.zerohip.server.common.exception.ExceptionCode;
 import com.zerohip.server.common.scope.Scope;
-import com.zerohip.server.common.userPrincipal.UserPrincipal;
 import com.zerohip.server.financialRecord.entity.FinancialRecord;
 import com.zerohip.server.financialRecord.service.FinancialRecordService;
 import com.zerohip.server.financialRecordArticle.dto.FinancialRecordArticleDto;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import com.zerohip.server.financialRecordArticle.repository.FinancialRecordArticleRepository;
 import com.zerohip.server.user.entity.User;
+import com.zerohip.server.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,12 +27,13 @@ import java.util.Optional;
 public class FinancialRecordArticleServiceImpl implements FinancialRecordArticleService {
   // 결합도 관련해서 고민이 필요해 보임
   private final FinancialRecordService financialRecordService;
+  private final UserService userService;
   private final FinancialRecordArticleRepository repository;
 
   @Override
   public FinancialRecordArticle createFaRecArticle(User author, FinancialRecordArticle faRecArticle) {
     // 로그인된 사용자와 게시글 작성자가 같은지 확인
-    VerifiedAuthor(author);
+    VerifiedAuthor(author, faRecArticle);
 
     // 해당 가계부가 존재하는지 확인 -> 없으면 예외를 발생시키고 있으면 해당 가계부를 반환
     FinancialRecord faRec = financialRecordService.findFaRec(faRecArticle.getFinancialRecord().getFinancialRecordId());
@@ -64,7 +66,7 @@ public class FinancialRecordArticleServiceImpl implements FinancialRecordArticle
     // 수정할 게시글 조회
     FinancialRecordArticle findFaRecArticle = findVerifiedFaRecArticle(faRecArticleId);
     // 로그인된 사용자와 수정할 게시글의 작성자가 같은지 확인
-    userValid(findFaRecArticle);
+    VerifiedAuthor(author, findFaRecArticle);
 
     // 검증정보가 일치할 경우 수정
     findFaRecArticle.setTitle(patchParam.getTitle());
@@ -82,7 +84,7 @@ public class FinancialRecordArticleServiceImpl implements FinancialRecordArticle
     // 삭제할 게시물 조회
     FinancialRecordArticle findFaRecArticle = findVerifiedFaRecArticle(faRecArticleId);
     // 로그인된 사용자와 삭제할 게시글의 작성자가 같은지 확인
-    userValid(findFaRecArticle);
+    VerifiedAuthor(author, findFaRecArticle);
 
     // 검증정보가 일치할 경우 삭제
     repository.delete(findFaRecArticle);
@@ -107,25 +109,20 @@ public class FinancialRecordArticleServiceImpl implements FinancialRecordArticle
   }
 
   // 로그인한 사용자와 게시글 작성자가 같은지 확인
-  private static void VerifiedAuthor(User author) {
-    UserPrincipal userPrincipal = getUserPrincipal();
+  private void VerifiedAuthor(User author, Article article) {
+    // 사용자 인증 실패
+    if(author == null) {
+      throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
+    }
+    // article to FinancialRecordArticle
+    FinancialRecordArticle faRecArticle = (FinancialRecordArticle) article;
 
-    if(!userPrincipal.equals(author)) {
-      throw new IllegalArgumentException("로그인한 사용자와 작성자가 일치하지 않습니다.");
+    // 로그인한 유저와 게시글 작성자 비교
+    User findUser = userService.findUserByLoginId(author.getLoginId());
+    User findUserAtfaRecArticle = userService.findUserByLoginId(faRecArticle.getUser().getLoginId());
+
+    if(!findUser.equals(findUserAtfaRecArticle)) {
+      throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
     }
   }
-
-  // 로그인한 사용자 정보 가져오기
-  private static UserPrincipal getUserPrincipal() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-    return userPrincipal;
-  }
-
-  // 게시글 작성자와 로그인한 사용자가 같은지 확인
-  private static void userValid(FinancialRecordArticle findFaRecArticle) {
-    boolean isEquals = findFaRecArticle.getUser().equals(getUserPrincipal());
-    if(!isEquals) {
-      throw new RuntimeException("해당 게시글의 작성자가 아닙니다.");
-    }
-  }}
+}
