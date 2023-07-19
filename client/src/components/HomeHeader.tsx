@@ -25,7 +25,8 @@ export default function HomeHeader(props: Props) {
   return (
     <S.HomeHeaderContainer windowType={props.windowType}>
       <S.HomeHeaderBtn
-        href='/'
+        href=''
+        windowType={props.windowType}
         onClick={handleClickHomeButton}
         className={isHomeButtonActive ? 'current-tab' : ''}
       >
@@ -34,6 +35,7 @@ export default function HomeHeader(props: Props) {
       {/* href='/?filterfollower=true' // 쿼리 미확정 */}
       <S.HomeHeaderBtn
         href=''
+        windowType={props.windowType}
         onClick={handleClickFollowerButton}
         className={isFollowerButtonActive ? 'current-tab' : ''}
       >
@@ -55,7 +57,7 @@ const S = {
         : '0'};
     max-width: var(--app-max-w);
     width: 100%;
-    height: ${(props) => (props.windowType === ScreenEnum.MOBILE ? '12.5vw' : 'var(--header-h)')};
+    height: ${(props) => (props.windowType === ScreenEnum.MOBILE ? '10vw' : 'var(--header-h)')};
     max-height: var(--header-h);
     min-height: 3rem;
     background-color: white;
@@ -65,9 +67,9 @@ const S = {
     align-items: flex-end;
     z-index: 998;
   `,
-  HomeHeaderBtn: styled(Link)`
+  HomeHeaderBtn: styled(Link)<{ windowType: ScreenEnum }>`
     width: 6rem;
-    height: 100%; // 75%;
+    height: ${(props) => (props.windowType === ScreenEnum.MOBILE ? '100%' : '75%')};
     background-color: white;
     font-size: 1.25rem;
     color: var(--color-gray03);
@@ -77,7 +79,7 @@ const S = {
     &.current-tab {
       font-weight: bold;
       color: var(--color-primary);
-      border-bottom: 3px solid var(--color-primary);
+      border-bottom: 0.2rem solid var(--color-primary);
     }
 
     &:hover {
