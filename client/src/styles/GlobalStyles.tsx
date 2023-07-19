@@ -170,6 +170,24 @@ const GlobalStyles = () => (
       ::-webkit-scrollbar-corner {
         background: transparent;
       }
+      @media screen and (max-width:1024px)  {
+        :root {
+          font-size:14px;
+        }
+        
+      }
+      @media screen and (max-width:768px)  {
+        :root {
+          font-size:13px;
+        }
+        
+      }
+      @media screen and (max-width:468px)  {
+        :root {
+          font-size:12px;
+        }
+        
+      }
 
     `}
   />

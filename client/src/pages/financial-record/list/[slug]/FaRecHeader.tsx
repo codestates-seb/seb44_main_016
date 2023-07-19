@@ -13,7 +13,7 @@ interface FaRecHeaderProps {
 }
 
 export default function FaRecHeader({ setActiveTab, isLoading, isError, data }: FaRecHeaderProps) {
-  const { financialRecordName, memo, articleCount, faRecTimeline, imgPath } = data;
+  const { financialRecordName, memo, articleCount, faRecTimeline, users, imgPath } = data;
 
   const router = useRouter();
   const faRecId = router.query.slug;
@@ -61,7 +61,7 @@ export default function FaRecHeader({ setActiveTab, isLoading, isError, data }: 
                 </S.aLink>
                 <S.Button type='button'>
                   멤버
-                  {/* <span>{users.length}</span> */}
+                  <span>{users.length}</span>
                 </S.Button>
               </S.ButtonWrap>
               <S.DescContainer>{memo}</S.DescContainer>
@@ -80,12 +80,17 @@ const S = {
     width: 100%;
     align-items: center;
     padding: 3.125rem 0.625rem;
+
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+      align-items: center;
+      padding: 3.125rem 0;
+    }
   `,
 
   ImgBox: styled.div`
     width: 9.375rem;
     height: 9.375rem;
-    min-width: 150px;
     border-radius: var(--rounded-full);
     overflow: hidden;
     & > img {
@@ -104,14 +109,28 @@ const S = {
     display: flex;
     flex-direction: column;
 
+    @media screen and (max-width: 768px) {
+      margin: 1.6rem 0 0 0;
+    }
+
     & > div {
       display: flex;
       align-items: center;
       margin-bottom: 1.75rem;
+      @media screen and (max-width: 768px) {
+        margin-bottom: 1rem;
+        justify-content: center;
+      }
     }
 
     & > div:nth-of-type(1) {
       justify-content: space-between;
+      @media screen and (max-width: 768px) {
+        flex-direction: column;
+        & > div {
+          margin: 1rem 0 0 0;
+        }
+      }
     }
   `,
   LinkWrap: styled.div`
@@ -136,6 +155,20 @@ const S = {
   ButtonWrap: styled.div`
     display: flex;
     gap: 2rem;
+    & > * {
+      line-height: 1.2;
+    }
+    @media screen and (max-width: 768px) {
+      & > * {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        & > span {
+          margin-left: 0;
+          text-align: center;
+        }
+      }
+    }
   `,
   Button: styled.button`
     &:hover {

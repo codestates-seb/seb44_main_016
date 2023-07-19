@@ -60,6 +60,11 @@ export default function FinancialPage() {
     ({ pageParam = 1 }) => APIfinancialRecord.getRecordArticle(financialRecordId, pageParam, size),
     {
       getNextPageParam: (lastPage) => {
+        const currentPage = Number(lastPage.pageData?.page);
+        const totalPages = Number(lastPage.pageData?.totalPages);
+        if (isNaN(currentPage) || isNaN(totalPages)) {
+          return undefined;
+        }
         const nextPage = lastPage.pageData?.page + 1;
         return nextPage > lastPage.pageData?.totalPages ? undefined : nextPage;
       },
@@ -86,6 +91,9 @@ export default function FinancialPage() {
     return <Loading />;
   }
 
+  const filteredData = timelineData?.pages.flatMap(
+    (pageData) => pageData.data?.filter((el: FaRecData) => el.scope === '가계부 타임라인') || []
+  );
   return (
     <S.Container>
       <FaRecHeader
@@ -129,17 +137,13 @@ export default function FinancialPage() {
       ) : (
         <>
           <S.ContentWrap id='timeline'>
-            {timelineData?.pages.flatMap((pageData) => {
-              const filteredData = pageData.data?.filter((el: FaRecData) => el.scope === '가계부 타임라인');
-
-              return filteredData?.length > 0 ? (
-                filteredData?.map((filteredEl: FaRecData) => (
-                  <SnsArticle key={filteredEl.financialRecordArticleId} data={filteredEl} type='timeline' />
-                ))
-              ) : (
-                <S.ErrorText>타임라인이 비어있습니다.</S.ErrorText>
-              );
-            })}
+            {filteredData && filteredData?.length > 0 ? (
+              filteredData?.map((filteredEl: FaRecData) => (
+                <SnsArticle key={filteredEl.financialRecordArticleId} data={filteredEl} type='timeline' />
+              ))
+            ) : (
+              <S.ErrorText key='empty'>타임라인이 비어있습니다.</S.ErrorText>
+            )}
           </S.ContentWrap>
           <S.AddWrap ref={ref}>
             <S.AddBtn onClick={() => fetchNextPage()} disabled={!hasNextPage}>
@@ -158,6 +162,10 @@ const S = {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+
+    @media screen and (max-width: 768px) {
+      padding: 16px;
+    }
   `,
   ContentWrap: styled.div`
     display: flex;
