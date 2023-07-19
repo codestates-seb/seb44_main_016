@@ -2,6 +2,8 @@ package com.zerohip.server.feedArticle.entity;
 
 import com.zerohip.server.common.article.Article;
 import com.zerohip.server.common.feedType.FeedType;
+import com.zerohip.server.common.vote.entity.Vote;
+import com.zerohip.server.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +12,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "feedArticles")
@@ -34,6 +38,13 @@ public class FeedArticle extends Article {
     @OneToMany(mappedBy = "feedArticle", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FeedArticleImg> images = new ArrayList<>();
      */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
+
+    @OneToMany(mappedBy = "feedArticle", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vote> votes = new ArrayList<>();
+
     // 투표 횟수
     @Column(nullable = false)
     private int voteCount = 0;
@@ -46,6 +57,13 @@ public class FeedArticle extends Article {
     // 투표 횟수 감소 메서드
     public void decreaseVoteCount() {
         this.voteCount--;
+    }
+
+    public Vote getVote() {
+        return votes.stream()
+                .filter(vote -> vote.getVoteType() != null)
+                .findFirst()
+                .orElse(null);
     }
 
     // 댓글, 유저

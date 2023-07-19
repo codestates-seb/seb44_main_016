@@ -24,6 +24,8 @@ public class Vote {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private VoteType voteType;
+    @Column(nullable = false)
+    private int voteCount;
 
     public Vote() {
     }
@@ -46,5 +48,12 @@ public class Vote {
 
     public void setVoteType(VoteType voteType) {
         this.voteType = voteType;
+    }
+
+    public void increaseVoteCount() {
+        this.voteCount++;
+    }
+    public void decreaseVoteCount() {
+        this.voteCount--;
     }
 }
