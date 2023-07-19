@@ -5,6 +5,7 @@ import CommonStyles from '../styles/CommonStyles';
 import AsideBtn from '../components/aside/AsideBtn';
 import AsideLogo from '../components/aside/AsideLogo';
 import AsideProfileBox from '../components/aside/AsideProfileBox';
+import MobileEditBtn from '../components/aside/MobileEditBtn';
 
 import svgs from '../constants/svg';
 import { ScreenEnum } from '../constants/enums';
@@ -100,7 +101,7 @@ export default function Aside(props: Props) {
           </AsideBtn>
         </S.Upper>
         {isMobile ? (
-          <></>
+          <MobileEditBtn />
         ) : (
           <S.Lower>
             {props.isLoggedIn ? (
@@ -160,12 +161,6 @@ const S = {
       height: var(--aside-mobile-h);
       max-height: 15vw;
       bottom: 0;
-
-      & a,
-      & button {
-        width: 100%;
-        padding: 10;
-      }
     }
   `,
   LeftOfAsideCover: styled.div`
@@ -222,6 +217,7 @@ const S = {
     }
   `,
   Lower: styled.div`
+    position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
