@@ -40,7 +40,7 @@ const apiUser = {
   /** 회원 탈퇴 */
   deleteMyInfo: async () => {
     try {
-      await instance.delete(`${BASE_URL}/user/delete`); 
+      await instance.delete(`${BASE_URL}/user/delete`);
     } catch (err) {
       throw err.response;
     }
@@ -48,7 +48,7 @@ const apiUser = {
 
   /** 회원 정보 불러오기 */
   getMyInfo: async () => {
-    const res = await instance.get(`${BASE_URL}/user/mypage`); 
+    const res = await instance.get(`${BASE_URL}/user/mypage`);
     return res.data;
   },
 
@@ -57,7 +57,7 @@ const apiUser = {
     try {
       const res = await instance.patch(`${BASE_URL}/user/update`, userUpdateData, {
         headers: { 'Content-Type': 'multipart/form-data' },
-      }); 
+      });
       return res;
     } catch (err) {
       throw err.response;
