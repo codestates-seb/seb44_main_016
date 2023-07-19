@@ -4,9 +4,10 @@ import extractValueFromUrl from '../../../utils/extractFromURL';
 import { useAppDispatch } from '../../../components/redux/hooks';
 import { changeImgSrc } from '../../../components/redux/currentImgReducer';
 import { store } from '../../../components/redux/store';
+import { UserInfoResData } from '../../../types/user';
 
 interface RandomAvatarUpdateProps {
-  userData: any | null; // 이 데이터 타입은 추후 api 작성 완료 되면 수정 예정
+  userData: UserInfoResData;
   setIsOpen: (arg: boolean) => void;
   isOpen: boolean;
 }

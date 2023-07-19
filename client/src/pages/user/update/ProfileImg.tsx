@@ -5,9 +5,10 @@ import CloseBtn from '../../../../public/images/icon/closeBtn.svg';
 import RandomAvatarUpdate from './RandomAvatarUpdate';
 import { store } from '../../../components/redux/store';
 import UserImgFileUpdate from './UserImgFileUpdate';
+import { UserInfoResData } from '../../../types/user';
 
 interface ImageUploadProps {
-  data: any | null; // 이 데이터 타입은 추후 api 작성 완료 되면 수정 예정
+  data: UserInfoResData;
 }
 
 export default function ProfileImgUpdate({ data }: ImageUploadProps) {
@@ -28,7 +29,6 @@ export default function ProfileImgUpdate({ data }: ImageUploadProps) {
   const handleSelectMenu = (index: number) => setCurrentTab(index);
   const openModalHandler = () => setIsOpen(!isOpen);
   const { currentImgSrc } = store.getState().currentImgReducer;
-
   return (
     <S.UserImg>
       <img src={currentImgSrc ? currentImgSrc : data.profileImgPath} alt='유저 프로필 사진' />

@@ -1,28 +1,22 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { UserInfoResData, UserInputLabel } from '../../../types/user';
+import { UserInputLabel } from '../../../types/user';
 
 interface InputFieldProps {
   label: UserInputLabel;
   guide: string;
-  component: React.ReactElement | React.ReactNode;
+  component: React.ReactNode;
   error: string;
-  data: UserInfoResData;
 }
 
-export default function InputField({ label, guide, component, error, data }: InputFieldProps) {
-  const newProps = { placeholder: data.nickname };
-
+export default function InputField({ label, guide, component, error }: InputFieldProps) {
   return (
     <S.InputBox key={label.text}>
       <S.LabelBox>
         <S.Label htmlFor={label.htmlFor}>{label.text}</S.Label>
         <S.Guide htmlFor={label.htmlFor}>{guide}</S.Guide>
       </S.LabelBox>
-      <S.InputField>
-        {' '}
-        {React.isValidElement(component) && React.cloneElement(component, newProps)}
-      </S.InputField>
+      <S.InputField>{component}</S.InputField>
       <S.Error htmlFor={label.htmlFor}>{error} </S.Error>
     </S.InputBox>
   );
