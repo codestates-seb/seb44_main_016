@@ -13,7 +13,6 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "USERS")
-@MappedSuperclass
 public class User extends Auditable {
 
     @Id
@@ -34,16 +33,6 @@ public class User extends Auditable {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
-
-  public User(User user) {
-    this.userId = user.userId;
-    this.email = user.email;
-    this.loginId = user.loginId;
-    this.password = user.password;
-    this.nickname = user.nickname;
-    this.roles = user.roles;
-  }
-
 
   /** 연관관계 매핑
      *  userImage
