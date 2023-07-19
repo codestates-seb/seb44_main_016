@@ -29,13 +29,24 @@ public class FeedArticle extends Article {
     @Column(nullable = false, length = 2_000)
     private String content;
 
-    //피드게시글 작성시간은 Auditable 상속받기 때문에 아예 필드변수 없어도 ok.
-
     //이미지 파일
     /*
     @OneToMany(mappedBy = "feedArticle", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FeedArticleImg> images = new ArrayList<>();
      */
+    // 투표 횟수
+    @Column(nullable = false)
+    private int voteCount = 0;
 
-    //해시태그, 댓글, 유저, 투표(절약/플렉스) 추가적으로 작성 필요
+    // 투표 횟수 증가 메서드
+    public void increaseVoteCount() {
+        this.voteCount++;
+    }
+
+    // 투표 횟수 감소 메서드
+    public void decreaseVoteCount() {
+        this.voteCount--;
+    }
+
+    // 댓글, 유저, 투표(절약/플렉스) 추가적으로 작성 필요
 }
