@@ -1,14 +1,14 @@
 package com.zerohip.server.common.comment.entity;
 
 import com.zerohip.server.common.audit.Auditable;
+import com.zerohip.server.feedArticle.entity.FeedArticle;
+import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
+import com.zerohip.server.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -28,10 +28,18 @@ public class Comment extends Auditable {
   @Column(nullable = false, unique = false, updatable = true, length = 2_000)
   private String content;
 
+  @ManyToOne
+  @JoinColumn(name = "fianancial-record-article-id")
+  private FinancialRecordArticle financialRecordArticle;
+
+  @ManyToOne
+  @JoinColumn(name = "feed-article-id")
+  private FeedArticle feedArticle;
+
+  @ManyToOne
+  @JoinColumn(name = "user-id")
+  private User user;
   /**
-   * - 피드 게시물
-   * - 가계부 게시물
    * - 좋아요
-   * - 유저
    */
 }
