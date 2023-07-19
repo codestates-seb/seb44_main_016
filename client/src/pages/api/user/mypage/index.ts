@@ -5,7 +5,7 @@ export default function signUp(req: NextApiRequest, res: NextApiResponse) {
     userId: '12@Sddh4',
     loginId: 'doyu',
     nickname: '마마망',
-    imgId: 'https://source.boringavatars.com/beam/150/doyu5',
+    profileImgPath: 'https://source.boringavatars.com/beam/150/doyu5',
     followingList: [
       {
         userId: 11, // 아이디는 다 다름

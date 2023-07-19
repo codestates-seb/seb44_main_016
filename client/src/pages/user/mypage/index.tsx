@@ -34,7 +34,7 @@ function MyPage() {
               </Head>
               <h1 className='blind'>마이페이지</h1>
               <S.UserImg>
-                <img src={data?.imgId} alt='프로필 사진' />
+                <img src={data?.profileImgPath} alt='프로필 사진' />
               </S.UserImg>
               <S.UserName>
                 <S.Nickname>{data.nickname}</S.Nickname>

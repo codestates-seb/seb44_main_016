@@ -16,6 +16,10 @@ export interface SignUpError {
   policy: string;
 }
 
+export interface UserInputLabel {
+  htmlFor: string;
+  text: string;
+}
 export interface PostSignUp {
   email: string | null;
   loginId: string | null;
@@ -44,8 +48,32 @@ export interface UserUpdateReqData {
 }
 
 export interface FollowUsersInfoData {
+  userId: number;
   imgId: string;
   isAlsoFollowed: boolean;
   loginId: string;
   nickname: string;
+}
+
+export interface UserFeedData {
+  feedArticleId: number;
+  feedType: number;
+  user: {
+    userId: number;
+    nickname: string;
+    profileImgPath: string;
+  };
+  content: 'SKT 가족 할인이 짜장입니다 그 돈 아껴서 태국 스노쿨링 하다 왔어요 거북이도 봤쬬';
+  createdAt: Date;
+  modifiedAt: Date;
+  imgPath: string;
+}
+export interface UserInfoResData {
+  userId: string;
+  loginId: string;
+  nickname: string;
+  profileImgPath: string;
+  followingList: FollowUsersInfoData[];
+  followerList: FollowUsersInfoData[];
+  myContents?: UserFeedData[];
 }

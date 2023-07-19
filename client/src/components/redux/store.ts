@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authnReducer from './authnReducer';
+import currentImgReducer from './currentImgReducer';
 
 export const store = configureStore({
   reducer: {
     authnReducer,
+    currentImgReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 });
