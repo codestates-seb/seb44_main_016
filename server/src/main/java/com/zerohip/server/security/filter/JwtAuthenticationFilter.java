@@ -69,7 +69,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         // 리프레쉬 토큰 쿠키화
         ResponseCookie cookie = ResponseCookie.from("Refresh", refreshToken)
-//                .domain("zerohip.co.kr")
+                .domain("localhost")
                 .maxAge(24 * 60 * 60)
                 .path("/")
 //                .secure(true)
