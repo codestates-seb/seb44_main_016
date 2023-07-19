@@ -2,6 +2,7 @@ package com.zerohip.server.financialRecordArticle.entity;
 
 import com.zerohip.server.common.article.Article;
 //import com.zerohip.server.common.img.entity.Img;
+import com.zerohip.server.common.scope.Scope;
 import com.zerohip.server.financialRecord.entity.FinancialRecord;
 import com.zerohip.server.user.entity.User;
 import lombok.AllArgsConstructor;
@@ -64,4 +65,14 @@ public class FinancialRecordArticle extends Article {
   // 댓글 매핑
   // 좋아요 매핑
   // 해시태그 매핑
+
+  public FinancialRecordArticle(Scope scope, String title, String content, LocalDate faDate, String category, Integer price, FinancialRecord financialRecord) {
+    super(scope);
+    this.title = title;
+    this.content = content;
+    this.faDate = faDate;
+    this.category = category;
+    this.price = price;
+    this.financialRecord = financialRecord;
+  }
 }
