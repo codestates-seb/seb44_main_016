@@ -7,18 +7,20 @@ import { store } from '../../../components/redux/store';
 import { UserInfoResData } from '../../../types/user';
 
 interface RandomAvatarUpdateProps {
-  userData: UserInfoResData;
+  myInfoData: UserInfoResData;
   setIsOpen: (arg: boolean) => void;
   isOpen: boolean;
 }
 
-export default function RandomAvatarUpdate({ userData, setIsOpen, isOpen }: RandomAvatarUpdateProps) {
+export default function RandomAvatarUpdate({ myInfoData, setIsOpen, isOpen }: RandomAvatarUpdateProps) {
   const dispatch = useAppDispatch();
   const currentImgSrc = store.getState().currentImgReducer.currentImgSrc;
 
-  const [avatarImgURL, setAvatarImgURL] = useState(currentImgSrc ? currentImgSrc : userData.profileImgPath);
+  const [avatarImgURL, setAvatarImgURL] = useState(
+    currentImgSrc ? currentImgSrc : myInfoData?.profileImgPath
+  );
   const [changeAvatarNumber, setChangeAvatarNumber] = useState(
-    userData ? Number(extractValueFromUrl(userData.profileImgPath, userData.loginId)) : null
+    myInfoData ? Number(extractValueFromUrl(myInfoData.profileImgPath, myInfoData.loginId)) : null
   );
 
   const handleChooseAvatarProfileImg = () => {
@@ -29,7 +31,7 @@ export default function RandomAvatarUpdate({ userData, setIsOpen, isOpen }: Rand
   const handleChangeAvatarImg = (e: React.MouseEvent) => {
     e.preventDefault();
     setChangeAvatarNumber((prev: number) => prev + 1);
-    setAvatarImgURL(`https://source.boringavatars.com/beam/150/${userData.loginId}${changeAvatarNumber}`);
+    setAvatarImgURL(`https://source.boringavatars.com/beam/150/${myInfoData?.loginId}${changeAvatarNumber}`);
   };
 
   return (

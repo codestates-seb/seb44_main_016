@@ -8,21 +8,21 @@ import UserImgFileUpdate from './UserImgFileUpdate';
 import { UserInfoResData } from '../../../types/user';
 
 interface ImageUploadProps {
-  data: UserInfoResData;
+  myInfoData: UserInfoResData;
 }
 
-export default function ProfileImgUpdate({ data }: ImageUploadProps) {
+export default function ProfileImgUpdate({ myInfoData }: ImageUploadProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentTab, setCurrentTab] = useState(0);
 
   const menuArr = [
     {
       name: '랜덤 아바타 뽑기',
-      content: () => <RandomAvatarUpdate userData={data} setIsOpen={setIsOpen} isOpen={isOpen} />,
+      content: () => <RandomAvatarUpdate myInfoData={myInfoData} setIsOpen={setIsOpen} isOpen={isOpen} />,
     },
     {
       name: '자유롭게 사진 올리기',
-      content: () => <UserImgFileUpdate userData={data} setIsOpen={setIsOpen} isOpen={isOpen} />,
+      content: () => <UserImgFileUpdate myInfoData={myInfoData} setIsOpen={setIsOpen} isOpen={isOpen} />,
     },
   ];
 
@@ -31,7 +31,7 @@ export default function ProfileImgUpdate({ data }: ImageUploadProps) {
   const { currentImgSrc } = store.getState().currentImgReducer;
   return (
     <S.UserImg>
-      <img src={currentImgSrc ? currentImgSrc : data.profileImgPath} alt='유저 프로필 사진' />
+      <img src={currentImgSrc ? currentImgSrc : myInfoData?.profileImgPath} alt='유저 프로필 사진' />
       <S.ImageUploadBtn onClick={openModalHandler} type='button' aria-label='이미지 업로드 버튼'>
         <ImageUploadBtnIcon />
       </S.ImageUploadBtn>

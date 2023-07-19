@@ -11,13 +11,13 @@ interface InputFieldProps {
 
 export default function InputField({ label, guide, component, error }: InputFieldProps) {
   return (
-    <S.InputBox key={label.text}>
+    <S.InputBox key={label?.text || ''}>
       <S.LabelBox>
-        <S.Label htmlFor={label.htmlFor}>{label.text}</S.Label>
-        <S.Guide htmlFor={label.htmlFor}>{guide}</S.Guide>
+        <S.Label htmlFor={label?.htmlFor || ''}>{label?.text || ''}</S.Label>
+        <S.Guide htmlFor={label?.htmlFor || ''}>{guide}</S.Guide>
       </S.LabelBox>
       <S.InputField>{component}</S.InputField>
-      <S.Error htmlFor={label.htmlFor}>{error} </S.Error>
+      <S.Error htmlFor={label?.htmlFor || ''}>{error} </S.Error>
     </S.InputBox>
   );
 }

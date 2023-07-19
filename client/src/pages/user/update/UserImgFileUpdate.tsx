@@ -9,12 +9,12 @@ import { store } from '../../../components/redux/store';
 import { UserInfoResData } from '../../../types/user';
 
 interface RandomAvatarUpdateProps {
-  userData: UserInfoResData;
+  myInfoData: UserInfoResData;
   setIsOpen: (arg: boolean) => void;
   isOpen: boolean;
 }
 
-export default function UserImgFileUpdate({ userData, setIsOpen, isOpen }: RandomAvatarUpdateProps) {
+export default function UserImgFileUpdate({ myInfoData, setIsOpen, isOpen }: RandomAvatarUpdateProps) {
   const dispatch = useAppDispatch();
   const currentImgSrc = store.getState().currentImgReducer.currentImgSrc;
   const { imgSrc, setImgSrc, croppedImage, setCroppedImage, cropModal, setCropModal } = useImgCrop();
@@ -41,11 +41,11 @@ export default function UserImgFileUpdate({ userData, setIsOpen, isOpen }: Rando
         ) : currentImgSrc ? (
           <img src={currentImgSrc} alt={`프로필 사진`} />
         ) : (
-          <img src={userData.profileImgPath} alt={`프로필 사진`} />
+          <img src={myInfoData?.profileImgPath} alt={`프로필 사진`} />
         )}
       </S.UserImg>
-      <S.FileInput type='file' id='addFaRecImg' accept='image/*' onChange={onFileChange} />
-      <FilePlusLabel htmlFor='addFaRecImg' />
+      <S.FileInput type='file' id='addUserProfileImg' accept='image/*' onChange={onFileChange} />
+      <FilePlusLabel htmlFor='addUserProfileImg' />
       <S.ButtonWrap>
         <button type='button' onClick={handleChooseFileProfileImg}>
           이 사진으로 <br /> 결정하기

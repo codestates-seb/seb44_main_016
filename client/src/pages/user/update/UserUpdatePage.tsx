@@ -11,7 +11,7 @@ import BackBtnBox from '../../../components/BackBtn';
 import getNewError from '../../../utils/inputValidationError';
 import { useMutation } from '@tanstack/react-query';
 import apiUser from '../../../services/apiUser';
-import ProfileImgUpdate from './ProfileImg';
+import ProfileImgUpdate from './ProfileImgUpdate';
 import { RootState } from '../../../components/redux/store';
 import { changeImgSrc } from '../../../components/redux/currentImgReducer';
 import { useAppDispatch } from '../../../components/redux/hooks';
@@ -25,8 +25,6 @@ interface UserUpdatePageProps {
 export default function UserUpdatePage({ myInfoData }: UserUpdatePageProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
-
-  console.log(myInfoData);
 
   const currentImgSrc = useSelector<RootState>((state) => state.currentImgReducer.currentImgSrc);
   const originalNickname = myInfoData ? myInfoData.nickname : '';
@@ -119,7 +117,7 @@ export default function UserUpdatePage({ myInfoData }: UserUpdatePageProps) {
     <S.Container>
       <BackBtnBox />
       <S.FormContainer>
-        <ProfileImgUpdate data={myInfoData} />
+        <ProfileImgUpdate myInfoData={myInfoData} />
         {inputData.map((el) => (
           <InputField
             key={el.label.text}
