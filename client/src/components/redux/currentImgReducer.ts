@@ -14,12 +14,7 @@ const currentImgReducer = createSlice({
   name: 'currentImgReducer',
   initialState,
   reducers: {
-    changeAvatarImgSrc: (state, action: PayloadAction<ChangeUserImg>) => {
-      const { currentImgSrc, isAvatar } = action.payload;
-      state.currentImgSrc = currentImgSrc;
-      state.isAvatar = isAvatar;
-    },
-    changeFileImgSrc: (state, action: PayloadAction<ChangeUserImg>) => {
+    changeImgSrc: (state, action: PayloadAction<ChangeUserImg>) => {
       const { currentImgSrc, isAvatar } = action.payload;
       state.currentImgSrc = currentImgSrc;
       state.isAvatar = isAvatar;
@@ -27,6 +22,6 @@ const currentImgReducer = createSlice({
   },
 });
 
-export const { changeAvatarImgSrc, changeFileImgSrc } = currentImgReducer.actions;
+export const { changeImgSrc } = currentImgReducer.actions;
 
 export default currentImgReducer.reducer;

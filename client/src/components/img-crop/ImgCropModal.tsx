@@ -12,6 +12,7 @@ interface ImageCropModalProps {
   setCropModal: (isOpen: boolean) => void;
   aspect: number;
   cropShape: 'round' | 'rect';
+  isMyPage?: boolean;
 }
 
 function ImgCropModal({
@@ -21,6 +22,7 @@ function ImgCropModal({
   setCropModal,
   aspect,
   cropShape,
+  isMyPage,
 }: ImageCropModalProps) {
   const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -74,7 +76,7 @@ function ImgCropModal({
 
   return (
     <S.CropWrap>
-      <S.CropContainer>
+      <S.CropContainer className={isMyPage ? 'isMyPage' : ''}>
         <Cropper
           image={imgSrc || ''}
           crop={crop}
@@ -130,6 +132,11 @@ const S = {
       height: calc(100% - 2rem);
       margin-bottom: 1rem;
       border-radius: var(--rounded-default);
+    }
+    &.isMyPage {
+      max-width: 420px;
+      width: 420px;
+      height: 400px;
     }
   `,
   ButtonWrap: styled.div`
