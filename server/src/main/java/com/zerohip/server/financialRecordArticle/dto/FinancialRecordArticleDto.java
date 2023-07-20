@@ -66,7 +66,7 @@ public class FinancialRecordArticleDto {
   @Getter
   @AllArgsConstructor
   public static class Response {
-    private Long financialRecordArticleId;
+    private Long articleId;
     private String title;
     private String content;
     private LocalDate faDate;
@@ -83,5 +83,10 @@ public class FinancialRecordArticleDto {
     // 댓글 매핑 데이터
     // 좋아요 매핑 데이터
     // 해시태그 매핑 데이터
+
+
+    public void setFinancialRecordId(Long financialRecordId) {
+      this.financialRecordId = financialRecordId;
+    }
   }
 }

@@ -49,7 +49,7 @@ public class FinancialRecordArticle extends Article {
 
   // 가계부 매핑
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "financial-Record-id")
+  @JoinColumn(name = "financial_Record_id")
   private FinancialRecord financialRecord;
 
   // 이미지 매핑
@@ -60,7 +60,7 @@ public class FinancialRecordArticle extends Article {
 
   // 유저 매핑
   @ManyToOne
-  @JoinColumn(name = "user-id")
+  @JoinColumn(name = "user_id")
   private User user;
   // 댓글 매핑
   // 좋아요 매핑

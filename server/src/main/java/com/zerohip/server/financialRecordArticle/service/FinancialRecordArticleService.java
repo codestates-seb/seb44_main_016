@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface FinancialRecordArticleService {
   // 가계부 게시글 생성
-  FinancialRecordArticle createFaRecArticle(User author, FinancialRecordArticle faRecArticle);
+  FinancialRecordArticle createFaRecArticle(Long financialRecordId, User author, FinancialRecordArticle faRecArticle);
   // 가계부 게시글 조회(단건)
   FinancialRecordArticle findFaRecArticle(Long faRecArticleId);
   // 가계부 게시글 조회(전체)
@@ -20,4 +20,6 @@ public interface FinancialRecordArticleService {
   void deleteFaRecArticle(User author, Long faRecArticleId);
   // 가계부 게시글 조회 확인
   FinancialRecordArticle findVerifiedFaRecArticle(Long faRecArticleId);
+
+  User findUser(User author);
 }

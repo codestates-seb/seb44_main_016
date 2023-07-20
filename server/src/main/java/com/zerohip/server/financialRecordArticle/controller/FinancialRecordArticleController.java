@@ -28,17 +28,17 @@ import java.util.List;
 @RequestMapping("/financial-record/{financial-record-id}/article")
 public class FinancialRecordArticleController {
 
-  private final static String FINANCIAL_RECORD_ARTICLE_DEFAULT_URI = "/financial-record/{financialRecordId}/article";
   private final FinancialRecordArticleService service;
   private final FinancialRecordArticleMapper mapper;
 
   @PostMapping
   public ResponseEntity createFinancialRecordArticle(@Valid @RequestBody FinancialRecordArticleDto.Post requestbody,
+                                                     @PathVariable("financial-record-id") Long financialRecordId,
                                                      @AuthenticationPrincipal User author) {
 
-    FinancialRecordArticle saveFaRecArticle = service.createFaRecArticle(author, mapper.financialRecordArticlePostToFinancialRecordArticle(requestbody));
+    FinancialRecordArticle saveFaRecArticle = service.createFaRecArticle(financialRecordId, author, mapper.financialRecordArticlePostToFinancialRecordArticle(requestbody));
 
-    URI uri = URI.create(FINANCIAL_RECORD_ARTICLE_DEFAULT_URI + "/" + saveFaRecArticle.getArticleId());
+    URI uri = URI.create("/financial-record/" + financialRecordId + "/article/" + saveFaRecArticle.getArticleId());
 
     log.info("saveFaRecArticle.getCreatedAt() : {}", saveFaRecArticle.getCreatedAt());
 

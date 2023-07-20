@@ -9,14 +9,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.List;
 
-
+@Entity
+@Table(name = "financialRecords")
 @Setter
 @Getter
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 public class FinancialRecord extends Auditable {
@@ -33,13 +34,16 @@ public class FinancialRecord extends Auditable {
   @Column(nullable = true, unique = false, updatable = true)
   private String memo;
 
-  @Size(min = 0)
+  @Min(0)
   @Column(nullable = false, unique = false, updatable = false, columnDefinition = "integer default 0")
   private int totalCount;
 
-  @Size(min = 0)
+  @Min(0)
   @Column(nullable = false, unique = false, updatable = false, columnDefinition = "integer default 0")
   private int timeLineCount;
+
+  @Column(columnDefinition = "boolean default false")
+  private boolean isBookmark;
 
   // 게시물 수
   @OneToMany(mappedBy = "financialRecord", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -47,14 +51,8 @@ public class FinancialRecord extends Auditable {
 
   // 유저 매핑(List 형식)
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user-id")
+  @JoinColumn(name = "user_id", nullable = false)
   private User user;
-
-  @PrePersist
-  public void prePersist() {
-    this.totalCount = 0;
-    this.timeLineCount = 0;
-  }
 
   public FinancialRecord(String financialRecordName, String memo) {
     this.financialRecordName = financialRecordName;
