@@ -34,6 +34,7 @@ instance.interceptors.response.use(
       if (response.data.status === 403) {
         /** GET : NEW ACCESS TOKEN */
         const res = await axios.post(`http://localhost:8080/auth/refresh`, null, {
+          // 서버 배포 링크로 추후 변경 예정
           headers: {
             'Content-Type': 'application/json',
           },
@@ -45,7 +46,7 @@ instance.interceptors.response.use(
         return axios(originalRequest);
       }
     } catch (error) {
-      toast.error('로그인 먼저 해주세요.');
+      toast.info('로그인이 필요한 서비스입니다.');
       return false;
     }
     return Promise.reject(error);
