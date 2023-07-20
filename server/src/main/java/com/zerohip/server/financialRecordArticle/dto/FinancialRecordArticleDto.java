@@ -66,7 +66,7 @@ public class FinancialRecordArticleDto {
   @Getter
   @AllArgsConstructor
   public static class Response {
-    private Long financialRecordArticleId;
+    private Long articleId;
     private String title;
     private String content;
     private LocalDate faDate;
