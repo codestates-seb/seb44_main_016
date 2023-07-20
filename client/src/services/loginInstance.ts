@@ -1,17 +1,16 @@
 import axios from 'axios';
 import { store } from '../components/redux/store';
-import { setCookie, getCookie, deleteCookie } from 'cookies-next';
+import { toast } from 'react-toastify';
 
 /** INSTANCE WITH TOKEN */
 export const instance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  withCredentials: true,
 });
 
 /** REQUEST INTERCEPTORS */
 instance.interceptors.request.use(
   (config) => {
-    // const accessToken = store.getState().authnReducer.login.accessToken;
-    const accessToken = 'test'; // accessToken 만료 test용
+    const accessToken = store.getState().authnReducer.login.accessToken;
     if (accessToken) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
@@ -25,33 +24,28 @@ instance.interceptors.request.use(
 /** RESPONSE INTERCEPTORS */
 instance.interceptors.response.use(
   (response) => {
-    // console.log('리스펀스!');
     return response;
   },
   async (error) => {
     try {
-      console.log(error);
-      const { status, message, response, config } = error;
+      const { response, config } = error;
       const originalRequest = config;
-
-      if (status === '401') {
-        console.log('액세스 없음! 받아와야 함 ');
-
+      console.log(response);
+      if (response.data.status === 403) {
         /** GET : NEW ACCESS TOKEN */
-        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/auth/refresh`, {
+        const res = await axios.post(`http://localhost:8080/auth/refresh`, null, {
           headers: {
             'Content-Type': 'application/json',
           },
+          withCredentials: true,
         });
-        /** CHANGE ACCESS TOKEN */
-        originalRequest.headers['Authorization'] = res.headers['Authorization'];
-        getCookie('Refresh');
+
+        /** CHANGE ACCESS TOKEN AND RETRY THE REQUEST*/
+        originalRequest.headers['Authorization'] = res.headers.authorization;
         return axios(originalRequest);
       }
     } catch (error) {
-      console.log('둘 다 없음! 로그아웃됨 ');
-
-      window.location.href = '/';
+      toast.error('로그인 먼저 해주세요.');
       return false;
     }
     return Promise.reject(error);
