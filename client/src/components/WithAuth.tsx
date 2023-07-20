@@ -5,7 +5,7 @@ import { useAppDispatch } from './redux/hooks';
 import { login, logout } from './redux/authnReducer';
 import { useMutation } from '@tanstack/react-query';
 import apiUser from '../services/apiUser';
-import useAccessToken from '../hooks/useAccessToken';
+import useAccessToken from '../utils/getAccessToken';
 
 const withAuth = (Component: ComponentType) => (props: object) => {
   const router = useRouter();
