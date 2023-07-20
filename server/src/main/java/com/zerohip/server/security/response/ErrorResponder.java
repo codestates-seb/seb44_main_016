@@ -21,7 +21,16 @@ public class ErrorResponder {
 
     public static void sendExpiredJwtExceptionError(HttpServletResponse response, HttpStatus status) throws IOException {
 
-        ErrorResponse errorResponse = ErrorResponse.of(status, "Jwt 토큰의 유효기간이 만료되었습니다.");
+        ErrorResponse errorResponse = ErrorResponse.of(status, "JWT 유효기간이 만료되었습니다.");
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setStatus(status.value());
+        response.getWriter().write(new Gson().toJson(errorResponse, ErrorResponse.class));
+    }
+
+
+    public static void sendRefreshTokenExceptionError(HttpServletResponse response, HttpStatus status) throws IOException {
+
+        ErrorResponse errorResponse = ErrorResponse.of(status, "Refresh Token 이 유효하지 않습니다.");
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(status.value());
         response.getWriter().write(new Gson().toJson(errorResponse, ErrorResponse.class));

@@ -93,22 +93,13 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
         String loginId = (String) claims.get("loginId");
         List<GrantedAuthority> authorities = authorityUtils.createAuthorities((List) claims.get("roles"));
-        List<String> roles = new ArrayList<>();
-        authorities.forEach(u -> roles.add(u.getAuthority()));
-        User user = User.builder()
-                .loginId(loginId)
-                .roles(roles).build();
+//        List<String> roles = new ArrayList<>();
+//        authorities.forEach(u -> roles.add(u.getAuthority()));
+//        User user = User.builder()
+//                .loginId(loginId)
+//                .roles(roles).build();
 
-        /**
-         * @AuthenticationPrincipal 로 인증된 사용자 가져올 때, nullPointerException 발생하는 이슈 해결
-         *
-         * 1. AuthenticationPrincipalArgumentResolver 클래스에서 SecurityContextHolder.getContext().getAuthentication()의 값을 가져와 파라미터에 주입
-         * 2. SecurityContextHolder 에 Authentication 객체를 저장하는 과정을, 토큰에서 추출한 loginId 로 인증 객체 생성하는 방식으로 작성함
-         *  -> db 에서 조회 후 유저객체를 가져오는 방식으로 변경했었으나, 성능면에서 비효율적이므로 수정
-         * 3. 인증 정보를 넣어주는 아래 로직에서 user 객체가 아닌 loginId 값을 넣어줬기 때문에 타입과 반환값이 달랐음
-         * 4. setAuthenticationToContext() 메서드 내부에 User 객체를 loginId 사용하여 빌더패턴으로 생성 -> 컨텍스트에 인증 정보 저장 시 user 객체로 저장
-         */
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(loginId, null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }

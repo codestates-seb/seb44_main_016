@@ -7,11 +7,12 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @Builder
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "USERS")
 public class User extends Auditable {
 
@@ -30,6 +31,17 @@ public class User extends Auditable {
 
     @Column
     private String nickname;
+
+    @Column
+    private String provider;
+
+    public User(String email, String loginId, String password, String nickname, String provider) {
+        this.email = email;
+        this.loginId = loginId;
+        this.password = password;
+        this.nickname = nickname;
+        this.provider = provider;
+    }
 
     @Builder.Default
     @ElementCollection(fetch = FetchType.EAGER)
