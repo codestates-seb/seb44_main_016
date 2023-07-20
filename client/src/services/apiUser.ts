@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { PostSignUp, LoginReqData, UserUpdateReqData } from '../types/user';
-import { instance } from './loginInstance';
+import { instance } from './tokenInstance';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
