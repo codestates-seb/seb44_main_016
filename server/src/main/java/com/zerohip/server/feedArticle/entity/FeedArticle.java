@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class FeedArticle extends Article {
 
-    //feedType - 절약팁, 허락해줘 선택
+    //feedType - 절약팁,허락해줘 선택
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private FeedType feedType;
