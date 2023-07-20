@@ -42,6 +42,9 @@ public class FinancialRecord extends Auditable {
   @Column(nullable = false, unique = false, updatable = false, columnDefinition = "integer default 0")
   private int timeLineCount;
 
+  @Column(columnDefinition = "boolean default false")
+  private boolean isBookmark;
+
   // 게시물 수
   @OneToMany(mappedBy = "financialRecord", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<FinancialRecordArticle> financialRecordArticles; // 글 매핑(List 형식)
@@ -50,12 +53,6 @@ public class FinancialRecord extends Auditable {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
-
-  @PrePersist
-  public void prePersist() {
-    this.totalCount = 0;
-    this.timeLineCount = 0;
-  }
 
   public FinancialRecord(String financialRecordName, String memo) {
     this.financialRecordName = financialRecordName;
