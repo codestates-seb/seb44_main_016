@@ -18,7 +18,8 @@ export interface FaRecData {
 }
 
 export interface FaRecUser {
-  userId: string;
+  userId: number;
+  nickname: string;
   profileImgPath: string;
 }
 
@@ -27,8 +28,8 @@ export interface FaRecHeaderData {
   financialRecordName: string;
   memo: string;
   articleCount: number;
-  faRecTimeline: number;
-  imgId: string;
+  timeLineCount: number;
+  imgPath: string;
   isBookmark: boolean;
   users: FaRecUser[];
 }
