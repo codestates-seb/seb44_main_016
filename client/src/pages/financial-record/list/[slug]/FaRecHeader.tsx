@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
 import CommonStyles from '../../../../styles/CommonStyles';
 import { useRouter } from 'next/router';
-import { FaRecHeaderData } from '../../../../types/financialRecord';
+
 import Loading from '../../../../components/Loading';
 import ErrorComponent from '../../../../components/ErrorComponent';
+import { FaRecHeaderData } from '../../../../types/article';
 
 interface FaRecHeaderProps {
   data: FaRecHeaderData;
@@ -14,7 +15,7 @@ interface FaRecHeaderProps {
 }
 
 export default function FaRecHeader({ setActiveTab, isLoading, isError, error, data }: FaRecHeaderProps) {
-  const { financialRecordName, memo, articleCount, faRecTimeline, users, imgPath } = data || {};
+  const { financialRecordName, memo, articleCount, timeLineCount, users, imgPath } = data || {};
 
   const router = useRouter();
   const faRecId = router.query.slug;
@@ -58,7 +59,7 @@ export default function FaRecHeader({ setActiveTab, isLoading, isError, error, d
                 </S.aLink>
                 <S.aLink href='#timeline' onClick={() => handleButtonClick('타임라인')}>
                   타임라인
-                  <span>{faRecTimeline}</span>
+                  <span>{timeLineCount}</span>
                 </S.aLink>
                 <S.Button type='button'>
                   멤버

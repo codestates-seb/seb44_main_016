@@ -1,18 +1,20 @@
+import { FormEvent, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
+import { useMutation } from '@tanstack/react-query';
 import CommonStyles from '../../styles/CommonStyles';
 import useInput from '../../hooks/useComponents';
-import { FormEvent, useEffect, useState } from 'react';
 import { useImgCrop } from '../../hooks/useImgCrop';
 import { handleFileChange } from '../../components/img-crop/imgCropUtils';
 import ImgCropModal from '../../components/img-crop/ImgCropModal';
-import { useMutation } from '@tanstack/react-query';
 import { APIfinancialRecord } from '../../services/apiFinancial';
 import InputField from '../../components/InputField';
 import { getRandomImageUrl } from '../../utils/randomImg';
 import { RANDOM_IMG_URLS } from '../../constants/faRecImgUrls';
 import FilePlusLabel from '../../components/FilePlusLabel';
-import { toast } from 'react-toastify';
-import { useRouter } from 'next/router';
+import { FAREC_MESSAGES } from '../../constants/faRec';
+import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../hooks/useRefusalAni';
 
 type PageType = 'create' | 'edit';
 
@@ -50,7 +52,7 @@ export default function FaRecForm({
   });
 
   const [randomImg, setRandomImg] = useState<string>('');
-
+  const [isClickedProps, RefusalAnimation] = useRefusalAni();
   useEffect(() => {
     setRandomImg(getRandomImageUrl(RANDOM_IMG_URLS));
   }, []);
@@ -76,13 +78,17 @@ export default function FaRecForm({
     {
       onSuccess: () => {
         const successMessage =
-          pageType === 'create' ? '가계부 생성에 성공하였습니다.' : '가계부 수정에 성공하였습니다.';
+          pageType === 'create'
+            ? `${FAREC_MESSAGES.FAREC_CREATE_SUCCESS}`
+            : `${FAREC_MESSAGES.FAREC_UPDATE_SUCCESS}`;
         toast.success(successMessage);
         router.push(`/financial-record`);
       },
       onError: () => {
         const errorMessage =
-          pageType === 'create' ? '가계부 생성을 실패하였습니다.' : '가계부 수정을 실패하였습니다.';
+          pageType === 'create'
+            ? `${FAREC_MESSAGES.FAREC_CREATE_FAIL}`
+            : `${FAREC_MESSAGES.FAREC_UPDATE_FAIL}`;
         toast.error(errorMessage);
       },
     }
@@ -92,24 +98,21 @@ export default function FaRecForm({
     e.preventDefault();
 
     const newErrors = {
-      faRecName: faRecName ? '' : '가계부 이름은 필수입니다.',
-      faRecDesc: faRecDesc ? '' : '가계부 설명은 필수입니다.',
+      faRecName: faRecName ? '' : `${FAREC_MESSAGES.FAREC_NAME_GUILD}`,
+      faRecDesc: faRecDesc ? '' : `${FAREC_MESSAGES.FAREC_DESC_GUILD}`,
     };
 
     setErrors(newErrors);
 
     if (newErrors.faRecName || newErrors.faRecDesc) {
+      RefusalAnimation();
       return;
     }
 
     const formData = new FormData();
     formData.append('financialRecordName', faRecName || '');
     formData.append('memo', faRecDesc || '');
-    formData.append('imgId', croppedImage || initialImage || randomImg);
-    /**
-     *  아직 userId 받아오지 못해 테스트 아이디 입력. 추후 수정 예정
-     */
-    formData.append('userId', 'test');
+    formData.append('imgPath', croppedImage || initialImage || randomImg);
 
     if (pageType === 'edit') {
       formData.append('financialRecordId', `${financialRecordId}`);
@@ -159,7 +162,9 @@ export default function FaRecForm({
             />
           </S.InputFieldWrap>
         </S.InputFieldWrap>
-        <S.SubmitBtn>완료</S.SubmitBtn>
+        <S.SubmitBox {...isClickedProps}>
+          <S.SubmitBtn>완료</S.SubmitBtn>
+        </S.SubmitBox>
       </S.Container>
     </S.Form>
   );
@@ -236,5 +241,8 @@ const S = {
     & > * {
       margin-bottom: 1rem;
     }
+  `,
+  SubmitBox: styled.div<SubmitBoxProps>`
+    ${isClickedStyled}
   `,
 };

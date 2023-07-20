@@ -9,22 +9,22 @@ import useInput from '../../hooks/useComponents';
 import SVGs from '../../constants/svg';
 import Loading from '../../components/Loading';
 import { useState } from 'react';
-import { toast } from 'react-toastify';
+import ErrorComponent from '../../components/ErrorComponent';
+import { FAREC_MESSAGES } from '../../constants/faRec';
 
 export const metadata: Metadata = {
-  title: '가계부 목록',
-  description: '가계부 목록 페이지입니다.',
+  title: `${PAGE_NAMES.FINANCIAL_RECORD_LIST}`,
+  description: `${PAGE_NAMES.FINANCIAL_RECORD_LIST} 페이지입니다.`,
 };
 
 export type UserData = {
-  userId: string;
+  userId: number;
   profileImgPath: string;
 };
 
 export type RecordData = {
   financialRecordId: number | undefined;
   financialRecordName: string | undefined;
-  /**  후순위 기능이라 옵셔널체이닝 사용 */
   isBookmark?: boolean | undefined;
   users: UserData[] | undefined;
 };
@@ -60,12 +60,7 @@ export default function FinancialListPage() {
       </S.FormWrap>
 
       {isError ? (
-        <S.ErrorText>
-          {' '}
-          {(error as Error).message} 오류가 발생하였습니다.
-          <br />
-          다시 시도 해 주세요.
-        </S.ErrorText>
+        <ErrorComponent message={(error as Error).message} />
       ) : isLoading ? (
         <Loading />
       ) : displayData && displayData.length > 0 ? (
@@ -74,7 +69,7 @@ export default function FinancialListPage() {
             displayData?.map((el) => <ListItem key={el.financialRecordId} item={el} />)}
         </S.FaRecList>
       ) : (
-        <S.ErrorText>리스트가 비어있습니다.</S.ErrorText>
+        <S.ErrorText>{FAREC_MESSAGES.FAREC_EMPTY}</S.ErrorText>
       )}
     </S.ListWrap>
   );
