@@ -3,9 +3,12 @@ package com.zerohip.server.feedArticle.dto;
 
 import com.zerohip.server.common.audit.Auditable;
 import com.zerohip.server.common.feedType.FeedType;
+import com.zerohip.server.common.scope.Scope;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
+import com.zerohip.server.user.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.data.domain.Page;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -17,10 +20,11 @@ public class FeedArticleDto {
 
     @Getter
     @AllArgsConstructor
-    public static class post{
+    public static class Post{
+        @NotNull
+        private Scope scope;
         @NotBlank
-        //@Size(max = 추후 지정) -> @NotBlank와 함께 사용하면 조금 더 정확할 것 같음.
-        //@Size(min = 1, max = ???)를 사용하면 @NotBlank는 없어도 될 것 같기도.. 고민 필요
+        @Size(max = 2000)
         private String content;
         @NotNull
         private FeedType feedType;
@@ -32,32 +36,32 @@ public class FeedArticleDto {
     @Getter
     @AllArgsConstructor
     public static class FeedArticleResponse {
+        private UserDto.Response user;
         private Long feedArticleId;
-        @NotNull
-        //@Size(max = 추후 지정) -> @NotBlank와 함께 사용하면 조금 더 정확할 것 같음.
-        //@Size(min = 1, max = ???)를 사용하면 @NotBlank는 없어도 될 것 같기도.. 고민 필요
+        private Scope scope;
         private String content;
-        @NotNull
         private FeedType feedType;
         //조회 부분은 클라이언트의 요청을 받기 때문에 생성,수정 시간 명시
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
 
-        //이미지, 댓글, 해시태그, 유저, 투표, 유저Id
+        //이미지, 댓글, 투표
     }
 
     //전체 피드게시글 죄회 - 피드 게시글의 정보를 리스트로 담아서 조회
     @Getter
     @AllArgsConstructor
-    public static class FeedArticleListResponse {
-        private List<FeedArticle> feedArticles;
+    public static class FeedArticlePageResponse {
+        private Page<FeedArticle> feedArticles;
     }
 
     @Getter
     @AllArgsConstructor
     public static class Patch {
+        @NotNull
+        private Scope scope;
         @NotBlank
-        //@Size(max = 추후 지정) -> @NotBlank와 함께 사용하면 조금 더 정확할 것 같음.
+        @Size(max = 2000)
         private String content;
         @NotNull
         private FeedType feedType;
