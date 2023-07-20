@@ -9,6 +9,7 @@ import com.zerohip.server.financialRecord.entity.FinancialRecord;
 import com.zerohip.server.financialRecord.repository.FinancialRecordRepository;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import com.zerohip.server.user.entity.User;
+import com.zerohip.server.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,10 +29,11 @@ import java.util.Optional;
 public class FinancialRecordServiceImpl implements FinancialRecordService {
 
   private final FinancialRecordRepository repository;
+  private final UserService userService;
   // 가계부 생성
   @Override
   public FinancialRecord createFaRec(User author, FinancialRecord faRec) {
-    VerifiedAuthor(author, faRec);
+    faRec.setUser(findUser(author));
     // 저장된 가계부(saveFaRec)를 반환
     return repository.save(faRec);
   }
@@ -41,13 +43,13 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
   @Override
   public FinancialRecord findFaRec(User author, Long faRecId) {
     // 해당 가계부가 존재하는지 확인 후 없으면 예외를 발생시키고 있으면 해당 가계부를 반환
-    FinancialRecord findFaRec = repository.findById(faRecId).orElseThrow(() -> new IllegalArgumentException("해당 가계부가 존재하지 않습니다."));
+    FinancialRecord findFaRec = findVerifiedFaRec(faRecId);
 
     // 전체 게시글 및 타임라인 수 조회
     findFaRec.setTotalCount(countTotal(findFaRec));
     findFaRec.setTimeLineCount(countTimeLine(findFaRec));
     VerifiedAuthor(author, findFaRec);
-    return findVerifiedFaRec(faRecId);
+    return findFaRec;
   }
 
   // 가계부 전체 조회(동적쿼리 사용 예정)
@@ -97,13 +99,10 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
 
   private int countTimeLine(FinancialRecord faRec) {
     List<FinancialRecordArticle> articleList = faRec.getFinancialRecordArticles();
-    int count = 0;
-    for (FinancialRecordArticle article : articleList) {
-      Scope scope = article.getScope();
-      if (scope == Scope.FAREC_TIMELINE) {
-        count++;
-      }
-    }
+    int count = (int) articleList.stream()
+            .filter(article -> article.getScope() == Scope.FAREC_TIMELINE)
+            .count();
+
     return count;
   }
 
@@ -117,5 +116,9 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
     if(!author.getLoginId().equals(faRec.getUser().getLoginId())) {
       throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
     }
+  }
+
+  public User findUser(User author) {
+    return userService.findUserByLoginId(author.getLoginId());
   }
 }

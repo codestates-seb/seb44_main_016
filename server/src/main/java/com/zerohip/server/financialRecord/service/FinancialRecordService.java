@@ -25,4 +25,6 @@ public interface FinancialRecordService {
 
   // 가계부 조회확인
   FinancialRecord findVerifiedFaRec(Long faRecId);
+
+  public User findUser(User author);
 }
