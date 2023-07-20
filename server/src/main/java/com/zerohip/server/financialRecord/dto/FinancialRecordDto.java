@@ -37,6 +37,7 @@ public class FinancialRecordDto {
     private String memo;
     private int totalCount;
     private int timeLineCount;
+    private boolean isBookmark;
 
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
