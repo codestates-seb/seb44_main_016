@@ -9,14 +9,11 @@ import { USER_UPDATE_MESSAGES } from '../../../constants/user';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 import BackBtnBox from '../../../components/BackBtn';
 import getNewError from '../../../utils/inputValidationError';
-import { useMutation } from '@tanstack/react-query';
 import apiUser from '../../../services/apiUser';
 import ProfileImgUpdate from './ProfileImgUpdate';
 import { RootState } from '../../../components/redux/store';
-import { changeImgSrc } from '../../../components/redux/currentImgReducer';
-import { useAppDispatch } from '../../../components/redux/hooks';
 import { useSelector } from 'react-redux';
-import InputField from './InputField';
+import UserInputField from './UserInputField';
 import { UserInfoResData } from '../../../types/user';
 import useMutateUser from '../../../services/useMutateUser';
 
@@ -25,7 +22,6 @@ interface UserUpdatePageProps {
 }
 export default function UserUpdatePage({ myInfoData }: UserUpdatePageProps) {
   const router = useRouter();
-  const dispatch = useAppDispatch();
 
   const currentImgSrc = useSelector<RootState>((state) => state.currentImgReducer.currentImgSrc);
   const originalNickname = myInfoData ? myInfoData.nickname : '';
@@ -117,7 +113,7 @@ export default function UserUpdatePage({ myInfoData }: UserUpdatePageProps) {
       <S.FormContainer>
         <ProfileImgUpdate myInfoData={myInfoData} />
         {inputData.map((el) => (
-          <InputField
+          <UserInputField
             key={el.label.text}
             label={el.label}
             guide={el.guide}
