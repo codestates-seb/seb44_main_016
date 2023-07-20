@@ -12,8 +12,8 @@ import SnsArticle from '../../../../components/SnsArticle';
 import Loading from '../../../../components/Loading';
 import Pagination from '../../../../components/Pagination';
 import CommonStyles from '../../../../styles/CommonStyles';
-import { toast } from 'react-toastify';
 import ErrorComponent from '../../../../components/ErrorComponent';
+import { FAREC_MESSAGES } from '../../../../constants/faRec';
 
 export default function FinancialPage() {
   const router = useRouter();
@@ -32,7 +32,6 @@ export default function FinancialPage() {
     data: faRecData,
     error: faRecError,
     isError: isFaRecError,
-    isSuccess: isFaRecSuccess,
     isLoading: isFaRecLoading,
   } = useQuery(['faRecHeader'], () => APIfinancialRecord.getFaRec(financialRecordId), {
     staleTime: 1000 * 60 * 30,
@@ -40,7 +39,6 @@ export default function FinancialPage() {
   });
   const {
     data: articleData,
-    error: articleError,
     isError: isArticleError,
     isLoading: isArticleLoading,
   } = useQuery(
@@ -50,8 +48,6 @@ export default function FinancialPage() {
   );
   const {
     data: timelineData,
-    error: timelineError,
-    isError: isTimelineError,
     isLoading: IsTimelineLoading,
     fetchNextPage,
     hasNextPage,
@@ -79,14 +75,6 @@ export default function FinancialPage() {
     }
   }, [inView, hasNextPage]);
 
-  // if (isFaRecError || isArticleError || isTimelineError) {
-  //   const errorMessage =
-  //     (faRecError as Error)?.message || (articleError as Error)?.message || (timelineError as Error)?.message;
-  //   toast.error(`${errorMessage} 에러가 발생하였습니다.`);
-  //   toast.info('잠시 후에 다시 시도해주세요.');
-  //   return <ErrorComponent message={errorMessage} />;
-  // }
-
   if (isFaRecLoading || isArticleLoading || IsTimelineLoading) {
     return <Loading />;
   }
@@ -100,7 +88,7 @@ export default function FinancialPage() {
         setActiveTab={setActiveTab}
         isLoading={isFaRecLoading}
         isError={isFaRecError}
-        error={(faRecError as Error).message}
+        error={(faRecError as Error)?.message}
         data={faRecData}
       />
       <Tab tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
@@ -126,7 +114,7 @@ export default function FinancialPage() {
               );
             })
           ) : (
-            <S.ErrorText>가계부가 비어있습니다.</S.ErrorText>
+            <S.ErrorText>{FAREC_MESSAGES.FAREC_EMPTY}</S.ErrorText>
           )}
           {!isArticleError && articleData?.data?.length > 0 && (
             <Pagination
@@ -144,7 +132,7 @@ export default function FinancialPage() {
                 <SnsArticle key={filteredEl.financialRecordArticleId} data={filteredEl} type='timeline' />
               ))
             ) : (
-              <S.ErrorText key='empty'>타임라인이 비어있습니다.</S.ErrorText>
+              <S.ErrorText key='empty'>{FAREC_MESSAGES.FAREC_TIMELINE_EMPTY}</S.ErrorText>
             )}
           </S.ContentWrap>
           <S.AddWrap ref={ref}>

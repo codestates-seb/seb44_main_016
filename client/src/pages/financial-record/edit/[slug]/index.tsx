@@ -5,6 +5,7 @@ import { Metadata } from 'next';
 import Loading from '../../../../components/Loading';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
+import { PAGE_NAMES } from '../../../../constants/pageNames';
 
 type FaRecData = {
   financialRecordId: number;
@@ -14,14 +15,13 @@ type FaRecData = {
 };
 
 export const metadata: Metadata = {
-  title: '가계부 수정',
-  description: '가계부 수정 페이지입니다.',
+  title: PAGE_NAMES.FINANCIAL_RECORD_UPDATE,
+  description: `${PAGE_NAMES.FINANCIAL_RECORD_UPDATE} 페이지입니다.`,
 };
 
 export default function FaRecEditPage() {
   const router = useRouter();
   const financialRecordId = router.query.slug ? Number(router.query.slug) : 0;
-  console.log(financialRecordId);
   const { isLoading, isError, error, data, isSuccess } = useQuery<FaRecData>(
     ['reFac'],
     () => APIfinancialRecord.getFaRec(financialRecordId),
@@ -44,7 +44,7 @@ export default function FaRecEditPage() {
 
   return (
     <>
-      <h1 className='blind'>가계부 수정 페이지</h1>
+      <h1 className='blind'>{PAGE_NAMES.FINANCIAL_RECORD_UPDATE} 페이지</h1>
       {isSuccess && (
         <FaRecForm
           pageType='edit'
