@@ -94,7 +94,7 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
           </ArticleHeader>
         )}
         {data.imgPath.length >= 1 ? (
-          <ImgsCarousel imgPath={data.imgPath} width={'var(--article-w)'} windowType={windowType} />
+          <ImgsCarousel imgPath={data.imgPath} width={'var(--article-w)'} />
         ) : (
           <></>
         )}
