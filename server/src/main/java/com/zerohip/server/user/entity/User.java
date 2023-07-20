@@ -47,8 +47,7 @@ public class User extends Auditable {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-
-    /** 연관관계 매핑
+  /** 연관관계 매핑
      *  userImage
      *  faRec
      *  aRecBoard

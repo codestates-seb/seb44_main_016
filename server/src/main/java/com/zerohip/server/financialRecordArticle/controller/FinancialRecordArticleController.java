@@ -4,10 +4,12 @@ import com.zerohip.server.financialRecordArticle.dto.FinancialRecordArticleDto;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import com.zerohip.server.financialRecordArticle.mapper.FinancialRecordArticleMapper;
 import com.zerohip.server.financialRecordArticle.service.FinancialRecordArticleService;
+import com.zerohip.server.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,16 +28,17 @@ import java.util.List;
 @RequestMapping("/financial-record/{financial-record-id}/article")
 public class FinancialRecordArticleController {
 
-  private final static String FINANCIAL_RECORD_ARTICLE_DEFAULT_URI = "/financial-record/{financialRecordId}/article";
   private final FinancialRecordArticleService service;
   private final FinancialRecordArticleMapper mapper;
 
   @PostMapping
   public ResponseEntity createFinancialRecordArticle(@Valid @RequestBody FinancialRecordArticleDto.Post requestbody,
-                                                     @PathVariable("financial-record-id") Long financialRecordId) {
-    FinancialRecordArticle saveFaRecArticle = service.createFaRecArticle(financialRecordId, mapper.financialRecordArticlePostToFinancialRecordArticle(requestbody));
+                                                     @PathVariable("financial-record-id") Long financialRecordId,
+                                                     @AuthenticationPrincipal User author) {
 
-    URI uri = URI.create(FINANCIAL_RECORD_ARTICLE_DEFAULT_URI.replace("{financialRecordId}", String.valueOf(financialRecordId)).concat("/").concat(String.valueOf(saveFaRecArticle.getFinancialRecordArticleId())));
+    FinancialRecordArticle saveFaRecArticle = service.createFaRecArticle(financialRecordId, author, mapper.financialRecordArticlePostToFinancialRecordArticle(requestbody));
+
+    URI uri = URI.create("/financial-record/" + financialRecordId + "/article/" + saveFaRecArticle.getArticleId());
 
     log.info("saveFaRecArticle.getCreatedAt() : {}", saveFaRecArticle.getCreatedAt());
 
@@ -61,16 +64,18 @@ public class FinancialRecordArticleController {
 
   @PatchMapping("/{financial-record-article-id}")
   public ResponseEntity patchFinancialRecord(@Valid @RequestBody FinancialRecordArticleDto.Patch requestbody,
-                                             @PathVariable("financial-record-id") Long financialRecordId,
-                                             @PathVariable("financial-record-article-id") Long financialRecordArticleId) {
-    FinancialRecordArticle updatedFaRecArticle = service.updateFaRecArticle(financialRecordArticleId, requestbody);
+                                             @PathVariable("financial-record-article-id") Long financialRecordArticleId,
+                                             @AuthenticationPrincipal User author) {
+    FinancialRecordArticle updatedFaRecArticle = service.updateFaRecArticle(author, financialRecordArticleId, requestbody);
 
     return ResponseEntity.ok(mapper.financialRecordArticleToFinancialRecordArticleResponse(updatedFaRecArticle));
   }
 
   @DeleteMapping("/{financial-record-article-id}")
-  public ResponseEntity deleteFinancialRecord(@PathVariable("financial-record-article-id") Long financialRecordArticleId) {
-    service.deleteFaRecArticle(financialRecordArticleId);
+  public ResponseEntity deleteFinancialRecord(@PathVariable("financial-record-article-id") Long financialRecordArticleId,
+                                              @AuthenticationPrincipal User author) {
+    service.deleteFaRecArticle(author, financialRecordArticleId);
+
 
     return ResponseEntity.noContent().build();
   }
