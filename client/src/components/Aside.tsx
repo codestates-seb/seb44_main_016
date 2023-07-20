@@ -132,13 +132,13 @@ export default function Aside(props: Props) {
         )}
       </S.AsideInnerContainer>
       {isNoticeTabOpened && (
-        <S.TabContainer>
+        <S.TabContainer className={asideClsName}>
           알림
           <S.CloseTabBtn onClick={handleCloseTab}>×</S.CloseTabBtn>
         </S.TabContainer>
       )}
       {isSearchTabOpened && (
-        <S.TabContainer>
+        <S.TabContainer className={asideClsName}>
           검색
           <S.CloseTabBtn onClick={handleCloseTab}>×</S.CloseTabBtn>
         </S.TabContainer>
@@ -250,6 +250,20 @@ const S = {
     @keyframes fadein {
       from {
         left: -10rem;
+      }
+    }
+
+    &.mobile {
+      position: fixed;
+      left: 0%;
+      top: 0rem;
+      width: 100%;
+      height: 100%;
+
+      @keyframes fadein {
+        from {
+          left: -100%;
+        }
       }
     }
   `,
