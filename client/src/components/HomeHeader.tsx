@@ -16,6 +16,12 @@ export default function HomeHeader(props: Props) {
   const [isFollowerBtnActive, setIsFollowerBtnActive] = React.useState(false);
   const [isRankBtnActive, setIsRankBtnActive] = React.useState(false);
 
+  const windowTypeStr = props.windowType.toString();
+
+  const getClsName = (isActive: boolean) => {
+    return `${windowTypeStr} ${isActive ? 'current-tab' : ''}`;
+  };
+
   const handleClickHomeBtn = () => {
     setIsHomeBtnActive(true);
     setIsFollowerBtnActive(false);
@@ -33,33 +39,18 @@ export default function HomeHeader(props: Props) {
   };
 
   return (
-    <S.HomeHeaderContainer windowType={props.windowType}>
+    <S.HomeHeaderContainer className={windowTypeStr}>
       {props.windowType === ScreenEnum.MOBILE ? <MobileHomeHeaderLogo /> : <></>}
 
       <S.HomeHeaderTabBtns>
-        <S.HomeHeaderBtn
-          href=''
-          windowType={props.windowType}
-          onClick={handleClickHomeBtn}
-          className={isHomeBtnActive ? 'current-tab' : ''}
-        >
+        <S.HomeHeaderBtn href='' onClick={handleClickHomeBtn} className={getClsName(isHomeBtnActive)}>
           홈
         </S.HomeHeaderBtn>
         {/* href='/?filterfollower=true' // 쿼리 미확정 */}
-        <S.HomeHeaderBtn
-          href=''
-          windowType={props.windowType}
-          onClick={handleClickFollowerBtn}
-          className={isFollowerBtnActive ? 'current-tab' : ''}
-        >
+        <S.HomeHeaderBtn href='' onClick={handleClickFollowerBtn} className={getClsName(isFollowerBtnActive)}>
           팔로워
         </S.HomeHeaderBtn>
-        <S.HomeHeaderBtn
-          href=''
-          windowType={props.windowType}
-          onClick={handleClickRankBtn}
-          className={isRankBtnActive ? 'current-tab' : ''}
-        >
+        <S.HomeHeaderBtn href='' onClick={handleClickRankBtn} className={getClsName(isRankBtnActive)}>
           랭킹
         </S.HomeHeaderBtn>
       </S.HomeHeaderTabBtns>
@@ -70,23 +61,30 @@ export default function HomeHeader(props: Props) {
 
 const S = {
   ...CommonStyles,
-  HomeHeaderContainer: styled.header<{ windowType: ScreenEnum }>`
+  HomeHeaderContainer: styled.header`
     position: fixed;
-    padding-left: ${(props) =>
-      props.windowType === ScreenEnum.DESKTOP
-        ? 'var(--aside-w)'
-        : props.windowType === ScreenEnum.TABLET
-        ? 'var(--aside-shrink-w)'
-        : '0'};
     max-width: var(--app-max-w);
     width: 100%;
-    height: ${(props) => (props.windowType === ScreenEnum.MOBILE ? '8vw' : 'var(--header-h)')};
+    height: var(--header-h);
     max-height: var(--header-h);
     min-height: 3rem;
     background-color: white;
     border-bottom: 0.05rem solid var(--color-gray08);
+
+    &.desktop {
+      padding-left: var(--aside-w);
+    }
+    &.tablet {
+      padding-left: var(--aside-shrink-w);
+    }
+    &.mobile {
+      padding-left: 0;
+      height: 8vw;
+      justify-content: space-between;
+    }
+
     display: flex;
-    justify-content: ${(props) => (props.windowType === ScreenEnum.MOBILE ? 'space-between' : 'center')};
+    justify-content: center;
     z-index: 998;
   `,
   HomeHeaderTabBtns: styled.div`
@@ -94,14 +92,19 @@ const S = {
     justify-content: center;
     align-items: flex-end;
   `,
-  HomeHeaderBtn: styled(Link)<{ windowType: ScreenEnum }>`
-    width: ${(props) => (props.windowType === ScreenEnum.MOBILE ? '5rem' : '6rem')};
-    height: ${(props) => (props.windowType === ScreenEnum.MOBILE ? '100%' : '75%')};
+  HomeHeaderBtn: styled(Link)`
+    width: 6rem;
+    height: 75%;
     background-color: white;
     font-size: 1.25rem;
     color: var(--color-gray03);
     padding-top: 0.2rem;
     border-bottom: 0.2rem solid transparent;
+
+    &.mobile {
+      width: 5rem;
+      height: 100%;
+    }
 
     &.current-tab {
       font-weight: bold;
