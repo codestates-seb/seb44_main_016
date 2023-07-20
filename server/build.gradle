@@ -58,8 +58,9 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-mail'
   implementation 'com.google.code.gson:gson'
 
-  // oauth
+  // Oauth2
   implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
 
 }
 

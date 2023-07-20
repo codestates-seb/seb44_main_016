@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -34,6 +35,12 @@ import org.springframework.web.filter.CorsFilter;
 @Slf4j
 @EnableWebSecurity
 public class SecurityConfig {
+
+//    @Value("${spring.security.oauth2.client.registration.google.clientId}")
+//    private String clientId;
+//
+//    @Value("${spring.security.oauth2.client.registration.google.clientSecret}")
+//    private String clientSecret;
 
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
@@ -60,6 +67,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().permitAll()   // role : user 만 있기 때문에 세부 권한 지정 필요 x
                 );
+//                .oauth2Login(Customizer.withDefaults());
+
 
         return http.build();
     }
@@ -96,4 +105,6 @@ public class SecurityConfig {
                     .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
         }
     }
+
+
 }

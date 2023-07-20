@@ -29,7 +29,7 @@ public class AuthService {
     public String createAccessToken(String refreshToken) {
 
 
-        if (!verifiedJwtStatus(refreshToken)) {
+        if (verifiedJwtStatus(refreshToken)) {
             log.info("# Refresh Token has Expired");
             return null;
         }
