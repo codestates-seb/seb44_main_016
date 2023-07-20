@@ -24,7 +24,7 @@ public class AuthController {
         String newAccessToken = authService.createAccessToken(refreshToken);
 
         if (newAccessToken == null) {
-            ErrorResponder.sendExpiredJwtExceptionError(response, HttpStatus.UNAUTHORIZED);
+            ErrorResponder.sendRefreshTokenExceptionError(response, HttpStatus.UNAUTHORIZED);
         }
             response.setHeader("Authorization", "Bearer " + newAccessToken);
     }

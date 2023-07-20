@@ -40,14 +40,14 @@ public class UserController {
 
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal User author,
+    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal String authorId,
                                         @RequestBody UserDto.CheckPassword checkPasswordDto) {
 
-        if (author == null) {
+        if (authorId == null) {
             throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
         }
 
-        userService.deleteUser(author, checkPasswordDto.getPassword());
+        userService.deleteUser(authorId, checkPasswordDto.getPassword());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
