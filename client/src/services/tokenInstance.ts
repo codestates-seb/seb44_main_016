@@ -33,7 +33,7 @@ instance.interceptors.response.use(
 
       if (response.data.status === 403) {
         /** GET : NEW ACCESS TOKEN */
-        const res = await axios.post(`http://localhost:8080/auth/refresh`, null, {
+        const res = await axios.post(`/auth/refresh`, null, {
           // 서버 배포 링크로 추후 변경 예정
           headers: {
             'Content-Type': 'application/json',
