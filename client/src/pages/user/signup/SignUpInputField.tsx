@@ -28,13 +28,13 @@ export default function SignUpInputField({
   return (
     <S.InputContainer>
       <S.LabelBox>
-        <S.Label htmlFor={label.htmlFor}>
-          {label.text}
-          <span>{label.required && '*'}</span>
+        <S.Label htmlFor={label?.htmlFor || ''}>
+          {label?.text || ''}
+          <span>{label?.required && '*'}</span>
         </S.Label>
       </S.LabelBox>
-      <S.EmailAddress className={i === inputData.length - 1 ? 'email' : ''}>
-        <S.InputBox className={i === inputData.length - 1 ? 'email' : ''}>{component}</S.InputBox>
+      <S.EmailAddress className={i === inputData?.length - 1 ? 'email' : ''}>
+        <S.InputBox className={i === inputData?.length - 1 ? 'email' : ''}>{component}</S.InputBox>
         {subComponent && (
           <S.DomainBox>
             <div>@</div>
