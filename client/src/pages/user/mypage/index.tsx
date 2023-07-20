@@ -13,20 +13,23 @@ import { FeedArticleResType } from '../../../types/article';
 
 function MyPage() {
   const router = useRouter();
-  const { isLoading, error, data, isSuccess } = useQuery(['myInfo'], apiUser.getMyInfo);
+  const {
+    isLoading: isMyInfoLoading,
+    error: myInfoError,
+    data: myInfoData,
+  } = useQuery(['myInfo'], apiUser.getMyInfo);
 
-  if (error) {
+  if (myInfoError) {
     toast.error('오류가 발생했습니다.');
     toast.info('잠시 후에 다시 시도해주세요.');
   }
 
   return (
     <>
-      {isLoading ? (
+      {isMyInfoLoading ? (
         <Loading />
       ) : (
-        isSuccess &&
-        data && (
+        myInfoData && (
           <S.Container>
             <S.UserProfileContainer>
               <Head>
@@ -34,24 +37,24 @@ function MyPage() {
               </Head>
               <h1 className='blind'>마이페이지</h1>
               <S.UserImg>
-                <img src={data?.profileImgPath} alt='프로필 사진' />
+                <img src={myInfoData?.profileImgPath} alt='프로필 사진' />
               </S.UserImg>
               <S.UserName>
-                <S.Nickname>{data.nickname}</S.Nickname>
+                <S.Nickname>{myInfoData.nickname}</S.Nickname>
               </S.UserName>
               <S.ModifyBtnBox>
-                <FollowModal title='구독함' list={data.followingList} />
-                <FollowModal title='구독됨' list={data.followerList} />
+                <FollowModal title='구독함' list={myInfoData.followingList} />
+                <FollowModal title='구독됨' list={myInfoData.followerList} />
                 <S.ModifyBtn type='button' onClick={() => router.push('/user/update')}>
                   설정
                 </S.ModifyBtn>
               </S.ModifyBtnBox>
             </S.UserProfileContainer>
             <S.UserArticleContainer>
-              <h2 className='blind'>내가 쓴 글</h2>
+              {/* <h2 className='blind'>내가 쓴 글</h2>
               {data.myContents.map((el: FeedArticleResType) => {
                 return <SnsArticle key={el.feedArticleId} type='feed' data={el} />;
-              })}
+              })} */}
             </S.UserArticleContainer>
           </S.Container>
         )

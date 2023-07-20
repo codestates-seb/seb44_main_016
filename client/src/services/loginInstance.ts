@@ -30,7 +30,7 @@ instance.interceptors.response.use(
     try {
       const { response, config } = error;
       const originalRequest = config;
-      console.log(response);
+
       if (response.data.status === 403) {
         /** GET : NEW ACCESS TOKEN */
         const res = await axios.post(`http://localhost:8080/auth/refresh`, null, {

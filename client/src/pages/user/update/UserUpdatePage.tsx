@@ -18,6 +18,7 @@ import { useAppDispatch } from '../../../components/redux/hooks';
 import { useSelector } from 'react-redux';
 import InputField from './InputField';
 import { UserInfoResData } from '../../../types/user';
+import useMutateUser from '../../../services/useMutateUser';
 
 interface UserUpdatePageProps {
   myInfoData: UserInfoResData;
@@ -77,7 +78,7 @@ export default function UserUpdatePage({ myInfoData }: UserUpdatePageProps) {
     },
   ];
 
-  const { mutateAsync } = useMutation(apiUser.updateMyInfo);
+  const { updateUserMutate } = useMutateUser.update(apiUser.updateMyInfo);
 
   const handleUpdateUserSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,10 +104,7 @@ export default function UserUpdatePage({ myInfoData }: UserUpdatePageProps) {
     formData.append('password', pwValue ? pwValue : '');
     formData.append('profileImgPath', typeof currentImgSrc === 'string' ? currentImgSrc : '');
 
-    await mutateAsync(formData);
-    toast.success('회원 정보가 수정되었습니다.');
-    dispatch(changeImgSrc({ currentImgSrc: '', isAvatar: false }));
-    router.push(`/user/mypage`);
+    updateUserMutate(formData);
   };
 
   const handleMoveDeletePage = () => {

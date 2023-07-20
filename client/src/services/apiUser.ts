@@ -7,43 +7,28 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const apiUser = {
   /** 회원 가입 */
   postSignUp: async (signUpData: PostSignUp) => {
-    try {
-      const res = await axios.post(`${BASE_URL}/user/signup`, signUpData);
-      return res.data;
-    } catch (err) {
-      console.error('Error:', err.response.data);
-      const field = err.response.data.fieldErrors.field;
-      const reason = err.response.data.fieldErrors.reason;
-      return { field, reason };
-    }
+    const res = await axios.post(`${BASE_URL}/user/signup`, signUpData);
+    return res;
   },
 
   /** 로그인 */
   postLogin: async (loginData: LoginReqData): Promise<AxiosResponse> => {
-    try {
-      const res = await axios.post(`${BASE_URL}/user/login`, loginData, {
-        withCredentials: true,
-      });
-      return res;
-    } catch (err) {
-      return err.response;
-    }
+    const res = await axios.post(`${BASE_URL}/user/login`, loginData, {
+      withCredentials: true,
+    });
+    return res;
   },
 
   /** 로그아웃 */
   deleteLogout: async () => {
     const res = await instance.delete(`${BASE_URL}/auth/logout`);
-    console.log(res);
-    return Promise.resolve();
+    return res;
   },
 
   /** 회원 탈퇴 */
-  deleteMyInfo: async () => {
-    try {
-      await instance.delete(`${BASE_URL}/user/delete`);
-    } catch (err) {
-      throw err.response;
-    }
+  deleteMyInfo: async (password: string) => {
+    const res = await instance.delete(`${BASE_URL}/user/delete`, { data: { password: password } });
+    return res;
   },
 
   /** 회원 정보 불러오기 */
@@ -54,23 +39,15 @@ const apiUser = {
 
   /** 회원 정보 수정 */
   updateMyInfo: async (userUpdateData: FormData) => {
-    try {
-      const res = await instance.patch(`${BASE_URL}/user/update`, userUpdateData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      return res;
-    } catch (err) {
-      throw err.response;
-    }
+    const res = await instance.patch(`${BASE_URL}/user/update`, userUpdateData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return res;
   },
 
   getNewRefresh: async () => {
-    try {
-      const res = await instance.delete(`${BASE_URL}/auth/refresh`);
-      return res;
-    } catch (err) {
-      throw err.response;
-    }
+    const res = await instance.post(`${BASE_URL}/auth/refresh`);
+    return res;
   },
 };
 
