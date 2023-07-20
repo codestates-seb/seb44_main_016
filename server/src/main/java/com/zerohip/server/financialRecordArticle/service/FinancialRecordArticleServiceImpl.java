@@ -10,6 +10,7 @@ import com.zerohip.server.financialRecordArticle.dto.FinancialRecordArticleDto;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import com.zerohip.server.financialRecordArticle.repository.FinancialRecordArticleRepository;
 import com.zerohip.server.user.entity.User;
+import com.zerohip.server.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,19 +27,17 @@ import java.util.Optional;
 public class FinancialRecordArticleServiceImpl implements FinancialRecordArticleService {
   // 결합도 관련해서 고민이 필요해 보임
   private final FinancialRecordService financialRecordService;
+  private final UserService userService;
   private final FinancialRecordArticleRepository repository;
 
   @Override
-  public FinancialRecordArticle createFaRecArticle(User author, FinancialRecordArticle faRecArticle) {
-    // 로그인된 사용자와 게시글 작성자가 같은지 확인
-    VerifiedAuthor(author, faRecArticle);
-
+  public FinancialRecordArticle createFaRecArticle(Long financialRecordId, User author, FinancialRecordArticle faRecArticle) {
     // 해당 가계부가 존재하는지 확인 -> 없으면 예외를 발생시키고 있으면 해당 가계부를 반환
-    FinancialRecord faRec = financialRecordService.findFaRec(author, faRecArticle.getFinancialRecord().getFinancialRecordId());
+    FinancialRecord faRec = financialRecordService.findFaRec(author, financialRecordId);
 
     // FinancialRecordArticle과 FinancialRecord의 관계를 설정
     faRecArticle.setFinancialRecord(faRec);
-    faRecArticle.setUser(author);
+    faRecArticle.setUser(findUser(author));
 
     // FinancialRecordArticle의 유효성 검사
     validateFaRecArticle(faRecArticle);
@@ -118,5 +117,9 @@ public class FinancialRecordArticleServiceImpl implements FinancialRecordArticle
     if(!author.getLoginId().equals(faRecArticle.getUser().getLoginId())) {
       throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
     }
+  }
+
+  public User findUser(User author) {
+    return userService.findUserByLoginId(author.getLoginId());
   }
 }
