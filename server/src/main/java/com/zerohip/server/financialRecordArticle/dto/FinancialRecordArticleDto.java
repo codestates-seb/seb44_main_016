@@ -83,5 +83,10 @@ public class FinancialRecordArticleDto {
     // 댓글 매핑 데이터
     // 좋아요 매핑 데이터
     // 해시태그 매핑 데이터
+
+
+    public void setFinancialRecordId(Long financialRecordId) {
+      this.financialRecordId = financialRecordId;
+    }
   }
 }
