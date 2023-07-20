@@ -5,15 +5,15 @@ import com.zerohip.server.financialRecord.dto.FinancialRecordDto;
 import com.zerohip.server.financialRecord.entity.FinancialRecord;
 import com.zerohip.server.financialRecord.mapper.FinancialRecordMapper;
 import com.zerohip.server.financialRecord.service.FinancialRecordService;
+import com.zerohip.server.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
 
@@ -30,8 +30,9 @@ public class FinancialRecordController {
   private final FinancialRecordMapper mapper;
 
   @PostMapping
-  public ResponseEntity createFinancialRecord(@Valid @RequestBody FinancialRecordDto.Post requestbody) {
-    FinancialRecord createFaRec = faRecService.createFaRec(mapper.financialRecordPostToFinancialRecord(requestbody));
+  public ResponseEntity createFinancialRecord(@Valid @RequestBody FinancialRecordDto.Post requestbody,
+                                              @AuthenticationPrincipal User author) {
+    FinancialRecord createFaRec = faRecService.createFaRec(author, mapper.financialRecordPostToFinancialRecord(requestbody));
     URI uri = URI.create(FINANCIAL_RECORD_DEFAULT_URI + "/" + createFaRec.getFinancialRecordId());
 
     log.info("createFaRec.getCreatedAt() : {}", createFaRec.getCreatedAt());
@@ -40,31 +41,32 @@ public class FinancialRecordController {
   }
 
   @GetMapping("/{financial-record-id}")
-  public ResponseEntity getFinancialRecord(@PathVariable("financial-record-id") Long financialRecordId) {
-    FinancialRecord findFaRec = faRecService.findFaRec(financialRecordId);
+  public ResponseEntity getFinancialRecord(@PathVariable("financial-record-id") Long financialRecordId,
+                                           @AuthenticationPrincipal User author) {
+    FinancialRecord findFaRec = faRecService.findFaRec(author, financialRecordId);
 
     return ResponseEntity.ok(mapper.financialRecordToFinancialRecordResponse(findFaRec));
   }
 
   @GetMapping
-  public ResponseEntity getFinancialRecords(@Positive @RequestParam("page") int page,
-                                             @Positive @RequestParam("size") int size) {
-    Page<FinancialRecord> pageFaRec = faRecService.findFaRecs(page, size);
-    List<FinancialRecord> allFaRecs = pageFaRec.getContent();
-    return ResponseEntity.ok(new MultiResponseDto<>(mapper.financialRecordsToFinancialRecordResponses(allFaRecs), pageFaRec));
+  public ResponseEntity getFinancialRecords(@AuthenticationPrincipal User author) {
+    List<FinancialRecord> myFaRec = faRecService.findFaRecs(author);
+    return ResponseEntity.ok(new MultiResponseDto<>(mapper.financialRecordsToFinancialRecordResponses(myFaRec)));
   }
 
   @PatchMapping("/{financial-record-id}")
   public ResponseEntity patchFinancialRecord(@PathVariable("financial-record-id") Long financialRecordId,
-                                              @Valid @RequestBody FinancialRecordDto.Patch requestbody) {
-    FinancialRecord updateFaRec = faRecService.updateFaRec(financialRecordId, requestbody);
+                                             @Valid @RequestBody FinancialRecordDto.Patch requestbody,
+                                             @AuthenticationPrincipal User author) {
+    FinancialRecord updateFaRec = faRecService.updateFaRec(author, financialRecordId, requestbody);
 
     return ResponseEntity.ok(mapper.financialRecordToFinancialRecordResponse(updateFaRec));
   }
 
   @DeleteMapping("/{financial-record-id}")
-  public ResponseEntity deleteFinancialRecord(@PathVariable("financial-record-id") Long financialRecordId) {
-    faRecService.deleteFaRec(financialRecordId);
+  public ResponseEntity deleteFinancialRecord(@PathVariable("financial-record-id") Long financialRecordId,
+                                              @AuthenticationPrincipal User author) {
+    faRecService.deleteFaRec(author, financialRecordId);
 
     return ResponseEntity.noContent().build();
   }
