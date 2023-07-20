@@ -4,7 +4,11 @@ import com.zerohip.server.common.feedType.FeedType;
 import com.zerohip.server.feedArticle.dto.FeedArticleDto;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
 import com.zerohip.server.feedArticle.repository.FeedArticleRepository;
+import com.zerohip.server.user.entity.User;
+import com.zerohip.server.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,10 +21,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class FeedArticleServiceImpl implements FeedArticleService {
     private final FeedArticleRepository feedArticleRepository;
+    private final UserService userService;
 
     //피드게시글 작성
     @Override
-    public FeedArticle createFeedArticle(FeedArticle feedArticle) {
+    public FeedArticle createFeedArticle(User author, FeedArticle feedArticle) {
         validateFeedArticle(feedArticle);
         return feedArticleRepository.save(feedArticle);
     }
@@ -41,16 +46,17 @@ public class FeedArticleServiceImpl implements FeedArticleService {
 
     //피드 조회
     @Override
-    public List<FeedArticle> findFeedArticles() {
-        return feedArticleRepository.findAll();
+    public Page<FeedArticle> findFeedArticles(Long feedArticleId, int page, int size) {
+        return feedArticleRepository.findAll(PageRequest.of(page -1, size));
     }
 
     //피드 게시글 수정
     @Override
-    public FeedArticle updateFeedArticle(Long feedArticleId, FeedArticleDto.Patch patchParam) {
+    public FeedArticle updateFeedArticle(User author, Long feedArticleId, FeedArticleDto.Patch patchParam) {
         FeedArticle findFeedArticle = findVerifiedFeedArticle(feedArticleId);
         findFeedArticle.setContent(patchParam.getContent());
-        findFeedArticle.setFeedType((FeedType) patchParam.getFeedType());
+        findFeedArticle.setFeedType(patchParam.getFeedType());
+        findFeedArticle.setScope(patchParam.getScope());
 
         FeedArticle updateFeedArticle = feedArticleRepository.save(findFeedArticle);
         return updateFeedArticle;
@@ -58,7 +64,7 @@ public class FeedArticleServiceImpl implements FeedArticleService {
 
     //피드 게시글 삭제
     @Override
-    public void deleteFeedArticle(Long feedArticleId) {
+    public void deleteFeedArticle(User author, Long feedArticleId) {
         FeedArticle findFeedArticle = findVerifiedFeedArticle(feedArticleId);
         feedArticleRepository.delete(findFeedArticle);
     }
@@ -67,5 +73,10 @@ public class FeedArticleServiceImpl implements FeedArticleService {
         Optional<FeedArticle> optionalFeedArticle = feedArticleRepository.findById(feedArticleId);
         FeedArticle findFeedArticle = optionalFeedArticle.orElseThrow(() -> new RuntimeException("게시글이 존재하지 않습니다."));
         return findFeedArticle;
+    }
+
+    @Override
+    public FeedArticle createFeedArticle(FeedArticle feedArticle) {
+        return null;
     }
 }
