@@ -36,12 +36,6 @@ import org.springframework.web.filter.CorsFilter;
 @EnableWebSecurity
 public class SecurityConfig {
 
-//    @Value("${spring.security.oauth2.client.registration.google.clientId}")
-//    private String clientId;
-//
-//    @Value("${spring.security.oauth2.client.registration.google.clientSecret}")
-//    private String clientSecret;
-
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
     private final CorsFilter corsFilter;
@@ -67,7 +61,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().permitAll()   // role : user 만 있기 때문에 세부 권한 지정 필요 x
                 );
-//                .oauth2Login(Customizer.withDefaults());
 
 
         return http.build();
