@@ -2,6 +2,8 @@ package com.zerohip.server.feedArticle.entity;
 
 import com.zerohip.server.common.article.Article;
 import com.zerohip.server.common.feedType.FeedType;
+import com.zerohip.server.common.scope.Scope;
+import com.zerohip.server.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,19 +25,25 @@ public class FeedArticle extends Article {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private FeedType feedType;
-
     @Size(max = 2_000)
     @NotNull
     @Column(nullable = false, length = 2_000)
     private String content;
 
-    //피드게시글 작성시간은 Auditable 상속받기 때문에 아예 필드변수 없어도 ok.
 
     //이미지 파일
     /*
     @OneToMany(mappedBy = "feedArticle", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FeedArticleImg> images = new ArrayList<>();
      */
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    //댓글, 유저, 투표(절약/플렉스) 추가적으로 작성 필요
+    //댓글, 투표(절약/플렉스) 추가적으로 작성 필요
+    public FeedArticle(Scope scope, FeedType feedType, String content) {
+        super(scope);
+        this.feedType = feedType;
+        this.content = content;
+    }
 }
