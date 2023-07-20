@@ -4,7 +4,6 @@ import Head from 'next/head';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { useMutation } from '@tanstack/react-query';
 import CommonStyles from '../../../styles/CommonStyles';
 import useInput from '../../../hooks/useComponents';
 import useCheckboxError from '../../../hooks/useCheckoutError';
@@ -12,9 +11,9 @@ import apiUser from '../../../services/apiUser';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 import getNewError from '../../../utils/inputValidationError';
 import BackBtnBox from '../../../components/BackBtn';
+import useMutateUser from '../../../services/useMutateUser';
 
 export default function UserDelete() {
-  const router = useRouter();
   const [PwInput, pwValue] = useInput('password', '비밀번호', 'pw', 'current-password');
   const [PwConfirmInput, password] = useInput('password', '비밀번호 확인', 'pwConfirm', 'current-password');
   const [error, setError] = useState({
@@ -47,7 +46,7 @@ export default function UserDelete() {
     },
   ];
 
-  const { mutateAsync } = useMutation(() => apiUser.deleteMyInfo());
+  const { deleteUserMutate } = useMutateUser.delete(apiUser.deleteMyInfo);
 
   useEffect(() => {
     const newError = getNewError.delete({ pwValue, password, isChecked });
@@ -63,10 +62,7 @@ export default function UserDelete() {
       return;
     }
 
-    await mutateAsync();
-    const deletePageURL = router.asPath;
-    localStorage.setItem('deletePageURL', deletePageURL);
-    router.push('/user/delete/goodbye');
+    deleteUserMutate(password ? password : '');
   };
 
   return (

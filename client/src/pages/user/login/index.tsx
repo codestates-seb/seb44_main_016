@@ -2,7 +2,6 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useMutation } from '@tanstack/react-query';
 import { RootState } from '../../../components/redux/store';
 import styled from '@emotion/styled';
 import useInput from '../../../hooks/useComponents';
@@ -10,10 +9,9 @@ import Logo from '../../../../public/images/logo.svg';
 import CommonStyles from '../../../styles/CommonStyles';
 import Oauth from './OAuth';
 import apiUser from '../../../services/apiUser';
-import { useAppDispatch } from '../../../components/redux/hooks';
-import { login } from '../../../components/redux/authnReducer';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 import { toast } from 'react-toastify';
+import useMutateUser from '../../../services/useMutateUser';
 
 export default function Login() {
   const [IdInput, loginId, setLoginId] = useInput('text', '아이디', 'loginId', 'username');
@@ -21,14 +19,12 @@ export default function Login() {
   const [isClickedProps, RefusalAnimation] = useRefusalAni();
 
   const router = useRouter();
-  const dispatch = useAppDispatch();
 
   const loginData = {
     loginId,
     password: pwValue,
   };
-
-  const { mutateAsync } = useMutation(() => apiUser.postLogin(loginData));
+  const { LoginMutate } = useMutateUser.login(apiUser.postLogin);
   const isLoggedIn = useSelector<RootState>((state) => state.authnReducer.login.isLoggedIn);
 
   useEffect(() => {
@@ -44,22 +40,9 @@ export default function Login() {
       return;
     }
 
-    const res = await mutateAsync();
-
-    if (res.status === 200) {
-      const accessToken = res.headers.Authorization; // 나중에 서버 연결 후
-      // const accessToken = 'temp-access-token-from-header';
-      const { nickname } = res.data;
-      console.log('here');
-      dispatch(login({ accessToken, nickname, isLoggedIn: true }));
-
-      setLoginId('');
-      setPwValue('');
-      toast(`${nickname}님, 환영합니다!`);
-      router.push(`/`);
-    } else if (res.status === 401) {
-      toast.error(res.data.message);
-    }
+    LoginMutate(loginData);
+    setLoginId('');
+    setPwValue('');
     return;
   };
 
