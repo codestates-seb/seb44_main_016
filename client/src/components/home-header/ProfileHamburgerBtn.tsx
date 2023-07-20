@@ -2,11 +2,15 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
-import svgs from '../../constants/svg';
 import { useMutateLogOut } from '../../hooks/useLogout';
 import apiUser from '../../services/apiUser';
+import { ScreenEnum } from '../../constants/enums';
 
-export default function AsideHamburgerBtn() {
+type Props = {
+  className: string;
+};
+
+export default function ProfileHamburgerBtn(props: Props) {
   const [isHamburgerOpened, setIsHamburgerOpened] = React.useState(false);
   const { LogOutMutate } = useMutateLogOut(apiUser.deleteLogout);
 
@@ -17,33 +21,62 @@ export default function AsideHamburgerBtn() {
 
   return (
     <>
-      <S.HamburgerBtn onClick={() => setIsHamburgerOpened(true)}>{svgs.ellipsis}</S.HamburgerBtn>
-      {isHamburgerOpened ? (
-        <>
-          <S.Backdrop onMouseDown={() => setIsHamburgerOpened(false)} />
-          <S.HamburgerModal>
-            <S.Triangle />
-            <S.LinkBtnList>
-              <S.LinkBtn href='/user/mypage' onClick={() => setIsHamburgerOpened(false)}>
-                마이 페이지
-              </S.LinkBtn>
-              <S.LinkBtn href='/user/update' onClick={() => setIsHamburgerOpened(false)}>
-                회원정보 수정
-              </S.LinkBtn>
-              <S.LinkBtn href='' onClick={handleLogout}>
-                로그아웃
-              </S.LinkBtn>
-            </S.LinkBtnList>
-          </S.HamburgerModal>
-        </>
-      ) : (
-        <></>
-      )}
+      <S.MobileHomeHeaderProfileDiv className={props.className}>
+        <S.ProfileBtn onClick={() => setIsHamburgerOpened(true)}>
+          <S.ProfileImg />
+        </S.ProfileBtn>
+        {isHamburgerOpened ? (
+          <>
+            <S.Backdrop onMouseDown={() => setIsHamburgerOpened(false)} />
+            <S.HamburgerModal>
+              <S.Triangle className={props.className} />
+              <S.LinkBtnList className={props.className}>
+                <S.LinkBtn href='/user/mypage' onClick={() => setIsHamburgerOpened(false)}>
+                  마이 페이지
+                </S.LinkBtn>
+                <S.LinkBtn href='/user/update' onClick={() => setIsHamburgerOpened(false)}>
+                  회원정보 수정
+                </S.LinkBtn>
+                <S.LinkBtn href='' onClick={handleLogout}>
+                  로그아웃
+                </S.LinkBtn>
+              </S.LinkBtnList>
+            </S.HamburgerModal>
+          </>
+        ) : (
+          <></>
+        )}
+      </S.MobileHomeHeaderProfileDiv>
     </>
   );
 }
 
 const S = {
+  MobileHomeHeaderProfileDiv: styled.div`
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1vw;
+
+    &.shrink {
+      margin-right: 0;
+    }
+  `,
+  ProfileBtn: styled.button`
+    width: calc(var(--header-h) - 2.5rem);
+    height: calc(var(--header-h) - 2.5rem);
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: var(--rounded-full);
+  `,
+  ProfileImg: styled.img`
+    width: 100%;
+    height: 100%;
+    background-color: black;
+  `,
+
   HamburgerBtn: styled.button`
     width: 2rem;
     height: 2rem;
@@ -67,22 +100,33 @@ const S = {
       }
     }
   `,
+
   HamburgerModal: styled.div`
+    position: absolute;
+    top: 11.5rem;
+    right: 0rem;
     filter: drop-shadow(0px 2px 2px var(--color-gray06)); // 그림자
   `,
   Triangle: styled.div`
     position: absolute;
-    top: -1.5rem;
+    top: -9rem;
     right: 1.5rem;
-    width: 0px;
-    height: 0px;
-    border-top: 1.5rem solid white;
+    border-bottom: 1.5rem solid white;
     border-left: 1.5rem solid transparent;
     border-right: 0px solid transparent;
+
+    &.shrink {
+      top: -11rem;
+      right: -3rem;
+      border-top: 0.75rem solid transparent;
+      border-bottom: 0.75rem solid transparent;
+      border-left: 1.5rem solid transparent;
+      border-right: 1.5rem solid white;
+    }
   `,
   LinkBtnList: styled.ol`
     position: absolute;
-    top: -9rem;
+    top: -6rem;
     right: 6.5rem;
     transform: translate(80%, -20%);
     border-radius: 1rem;
@@ -92,6 +136,13 @@ const S = {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+
+    &.shrink {
+      top: -16.5rem;
+      right: -4rem;
+      transform: translate(80%, -20%);
+      border-radius: 1rem;
+    }
 
     &:last-child::after {
       content: '';
@@ -122,6 +173,7 @@ const S = {
     white-space: nowrap;
     width: 100%;
     padding: 1rem;
+
     font-weight: 500;
     background-color: white;
 

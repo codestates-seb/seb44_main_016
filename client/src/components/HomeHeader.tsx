@@ -2,6 +2,8 @@ import React from 'react'; // useState 사용
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
+import MobileHomeHeaderLogo from './home-header/MobileHomeHeaderLogo';
+import ProfileHamburgerBtn from './home-header/ProfileHamburgerBtn';
 import CommonStyles from '../styles/CommonStyles';
 import { ScreenEnum } from '../constants/enums';
 
@@ -24,23 +26,28 @@ export default function HomeHeader(props: Props) {
 
   return (
     <S.HomeHeaderContainer windowType={props.windowType}>
-      <S.HomeHeaderBtn
-        href=''
-        windowType={props.windowType}
-        onClick={handleClickHomeButton}
-        className={isHomeButtonActive ? 'current-tab' : ''}
-      >
-        홈
-      </S.HomeHeaderBtn>
-      {/* href='/?filterfollower=true' // 쿼리 미확정 */}
-      <S.HomeHeaderBtn
-        href=''
-        windowType={props.windowType}
-        onClick={handleClickFollowerButton}
-        className={isFollowerButtonActive ? 'current-tab' : ''}
-      >
-        팔로워
-      </S.HomeHeaderBtn>
+      {props.windowType === ScreenEnum.MOBILE ? <MobileHomeHeaderLogo /> : <></>}
+
+      <S.HomeHeaderTabBtns>
+        <S.HomeHeaderBtn
+          href=''
+          windowType={props.windowType}
+          onClick={handleClickHomeButton}
+          className={isHomeButtonActive ? 'current-tab' : ''}
+        >
+          홈
+        </S.HomeHeaderBtn>
+        {/* href='/?filterfollower=true' // 쿼리 미확정 */}
+        <S.HomeHeaderBtn
+          href=''
+          windowType={props.windowType}
+          onClick={handleClickFollowerButton}
+          className={isFollowerButtonActive ? 'current-tab' : ''}
+        >
+          팔로워
+        </S.HomeHeaderBtn>
+      </S.HomeHeaderTabBtns>
+      {props.windowType === ScreenEnum.MOBILE ? <ProfileHamburgerBtn className={props.windowType} /> : <></>}
     </S.HomeHeaderContainer>
   );
 }
@@ -57,15 +64,19 @@ const S = {
         : '0'};
     max-width: var(--app-max-w);
     width: 100%;
-    height: ${(props) => (props.windowType === ScreenEnum.MOBILE ? '10vw' : 'var(--header-h)')};
+    height: ${(props) => (props.windowType === ScreenEnum.MOBILE ? '8vw' : 'var(--header-h)')};
     max-height: var(--header-h);
     min-height: 3rem;
     background-color: white;
     border-bottom: 0.05rem solid var(--color-gray08);
     display: flex;
+    justify-content: ${(props) => (props.windowType === ScreenEnum.MOBILE ? 'space-between' : 'center')};
+    z-index: 998;
+  `,
+  HomeHeaderTabBtns: styled.div`
+    display: flex;
     justify-content: center;
     align-items: flex-end;
-    z-index: 998;
   `,
   HomeHeaderBtn: styled(Link)<{ windowType: ScreenEnum }>`
     width: 6rem;

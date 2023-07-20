@@ -6,6 +6,7 @@ import AsideBtn from '../components/aside/AsideBtn';
 import AsideLogo from '../components/aside/AsideLogo';
 import AsideProfileBox from '../components/aside/AsideProfileBox';
 import MobileEditBtn from '../components/aside/MobileEditBtn';
+import ProfileHamburgerBtn from '../components/home-header/ProfileHamburgerBtn';
 
 import svgs from '../constants/svg';
 import { ScreenEnum } from '../constants/enums';
@@ -107,7 +108,11 @@ export default function Aside(props: Props) {
             {props.isLoggedIn ? (
               <>
                 {/* href='/user/mypage' */}
-                <AsideProfileBox className={asideClsName} />
+                {isShrinkOrMobile && !isMobile ? (
+                  <ProfileHamburgerBtn className={asideClsName} />
+                ) : (
+                  <AsideProfileBox className={asideClsName} />
+                )}
                 {isShrinkOrMobile ? (
                   isMobile ? (
                     <></>
@@ -159,7 +164,7 @@ const S = {
     &.mobile {
       width: 100%;
       height: var(--aside-mobile-h);
-      max-height: 15vw;
+      max-height: 12.5vw;
       bottom: 0;
     }
   `,
