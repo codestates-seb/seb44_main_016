@@ -12,25 +12,13 @@ public interface FeedArticleService {
   // 피드 게시글 생성
   FeedArticle createFeedArticle(User author, FeedArticle feedArticle);
 
-  //피드 조회
-  List<FeedArticle> findFeedArticles();
-
-  //피드 게시글 수정
-  FeedArticle updateFeedArticle(Long feedArticleId, FeedArticleDto.Patch patchParam);
-
-  //피드 게시글 삭제
-  void deleteFeedArticle(Long feedArticleId);
-
   FeedArticle findVerifiedFeedArticle(Long feedArticleId);
-
-  //피드게시글 작성
-  FeedArticle createFeedArticle(FeedArticle feedArticle);
 
   // 피드 게시글 조회(단건)
   FeedArticle findFeedArticle(Long feedArticleId);
 
   // 피드 게시글 조회(전체)
-  Page<FeedArticle> findFeedArticles(Long FeedArticleId,int page, int size);
+  Page<FeedArticle> findFeedArticles(Long FeedArticleId, int page, int size);
   
   // 피드 게시글 수정
   FeedArticle updateFeedArticle(User author, Long feedArticleId, FeedArticleDto.Patch patchParam);
