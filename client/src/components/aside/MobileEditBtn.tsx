@@ -6,7 +6,7 @@ import CommonStyles from '../../styles/CommonStyles';
 import svgs from '../../constants/svg';
 
 export default function MobileEditBtn() {
-  return <S.MobileEditBtn href='/editor'>{svgs.editor}</S.MobileEditBtn>;
+  return <S.MobileEditBtn href='/editor'>{svgs.pen}</S.MobileEditBtn>;
 }
 
 const S = {

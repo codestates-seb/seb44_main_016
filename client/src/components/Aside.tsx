@@ -94,11 +94,11 @@ export default function Aside(props: Props) {
               )}
             </>
           )}
-          <AsideBtn leftIcon={svgs.ranking} className={asideClsName}>
-            명예의 전당
-          </AsideBtn>
           <AsideBtn onClick={handleOpenOrCloseSearchTab} leftIcon={svgs.search} className={asideClsName}>
             검색
+          </AsideBtn>
+          <AsideBtn leftIcon={svgs.thumb} className={asideClsName} href='/about'>
+            About
           </AsideBtn>
         </S.Upper>
         {isMobile ? (
@@ -117,7 +117,7 @@ export default function Aside(props: Props) {
                   isMobile ? (
                     <></>
                   ) : (
-                    <AsideBtn leftIcon={svgs.editor} />
+                    <AsideBtn leftIcon={svgs.pen} />
                   )
                 ) : (
                   <S.LinkBtn href={'/editor'}>글쓰기</S.LinkBtn>

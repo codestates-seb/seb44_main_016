@@ -12,16 +12,24 @@ type Props = {
 };
 
 export default function HomeHeader(props: Props) {
-  const [isHomeButtonActive, setIsHomeButtonActive] = React.useState(true);
-  const [isFollowerButtonActive, setIsFollowerButtonActive] = React.useState(false);
+  const [isHomeBtnActive, setIsHomeBtnActive] = React.useState(true);
+  const [isFollowerBtnActive, setIsFollowerBtnActive] = React.useState(false);
+  const [isRankBtnActive, setIsRankBtnActive] = React.useState(false);
 
-  const handleClickHomeButton = () => {
-    setIsHomeButtonActive(true);
-    setIsFollowerButtonActive(false);
+  const handleClickHomeBtn = () => {
+    setIsHomeBtnActive(true);
+    setIsFollowerBtnActive(false);
+    setIsRankBtnActive(false);
   };
-  const handleClickFollowerButton = () => {
-    setIsHomeButtonActive(false);
-    setIsFollowerButtonActive(true);
+  const handleClickFollowerBtn = () => {
+    setIsHomeBtnActive(false);
+    setIsFollowerBtnActive(true);
+    setIsRankBtnActive(false);
+  };
+  const handleClickRankBtn = () => {
+    setIsHomeBtnActive(false);
+    setIsFollowerBtnActive(false);
+    setIsRankBtnActive(true);
   };
 
   return (
@@ -32,8 +40,8 @@ export default function HomeHeader(props: Props) {
         <S.HomeHeaderBtn
           href=''
           windowType={props.windowType}
-          onClick={handleClickHomeButton}
-          className={isHomeButtonActive ? 'current-tab' : ''}
+          onClick={handleClickHomeBtn}
+          className={isHomeBtnActive ? 'current-tab' : ''}
         >
           홈
         </S.HomeHeaderBtn>
@@ -41,10 +49,18 @@ export default function HomeHeader(props: Props) {
         <S.HomeHeaderBtn
           href=''
           windowType={props.windowType}
-          onClick={handleClickFollowerButton}
-          className={isFollowerButtonActive ? 'current-tab' : ''}
+          onClick={handleClickFollowerBtn}
+          className={isFollowerBtnActive ? 'current-tab' : ''}
         >
           팔로워
+        </S.HomeHeaderBtn>
+        <S.HomeHeaderBtn
+          href=''
+          windowType={props.windowType}
+          onClick={handleClickRankBtn}
+          className={isRankBtnActive ? 'current-tab' : ''}
+        >
+          랭킹
         </S.HomeHeaderBtn>
       </S.HomeHeaderTabBtns>
       {props.windowType === ScreenEnum.MOBILE ? <ProfileHamburgerBtn className={props.windowType} /> : <></>}
@@ -79,7 +95,7 @@ const S = {
     align-items: flex-end;
   `,
   HomeHeaderBtn: styled(Link)<{ windowType: ScreenEnum }>`
-    width: 6rem;
+    width: ${(props) => (props.windowType === ScreenEnum.MOBILE ? '5rem' : '6rem')};
     height: ${(props) => (props.windowType === ScreenEnum.MOBILE ? '100%' : '75%')};
     background-color: white;
     font-size: 1.25rem;
