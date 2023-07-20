@@ -1,24 +1,17 @@
 spring:
+  datasource:
+    url: ${MYSQL_SECRET_URL}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   jpa:
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL8InnoDBDialect
     hibernate:
       ddl-auto: create
-    show-sql: true
     properties:
       hibernate:
         format_sql: true
-        use_sql_comments: true
-        dialect: org.hibernate.dialect.H2Dialect
-        jdbc:
-          lob:
-            non_contextual_creation: true
-  datasource:
-    url: ${MYSQL_SECRET_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
+    show-sql: true
+    open-in-view: true
 logging:
   level:
     org:
@@ -33,6 +26,7 @@ server:
 #  address:
 #    admin: admin@gmail.com
 jwt:
-  key: neverland123123123123123123123123123123 # 배포 전 환경변수 포맷 후 ec2 인스턴스에 변수 등록
-  access-token-expiration-minutes: 40
-  refresh-token-expiration-minutes: 420
+  key: ${JWT_KEY}
+  access-token-expiration-minutes: ${JWT_ACCESS_TOKEN}
+  refresh-token-expiration-minutes: ${JWT_REFRESH_TOKEN}
+

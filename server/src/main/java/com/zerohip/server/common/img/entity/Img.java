@@ -1,5 +1,7 @@
 //package com.zerohip.server.common.img.entity;
 //
+
+//import com.zerohip.server.common.article.Article;
 //import com.zerohip.server.feedArticle.entity.FeedArticle;
 //import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 //import lombok.Getter;
