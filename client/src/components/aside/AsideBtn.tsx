@@ -37,7 +37,7 @@ export default function AsideBtn(props: Props) {
         <></>
       ) : (
         <S.AsideInnerBtnRight onClick={props.onClick || props.onClickRight}>
-          <SvgBox isReverse={!props.isReverse}>{props.rightIcon || <></>}</SvgBox>
+          <SvgBox isReverse={props.isReverse}>{props.rightIcon || <></>}</SvgBox>
         </S.AsideInnerBtnRight>
       )}
     </S.AsideBtnContainer>
