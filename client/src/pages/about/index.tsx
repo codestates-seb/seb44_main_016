@@ -64,7 +64,7 @@ export default function About() {
     <S.Container>
       <h1 className='blind'>팀 선빵 소개페이지</h1>
       <S.Section>
-        <S.Title># Team. 선빵</S.Title>
+        <S.Title>Team. 선빵</S.Title>
         <p>
           안녕하세요. 팀 <S.Mark>선빵</S.Mark>입니다.
           <br /> 저희는 SNS와 가계부를 합친 SNS형 가계부 <S.Mark>'제로힙'</S.Mark> 프로젝트를 진행하고
@@ -76,7 +76,7 @@ export default function About() {
         </S.BackgroundBox>
       </S.Section>
       <S.Section>
-        <S.Title># 기획 의도</S.Title>
+        <S.Title>기획 의도</S.Title>
         <S.PlanContainer>
           {PLAN.map((el, i) => {
             return (
@@ -94,7 +94,7 @@ export default function About() {
         </S.PlanContainer>
       </S.Section>
       <S.Section>
-        <S.Title># 제로힙 레코드</S.Title>
+        <S.Title>제로힙 레코드</S.Title>
         <S.CountContainer ref={ref}>
           {TEAM_COUNT.map((el, i) => (
             <div key={i} className={inView ? `view item${i}` : ''}>
@@ -109,7 +109,7 @@ export default function About() {
       </S.Section>
 
       <S.Section>
-        <S.Title># 팀원 소개</S.Title>
+        <S.Title>팀원 소개</S.Title>
         <S.Members>
           <div className='top'>
             {MEMBERS.map((member, i) => (

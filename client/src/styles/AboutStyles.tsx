@@ -4,6 +4,7 @@ export const AboutStyles = {
   Container: styled.div`
     padding: 1.875rem;
     word-break: keep-all;
+    line-height: 1.6;
     @media screen and (max-width: 768px) {
       padding: 16px;
     }
@@ -180,6 +181,14 @@ export const AboutStyles = {
     -webkit-background-clip: text;
     background-image: linear-gradient(to right, #0d0d0d, var(--color-primary));
     display: inline-block;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 4px;
+      background-image: linear-gradient(to right, #0d0d0d, var(--color-primary));
+    }
   `,
   Point: styled.div`
     margin: 3rem 0;
