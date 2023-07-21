@@ -14,8 +14,9 @@ import Pagination from '../../../../components/Pagination';
 import CommonStyles from '../../../../styles/CommonStyles';
 import ErrorComponent from '../../../../components/ErrorComponent';
 import { FAREC_MESSAGES } from '../../../../constants/faRec';
+import withAuth from '../../../../components/WithAuth';
 
-export default function FinancialPage() {
+function FinancialPage() {
   const router = useRouter();
   const { ref, inView } = useInView();
   const financialRecordId = router.query.slug ? Number(router.query.slug) : 0;
@@ -56,13 +57,13 @@ export default function FinancialPage() {
     ({ pageParam = 1 }) => APIfinancialRecord.getRecordArticle(financialRecordId, pageParam, size),
     {
       getNextPageParam: (lastPage) => {
-        const currentPage = Number(lastPage.pageData?.page);
-        const totalPages = Number(lastPage.pageData?.totalPages);
+        const currentPage = Number(lastPage.pageInfo?.page);
+        const totalPages = Number(lastPage.pageInfo?.totalPages);
         if (isNaN(currentPage) || isNaN(totalPages)) {
           return undefined;
         }
-        const nextPage = lastPage.pageData?.page + 1;
-        return nextPage > lastPage.pageData?.totalPages ? undefined : nextPage;
+        const nextPage = lastPage.pageInfo?.page + 1;
+        return nextPage > lastPage.pageInfo?.totalPages ? undefined : nextPage;
       },
       staleTime: 1000 * 60 * 10,
       enabled: !!financialRecordId,
@@ -119,7 +120,7 @@ export default function FinancialPage() {
           {!isArticleError && articleData?.data?.length > 0 && (
             <Pagination
               currentPage={page}
-              totalPages={articleData?.pageData.totalPages || 1}
+              totalPages={articleData?.pageInfo.totalPages || 1}
               handlePageChange={setPage}
             />
           )}
@@ -186,3 +187,5 @@ const S = {
     align-items: center;
   `,
 };
+
+export default withAuth(FinancialPage);

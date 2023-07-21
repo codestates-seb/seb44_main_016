@@ -11,6 +11,7 @@ import Loading from '../../components/Loading';
 import { useState } from 'react';
 import ErrorComponent from '../../components/ErrorComponent';
 import { FAREC_MESSAGES } from '../../constants/faRec';
+import withAuth from '../../components/WithAuth';
 
 export const metadata: Metadata = {
   title: `${PAGE_NAMES.FINANCIAL_RECORD_LIST}`,
@@ -29,7 +30,7 @@ export type RecordData = {
   users: UserData[] | undefined;
 };
 
-export default function FinancialListPage() {
+function FinancialListPage() {
   const { data, error, isError, isLoading } = useQuery<RecordData[]>(
     ['recordList'],
     APIfinancialRecord.getRecordList
@@ -111,3 +112,5 @@ const S = {
     transform: translateY(-50%);
   `,
 };
+
+export default withAuth(FinancialListPage);

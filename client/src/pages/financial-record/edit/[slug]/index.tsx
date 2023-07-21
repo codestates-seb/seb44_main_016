@@ -6,6 +6,7 @@ import Loading from '../../../../components/Loading';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { PAGE_NAMES } from '../../../../constants/pageNames';
+import withAuth from '../../../../components/WithAuth';
 
 type FaRecData = {
   financialRecordId: number;
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   description: `${PAGE_NAMES.FINANCIAL_RECORD_UPDATE} 페이지입니다.`,
 };
 
-export default function FaRecEditPage() {
+function FaRecEditPage() {
   const router = useRouter();
   const financialRecordId = router.query.slug ? Number(router.query.slug) : 0;
   const { isLoading, isError, error, data, isSuccess } = useQuery<FaRecData>(
@@ -57,3 +58,5 @@ export default function FaRecEditPage() {
     </>
   );
 }
+
+export default withAuth(FaRecEditPage);
