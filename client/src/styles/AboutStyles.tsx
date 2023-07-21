@@ -305,7 +305,6 @@ export const AboutStyles = {
           padding-bottom: 1rem;
           margin-bottom: 1rem;
           & > h3 {
-            margin-bottom: 4px;
             font-weight: 600;
             color: var(--color-primary);
           }
