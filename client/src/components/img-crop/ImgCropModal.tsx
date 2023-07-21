@@ -119,7 +119,7 @@ const S = {
     background: var(--color-white);
     padding: 1rem;
     border-radius: var(--rounded-default);
-    box-shadow: var(--box-shadow-default);
+    box-shadow: var(--shadow-default);
     display: flex;
     flex-direction: column;
     justify-content: center;

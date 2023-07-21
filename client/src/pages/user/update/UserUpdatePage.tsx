@@ -9,22 +9,19 @@ import { USER_UPDATE_MESSAGES } from '../../../constants/user';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 import BackBtnBox from '../../../components/BackBtn';
 import getNewError from '../../../utils/inputValidationError';
-import { useMutation } from '@tanstack/react-query';
 import apiUser from '../../../services/apiUser';
 import ProfileImgUpdate from './ProfileImgUpdate';
 import { RootState } from '../../../components/redux/store';
-import { changeImgSrc } from '../../../components/redux/currentImgReducer';
-import { useAppDispatch } from '../../../components/redux/hooks';
 import { useSelector } from 'react-redux';
-import InputField from './InputField';
+import UserInputField from './UserInputField';
 import { UserInfoResData } from '../../../types/user';
+import useMutateUser from '../../../services/useMutateUser';
 
 interface UserUpdatePageProps {
   myInfoData: UserInfoResData;
 }
 export default function UserUpdatePage({ myInfoData }: UserUpdatePageProps) {
   const router = useRouter();
-  const dispatch = useAppDispatch();
 
   const currentImgSrc = useSelector<RootState>((state) => state.currentImgReducer.currentImgSrc);
   const originalNickname = myInfoData ? myInfoData.nickname : '';
@@ -77,7 +74,7 @@ export default function UserUpdatePage({ myInfoData }: UserUpdatePageProps) {
     },
   ];
 
-  const { mutateAsync } = useMutation(apiUser.updateMyInfo);
+  const { updateUserMutate } = useMutateUser.update(apiUser.updateMyInfo);
 
   const handleUpdateUserSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,10 +100,7 @@ export default function UserUpdatePage({ myInfoData }: UserUpdatePageProps) {
     formData.append('password', pwValue ? pwValue : '');
     formData.append('profileImgPath', typeof currentImgSrc === 'string' ? currentImgSrc : '');
 
-    await mutateAsync(formData);
-    toast.success('회원 정보가 수정되었습니다.');
-    dispatch(changeImgSrc({ currentImgSrc: '', isAvatar: false }));
-    router.push(`/user/mypage`);
+    updateUserMutate(formData);
   };
 
   const handleMoveDeletePage = () => {
@@ -119,7 +113,7 @@ export default function UserUpdatePage({ myInfoData }: UserUpdatePageProps) {
       <S.FormContainer>
         <ProfileImgUpdate myInfoData={myInfoData} />
         {inputData.map((el) => (
-          <InputField
+          <UserInputField
             key={el.label.text}
             label={el.label}
             guide={el.guide}

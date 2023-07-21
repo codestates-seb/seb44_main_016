@@ -1,8 +1,5 @@
 import styled from '@emotion/styled';
-import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
 import CommonStyles from '../../../styles/CommonStyles';
 import useInput from '../../../hooks/useComponents';
 import useCheckboxError from '../../../hooks/useCheckoutError';
@@ -10,12 +7,11 @@ import { SIGN_UP_MESSAGES } from '../../../constants/user';
 import apiUser from '../../../services/apiUser';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 import PolicyAgreement from './PolicyAgreement';
-import SelectBox from '../../../components/SelectBox';
-import { EMAIL_DOMAIN } from '../../../constants/selectItems';
 import getSignUpNewError from '../../../utils/inputValidationError';
+import useMutateUser from '../../../services/useMutateUser';
+import SignUpInputField from './SignUpInputField';
 
 export default function SignUpForm() {
-  const router = useRouter();
   const [IdInput, loginId] = useInput('text', '아이디', 'loginId', 'username');
   const [PwInput, pwValue] = useInput('password', '비밀번호', 'pw', 'new-password');
   const [PwConfirmInput, password] = useInput('password', '비밀번호 확인', 'pwConfirm', 'new-password');
@@ -108,56 +104,33 @@ export default function SignUpForm() {
     profileImgPath: `https://source.boringavatars.com/beam/150/${nickname}`,
   };
 
-  const { mutateAsync } = useMutation(() => apiUser.postSignUp(requestBody));
+  const { SignUpMutate } = useMutateUser.signUp(apiUser.postSignUp);
 
   const handleSignUpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (error.loginId || error.passwordConfirm || error.nickname || error.email || error.policy) {
       RefusalAnimation();
       return;
     }
 
-    const res = await mutateAsync();
-
-    if (res.field === '아이디') {
-      setError({ ...error, loginId: res.reason });
-      return;
-    }
-
-    toast.success('회원가입에 성공했습니다.');
-    toast.info('로그인을 해 주세요.');
-    router.push('/user/login');
+    SignUpMutate(requestBody);
   };
 
   return (
     <S.FormContainer>
       {inputData.map((el, i) => (
-        <S.InputContainer key={i}>
-          <S.LabelBox>
-            <S.Label htmlFor={el.label.htmlFor}>
-              {el.label.text}
-              <span>{el.label.required && '*'}</span>
-            </S.Label>
-          </S.LabelBox>
-          <S.EmailAddress className={i === inputData.length - 1 ? 'email' : ''}>
-            <S.InputBox className={i === inputData.length - 1 ? 'email' : ''}>{el.component}</S.InputBox>
-            {el.subComponent && (
-              <S.DomainBox>
-                <div>@</div>
-                <SelectBox
-                  totalItem={EMAIL_DOMAIN}
-                  searchItem={domainValue}
-                  setSearchItem={setDomainValue}
-                  placeholder='직접 입력'
-                  ariaLabel='이메일 도메인 입력 또는 찾기'
-                />
-              </S.DomainBox>
-            )}
-          </S.EmailAddress>
-          <S.ErrorBox>
-            <S.Error>{el.error}</S.Error>
-          </S.ErrorBox>
-        </S.InputContainer>
+        <SignUpInputField
+          key={el.label.text}
+          i={i}
+          label={el.label}
+          subComponent={el.subComponent}
+          component={el.component}
+          error={el.error}
+          inputData={inputData}
+          domainValue={domainValue}
+          setDomainValue={setDomainValue}
+        />
       ))}
       <PolicyAgreement error={error} CheckboxComponent={CheckboxComponent} />
       <S.SubmitBox {...isClickedProps}>
@@ -182,50 +155,5 @@ const S = {
     ${isClickedStyled}
     font-size: 1.2rem;
     font-weight: 500;
-  `,
-  InputContainer: styled.div`
-    margin-bottom: 48px;
-  `,
-  LabelBox: styled.div``,
-  Label: styled.label`
-    font-weight: 600;
-    font-size: 1.13rem;
-    display: inline-block;
-    margin-bottom: 10px;
-    > span {
-      color: var(--color-point-pink);
-      display: inline-block;
-      margin-left: 0.5rem;
-    }
-  `,
-  ErrorBox: styled.div`
-    margin-top: 0.5rem;
-    padding-left: 1rem;
-  `,
-  Error: styled.label`
-    color: var(--color-point-pink);
-    font-size: 0.98rem;
-    border: 1px solid transparent;
-  `,
-  InputBox: styled.div`
-    &.email {
-      width: 44%;
-    }
-  `,
-  DomainBox: styled.div`
-    width: 56%;
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-    > div:first-of-type {
-      color: #c4c4c4;
-      margin: 0 1rem;
-      font-size: 1.2rem;
-    }
-  `,
-  EmailAddress: styled.div`
-    &.email {
-      display: flex;
-    }
   `,
 };

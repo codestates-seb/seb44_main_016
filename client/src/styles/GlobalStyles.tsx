@@ -3,7 +3,13 @@ import { Global } from '@emotion/react';
 const GlobalStyles = () => (
   <Global
     styles={`
-    @import url('https://webfontworld.github.io/pretendard/Pretendard.css');
+      @import url('https://webfontworld.github.io/pretendard/Pretendard.css');
+
+      @media screen and (max-width: 1024px)  {
+        :root {
+          font-size: 14px;
+        }
+      }
 
       * {
         margin: 0;
@@ -79,6 +85,8 @@ const GlobalStyles = () => (
         /* width & height */
         --app-max-w: 1140px;
         --aside-w : 15.5rem;  // 15rem~15.625rem
+        --aside-shrink-w : 5rem;
+        --aside-mobile-h: 4rem;
         --aside-tab-w: 22rem;
         --header-h : 5rem;
         --main-w : calc(var(--app-max-w) - var(--aside-w));

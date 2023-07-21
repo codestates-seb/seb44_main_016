@@ -8,6 +8,7 @@ import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 import CommonStyles from '../styles/CommonStyles';
 import SVGs from '../constants/svg';
+import { useWindowType } from '../hooks/useWindowSize';
 
 type Props = {
   imgPath: string[];
@@ -31,8 +32,10 @@ export default function ImgsCarousel(props: Props) {
     setModalVisible(false);
     setModalImage('');
   };
+  const windowType = useWindowType();
+
   return (
-    <S.ImgContainer>
+    <S.ImgContainer className={windowType}>
       {props.rank && (
         <S.RankIndicator>
           <S.RankText>{`${props.rank}위`}</S.RankText>
@@ -110,6 +113,8 @@ const S = {
     height: var(--imgcarousel-h);
     overflow: hidden;
     background-color: #f8f9fc;
+    border-bottom: 0.05rem solid var(--color-gray08);
+
     & .swiper-initialized {
       height: 100%;
     }
@@ -124,6 +129,9 @@ const S = {
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+    &.mobile {
+      height: 70vw;
     }
   `,
   Img: styled.img`

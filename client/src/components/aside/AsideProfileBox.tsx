@@ -9,8 +9,17 @@ type Props = {
 };
 
 export default function AsideProfileBox(props: Props) {
-  const [nickname, userId] = props.className === 'tab-closed' ? ['마마망', '@doyu'] : ['', ''];
-  const hamburgerBtn = props.className === 'tab-closed' ? <AsideHamburgerBtn /> : <></>;
+  const isShrinkOrMobile = ['shrink', 'mobile'].includes(props.className || '');
+
+  let nickname = '';
+  let loginId = '';
+  let hamburgerBtn = <></>;
+
+  if (!isShrinkOrMobile) {
+    nickname = '마마망';
+    loginId = '@doyu';
+    hamburgerBtn = <AsideHamburgerBtn />;
+  }
 
   return (
     <S.ProfileBoxContainer>
@@ -18,7 +27,7 @@ export default function AsideProfileBox(props: Props) {
         <S.ProfileImg />
         <S.ProfileTexts>
           <S.Nickname>{nickname}</S.Nickname>
-          <span>{userId}</span>
+          <span>{loginId}</span>
         </S.ProfileTexts>
       </S.ProfileLeftBtn>
       <S.ProfileRightDiv>{hamburgerBtn}</S.ProfileRightDiv>
