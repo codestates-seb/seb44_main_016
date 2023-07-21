@@ -1,8 +1,24 @@
-import styled from '@emotion/styled';
-import { useState } from 'react';
-import { INTRO, MEMBERS } from '../../constants/about';
+import { AboutStyles } from '../../styles/AboutStyles';
+import { MEMBERS, PLAN, SLOGAN } from '../../constants/about';
+import { useEffect, useState } from 'react';
+import Tab from '../../components/Tab';
 
 export default function About() {
+  const [memberIndex, setMemberIndex] = useState(0);
+  const tabs = ['소개', '소감', '작업 내역'];
+  const [activeTab, setActiveTab] = useState<string>('소개');
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+  };
+  const [typedText, setTypedText] = useState('');
+  const speed = 150;
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setTypedText(SLOGAN.slice(0, typedText.length + 1));
+    }, speed);
+    return () => clearTimeout(timeout);
+  }, [typedText]);
   return (
     <S.Container>
       <h1 className='blind'>팀 선빵 소개페이지</h1>
@@ -14,162 +30,87 @@ export default function About() {
           있습니다. 소통의 공간이 소비로 통하는 요즘, 제로의 힙, 소통의 힘을 믿으며 서비스를 개발 중입니다. 수
           백의 '있어빌리티'보다 당신의 <S.Mark>'제로빌리티'</S.Mark>를 응원합니다! <br />
         </p>
-        <S.Point>당신의 과소비가 0에 수렴할 때 까지, 제로힙.</S.Point>
+        <S.BackgroundBox>
+          <p>{typedText}</p>
+        </S.BackgroundBox>
       </S.Section>
       <S.Section>
         <S.Title># 기획 의도</S.Title>
-        <S.Ul>
-          {INTRO.map((el, i) => (
-            <li key={i}>{el}</li>
-          ))}
-        </S.Ul>
+        <S.PlanContainer>
+          {PLAN.map((el, i) => {
+            return (
+              <div className='item' key={i}>
+                <div className='inner'>
+                  <div className='top'>
+                    <h3>{el.title}</h3>
+                    <div>{el.engTitle}</div>
+                  </div>
+                  <div className='bottom'>{el.desc}</div>
+                </div>
+              </div>
+            );
+          })}
+        </S.PlanContainer>
       </S.Section>
-
       <S.Section>
         <S.Title># 팀원 소개</S.Title>
-        {MEMBERS.map((member, i) => (
-          <S.ContentWrap key={i}>
-            <S.ContentImg>
-              <img src={member.img} alt={member.name} />
-            </S.ContentImg>
-            <S.ContentInfo>
-              <div>
-                <S.MemberTitle>
-                  <S.Team>{member.team}</S.Team>
+        <S.Members>
+          <div className='top'>
+            {MEMBERS.map((member, i) => (
+              <button key={i} onClick={() => setMemberIndex(i)}>
+                <div>
+                  <img src={member.img} alt={member.name} />{' '}
+                </div>
+                <div className='name'>
+                  <span>[{member.team}]</span>
+                  {` `}
+                  {member.name}
+                </div>
+              </button>
+            ))}
+          </div>
+          <div className='bottom'>
+            <S.ContentWrap>
+              <S.ContentImg>
+                <img src={MEMBERS[memberIndex].img} alt={MEMBERS[memberIndex].name} />
+              </S.ContentImg>
+              <S.ContentInfo>
+                <div>
+                  <S.MemberTitle>
+                    <S.Team>{MEMBERS[memberIndex].team}</S.Team>
+                    <div>
+                      {MEMBERS[memberIndex].name}
+                      <S.Github>
+                        <a href={MEMBERS[memberIndex].githubUrl} target='_blank' rel='noreferrer'>
+                          {MEMBERS[memberIndex].githubNick}
+                        </a>
+                      </S.Github>
+                    </div>
+                  </S.MemberTitle>
+                  <Tab tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
                   <div>
-                    {member.name}
-                    <S.Github>
-                      <a href={member.githubUrl} target='_blank' rel='noreferrer'>
-                        {member.githubNick}
-                      </a>
-                    </S.Github>
+                    {activeTab === '소개' ? (
+                      <div>{MEMBERS[memberIndex].introduce}</div>
+                    ) : activeTab === '소감' ? (
+                      <div>{MEMBERS[memberIndex].impression}</div>
+                    ) : (
+                      <S.Ul>
+                        {MEMBERS[memberIndex].worklog.map((el, i) => (
+                          <li key={i}>{el}</li>
+                        ))}
+                      </S.Ul>
+                    )}
                   </div>
-                </S.MemberTitle>
-                <S.Content>{member.content}</S.Content>
-              </div>
-            </S.ContentInfo>
-          </S.ContentWrap>
-        ))}
+                </div>
+              </S.ContentInfo>
+            </S.ContentWrap>
+          </div>
+        </S.Members>
       </S.Section>
     </S.Container>
   );
 }
 
 const S = {
-  Container: styled.div`
-    padding: 1.875rem;
-
-    & > section {
-      margin-bottom: 1.6rem;
-    }
-  `,
-  Section: styled.section`
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start;
-  `,
-  ContentWrap: styled.div`
-    display: flex;
-    padding: 1rem;
-    background: var(--color-white);
-    box-shadow: var(--shadow-default);
-    border-radius: var(--rounded-default);
-
-    & > div {
-      width: 50%;
-    }
-    &:nth-child(odd) > div:nth-of-type(1) {
-      order: 1;
-    }
-  `,
-  ContentImg: styled.div`
-    overflow: hidden;
-    border-radius: var(--rounded-default);
-    height: 25rem;
-
-    & > img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  `,
-  ContentInfo: styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 1.875rem;
-  `,
-  MemberTitle: styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-    font-weight: 500;
-    & > div {
-      font-size: var(--text-l);
-      display: flex;
-      align-items: center;
-    }
-  `,
-  Title: styled.h2`
-    font-size: var(--text-l);
-    color: transparent;
-    background-clip: text;
-    -webkit-background-clip: text;
-    background-image: linear-gradient(to right, #0d0d0d, var(--color-primary));
-    display: inline-block;
-  `,
-  Point: styled.div`
-    margin: 3rem 0;
-    font-size: var(--text-xl);
-    text-align: center;
-    color: var(--color-primary);
-    font-weight: 600;
-    width: 100%;
-  `,
-  Team: styled.span`
-    font-weight: 500;
-    color: var(--color-white);
-    display: inline-block;
-    padding: 0 0.625rem;
-    background: var(--color-primary);
-    border-radius: var(--rounded-default);
-    margin-bottom: 0.3rem;
-    font-size: var(--text-m);
-  `,
-  Github: styled.span`
-    font-weight: 400;
-    font-size: var(--text-default);
-    margin-left: 0.5rem;
-    color: var(--color-primary);
-  `,
-  Content: styled.div`
-    color: var(--color-gray03);
-    font-weight: var(--text-s);
-  `,
-  Mark: styled.mark`
-    background: var(--color-point-lilac);
-    border-radius: var(--rounded-default);
-    padding: 0 6px;
-  `,
-  Ul: styled.ul`
-    & > li {
-      margin: 1rem 0;
-      display: flex;
-      align-items: flex-start;
-    }
-    & > li::before {
-      content: '';
-      display: inline-block;
-      margin-right: 10px;
-      width: 8px;
-      height: 8px;
-      border-radius: var(--rounded-full);
-      background: var(--color-primary);
-      box-shadow: var(--shadow-default);
-      flex-shrink: 0;
-      transform: translateY(calc(50% + 2px));
-    }
-  `,
+  ...AboutStyles,
 };
