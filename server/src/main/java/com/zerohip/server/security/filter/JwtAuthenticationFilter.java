@@ -2,11 +2,15 @@ package com.zerohip.server.security.filter;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zerohip.server.security.auth.entity.RefreshToken;
+import com.zerohip.server.security.auth.repository.RefreshTokenRepository;
 import com.zerohip.server.security.provider.JwtTokenizer;
 import com.zerohip.server.user.dto.UserDto;
 import com.zerohip.server.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,7 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -24,11 +27,13 @@ import java.util.Map;
 
 // 로그인 인증 요청 처리 엔트리포인트
 @RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     // DI 받은 AuthenticationManager 로 로그인 인증 정보를 전달받아 인증 여부 판단
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
+    private final RefreshTokenRepository refreshTokenRepository;
 
 
     // 인증 시도 로직 구현
@@ -62,9 +67,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setHeader("Authorization", "Bearer " + accessToken);
 //        response.setHeader("Refresh", refreshToken);
 
-        // 리프레쉬 토큰 쿠키화 : 클라이언트 단에서 쿠키로 받는걸 선호
-        Cookie refreshTokenCookie = new Cookie("Refresh", refreshToken);
-        response.addCookie(refreshTokenCookie);
+        // 리프레쉬 토큰 쿠키화
+        ResponseCookie cookie = ResponseCookie.from("Refresh", refreshToken)
+                .domain("localhost")
+                .maxAge(24 * 60 * 60)
+                .path("/")
+//                .secure(true)
+                .sameSite("None")
+                .httpOnly(true)
+                .build();
+
+        response.setHeader("Set-Cookie", cookie.toString());
 
 
         //onAuthenticationSuccess() : UserAuthenticationSuccessHandler 호출
@@ -96,6 +109,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
 
         String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
+
+        // refresh token  : redis 사용 시 수정 예정
+        refreshTokenRepository.findByLoginId(user.getLoginId())
+                .ifPresentOrElse(
+                        re -> {
+                            re.changeToken(refreshToken);
+                            refreshTokenRepository.save(re);
+                            log.info("# IssueRefreshToken | change token"); // 이미 생성된 토큰이 존재할 경우, 토큰 재발행 후 저장
+                        },
+                        () -> {
+                            RefreshToken token = RefreshToken.createToken(user.getLoginId(), refreshToken); // 없다면 토큰 생성 후, 저장
+                            refreshTokenRepository.save(token);
+                            log.info("# IssueRefreshToken | save login : {}, token : {}", token.getLoginId(), token.getToken());
+                        });
 
         return refreshToken;
     }

@@ -7,8 +7,6 @@ spring:
         web-allow-others: true
   datasource:
     url: jdbc:h2:mem:test
-    username: sa
-    driver-class-name: org.h2.Driver
   jpa:
     hibernate:
       ddl-auto: create
@@ -16,12 +14,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        use_sql_comments: true
-        dialect: org.hibernate.dialect.H2Dialect
-        jdbc:
-          lob:
-            non_contextual_creation: true
-
+  sql:
+    init:
+      data-locations: classpath*:db/h2/data.sql
 logging:
   level:
     org:
@@ -32,10 +27,17 @@ server:
   servlet:
     encoding:
       force-response: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 169242830549-appje0sp82r5s1l19bglnsonk40dv7u0.apps.googleusercontent.com  # 환경변수 ${GOOGLE_CLIENT_ID}
+            clientSecret: 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  # 환경변수 ${GOOGLE_CLIENT_SECRET}
 #mail:
 #  address:
 #    admin: admin@gmail.com
 jwt:
-  key: neverland123123123123123123123123123123 # 배포 전 환경변수 포맷 후 ec2 인스턴스에 변수 등록
-  access-token-expiration-minutes: 40
-  refresh-token-expiration-minutes: 420
+  key: neverland123123123123123123123123123123 # 환경변수 ${JWT_KEY}
+  access-token-expiration-minutes: 60          # 환경변수 ${JWT_ACCESS_TOKEN}
+  refresh-token-expiration-minutes: 10080      # 환경변수 ${JWT_REFRESH_TOKEN}

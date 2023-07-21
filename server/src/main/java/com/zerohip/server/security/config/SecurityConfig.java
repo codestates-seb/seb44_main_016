@@ -1,6 +1,7 @@
 package com.zerohip.server.security.config;
 
 
+import com.zerohip.server.security.auth.repository.RefreshTokenRepository;
 import com.zerohip.server.security.filter.JwtAuthenticationFilter;
 import com.zerohip.server.security.filter.JwtVerificationFilter;
 import com.zerohip.server.security.handler.UserAccessDeniedHandler;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -37,6 +39,7 @@ public class SecurityConfig {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
     private final CorsFilter corsFilter;
+    private final RefreshTokenRepository refreshTokenRepository;
 
 
     @Bean
@@ -59,6 +62,7 @@ public class SecurityConfig {
                         .anyRequest().permitAll()   // role : user 만 있기 때문에 세부 권한 지정 필요 x
                 );
 
+
         return http.build();
     }
 
@@ -79,7 +83,7 @@ public class SecurityConfig {
             // AuthenticationManager 객체를 가져오는데, Spring Security 설정을 구성하는 SecurityConfigurer 간에 공유되는 객체를 가져옴
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer, refreshTokenRepository);
             jwtAuthenticationFilter.setFilterProcessesUrl("/user/login");   // 로그인 url 지정
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new UserAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new UserAuthenticationFailureHandler());
@@ -94,4 +98,6 @@ public class SecurityConfig {
                     .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
         }
     }
+
+
 }

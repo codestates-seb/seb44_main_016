@@ -34,7 +34,7 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
 
 
         Map<String, Object> userInfo = new HashMap<>();
-        userInfo.put("uerId", userId);
+        userInfo.put("userId", userId);
         userInfo.put("loginId", loginId);
         userInfo.put("nickname", nickname);
 

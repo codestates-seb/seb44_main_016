@@ -37,6 +37,7 @@ dependencies {
 
   // h2 DB
   runtimeOnly 'com.h2database:h2'
+  runtimeOnly 'com.mysql:mysql-connector-j'
 
   // MapStruct
   implementation 'org.mapstruct:mapstruct:1.5.3.Final'
@@ -56,6 +57,11 @@ dependencies {
   // Gson & mail
   implementation 'org.springframework.boot:spring-boot-starter-mail'
   implementation 'com.google.code.gson:gson'
+
+  // Oauth2
+  implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+
 }
 
 tasks.named('test') {
