@@ -2,9 +2,8 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 
-import { useMutateLogOut } from '../../hooks/useLogout';
+import useMutateUser from '../../services/useMutateUser';
 import apiUser from '../../services/apiUser';
-import { ScreenEnum } from '../../constants/enums';
 
 type Props = {
   className: string;
@@ -12,7 +11,7 @@ type Props = {
 
 export default function ProfileHamburgerBtn(props: Props) {
   const [isHamburgerOpened, setIsHamburgerOpened] = React.useState(false);
-  const { LogOutMutate } = useMutateLogOut(apiUser.deleteLogout);
+  const { LogOutMutate } = useMutateUser.logout(apiUser.deleteLogout);
 
   const handleLogout = () => {
     setIsHamburgerOpened(false);
