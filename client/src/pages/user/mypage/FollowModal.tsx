@@ -1,36 +1,65 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
-import CloseBtn from '../../../../public/images/icon/closeBtn.svg';
-import ModalList from './FollowList';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import CloseBtnIcon from '../../../../public/images/icon/closeBtn.svg';
+import FollowList from './FollowList';
 import { FollowUsersInfoData } from '../../../types/user';
 
 interface FollowModalProps {
   title: string;
-  list: FollowUsersInfoData[];
+  followList: FollowUsersInfoData[];
 }
 
-export default function FollowModal({ title, list }: FollowModalProps) {
+export default function FollowModal({ title, followList }: FollowModalProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-  const openModalHandler = () => setIsOpen(!isOpen);
+  const handleOpenModal = () => {
+    setIsOpen(!isOpen);
+  };
+
+  useEffect(() => {
+    const handleFocusCloseButton = (e: KeyboardEvent) => {
+      if (isOpen && e.key === 'Escape') {
+        e.preventDefault();
+        if (closeButtonRef.current) {
+          closeButtonRef.current.focus();
+        }
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleFocusCloseButton);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleFocusCloseButton);
+    };
+  }, [isOpen]);
 
   return (
-    <S.FollowerContainer onClick={openModalHandler}>
-      <S.ButtonNameBtn type='button'>
-        {title} <S.FollowerNum>{list?.length}</S.FollowerNum>
-      </S.ButtonNameBtn>
+    <S.FollowerContainer onClick={handleOpenModal}>
+      <S.ServiceNameBtn aria-haspopup='dialog' aria-controls='dialogPopup' type='button'>
+        {title} <S.FollowTotalNum>{followList?.length}</S.FollowTotalNum>
+      </S.ServiceNameBtn>
       {isOpen ? (
-        <S.ModalBackdrop onClick={openModalHandler}>
-          <S.ModalView onClick={(e) => e.stopPropagation()}>
+        <S.ModalBackdrop onClick={handleOpenModal}>
+          <S.ModalView role='dialog' aria-modal='true' id='dialogPopup' onClick={(e) => e.stopPropagation()}>
             <S.ModalTop>
-              <S.Title>{title}</S.Title>
-              <CloseBtn onClick={openModalHandler} />
+              <S.Title tabIndex={0} ref={modalRef}>
+                {title}
+              </S.Title>
+              <S.CloseBtnBtn type='button' onClick={handleOpenModal} ref={closeButtonRef}>
+                <CloseBtnIcon />
+              </S.CloseBtnBtn>
             </S.ModalTop>
-            <S.ModalFollowerBox>
-              {list?.map((el) => (
-                <ModalList key={el.loginId} title={title} userInfo={el} />
+            <S.ModalFollowListBox>
+              <div tabIndex={0} />
+              {followList?.map((el) => (
+                <FollowList key={el.loginId} title={title} userInfo={el} />
               ))}
-            </S.ModalFollowerBox>
+              <div tabIndex={0} />
+            </S.ModalFollowListBox>
           </S.ModalView>
         </S.ModalBackdrop>
       ) : null}
@@ -60,8 +89,14 @@ const S = {
       margin-top: 5px;
       cursor: pointer;
     }
+    @media screen and (max-width: 1024px) {
+      height: 350px;
+    }
+    @media screen and (max-width: 500px) {
+      width: 95%;
+    }
   `,
-  ButtonNameBtn: styled.button`
+  ServiceNameBtn: styled.button`
     font-size: 1.07rem;
     font-weight: 500;
     &:hover {
@@ -79,7 +114,7 @@ const S = {
       margin: 0 1.7rem 0 1rem;
     }
   `,
-  FollowerNum: styled.div`
+  FollowTotalNum: styled.div`
     color: var(--color-point-purple);
     font-weight: 500;
     display: inline-block;
@@ -90,22 +125,46 @@ const S = {
     height: 50px;
     display: flex;
     justify-content: flex-end;
-    padding-right: 2rem;
     align-items: center;
     border-bottom: 1px solid var(--color-gray08);
+    position: relative;
+  `,
+  CloseBtnBtn: styled.button`
+    margin-right: 2rem;
+    z-index: 2;
+    height: 3rem;
+    width: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media screen and (max-width: 400px) {
+      margin-right: 0.7rem;
+    }
   `,
   Title: styled.div`
     font-weight: 400;
     color: var(--color-gray03);
-    margin-right: 8rem;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    margin-right: 1rem;
+    @media screen and (max-width: 1024px) {
+      font-size: 15px;
+    }
+    &:focus {
+      outline: 2px solid var(--color-primary);
+    }
   `,
-  ModalFollowerBox: styled.div`
+  ModalFollowListBox: styled.div`
     width: 100%;
     height: calc(100% - 50px);
     overflow: scroll;
     overflow-x: hidden;
     justify-content: space-between;
     padding: 0rem 1.65rem 0 1.5rem;
+    @media screen and (max-width: 400px) {
+      padding: 0rem 1.25rem 0 1.1rem;
+    }
   `,
   UserInfo: styled.div`
     display: flex;
