@@ -88,7 +88,7 @@ const S = {
     @media screen and (max-width: 1024px) {
       height: 350px;
     }
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 400px) {
       width: 95%;
     }
   `,
