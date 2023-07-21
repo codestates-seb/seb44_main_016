@@ -4,8 +4,15 @@ export const AboutStyles = {
   Container: styled.div`
     padding: 1.875rem;
     word-break: keep-all;
+    @media screen and (max-width: 768px) {
+      padding: 16px;
+    }
     & > section {
       margin-bottom: 4rem;
+
+      @media screen and (max-width: 768px) {
+        margin-bottom: 2rem;
+      }
     }
   `,
   Section: styled.section`
@@ -29,6 +36,11 @@ export const AboutStyles = {
       font-weight: 600;
       color: var(--color-white);
       font-size: var(--text-l);
+      padding: 0 1rem;
+      text-align: center;
+      @media screen and (max-width: 768px) {
+        font-weight: 500;
+      }
     }
   `,
   ContentWrap: styled.div`
@@ -41,12 +53,21 @@ export const AboutStyles = {
     & > div {
       width: 50%;
     }
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
+      & > div {
+        width: 100%;
+      }
+    }
   `,
   Members: styled.div`
     width: 100%;
     & > div.top {
       display: flex;
       gap: 4px;
+      @media screen and (max-width: 768px) {
+        flex-wrap: wrap;
+      }
       & > button {
         flex: 1;
         background: var(--color-white);
@@ -58,6 +79,10 @@ export const AboutStyles = {
         justify-content: center;
         box-shadow: var(--shadow-default);
         transition-duration: 0.3s;
+        @media screen and (max-width: 768px) {
+          flex: 0 0 calc(33.33% - 3px);
+        }
+
         &:hover {
           transform: scale(0.95);
         }
@@ -71,6 +96,9 @@ export const AboutStyles = {
           width: 5rem;
           height: 5rem;
           overflow: hidden;
+          @media screen and (max-width: 360px) {
+            display: none;
+          }
 
           & > img {
             width: 100%;
@@ -81,8 +109,15 @@ export const AboutStyles = {
         & > div:nth-of-type(2) {
           margin-top: 6px;
           font-weight: 500;
+          @media screen and (max-width: 360px) {
+            flex: 1;
+          }
           & > span {
             color: var(--color-primary);
+            @media screen and (max-width: 360px) {
+              display: block;
+              margin-bottom: 6px;
+            }
           }
         }
       }
@@ -97,6 +132,10 @@ export const AboutStyles = {
     border-radius: var(--rounded-default);
     height: 25rem;
 
+    @media screen and (max-width: 768px) {
+      height: 15rem;
+    }
+
     & > img {
       width: 100%;
       height: 100%;
@@ -108,6 +147,11 @@ export const AboutStyles = {
     flex-direction: column;
     justify-content: space-between;
     padding: 1rem 1.875rem;
+    @media screen and (max-width: 768px) {
+      padding: 0;
+      min-height: 25rem;
+      margin-top: 1rem;
+    }
 
     div.textBox {
       max-height: 300px;
@@ -193,6 +237,13 @@ export const AboutStyles = {
     display: flex;
     gap: 3rem;
     padding: 2rem;
+    @media screen and (max-width: 768px) {
+      padding: 1rem;
+      gap: 1rem;
+      flex-direction: column;
+    }
+    @media screen and (max-width: 480px) {
+    }
     & > div.item {
       position: relative;
       flex: 1;
@@ -202,6 +253,7 @@ export const AboutStyles = {
       top: 200px;
       opacity: 0;
       animation: moveUp 0.5s forwards;
+
       @keyframes moveUp {
         to {
           top: 0;
@@ -338,6 +390,13 @@ export const AboutStyles = {
     width: 100%;
     align-items: center;
     justify-content: center;
+    @media screen and (max-width: 768px) {
+      padding: 1rem;
+      gap: 1rem;
+    }
+    @media screen and (max-width: 640px) {
+      flex-direction: column;
+    }
     .icon {
       width: 8rem;
       height: 8rem;
@@ -345,6 +404,7 @@ export const AboutStyles = {
     }
     .countTitle {
       font-size: var(--text-l);
+
       & > span {
         font-weight: 600;
         color: var(--color-primary);

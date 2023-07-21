@@ -20,6 +20,7 @@ export default function About() {
   const divide = 15;
   const [counts, setCounts] = useState(TEAM_COUNT.map(() => 0));
   useEffect(() => {
+    let interval: number;
     if (inView) {
       setCounts(TEAM_COUNT.map(() => 0));
 
@@ -46,6 +47,11 @@ export default function About() {
 
       return () => clearInterval(interval);
     }
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
   }, [inView]);
 
   useEffect(() => {
