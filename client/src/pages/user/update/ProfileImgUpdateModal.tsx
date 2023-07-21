@@ -58,7 +58,7 @@ export default function ProfileImgUpdateModal({ isOpen, setIsOpen, myInfoData }:
     <S.ModalBackdrop onClick={handleOpenModal}>
       <S.ModalView role='dialog' aria-modal='true' id='dialogPopup' onClick={(e) => e.stopPropagation()}>
         <S.ModalTop>
-          <S.Title tabIndex={0} ref={modalRef}>
+          <S.Title ref={modalRef}>
             프로필 사진을 <S.ReactiveDiv>무엇으로 바꿀 예정이신가요?</S.ReactiveDiv>
           </S.Title>
           <S.CloseBtnBtn type='button' onClick={handleOpenModal} ref={closeButtonRef}>

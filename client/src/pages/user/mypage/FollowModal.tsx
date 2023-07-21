@@ -46,9 +46,7 @@ export default function FollowModal({ title, followList }: FollowModalProps) {
         <S.ModalBackdrop onClick={handleOpenModal}>
           <S.ModalView role='dialog' aria-modal='true' id='dialogPopup' onClick={(e) => e.stopPropagation()}>
             <S.ModalTop>
-              <S.Title tabIndex={0} ref={modalRef}>
-                {title}
-              </S.Title>
+              <S.Title ref={modalRef}>{title}</S.Title>
               <S.CloseBtnBtn type='button' onClick={handleOpenModal} ref={closeButtonRef}>
                 <CloseBtnIcon />
               </S.CloseBtnBtn>
