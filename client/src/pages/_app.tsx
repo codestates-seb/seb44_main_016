@@ -9,11 +9,14 @@ import Aside from '../components/Aside';
 import HomeHeader from '../components/HomeHeader';
 import Toast from '../components/Toast';
 import 'react-toastify/dist/ReactToastify.css';
+import { useWindowType } from '../hooks/useWindowSize';
+import { ScreenEnum } from '../constants/enums';
 
 const queryClient = new QueryClient();
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
+  const windowType = useWindowType();
 
   let isShowNav = true;
   let isShowHeader = false;
@@ -46,10 +49,10 @@ const App = ({ Component, pageProps }: AppProps) => {
           <S.RootScreen>
             <S.AppContainer maxWidth={maxWidth}>
               <S.FlexPage bgColor={bgColor}>
-                {isShowNav && <Aside isLoggedIn={true} />}
+                {isShowNav && <Aside isLoggedIn={true} windowType={windowType} />}
                 <S.SubPage>
-                  {isShowHeader && <HomeHeader />}
-                  <S.Main isShowNav={isShowNav} isShowHeader={isShowHeader}>
+                  {isShowHeader && <HomeHeader windowType={windowType} />}
+                  <S.Main isShowNav={isShowNav} isShowHeader={isShowHeader} windowType={windowType}>
                     <Component {...pageProps} />
                   </S.Main>
                 </S.SubPage>
@@ -92,12 +95,16 @@ const S = {
     height: 100%;
   `,
 
-  Main: styled.main<{ isShowNav: boolean; isShowHeader: boolean }>`
+  Main: styled.main<{ isShowNav: boolean; isShowHeader: boolean; windowType: ScreenEnum }>`
     width: auto;
-    height: 100%;
-    height: ${(props) => props.isShowHeader && 'calc(100% - var(--header-h));'};
+    height: ${(props) => (props.isShowHeader ? 'calc(100% - var(--header-h));' : '100%')};
     margin-top: ${(props) => props.isShowHeader && '5rem'};
-    margin-left: ${(props) => props.isShowNav && 'var(--aside-w)'};
+    margin-left: ${(props) =>
+      props.windowType === ScreenEnum.DESKTOP
+        ? 'var(--aside-w)'
+        : props.windowType === ScreenEnum.TABLET
+        ? 'var(--aside-shrink-w)'
+        : '0'};
     display: flex;
     flex-direction: column;
   `,

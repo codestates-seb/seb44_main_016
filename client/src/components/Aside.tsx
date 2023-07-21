@@ -2,23 +2,40 @@ import React from 'react'; // useState 사용
 import styled from '@emotion/styled';
 
 import CommonStyles from '../styles/CommonStyles';
-import AsideButton from '../components/aside/AsideButton';
+import AsideBtn from '../components/aside/AsideBtn';
 import AsideLogo from '../components/aside/AsideLogo';
 import AsideProfileBox from '../components/aside/AsideProfileBox';
+import MobileEditBtn from '../components/aside/MobileEditBtn';
+import ProfileHamburgerBtn from '../components/home-header/ProfileHamburgerBtn';
 
 import svgs from '../constants/svg';
+import { ScreenEnum } from '../constants/enums';
 
-/* type은 추후 다른 파일로 분리하고 Import할 예정 */
+function getClsName(isTabClosed: boolean, windowType: ScreenEnum) {
+  let asideClsName = '';
+  if (!isTabClosed || windowType !== ScreenEnum.DESKTOP) {
+    asideClsName = 'shrink';
+  }
+  if (windowType === ScreenEnum.MOBILE) {
+    asideClsName = 'mobile';
+  }
+  return asideClsName;
+}
+
 type Props = {
   isLoggedIn: boolean;
+  windowType: ScreenEnum;
 };
 
 export default function Aside(props: Props) {
+  const [isBookmarkedFaRecListOpened, setIsBookmarkedFaRecListOpened] = React.useState(true);
   const [isSearchTabOpened, setIsSearchTabOpened] = React.useState(false);
   const [isNoticeTabOpened, setIsNoticeTabOpened] = React.useState(false);
   const isTabClosed = !isSearchTabOpened && !isNoticeTabOpened;
 
-  const [isBookmarkedFaRecListOpened, setIsBookmarkedFaRecListOpened] = React.useState(true);
+  const asideClsName = getClsName(isTabClosed, props.windowType);
+  const isShrinkOrMobile = ['shrink', 'mobile'].includes(asideClsName || '');
+  const isMobile = asideClsName === 'mobile';
 
   const handleOpenOrCloseBookmarkedFaRecList = () => {
     setIsBookmarkedFaRecListOpened((prevBool) => !prevBool);
@@ -37,67 +54,93 @@ export default function Aside(props: Props) {
   };
 
   return (
-    <S.AsideContainer className={isTabClosed ? 'tab-closed' : ''}>
+    <S.AsideContainer className={asideClsName}>
       <S.LeftOfAsideCover />
-      <S.AsideInnerContainer>
-        <S.Upper>
-          <AsideLogo className={isTabClosed ? 'tab-closed' : ''} />
-          <ol>
-            <AsideButton leftIcon={svgs.home}>{isTabClosed && '홈'}</AsideButton>
-            {props.isLoggedIn && (
+      <S.AsideInnerContainer className={asideClsName}>
+        <S.Upper className={asideClsName}>
+          {isMobile ? <></> : <AsideLogo className={asideClsName} />}
+          <AsideBtn leftIcon={svgs.home} className={asideClsName} href='/'>
+            홈
+          </AsideBtn>
+          {props.isLoggedIn && (
+            <>
+              <AsideBtn onClick={handleOpenOrCloseNoticeTab} leftIcon={svgs.notice} className={asideClsName}>
+                알림
+              </AsideBtn>
+              {/* href='/financial-record' */}
+              <AsideBtn
+                leftIcon={svgs.faRec}
+                rightIcon={svgs.dropdown}
+                isReverse={isBookmarkedFaRecListOpened}
+                onClickRight={handleOpenOrCloseBookmarkedFaRecList}
+                className={asideClsName}
+              >
+                내 가계부
+              </AsideBtn>
+              {isBookmarkedFaRecListOpened || isShrinkOrMobile ? (
+                <></>
+              ) : (
+                <ol>
+                  <AsideBtn isSmall={true} className={asideClsName}>
+                    XXX의 가계부
+                  </AsideBtn>
+                  <AsideBtn isSmall={true} className={asideClsName}>
+                    ♡ 데이트 통장 ♥
+                  </AsideBtn>
+                  <AsideBtn isSmall={true} className={asideClsName}>
+                    '산악회 곗돈 장부
+                  </AsideBtn>
+                </ol>
+              )}
+            </>
+          )}
+          <AsideBtn onClick={handleOpenOrCloseSearchTab} leftIcon={svgs.search} className={asideClsName}>
+            검색
+          </AsideBtn>
+          <AsideBtn leftIcon={svgs.thumb} className={asideClsName} href='/about'>
+            About
+          </AsideBtn>
+        </S.Upper>
+        {isMobile ? (
+          <MobileEditBtn />
+        ) : (
+          <S.Lower>
+            {props.isLoggedIn ? (
               <>
-                <AsideButton onClick={handleOpenOrCloseNoticeTab} leftIcon={svgs.notice}>
-                  {isTabClosed && '알림'}
-                </AsideButton>
-                {/* href='/financial-record' */}
-                <AsideButton
-                  className={isTabClosed ? 'tab-closed' : ''}
-                  leftIcon={svgs.faRec}
-                  rightIcon={svgs.dropdown}
-                  isReverse={isBookmarkedFaRecListOpened}
-                  onClickRight={handleOpenOrCloseBookmarkedFaRecList}
-                >
-                  {isTabClosed && '내 가계부'}
-                </AsideButton>
-                {isBookmarkedFaRecListOpened && isTabClosed && (
-                  <ol>
-                    <AsideButton isSmall={true}>{isTabClosed && 'XXX의 가계부'}</AsideButton>
-                    <AsideButton isSmall={true}>{isTabClosed && '집사 일기'}</AsideButton>
-                    <AsideButton isSmall={true}>{isTabClosed && '산악회 곗돈 장부'}</AsideButton>
-                  </ol>
+                {/* href='/user/mypage' */}
+                {isShrinkOrMobile && !isMobile ? (
+                  <ProfileHamburgerBtn className={asideClsName} />
+                ) : (
+                  <AsideProfileBox className={asideClsName} />
+                )}
+                {isShrinkOrMobile ? (
+                  isMobile ? (
+                    <></>
+                  ) : (
+                    <AsideBtn leftIcon={svgs.pen} />
+                  )
+                ) : (
+                  <S.LinkBtn href={'/editor'}>글쓰기</S.LinkBtn>
                 )}
               </>
+            ) : isShrinkOrMobile ? (
+              <S.LinkBtn href='/user/login'>로그인</S.LinkBtn>
+            ) : (
+              <AsideBtn href='/user/login' leftIcon={svgs.person} />
             )}
-            <AsideButton leftIcon={svgs.ranking}>{isTabClosed && '명예의 전당'}</AsideButton>
-            <AsideButton onClick={handleOpenOrCloseSearchTab} leftIcon={svgs.search}>
-              {isTabClosed && '검색'}
-            </AsideButton>
-          </ol>
-        </S.Upper>
-        <S.Lower>
-          {props.isLoggedIn ? (
-            <>
-              {/* href='/user/mypage' */}
-              <AsideProfileBox className={isTabClosed ? 'tab-closed' : ''} />
-              {isTabClosed ? <S.SubmitBtn>글쓰기</S.SubmitBtn> : <AsideButton leftIcon={svgs.editor} />}
-            </>
-          ) : isTabClosed ? (
-            <S.LinkBtn href='/user/login'>로그인</S.LinkBtn>
-          ) : (
-            <AsideButton href='/user/login' leftIcon={svgs.person} />
-          )}
-        </S.Lower>
+          </S.Lower>
+        )}
       </S.AsideInnerContainer>
       {isNoticeTabOpened && (
-        <S.TabContainer>
+        <S.TabContainer className={asideClsName}>
           알림
-          <S.CloseTabButton onClick={handleCloseTab}>×</S.CloseTabButton>
+          <S.CloseTabBtn onClick={handleCloseTab}>×</S.CloseTabBtn>
         </S.TabContainer>
       )}
       {isSearchTabOpened && (
-        <S.TabContainer>
+        <S.TabContainer className={asideClsName}>
           검색
-          <S.CloseTabButton onClick={handleCloseTab}>×</S.CloseTabButton>
+          <S.CloseTabBtn onClick={handleCloseTab}>×</S.CloseTabBtn>
         </S.TabContainer>
       )}
     </S.AsideContainer>
@@ -107,7 +150,7 @@ export default function Aside(props: Props) {
 const S = {
   ...CommonStyles,
   AsideContainer: styled.aside`
-    width: 5rem;
+    width: var(--aside-w);
     position: fixed;
     height: 100%;
     flex-shrink: 0;
@@ -115,8 +158,14 @@ const S = {
     align-items: flex-start;
     z-index: 999; // HomeHeader와 겹쳐져 Aside 오른쪽 테두리의 일부가 안 보는 버그 수정
 
-    &.tab-closed {
-      width: var(--aside-w);
+    &.shrink {
+      width: var(--aside-shrink-w);
+    }
+    &.mobile {
+      width: 100%;
+      height: var(--aside-mobile-h);
+      max-height: 12.5vw;
+      bottom: 0;
     }
   `,
   LeftOfAsideCover: styled.div`
@@ -136,6 +185,11 @@ const S = {
     justify-content: space-between;
     align-items: flex-end;
 
+    &.mobile {
+      border-right: none;
+      border-top: 0.05rem solid var(--color-gray08);
+    }
+
     animation: fadein 0.5s;
     @keyframes fadein {
       from {
@@ -145,8 +199,30 @@ const S = {
   `,
   Upper: styled.div`
     width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &.mobile {
+      height: 100%;
+      padding: 0;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      & > div {
+        height: 100%;
+      }
+      & a,
+      & button {
+        padding: 0;
+        gap: 0;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+      }
+    }
   `,
   Lower: styled.div`
+    position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -176,8 +252,22 @@ const S = {
         left: -10rem;
       }
     }
+
+    &.mobile {
+      position: fixed;
+      left: 0%;
+      top: 0rem;
+      width: 100%;
+      height: 100%;
+
+      @keyframes fadein {
+        from {
+          left: -100%;
+        }
+      }
+    }
   `,
-  CloseTabButton: styled.button`
+  CloseTabBtn: styled.button`
     position: absolute;
     top: 0rem;
     right: 1rem;

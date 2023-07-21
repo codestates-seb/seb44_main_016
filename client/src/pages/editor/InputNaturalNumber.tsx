@@ -18,6 +18,7 @@ export default function InputNaturalNumber(props: Props) {
         name='price'
         placeholder='금액을 입력하세요'
         min='0'
+        step='100'
         value={props.num}
         onInput={props.handler}
         onChange={props.handler}
