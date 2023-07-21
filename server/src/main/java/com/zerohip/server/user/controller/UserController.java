@@ -29,6 +29,7 @@ public class UserController {
     private final UserServiceImpl userServiceImpl;
     private final UserMapper mapper;
 
+    // 회원가입
     @PostMapping("/signup")
     public ResponseEntity postUser(@Valid @RequestBody UserDto.Post userPostDto) {
 
@@ -39,6 +40,7 @@ public class UserController {
     }
 
 
+    // 회원탈퇴
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteUser(@AuthenticationPrincipal String authorId,
                                         @RequestBody UserDto.CheckPassword checkPasswordDto) {
@@ -51,6 +53,27 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+
+    // 유저인포
+    @GetMapping("/info")
+    public ResponseEntity<?> userInfoForClient(@AuthenticationPrincipal String authorId) {
+
+        if (authorId == null) {
+            throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
+        }
+
+        User findUser = userServiceImpl.findUserByLoginId(authorId);
+        return new ResponseEntity<>(mapper.userToUserResponseDto(findUser), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/mypage")
+    public ResponseEntity<?> getMyPage(@AuthenticationPrincipal String authorId) {
+
+        if (authorId == null) {
+            throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
+        }
+    }
 }
 
 
