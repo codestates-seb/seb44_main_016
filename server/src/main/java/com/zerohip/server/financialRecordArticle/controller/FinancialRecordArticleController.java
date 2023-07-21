@@ -8,13 +8,16 @@ import com.zerohip.server.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -31,12 +34,13 @@ public class FinancialRecordArticleController {
   private final FinancialRecordArticleService service;
   private final FinancialRecordArticleMapper mapper;
 
-  @PostMapping
-  public ResponseEntity createFinancialRecordArticle(@Valid @RequestBody FinancialRecordArticleDto.Post requestbody,
+  @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  public ResponseEntity createFinancialRecordArticle(@RequestPart("requestbody") @Valid FinancialRecordArticleDto.Post requestbody,
                                                      @PathVariable("financial-record-id") Long financialRecordId,
-                                                     @AuthenticationPrincipal User author) {
+                                                     @AuthenticationPrincipal User author,
+                                                     @RequestPart("files") List<MultipartFile> files) {
 
-    FinancialRecordArticle saveFaRecArticle = service.createFaRecArticle(financialRecordId, author, mapper.financialRecordArticlePostToFinancialRecordArticle(requestbody));
+    FinancialRecordArticle saveFaRecArticle = service.createFaRecArticle(financialRecordId, author, mapper.financialRecordArticlePostToFinancialRecordArticle(requestbody), files);
 
     URI uri = URI.create("/financial-record/" + financialRecordId + "/article/" + saveFaRecArticle.getArticleId());
 
@@ -63,10 +67,16 @@ public class FinancialRecordArticleController {
   }
 
   @PatchMapping("/{financial-record-article-id}")
-  public ResponseEntity patchFinancialRecord(@Valid @RequestBody FinancialRecordArticleDto.Patch requestbody,
+  public ResponseEntity patchFinancialRecord(@RequestPart("requestbody") @Valid FinancialRecordArticleDto.Patch requestbody,
                                              @PathVariable("financial-record-article-id") Long financialRecordArticleId,
-                                             @AuthenticationPrincipal User author) {
-    FinancialRecordArticle updatedFaRecArticle = service.updateFaRecArticle(author, financialRecordArticleId, requestbody);
+                                             @AuthenticationPrincipal User author,
+                                             @RequestPart("files") List<MultipartFile> files) {
+    FinancialRecordArticle updatedFaRecArticle = null;
+    try {
+      updatedFaRecArticle = service.updateFaRecArticle(author, financialRecordArticleId, requestbody, files);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
 
     return ResponseEntity.ok(mapper.financialRecordArticleToFinancialRecordArticleResponse(updatedFaRecArticle));
   }
@@ -76,8 +86,6 @@ public class FinancialRecordArticleController {
                                               @AuthenticationPrincipal User author) {
     service.deleteFaRecArticle(author, financialRecordArticleId);
 
-
     return ResponseEntity.noContent().build();
   }
-
 }

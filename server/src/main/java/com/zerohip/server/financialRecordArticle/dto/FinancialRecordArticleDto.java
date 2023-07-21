@@ -1,11 +1,11 @@
 package com.zerohip.server.financialRecordArticle.dto;
 
-//import com.zerohip.server.common.img.entity.Img;
-//import com.zerohip.server.common.img.dto.ImgDto;
+import com.zerohip.server.common.img.dto.ImgDto;
 import com.zerohip.server.common.scope.Scope;
 import com.zerohip.server.user.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class FinancialRecordArticleDto {
 
@@ -36,7 +37,7 @@ public class FinancialRecordArticleDto {
 
     @NotNull
     private Long financialRecordId;
-//    private List<ImgDto.Response> imgDtos;
+    private List<String> filePath;
     // 댓글 매핑 데이터
     // 좋아요 매핑 데이터
     // 해시태그 매핑 데이터
@@ -59,8 +60,14 @@ public class FinancialRecordArticleDto {
     @NotNull
     private Scope scope;
 
-//    private List<ImgDto.Response> imgDtos;
+    private List<String> filePath;
+    private List<Long> keepImgIds; // 유지할 이미지의 ID들
+    private Map<Long, MultipartFile> updateImgs;
     // 해시태그 매핑 데이터
+
+    public void setFilePath(List<String> filePath) {
+      this.filePath = filePath;
+    }
   }
 
   @Getter
@@ -79,7 +86,7 @@ public class FinancialRecordArticleDto {
 
     private Long financialRecordId;
     private UserDto.Response user;
-//    private List<ImgDto.Response> imgList;
+    private List<String> filePath;
     // 댓글 매핑 데이터
     // 좋아요 매핑 데이터
     // 해시태그 매핑 데이터
@@ -87,6 +94,9 @@ public class FinancialRecordArticleDto {
 
     public void setFinancialRecordId(Long financialRecordId) {
       this.financialRecordId = financialRecordId;
+    }
+    public void setFilePath(List<String> filePath) {
+      this.filePath = filePath;
     }
   }
 }
