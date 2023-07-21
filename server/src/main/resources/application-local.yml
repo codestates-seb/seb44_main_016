@@ -17,6 +17,15 @@ spring:
   sql:
     init:
       data-locations: classpath*:db/h2/data.sql
+  servlet:
+    multipart:
+     # 각 파일의 최대 크기와 전체 요청 본문의 최대크기 설정
+      max-file-size: 10MB
+      max-request-size: 10MB
+  web:
+    resources:
+      static-locations: "classpath:/static/, file:src/main/resources/static/" # 정적 리소스의 위치와, 해당 위치에서 파일이 제공되도록 설정
+      add-mappings: true
 logging:
   level:
     org:
@@ -34,3 +43,14 @@ jwt:
   key: neverland123123123123123123123123123123 # 환경변수 ${JWT_KEY}
   access-token-expiration-minutes: 60          # 환경변수 ${JWT_ACCESS_TOKEN}
   refresh-token-expiration-minutes: 10080      # 환경변수 ${JWT_REFRESH_TOKEN}
+cloud:
+  aws:
+    s3:
+      bucket: ${AWS_S3_BUCKET}
+    region:
+      static: ${AWS_REGION}
+    credentials:
+      access-key: ${AWS_ACCESS_KEY}
+      secret-key: ${AWS_SECRET_KEY}
+    stack:
+      auto: false

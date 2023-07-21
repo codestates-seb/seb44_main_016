@@ -29,4 +29,19 @@ jwt:
   key: ${JWT_KEY}
   access-token-expiration-minutes: ${JWT_ACCESS_TOKEN}
   refresh-token-expiration-minutes: ${JWT_REFRESH_TOKEN}
-
+cloud:
+  aws:
+    s3:
+      bucket: ${AWS_S3_BUCKET}
+    region:
+      static: ${AWS_REGION}
+    credentials:
+      access-key: ${AWS_ACCESS_KEY}
+      secret-key: ${AWS_SECRET_KEY}
+    stack:
+      auto: false
+servlet:
+  multipart:
+    enabled: true
+    max-file-size: 10MB
+    max-request-size: 10MB
