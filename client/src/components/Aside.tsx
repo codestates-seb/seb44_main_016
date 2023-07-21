@@ -98,7 +98,7 @@ export default function Aside(props: Props) {
             검색
           </AsideBtn>
           <AsideBtn leftIcon={svgs.thumb} className={asideClsName} href='/about'>
-            About
+            소개
           </AsideBtn>
         </S.Upper>
         {isMobile ? (
