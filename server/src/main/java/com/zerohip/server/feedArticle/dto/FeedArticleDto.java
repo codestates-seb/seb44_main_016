@@ -37,7 +37,7 @@ public class FeedArticleDto {
     @AllArgsConstructor
     public static class FeedArticleResponse {
         private UserDto.Response user;
-        private Long feedArticleId;
+        private Long articleId;
         private Scope scope;
         private String content;
         private FeedType feedType;

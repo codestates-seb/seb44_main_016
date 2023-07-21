@@ -13,6 +13,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 @Entity
 @Table(name = "feedArticles")
 @Getter
@@ -29,6 +31,9 @@ public class FeedArticle extends Article {
     @NotNull
     @Column(nullable = false, length = 2_000)
     private String content;
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    private Long articleId;
 
 
     //이미지 파일
