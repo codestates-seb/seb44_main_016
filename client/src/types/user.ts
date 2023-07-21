@@ -19,7 +19,17 @@ export interface SignUpError {
 export interface UserInputLabel {
   htmlFor: string;
   text: string;
+  required?: boolean;
 }
+
+export interface UserInputData {
+  label: UserInputLabel;
+  component: React.ReactNode;
+  error: string;
+}
+
+export type UserInputDataArray = UserInputData[];
+
 export interface PostSignUp {
   email: string | null;
   loginId: string | null;

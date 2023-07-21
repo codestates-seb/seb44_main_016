@@ -3,12 +3,12 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 
 import svgs from '../../constants/svg';
-import { useMutateLogOut } from '../../hooks/useLogout';
+import useMutateUser from '../../services/useMutateUser';
 import apiUser from '../../services/apiUser';
 
 export default function AsideHamburgerBtn() {
   const [isHamburgerOpened, setIsHamburgerOpened] = React.useState(false);
-  const { LogOutMutate } = useMutateLogOut(apiUser.deleteLogout);
+  const { LogOutMutate } = useMutateUser.logout(apiUser.deleteLogout);
 
   const handleLogout = () => {
     setIsHamburgerOpened(false);

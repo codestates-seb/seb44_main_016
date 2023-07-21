@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from '@emotion/styled';
 import { UserInputLabel } from '../../../types/user';
 
@@ -9,7 +8,7 @@ interface InputFieldProps {
   error: string;
 }
 
-export default function InputField({ label, guide, component, error }: InputFieldProps) {
+export default function UserInputField({ label, guide, component, error }: InputFieldProps) {
   return (
     <S.InputBox key={label?.text || ''}>
       <S.LabelBox>
