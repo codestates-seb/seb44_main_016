@@ -100,9 +100,9 @@ const S = {
     height: ${(props) => (props.isShowHeader ? 'calc(100% - var(--header-h));' : '100%')};
     margin-top: ${(props) => props.isShowHeader && '5rem'};
     margin-left: ${(props) =>
-      props.windowType === ScreenEnum.DESKTOP
+      props.isShowNav && props.windowType === ScreenEnum.DESKTOP
         ? 'var(--aside-w)'
-        : props.windowType === ScreenEnum.TABLET
+        : props.isShowNav && props.windowType === ScreenEnum.TABLET
         ? 'var(--aside-shrink-w)'
         : '0'};
     display: flex;
