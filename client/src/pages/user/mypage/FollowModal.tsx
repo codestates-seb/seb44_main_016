@@ -52,11 +52,9 @@ export default function FollowModal({ title, followList }: FollowModalProps) {
               </S.CloseBtnBtn>
             </S.ModalTop>
             <S.ModalFollowListBox>
-              <div tabIndex={0} />
               {followList?.map((el) => (
                 <FollowList key={el.loginId} title={title} userInfo={el} />
               ))}
-              <div tabIndex={0} />
             </S.ModalFollowListBox>
           </S.ModalView>
         </S.ModalBackdrop>

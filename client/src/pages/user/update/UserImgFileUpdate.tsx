@@ -7,7 +7,7 @@ import { useImgCrop } from '../../../hooks/useImgCrop';
 import { handleFileChange } from '../../../components/img-crop/imgCropUtils';
 import { store } from '../../../components/redux/store';
 import { UserInfoResData } from '../../../types/user';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface RandomAvatarUpdateProps {
   myInfoData: UserInfoResData;
@@ -18,6 +18,7 @@ interface RandomAvatarUpdateProps {
 export default function UserImgFileUpdate({ myInfoData, setIsOpen, isOpen }: RandomAvatarUpdateProps) {
   const dispatch = useAppDispatch();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const decideBtnRef = useRef<HTMLButtonElement>(null); // Ref for the DecideBtn
 
   const currentImgSrc = store.getState().currentImgReducer.currentImgSrc;
   const { imgSrc, setImgSrc, croppedImage, setCroppedImage, cropModal, setCropModal } = useImgCrop();
@@ -42,6 +43,18 @@ export default function UserImgFileUpdate({ myInfoData, setIsOpen, isOpen }: Ran
     }
   };
 
+  const prevCropModalRef = useRef(false);
+
+  useEffect(() => {
+    console.log(prevCropModalRef);
+    if (prevCropModalRef.current !== false) {
+      if (!cropModal && decideBtnRef.current) {
+        decideBtnRef.current.focus();
+      }
+    }
+    prevCropModalRef.current = cropModal;
+  }, [cropModal]);
+
   return (
     <>
       <S.UserImgBox>
@@ -65,7 +78,7 @@ export default function UserImgFileUpdate({ myInfoData, setIsOpen, isOpen }: Ran
       </S.UserImgBox>
 
       <S.ButtonBox>
-        <S.DecideBtn type='button' onClick={handleChooseFileProfileImg}>
+        <S.DecideBtn type='button' ref={decideBtnRef} onClick={handleChooseFileProfileImg}>
           이 사진으로 <br /> 결정하기
         </S.DecideBtn>
       </S.ButtonBox>
