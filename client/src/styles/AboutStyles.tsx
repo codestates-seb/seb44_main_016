@@ -331,4 +331,57 @@ export const AboutStyles = {
       animation-delay: 0.5s;
     }
   `,
+  CountContainer: styled.div`
+    display: flex;
+    gap: 3rem;
+    padding: 2rem;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    .icon {
+      width: 8rem;
+      height: 8rem;
+      margin-bottom: 0.5rem;
+    }
+    .countTitle {
+      font-size: var(--text-l);
+      & > span {
+        font-weight: 600;
+        color: var(--color-primary);
+      }
+    }
+    .desc {
+      color: var(--color-gray03);
+      font-size: var(--text-s);
+    }
+    & > div {
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      top: 150px;
+      padding: 1rem;
+      transition: all 0.3s ease-in-out;
+    }
+    .view {
+      animation: moveUp 0.5s forwards;
+      @keyframes moveUp {
+        to {
+          top: 0;
+          opacity: 1;
+        }
+      }
+      &.item0 {
+        animation-delay: 0s;
+      }
+      &.item1 {
+        animation-delay: 0.3s;
+      }
+      &.item2 {
+        animation-delay: 0.5s;
+      }
+    }
+  `,
 };

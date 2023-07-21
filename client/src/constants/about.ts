@@ -1,3 +1,5 @@
+import SVGs from './svg';
+
 export const PLAN = [
   {
     title: '함께하다',
@@ -17,6 +19,12 @@ export const PLAN = [
 ];
 
 export const SLOGAN = '당신의 과소비가 0에 수렴할 때 까지, 제로힙.';
+
+export const TEAM_COUNT = [
+  { title: 'Hour', count: 456, desc: '456 시간', icon: SVGs.aboutIcon0 },
+  { title: 'Commit', count: 817, desc: '817개의 Commit', icon: SVGs.aboutIcon1 },
+  { title: 'PR', count: 149, desc: '149개의 PR', icon: SVGs.aboutIcon2 },
+];
 
 export const MEMBERS = [
   //img 변경 예정

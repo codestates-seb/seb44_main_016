@@ -1,17 +1,52 @@
 import { AboutStyles } from '../../styles/AboutStyles';
-import { MEMBERS, PLAN, SLOGAN } from '../../constants/about';
+import { MEMBERS, PLAN, SLOGAN, TEAM_COUNT } from '../../constants/about';
 import { useEffect, useState } from 'react';
 import Tab from '../../components/Tab';
+import { useInView } from 'react-intersection-observer';
 
 export default function About() {
   const [memberIndex, setMemberIndex] = useState(0);
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    rootMargin: '0px 0px -300px 0px',
+  });
   const tabs = ['소개', '소감', '작업 내역'];
   const [activeTab, setActiveTab] = useState<string>('소개');
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
   };
   const [typedText, setTypedText] = useState('');
-  const speed = 150;
+  const speed = 10;
+  const divide = 15;
+  const [counts, setCounts] = useState(TEAM_COUNT.map(() => 0));
+  useEffect(() => {
+    if (inView) {
+      setCounts(TEAM_COUNT.map(() => 0));
+
+      const interval = setInterval(() => {
+        setCounts((prevCounts) =>
+          prevCounts.map((count, i) => {
+            const increment = Math.floor(TEAM_COUNT[i].count / divide);
+            const remainder = TEAM_COUNT[i].count % divide;
+            let newCount = count + increment;
+
+            if (newCount + increment > TEAM_COUNT[i].count) {
+              newCount = TEAM_COUNT[i].count;
+            } else if (
+              newCount + increment + remainder === TEAM_COUNT[i].count &&
+              newCount % increment === 0
+            ) {
+              newCount += remainder;
+            }
+
+            return newCount;
+          })
+        );
+      }, 100);
+
+      return () => clearInterval(interval);
+    }
+  }, [inView]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -52,6 +87,21 @@ export default function About() {
           })}
         </S.PlanContainer>
       </S.Section>
+      <S.Section>
+        <S.Title># 제로힙 레코드</S.Title>
+        <S.CountContainer ref={ref}>
+          {TEAM_COUNT.map((el, i) => (
+            <div key={i} className={inView ? `view item${i}` : ''}>
+              <div className='icon'>{el.icon}</div>
+              <div className='countTitle'>
+                <span className='count'>{counts[i]}</span> {el.title}
+              </div>
+              <div>{el.desc}</div>
+            </div>
+          ))}
+        </S.CountContainer>
+      </S.Section>
+
       <S.Section>
         <S.Title># 팀원 소개</S.Title>
         <S.Members>
