@@ -5,7 +5,7 @@ export const AboutStyles = {
     padding: 1.875rem;
     word-break: keep-all;
     & > section {
-      margin-bottom: 1.6rem;
+      margin-bottom: 4rem;
     }
   `,
   Section: styled.section`
@@ -108,6 +108,14 @@ export const AboutStyles = {
     flex-direction: column;
     justify-content: space-between;
     padding: 1rem 1.875rem;
+
+    div.textBox {
+      max-height: 300px;
+      overflow: scroll;
+    }
+    div.textBox > div {
+      margin: 1rem 0;
+    }
   `,
   MemberTitle: styled.div`
     display: flex;

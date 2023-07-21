@@ -76,7 +76,7 @@ export const MEMBERS = [
     img: 'https://i.namu.wiki/i/Qvk18CBALY3A7CKoYdienLC1B8q8JXEZIiydvuxxVFFqGYjDmDOaY2vB0YX_P_WbxA5REh9NtAdhi5L1TLEx1A.webp',
     githubUrl: 'https://github.com/tapdancedorong',
     githubNick: '@onestar',
-    introduce: '저는 대왕망고입니다.',
+    introduce: '저는 태양입니다.',
     impression: '저는 이번에.. 킹왕짱이었습니다..',
     worklog: ['자바 밥 주기', '자바스의 자바보이요', '자바랑 놀아주기'],
   },

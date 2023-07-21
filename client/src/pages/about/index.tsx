@@ -88,7 +88,7 @@ export default function About() {
                     </div>
                   </S.MemberTitle>
                   <Tab tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
-                  <div>
+                  <div className='textBox'>
                     {activeTab === '소개' ? (
                       <div>{MEMBERS[memberIndex].introduce}</div>
                     ) : activeTab === '소감' ? (
