@@ -146,8 +146,8 @@ const S = {
     color: var(--color-gray03);
     text-align: center;
     position: absolute;
-    width: 100%;
-    margin-right: 1rem;
+    width: 90%;
+    padding-right: 4rem;
     @media screen and (max-width: 1024px) {
       font-size: 15px;
     }

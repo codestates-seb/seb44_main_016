@@ -126,7 +126,7 @@ const S = {
     text-align: center;
     position: absolute;
     width: 100%;
-    margin-right: 1.5rem;
+    padding-right: 4rem;
   `,
   ReactiveDiv: styled.span`
     @media screen and (max-width: 330px) {
