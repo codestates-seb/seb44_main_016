@@ -116,7 +116,7 @@ const SVGs = {
       />
     </svg>
   ),
-  ranking: (
+  thumb: (
     <svg xmlns='http://www.w3.org/2000/svg' width='24' height='25' viewBox='0 0 24 25' fill='none'>
       <path
         fillRule='evenodd'
@@ -142,7 +142,7 @@ const SVGs = {
       />
     </svg>
   ),
-  editor: (
+  pen: (
     <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'>
       <path
         d='M23.3174 4.4224L19.5773 0.682313C18.6675 -0.227438 17.2271 -0.227438 16.3173 0.682313L14.4473 2.55236L21.4473 9.55239L23.3174 7.68234C24.2271 6.77259 24.2271 5.30688 23.3174 4.4224Z'

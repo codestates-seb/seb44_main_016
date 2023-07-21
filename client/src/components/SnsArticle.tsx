@@ -8,6 +8,8 @@ import ImgsCarousel from '../components/ImgsCarousel';
 import VoteForm from './sns-article/VoteForm';
 // import Comments from './sns-article/Comments';
 import { FeedArticleResType, FaRecData } from '../types/article';
+import { useWindowType, useWindowSize } from '../hooks/useWindowSize';
+import { ScreenEnum } from '../constants/enums';
 
 /* type은 추후 다른 파일로 분리하고 Import할 예정 */
 type PropsFeed = {
@@ -20,6 +22,12 @@ type PropsTimeline = {
 };
 
 export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
+  const windowType = useWindowType();
+  const [width, height] = useWindowSize();
+  const isNarrowScreen = width <= 400;
+
+  const [dummySavingCount, dummyFlexCount] = [256, 48];
+
   let labelText, Label;
   if (type === 'feed') {
     [labelText, Label] =
@@ -62,11 +70,20 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
       <Label>{labelText}</Label>
       <S.Box>
         {type === 'feed' ? (
-          <ArticleHeader type={type} createdAt={data.createdAt} profileImg={data.user.profileImgPath}>
+          // 피드 게시글 헤더
+          <ArticleHeader
+            windowType={windowType}
+            type={type}
+            createdAt={data.createdAt}
+            profileImg={data.user.profileImgPath}
+          >
             {data.user.nickname}
           </ArticleHeader>
         ) : (
+          // 타임라인 게시글 헤더
           <ArticleHeader
+            windowType={windowType}
+            isNarrowScreen={isNarrowScreen}
             type={type}
             faDate={data.faDate}
             category={data.category}
@@ -81,10 +98,10 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
         ) : (
           <></>
         )}
-        <S.ArtileMain>
+        <S.ArtileMain windowType={windowType}>
           {type !== 'feed' && data.title !== '' ? <S.TitleText>{data.title}</S.TitleText> : <></>}
           <S.ContextText>{data.content}</S.ContextText>
-          {type !== 'feed' || <VoteForm savingRate={256} flexRate={48} />}
+          {type !== 'feed' || <VoteForm savingCount={dummySavingCount} flexCount={dummyFlexCount} />}
           <S.UDForm>
             {/* CRUD의 U, D */}
             <S.UDBtn>수정</S.UDBtn>
@@ -100,15 +117,16 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
 const S = {
   ...CommonStyles,
   SnsArticleContainer: styled.article`
-    width: var(--article-w);
+    width: 100%;
     filter: drop-shadow(0px 3px 3px var(--color-gray07)); // 그림자
+    padding: 0 7%;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
   `,
   LabelTemplate: styled.div`
-    width: 116px;
-    height: 37px;
+    width: 7.25rem;
+    height: 2.4rem;
     background-color: white;
     font-weight: bold;
 
@@ -127,12 +145,12 @@ const S = {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
   `,
-  ArtileMain: styled.div`
+  ArtileMain: styled.div<{ windowType: ScreenEnum }>`
     width: 100%;
-    padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    padding: ${(props) => (props.windowType === ScreenEnum.MOBILE ? '1rem' : '1.25rem')};
+    gap: ${(props) => (props.windowType === ScreenEnum.MOBILE ? '1rem' : '1.25rem')};
   `,
   TitleText: styled.h3`
     line-height: 125%;
@@ -140,11 +158,11 @@ const S = {
   ContextText: styled.p`
     line-height: 125%;
     white-space: pre-wrap; // 줄바꿈 & text-wrap 적용
+    overflow-wrap: break-word;
   `,
   /* ↓ ArtileMain 내부 컴포넌트 ↓ */
   UDForm: styled.div`
     width: 100%;
-    padding-right: 0.7rem;
     display: flex;
     justify-content: flex-end;
     gap: 0.8rem;

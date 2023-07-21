@@ -24,6 +24,9 @@ export default function AsideHamburgerBtn() {
           <S.HamburgerModal>
             <S.Triangle />
             <S.LinkBtnList>
+              <S.LinkBtn href='/user/mypage' onClick={() => setIsHamburgerOpened(false)}>
+                마이 페이지
+              </S.LinkBtn>
               <S.LinkBtn href='/user/update' onClick={() => setIsHamburgerOpened(false)}>
                 회원정보 수정
               </S.LinkBtn>
@@ -79,7 +82,7 @@ const S = {
   `,
   LinkBtnList: styled.ol`
     position: absolute;
-    top: -6rem;
+    top: -9rem;
     right: 6.5rem;
     transform: translate(80%, -20%);
     border-radius: 1rem;
@@ -119,7 +122,6 @@ const S = {
     white-space: nowrap;
     width: 100%;
     padding: 1rem;
-
     font-weight: 500;
     background-color: white;
 

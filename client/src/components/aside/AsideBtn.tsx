@@ -17,26 +17,37 @@ type Props = {
   onClickRight?: () => void;
 };
 
-export default function AsideButton(props: Props) {
+export default function AsideBtn(props: Props) {
+  const isShrinkOrMobile = ['shrink', 'mobile'].includes(props.className || '');
+
+  const onClickLeft = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    if (props.href === undefined) {
+      e.preventDefault(); // 알림/검색 버튼을 누르면 화면이 맨 위로 스크롤되는 버그 수정
+    }
+    if (props.onClick) {
+      props.onClick();
+    }
+  };
+
   return (
-    <S.AsideButtonContainer isSmall={props.isSmall}>
-      <S.AsideInnerButtonLeft href={props.href || ''} onClick={props.onClick}>
+    <S.AsideBtnContainer isSmall={props.isSmall}>
+      <S.AsideInnerBtnLeft href={props.href || ''} onClick={onClickLeft}>
         <SvgBox>{props.leftIcon || <></>}</SvgBox>
-        {props.children ? <S.Text>{props.children}</S.Text> : <></>}
-      </S.AsideInnerButtonLeft>
-      {props.className === 'tab-closed' ? (
-        <S.AsideInnerButtonRight onClick={props.onClick || props.onClickRight}>
-          <SvgBox isReverse={!props.isReverse}>{props.rightIcon || <></>}</SvgBox>
-        </S.AsideInnerButtonRight>
-      ) : (
+        {isShrinkOrMobile ? <></> : <S.Text>{props.children}</S.Text>}
+      </S.AsideInnerBtnLeft>
+      {isShrinkOrMobile || props.rightIcon === undefined ? (
         <></>
+      ) : (
+        <S.AsideInnerBtnRight onClick={props.onClick || props.onClickRight}>
+          <SvgBox isReverse={props.isReverse}>{props.rightIcon || <></>}</SvgBox>
+        </S.AsideInnerBtnRight>
       )}
-    </S.AsideButtonContainer>
+    </S.AsideBtnContainer>
   );
 }
 
 const S = {
-  AsideButtonContainer: styled.div<{ isSmall?: boolean }>`
+  AsideBtnContainer: styled.div<{ isSmall?: boolean }>`
     width: 100%;
     height: ${(props) => (props.isSmall ? '2.75rem' : '3.25rem')};
     font-size: ${(props) => (props.isSmall ? '0.9rem' : '1rem')};
@@ -50,7 +61,7 @@ const S = {
       filter: brightness(0.9);
     }
   `,
-  AsideInnerButtonLeft: styled(Link)`
+  AsideInnerBtnLeft: styled(Link)`
     width: 100%;
     height: 100%;
     padding: 0rem 1rem;
@@ -60,7 +71,7 @@ const S = {
     gap: 0.5rem;
   `,
   Text: styled.span``,
-  AsideInnerButtonRight: styled.button`
+  AsideInnerBtnRight: styled.button`
     width: ${(props) => props.onClick && '3rem'};
     height: 100%;
     flex-shrink: 0;
