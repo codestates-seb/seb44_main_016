@@ -5,7 +5,7 @@ import com.zerohip.server.common.exception.ExceptionCode;
 import com.zerohip.server.user.dto.UserDto;
 import com.zerohip.server.user.entity.User;
 import com.zerohip.server.user.mapper.UserMapper;
-import com.zerohip.server.user.service.UserService;
+import com.zerohip.server.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +26,14 @@ import javax.validation.Valid;
 @Validated
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
     private final UserMapper mapper;
 
     @PostMapping("/signup")
     public ResponseEntity postUser(@Valid @RequestBody UserDto.Post userPostDto) {
 
         User user = mapper.userPostDtoToUser(userPostDto);
-        userService.createUser(user);
+        userServiceImpl.createUser(user);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -47,9 +47,10 @@ public class UserController {
             throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
         }
 
-        userService.deleteUser(authorId, checkPasswordDto.getPassword());
+        userServiceImpl.deleteUser(authorId, checkPasswordDto.getPassword());
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }
 
 

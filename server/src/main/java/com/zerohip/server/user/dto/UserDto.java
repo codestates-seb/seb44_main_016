@@ -126,8 +126,8 @@ public class UserDto {
         private Long userId;
         private String email;
         private String loginId;
-        private String password;
         private String nickname;
+        private String provider;
         private LocalDateTime createdAt;
 
         // 매핑 후 추가

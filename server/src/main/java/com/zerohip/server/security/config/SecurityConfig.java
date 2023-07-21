@@ -8,22 +8,33 @@ import com.zerohip.server.security.handler.UserAccessDeniedHandler;
 import com.zerohip.server.security.handler.UserAuthenticationEntryPoint;
 import com.zerohip.server.security.handler.UserAuthenticationFailureHandler;
 import com.zerohip.server.security.handler.UserAuthenticationSuccessHandler;
+import com.zerohip.server.security.oauth2.handler.OAuth2UserSuccessHandler;
 import com.zerohip.server.security.provider.JwtTokenizer;
 import com.zerohip.server.security.utils.CustomAuthorityUtils;
+import com.zerohip.server.user.repository.UserRepository;
+import com.zerohip.server.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.filter.CorsFilter;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * JWT 를 Authorization header 에 포함되지 않고 요청을 보낸 경우 403 에러
@@ -32,21 +43,29 @@ import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @RequiredArgsConstructor
-@Slf4j
 @EnableWebSecurity
 public class SecurityConfig {
+
+//    @Value("${spring.security.oauth2.client.registration.google.clientId}")
+//    private String clientId;
+//
+//    @Value("${spring.security.oauth2.client.registration.google.clientSecret}")
+//    private String clientSecret;
+
 
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
     private final CorsFilter corsFilter;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final UserService userService;
+    private final UserRepository userRepository;
 
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-                .headers().frameOptions().sameOrigin().disable() // 주의
+                .headers().frameOptions().sameOrigin().disable() // https 적용 후 수정예정
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -59,19 +78,23 @@ public class SecurityConfig {
                 .apply(new CustomFilterConfig()) // 커스터마이징 된 CustomFilterConfigurer 추가
                 .and()
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll()   // role : user 만 있기 때문에 세부 권한 지정 필요 x
-                );
+                        .anyRequest().permitAll()   // role : 현재 user 권한만 있기 때문에 세부 권한 지정 필요 x
+                )
+                .oauth2Login(oauth2 -> oauth2
+                .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, authorityUtils, userService, userRepository, refreshTokenRepository)));
+
 
 
         return http.build();
     }
 
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
-
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        return ((web) -> web
+//                .ignoring()
+//                .antMatchers("/courses/{coursesId}/share")
+//                .antMatchers("/posts/read/**"));
+//    }
 
 
     // CustomFilterConfigurer 등록
@@ -95,9 +118,37 @@ public class SecurityConfig {
                     .addFilter(jwtAuthenticationFilter) // Spring Security Filter Chain 에 추가
 
                     // 로그인 인증에 성공한 후 발급받은 JWT가 클라이언트의 request header(Authorization 헤더)에 포함되어 있을 경우에만 동작
-                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
+                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class)
+                    .addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class);
         }
     }
 
 
+
+//    @Bean
+//    public ClientRegistrationRepository clientRegistrationRepository(OAuth2ClientProperties oAuth2ClientProperties) {
+//        List<ClientRegistration> registrations = oAuth2ClientProperties
+//                .getRegistration().keySet().stream()
+//                .map(client -> getRegistration(oAuth2ClientProperties, client))
+//                .filter(Objects::nonNull)
+//                .collect(Collectors.toList());
+//
+//        return new InMemoryClientRegistrationRepository(registrations);
+//    }
+//
+//    private ClientRegistration getRegistration(OAuth2ClientProperties clientProperties, String client) {
+//
+//        if ("google".equals(client)) {
+//            OAuth2ClientProperties.Registration registration = clientProperties.getRegistration().get("google");
+//
+//            return CommonOAuth2Provider
+//                    .GOOGLE
+//                    .getBuilder(client)
+//                    .clientId(registration.getClientId())
+//                    .clientSecret(registration.getClientSecret())
+//                    .scope("email", "profile")
+//                    .build();
+//        }
+//        return null; // 구글 client 못 찾을 경우
+//    }
 }
