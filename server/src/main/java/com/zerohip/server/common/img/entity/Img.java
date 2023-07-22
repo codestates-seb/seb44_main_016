@@ -27,7 +27,7 @@ public class Img {
   @Column(nullable = true, length = 2000)
   private String fileName;
   @Size(max = 3000)
-  @Column(nullable = true, length = 3000)
+  @Column(nullable = true, unique = true, length = 3000)
   private String filePath;
 
   // 매핑 고고
