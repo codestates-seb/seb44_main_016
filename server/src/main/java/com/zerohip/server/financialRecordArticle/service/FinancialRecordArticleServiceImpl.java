@@ -53,7 +53,7 @@ public class FinancialRecordArticleServiceImpl implements FinancialRecordArticle
     FinancialRecordArticle savedFaRecArticle = repository.save(faRecArticle);
 
     // Img 객체 저장
-    List<Img> imgList = saveImages(savedFaRecArticle, files);
+    List<Img> imgList = saveImgs(savedFaRecArticle, files);
     savedFaRecArticle.setImgList(imgList);
 
     return savedFaRecArticle;
@@ -87,7 +87,7 @@ public class FinancialRecordArticleServiceImpl implements FinancialRecordArticle
 
     // 새로운 이미지가 있으면 추가
     if(newFiles != null && !newFiles.isEmpty()) {
-      List<Img> imgList = saveImages(findFaRecArticle, newFiles);
+      List<Img> imgList = saveImgs(findFaRecArticle, newFiles);
       findFaRecArticle.getImgList().addAll(imgList);
     }
 
@@ -158,7 +158,8 @@ public class FinancialRecordArticleServiceImpl implements FinancialRecordArticle
   public User findUser(User author) {
     return userService.findUserByLoginId(author.getLoginId());
   }
-  private List<Img> saveImages(FinancialRecordArticle faRecArticle, List<MultipartFile> files) {
+
+  private List<Img> saveImgs(FinancialRecordArticle faRecArticle, List<MultipartFile> files) {
     try {
       return imgService.createImg(faRecArticle, files);
     } catch (IOException e) {
