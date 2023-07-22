@@ -60,14 +60,9 @@ public class FinancialRecordArticleDto {
     @NotNull
     private Scope scope;
 
-    private List<String> filePath;
-    private List<Long> keepImgIds; // 유지할 이미지의 ID들
-    private Map<Long, MultipartFile> updateImgs;
+    private List<MultipartFile> newFiles; // 새로 추가될 이미지들
+    private List<String> deleteImgPaths; // 삭제될 이미지의 ID 리스트
     // 해시태그 매핑 데이터
-
-    public void setFilePath(List<String> filePath) {
-      this.filePath = filePath;
-    }
   }
 
   @Getter
