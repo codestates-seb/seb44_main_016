@@ -186,6 +186,11 @@ const S = {
     justify-content: center;
     align-items: center;
 
+    & > div > div > div {
+      // 사진 확대 시 이전/다음 페이지 영역 침범 방지
+      overflow: hidden;
+    }
+
     & > div > div > div > div {
       // ModalImage 바로 윗단계 div
       overflow: visible;
