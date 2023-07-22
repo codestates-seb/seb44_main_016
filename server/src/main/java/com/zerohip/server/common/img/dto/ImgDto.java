@@ -10,9 +10,9 @@ public class ImgDto {
   @Getter
   @AllArgsConstructor
   public static class Post {
-    @Size(max = 50)
+    @Size(max = 2000)
     private String fileName;
-    @Size(max = 100)
+    @Size(max = 3000)
     private String filePath;
 
     private Long financialRecordArticleId;
@@ -21,9 +21,9 @@ public class ImgDto {
   @Getter
   @AllArgsConstructor
   public static class Patch {
-    @Size(max = 50)
+    @Size(max = 2000)
     private String fileName;
-    @Size(max = 100)
+    @Size(max = 3000)
     private String filePath;
   }
 
@@ -31,11 +31,13 @@ public class ImgDto {
   @AllArgsConstructor
   public static class Response {
     private Long id;
-    @Size(max = 50)
+    @Size(max = 2000)
     private String fileName;
-    @Size(max = 100)
+    @Size(max = 3000)
     private String filePath;
 
     private Long financialRecordArticleId;
   }
 }
+
+
