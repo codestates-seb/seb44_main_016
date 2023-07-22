@@ -12,6 +12,7 @@ import com.zerohip.server.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,18 +25,15 @@ import java.util.UUID;
 
 @Slf4j  // SLF4J 로깅 시스템을 사용한다는 것을 나타냄
 @Service  // 이 클래스가 스프링 서비스임을 나타냄
+@Transactional
 @RequiredArgsConstructor  // final 필드 또는 @NonNull이 있는 필드만을 인자로 하는 생성자를 자동 생성
-public class S3Uploader {
+public class S3ServiceImpl {
 
   private final AmazonS3Client amazonS3Client;  // Amazon S3 클라이언트
-  private final FinancialRecordArticleRepository financialRecordArticleRepository;  // 금융 기록 문서 저장소
-  private final FeedArticleRepository feedArticleRepository;  // 피드 문서 저장소
-  private final UserRepository userRepository;  // 사용자 저장소
 
   @Value("${cloud.aws.s3.bucket}")  // 프로퍼티 파일에서 S3 버킷 이름을 가져옴
   private String bucket;
 
-  @Transactional  // 트랜잭션 범위를 정의함. 즉, 모든 작업이 성공하거나 모두 실패하게 됨
   public List<String> uploadFiles(List<MultipartFile> multipartFiles, String dirName) throws IOException {
     List<String> uploadImgUrlList = new ArrayList<>();
     for (MultipartFile multipartFile : multipartFiles) {
@@ -55,35 +53,6 @@ public class S3Uploader {
     // S3에 업로드
     putObject(multipartFile, fileName, metadata);  // 파일 업로드
 
-    return fileName;  // 파일 이름 반환
-  }
-
-  private void putObject(MultipartFile multipartFile, String fileName, ObjectMetadata metadata) throws IOException {
-    // S3에 파일 업로드. 파일의 내용, 이름, 메타데이터 등을 함께 전달
-    amazonS3Client.putObject(
-            new PutObjectRequest(bucket, fileName, multipartFile.getInputStream(), metadata)
-                    .withCannedAcl(CannedAccessControlList.PublicRead)
-    );
-    log.info("파일이 S3에 업로드되었습니다: {}", fileName);  // 로그 출력
-  }
-
-  private static ObjectMetadata setMetaData(MultipartFile multipartFile) {
-    // 메타데이터 생성
-    ObjectMetadata metadata = new ObjectMetadata();
-    metadata.setContentType(multipartFile.getContentType());  // 파일 타입 설정
-    metadata.setContentLength(multipartFile.getSize());  // 파일 크기 설정
-    return metadata;  // 메타데이터 반환
-  }
-
-  private static String setFileName(MultipartFile multipartFile, String dirName) {
-    // UUID를 이용해 파일 이름을 생성
-    String originalFilename = multipartFile.getOriginalFilename();
-    String newName = UUID.randomUUID().toString();
-    if (originalFilename != null && originalFilename.contains(".")) {
-      newName += originalFilename.substring(originalFilename.lastIndexOf("."));
-    }
-    String fileName = dirName + "/" + newName;
-    log.info("fileName: {}", fileName);
     return fileName;  // 파일 이름 반환
   }
 
@@ -108,5 +77,38 @@ public class S3Uploader {
     // S3에서 파일 삭제
     amazonS3Client.deleteObject(bucket, fileName);
     log.info("파일이 S3에서 삭제되었습니다: {}", fileName);
+  }
+
+  private void putObject(MultipartFile multipartFile, String fileName, ObjectMetadata metadata) throws IOException {
+    // S3에 파일 업로드. 파일의 내용, 이름, 메타데이터 등을 함께 전달
+    amazonS3Client.putObject(
+            new PutObjectRequest(bucket, fileName, multipartFile.getInputStream(), metadata)
+                    .withCannedAcl(CannedAccessControlList.PublicRead)
+    );
+    log.info("파일이 S3에 업로드되었습니다: {}", fileName);  // 로그 출력
+  }
+
+  private static ObjectMetadata setMetaData(MultipartFile multipartFile) {
+    // 메타데이터 생성
+    ObjectMetadata metadata = new ObjectMetadata();
+    metadata.setContentType(multipartFile.getContentType());  // 파일 타입 설정
+    metadata.setContentLength(multipartFile.getSize());  // 파일 크기 설정
+    return metadata;  // 메타데이터 반환
+  }
+
+  private static String setFileName(MultipartFile multipartFile, String dirName) {
+    // UUID를 이용해 파일 이름을 생성
+    String originalFilename = multipartFile.getOriginalFilename();
+    String newName = UUID.randomUUID().toString();
+    try {
+      if (originalFilename != null) {
+        newName += originalFilename;
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    String fileName = dirName + "/" + newName;
+    log.info("fileName: {}", fileName);
+    return fileName;  // 파일 이름 반환
   }
 }
