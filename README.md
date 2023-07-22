@@ -127,6 +127,7 @@
 
 
 ## 📚 팀 규칙
+- [📘 노션](https://valuable-trawler-3af.notion.site/913728ad13d14974bd766d780632aedc)
 - [📗 그라운드 룰](https://github.com/codestates-seb/seb39_main_055/wiki/%EA%B7%B8%EB%9D%BC%EC%9A%B4%EB%93%9C-%EB%A3%B0)
 - [📕 깃 커밋 컨벤션](https://github.com/codestates-seb/seb39_main_055/wiki/%EA%B9%83-%EC%BB%A4%EB%B0%8B-%EC%BB%A8%EB%B2%A4%EC%85%98)
 - [📘 깃 브랜치 전략](https://github.com/codestates-seb/seb39_main_055/wiki/%EA%B9%83-%EB%B8%8C%EB%9E%9C%EC%B9%98-%EC%A0%84%EB%9E%B5)
