@@ -28,7 +28,7 @@ export default function HeadMeta({ title, description, url, image }: HeadMetaPro
         property='og:image'
         content={
           image ||
-          'https://media.discordapp.net/attachments/1123431285671612496/1132326412343332864/zerohipMetaImg.png?width=2175&height=1222'
+          'https://media.discordapp.net/attachments/1123431285671612496/1132337861346209852/zerohipMeta.png?width=2442&height=1222'
         }
       />
       <meta property='og:article:author' content='제로힙' />
