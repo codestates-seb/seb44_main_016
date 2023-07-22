@@ -23,11 +23,11 @@ public class Img {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Size(max = 50)
-  @Column(nullable = true, length = 50)
+  @Size(max = 2000)
+  @Column(nullable = true, length = 2000)
   private String fileName;
-  @Size(max = 100)
-  @Column(nullable = true, length = 100)
+  @Size(max = 3000)
+  @Column(nullable = true, length = 3000)
   private String filePath;
 
   // 매핑 고고
