@@ -1,4 +1,4 @@
-export const metaData = {
+export const userMetaData = {
   signUpPage: {
     title: '제로힙 회원가입 페이지',
     description:

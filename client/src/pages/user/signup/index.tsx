@@ -4,7 +4,7 @@ import SignUpForm from './SignUpForm';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import HeadMeta from '../../../components/HeadMeta';
-import { metaData } from '../../../constants/metaDatas/metadata';
+import { userMetaData } from '../../../constants/seo/userMetaData';
 
 export default function SignUp() {
   const router = useRouter();
@@ -24,7 +24,7 @@ export default function SignUp() {
 
   return (
     <S.Container>
-      <HeadMeta title={metaData.signUpPage.title} description={metaData.signUpPage.description} />
+      <HeadMeta title={userMetaData.signUpPage.title} description={userMetaData.signUpPage.description} />
       <S.HomeBtnBox type='button' onClick={() => router.push('/')}>
         <h1 className='blind'>회원가입</h1>
         <Logo width={isSmallScreen ? '260' : '337'} />

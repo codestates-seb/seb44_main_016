@@ -19,7 +19,6 @@ export default function HeadMeta({ title, description, url, image }: HeadMetaPro
       <meta name='viewport' content='initial-scale=1.0, width=device-width' />
 
       <meta property='og:title' content={title || '제로힙'} />
-      <meta property='og:description' content='설명' />
       <meta
         property='og:description'
         content={description || '절약유도 가계부형 SNS | 당신의 과소비가 0으로 수렴할 때까지, 제로힙.'}

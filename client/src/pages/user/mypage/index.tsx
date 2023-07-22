@@ -10,7 +10,7 @@ import apiUser from '../../../services/apiUser';
 import Loading from '../../../components/Loading';
 import { FeedArticleResType } from '../../../types/article';
 import HeadMeta from '../../../components/HeadMeta';
-import { metaData } from '../../../constants/metaDatas/metadata';
+import { userMetaData } from '../../../constants/seo/userMetaData';
 
 function MyPage() {
   const router = useRouter();
@@ -27,7 +27,7 @@ function MyPage() {
 
   return (
     <>
-      <HeadMeta title={metaData.myPage.title} description={metaData.myPage.description} />
+      <HeadMeta title={userMetaData.myPage.title} description={userMetaData.myPage.description} />
       {isMyInfoLoading ? (
         <Loading />
       ) : (

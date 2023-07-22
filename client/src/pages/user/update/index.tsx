@@ -4,7 +4,7 @@ import apiUser from '../../../services/apiUser';
 import Loading from '../../../components/Loading';
 import UserUpdatePage from './UserUpdatePage';
 import HeadMeta from '../../../components/HeadMeta';
-import { metaData } from '../../../constants/metaDatas/metadata';
+import { userMetaData } from '../../../constants/seo/userMetaData';
 
 export default function UserUpdate() {
   const {
@@ -20,7 +20,10 @@ export default function UserUpdate() {
 
   return (
     <>
-      <HeadMeta title={metaData.userUpdatePage.title} description={metaData.userUpdatePage.description} />
+      <HeadMeta
+        title={userMetaData.userUpdatePage.title}
+        description={userMetaData.userUpdatePage.description}
+      />
       {isMyInfoLoading ? <Loading /> : myInfoData && <UserUpdatePage myInfoData={myInfoData} />}
     </>
   );

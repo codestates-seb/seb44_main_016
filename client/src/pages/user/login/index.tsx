@@ -12,7 +12,7 @@ import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/u
 import { toast } from 'react-toastify';
 import useMutateUser from '../../../services/useMutateUser';
 import HeadMeta from '../../../components/HeadMeta';
-import { metaData } from '../../../constants/metaDatas/metadata';
+import { userMetaData } from '../../../constants/seo/userMetaData';
 
 export default function Login() {
   const [IdInput, loginId, setLoginId] = useInput('text', '아이디', 'loginId', 'username');
@@ -62,7 +62,7 @@ export default function Login() {
 
   return (
     <S.LoginContainer>
-      <HeadMeta title={metaData.loginPage.title} description={metaData.loginPage.description} />
+      <HeadMeta title={userMetaData.loginPage.title} description={userMetaData.loginPage.description} />
       <S.LoginWrapper>
         <S.HomeBtn type='button' onClick={() => router.push(`/`)}>
           <Logo width={isSmallScreen ? '260' : '337'} aria-label='제로힙 로고' />
