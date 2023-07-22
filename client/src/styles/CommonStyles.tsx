@@ -58,6 +58,9 @@ const CommonStyles = {
       transform: scale(0.95);
       transition: transform 0.2s;
     }
+    &:focus {
+      outline: 2px solid var(--color-point-yellow);
+    }
     ${({ small }) =>
       small &&
       `

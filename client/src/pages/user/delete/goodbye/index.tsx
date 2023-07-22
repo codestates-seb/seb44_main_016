@@ -52,21 +52,22 @@ export default function GoodBye() {
         <Logo width='155' aria-label='제로힙 로고' />
       </S.HomeBtnBox>
       {showMessage ? (
-        <S.ContentBox>
+        <>
           <S.AnimationBox>
-            <Lottie loop animationData={deleteAnimation} play style={{ width: 310, height: 310 }} />{' '}
+            <Lottie loop animationData={deleteAnimation} play style={{ width: 300, height: 310 }} />{' '}
           </S.AnimationBox>
           <S.GoodByeBox>
             <S.GoodByeComment>
               <S.NicknameBox> {nickname}</S.NicknameBox>
-              <span>님의 탈퇴가 정상적으로 처리되었습니다.</span>
+              <span>님의 탈퇴가</span>
+              <S.ReactiveSentence> 정상적으로 처리되었습니다.</S.ReactiveSentence>
             </S.GoodByeComment>
             <S.NextTimeComment>다음에 또 이용해주세요!</S.NextTimeComment>
             <S.HomeBtn type='button' onClick={() => router.push(`/`)}>
               홈으로 이동
             </S.HomeBtn>
           </S.GoodByeBox>
-        </S.ContentBox>
+        </>
       ) : (
         <Loading />
       )}
@@ -81,7 +82,7 @@ const S = {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     position: relative;
   `,
@@ -91,28 +92,41 @@ const S = {
     top: 0;
     left: 4%;
   `,
-  LogoBtn: styled.button``,
-
-  ContentBox: styled.div``,
   AnimationBox: styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    @media screen and (max-width: 480px) {
+      margin-top: 5rem;
+    }
   `,
   GoodByeBox: styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0 1.4rem;
+    text-align: center;
+    @media screen and (max-width: 480px) {
+      width: 100%;
+    }
   `,
   GoodByeComment: styled.div`
     font-size: 1.8rem;
-    margin: 1rem auto 0.7rem auto;
+    margin: 2.5rem auto 1rem auto;
     font-weight: 600;
+    @media screen and (max-width: 480px) {
+      margin: 1.3rem auto 1rem auto;
+    }
   `,
   NicknameBox: styled.span`
     color: var(--color-primary);
+  `,
+  ReactiveSentence: styled.span`
+    @media screen and (max-width: 480px) {
+      display: block;
+    }
   `,
   NextTimeComment: styled.div`
     font-size: 1.4rem;
@@ -131,7 +145,7 @@ const S = {
     z-index: 1;
     border: 2px solid var(--color-primary);
     margin-top: 2rem;
-    width: 36%;
+    width: 37%;
     height: 50%;
     &:hover {
       color: var(--color-primary);
@@ -151,12 +165,14 @@ const S = {
       background: var(--color-primary);
       transition: 0.7s;
     }
-
     &:hover::before {
       top: 2.5rem;
       left: 2.5rem;
     }
     font-weight: 500;
     font-size: 1.1rem;
+    &:focus {
+      outline: 2px solid var(--color-point-yellow);
+    }
   `,
 };

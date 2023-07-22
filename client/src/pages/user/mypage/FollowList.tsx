@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 import { FollowUsersInfoData } from '../../../types/user';
 
-interface ModalListProps {
+interface FollowListProps {
   title: string;
   userInfo: FollowUsersInfoData;
 }
 
-export default function ModalList({ title, userInfo }: ModalListProps) {
+export default function FollowList({ title, userInfo }: FollowListProps) {
   return (
     <S.ModalFollowerBox>
       <S.UserInfo>
@@ -15,7 +15,7 @@ export default function ModalList({ title, userInfo }: ModalListProps) {
             <S.UserImg src={userInfo?.imgId} alt='유저 프로필 사진' />
           </S.UserImgBox>
           <S.UserNickNameIdBox>
-            <S.UserNickname>
+            <S.UserNickname tabIndex={0}>
               <div>{userInfo?.nickname}</div>
             </S.UserNickname>
             <S.UserId>
@@ -24,11 +24,11 @@ export default function ModalList({ title, userInfo }: ModalListProps) {
             </S.UserId>
           </S.UserNickNameIdBox>
         </S.UserImgInfoBox>
-        <S.UserFollowBox>
+        <S.IsUserFollowBox>
           {title === '구독됨' && !userInfo.isAlsoFollowed && (
-            <S.UserFollowBtn type='button'>구독하기</S.UserFollowBtn>
+            <S.LetsFollowUserBtn type='button'>구독하기</S.LetsFollowUserBtn>
           )}
-        </S.UserFollowBox>
+        </S.IsUserFollowBox>
       </S.UserInfo>
     </S.ModalFollowerBox>
   );
@@ -68,8 +68,10 @@ const S = {
     flex-direction: column;
     justify-content: center;
     width: 100%;
-    margin-left: 0.4rem;
-    padding-left: 0.8rem;
+    margin-left: 1.2rem;
+    @media screen and (max-width: 300px) {
+      margin-left: 0.8rem;
+    }
   `,
   UserNickname: styled.div`
     display: flex;
@@ -80,6 +82,9 @@ const S = {
     font-weight: 600;
     &:hover {
       font-weight: 700;
+    }
+    &:focus {
+      outline: 2px solid var(--color-primary);
     }
   `,
   UserId: styled.div`
@@ -94,11 +99,11 @@ const S = {
       margin-right: 0.1rem;
     }
   `,
-  UserFollowBox: styled.div`
+  IsUserFollowBox: styled.div`
     display: flex;
     align-items: center;
   `,
-  UserFollowBtn: styled.button`
+  LetsFollowUserBtn: styled.button`
     font-size: 0.93rem;
     color: var(--color-primary);
     font-weight: 500;

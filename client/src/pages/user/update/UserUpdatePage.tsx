@@ -7,7 +7,7 @@ import CommonStyles from '../../../styles/CommonStyles';
 import useInput from '../../../hooks/useComponents';
 import { USER_UPDATE_MESSAGES } from '../../../constants/user';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
-import BackBtnBox from '../../../components/BackBtn';
+import BackBtn from '../../../components/BackBtn';
 import getNewError from '../../../utils/inputValidationError';
 import apiUser from '../../../services/apiUser';
 import ProfileImgUpdate from './ProfileImgUpdate';
@@ -109,7 +109,7 @@ export default function UserUpdatePage({ myInfoData }: UserUpdatePageProps) {
 
   return (
     <S.Container>
-      <BackBtnBox />
+      <BackBtn />
       <S.FormContainer>
         <ProfileImgUpdate myInfoData={myInfoData} />
         {inputData.map((el) => (
@@ -126,9 +126,9 @@ export default function UserUpdatePage({ myInfoData }: UserUpdatePageProps) {
             회원 정보 수정
           </S.SubmitBtn>
         </S.SubmitBox>
-        <S.ModifyBtn type='button' onClick={handleMoveDeletePage}>
+        <S.MoveDeletePageBtn type='button' onClick={handleMoveDeletePage}>
           회원 탈퇴
-        </S.ModifyBtn>
+        </S.MoveDeletePageBtn>
       </S.FormContainer>
     </S.Container>
   );
@@ -138,8 +138,15 @@ const S = {
   ...CommonStyles,
   Container: styled.div`
     width: 100%;
+    height: 100%;
     padding: 0rem 2rem;
     position: relative;
+    @media screen and (max-width: 750px) {
+      padding: 0rem 1rem;
+    }
+    @media screen and (max-width: 500px) {
+      padding: 0rem 0rem;
+    }
   `,
   BackBox: styled.div`
     display: flex;
@@ -164,13 +171,22 @@ const S = {
     display: flex;
     flex-direction: column;
     align-items: center;
+    @media screen and (max-width: 600px) {
+      margin-bottom: 4.5rem;
+    }
   `,
   SubmitBox: styled.div<SubmitBoxProps>`
     width: 45%;
     margin: 2.7rem 0 4rem 0;
     ${isClickedStyled}
+    @media screen and (max-width: 900px) {
+      width: 40%;
+    }
+    @media screen and (max-width: 500px) {
+      width: 48%;
+    }
   `,
-  ModifyBtn: styled.button`
+  MoveDeletePageBtn: styled.button`
     position: relative;
     display: inline-block;
     color: var(--color-gray03);

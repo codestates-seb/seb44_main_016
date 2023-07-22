@@ -22,7 +22,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
       dispatch(login({ accessToken: newAccessToken, isLoggedIn: true }));
     },
     onError: (err) => {
-      dispatch(logout());
+      // dispatch(logout()); 배포 때 살릴 예정
       // router.push('/'); 배포 때 살릴 예정
       throw err;
     },

@@ -36,25 +36,25 @@ function MyPage() {
                 <title>제로힙 마이페이지</title>
               </Head>
               <h1 className='blind'>마이페이지</h1>
-              <S.UserImg>
+              <S.UserProfileImgBox>
                 <img src={myInfoData?.profileImgPath} alt='프로필 사진' />
-              </S.UserImg>
+              </S.UserProfileImgBox>
               <S.UserName>
                 <S.Nickname>{myInfoData.nickname}</S.Nickname>
               </S.UserName>
-              <S.ModifyBtnBox>
-                <FollowModal title='구독함' list={myInfoData.followingList} />
-                <FollowModal title='구독됨' list={myInfoData.followerList} />
-                <S.ModifyBtn type='button' onClick={() => router.push('/user/update')}>
+              <S.UserSubInfoBox>
+                <FollowModal title='구독함' followList={myInfoData.followingList} />
+                <FollowModal title='구독됨' followList={myInfoData.followerList} />
+                <S.UserInfoModifyBtn type='button' onClick={() => router.push('/user/update')}>
                   설정
-                </S.ModifyBtn>
-              </S.ModifyBtnBox>
+                </S.UserInfoModifyBtn>
+              </S.UserSubInfoBox>
             </S.UserProfileContainer>
             <S.UserArticleContainer>
-              {/* <h2 className='blind'>내가 쓴 글</h2>
-              {data.myContents.map((el: FeedArticleResType) => {
+              <h2 className='blind'>내가 쓴 글</h2>
+              {myInfoData.myContents.map((el: FeedArticleResType) => {
                 return <SnsArticle key={el.feedArticleId} type='feed' data={el} />;
-              })} */}
+              })}
             </S.UserArticleContainer>
           </S.Container>
         )
@@ -80,10 +80,20 @@ const S = {
     align-items: center;
     margin: 2.7rem 0 3.5rem 0;
   `,
-  UserImg: styled.div`
+  UserProfileImgBox: styled.div`
     transition: transform 0.3s ease-in-out;
+    border-radius: 50%;
+    overflow: hidden;
     &:hover {
       transform: scale(1.5) translateY(0.55rem);
+    }
+    > img {
+      width: 100%;
+      height: 100%;
+    }
+    @media screen and (max-width: 750px) {
+      width: 120px;
+      height: 120px;
     }
   `,
   UserName: styled.div`
@@ -97,11 +107,11 @@ const S = {
     background-clip: text;
     color: transparent;
   `,
-  ModifyBtnBox: styled.div`
+  UserSubInfoBox: styled.div`
     margin: 0 0 1.5rem 0;
     display: flex;
   `,
-  ModifyBtn: styled.button`
+  UserInfoModifyBtn: styled.button`
     position: relative;
     display: inline-block;
     color: black;
@@ -140,8 +150,11 @@ const S = {
     flex-direction: column;
     gap: 30px;
     margin-bottom: 3rem;
+    width: 100%;
+    @media screen and (max-width: 600px) {
+      margin-bottom: 10.2rem;
+    }
   `,
-
   ModalBackdrop: styled.div`
     position: fixed;
     z-index: 999;

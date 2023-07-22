@@ -1,11 +1,9 @@
 import styled from '@emotion/styled';
 import ImageUploadBtnIcon from '../../../../public/images/icon/imageUpload.svg';
 import { useState } from 'react';
-import CloseBtn from '../../../../public/images/icon/closeBtn.svg';
-import RandomAvatarUpdate from './RandomAvatarUpdate';
 import { store } from '../../../components/redux/store';
-import UserImgFileUpdate from './UserImgFileUpdate';
 import { UserInfoResData } from '../../../types/user';
+import ProfileImgUpdateModal from './ProfileImgUpdateModal';
 
 interface ImageUploadProps {
   myInfoData: UserInfoResData;
@@ -13,52 +11,25 @@ interface ImageUploadProps {
 
 export default function ProfileImgUpdate({ myInfoData }: ImageUploadProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [currentTab, setCurrentTab] = useState(0);
 
-  const menuArr = [
-    {
-      name: '랜덤 아바타 뽑기',
-      content: () => <RandomAvatarUpdate myInfoData={myInfoData} setIsOpen={setIsOpen} isOpen={isOpen} />,
-    },
-    {
-      name: '자유롭게 사진 올리기',
-      content: () => <UserImgFileUpdate myInfoData={myInfoData} setIsOpen={setIsOpen} isOpen={isOpen} />,
-    },
-  ];
-
-  const handleSelectMenu = (index: number) => setCurrentTab(index);
-  const openModalHandler = () => setIsOpen(!isOpen);
+  const handleOpenModal = () => setIsOpen(!isOpen);
   const { currentImgSrc } = store.getState().currentImgReducer;
+
   return (
     <S.UserImg>
       <img src={currentImgSrc ? currentImgSrc : myInfoData?.profileImgPath} alt='유저 프로필 사진' />
-      <S.ImageUploadBtn onClick={openModalHandler} type='button' aria-label='이미지 업로드 버튼'>
+      <S.ImageUploadBtn
+        onClick={handleOpenModal}
+        aria-haspopup='dialog'
+        aria-controls='dialogPopup'
+        type='button'
+        aria-label='이미지 업로드 버튼'
+      >
         <ImageUploadBtnIcon />
       </S.ImageUploadBtn>
 
       {isOpen ? (
-        <S.ModalBackdrop onClick={openModalHandler}>
-          <S.ModalView onClick={(e) => e.stopPropagation()}>
-            <S.ModalTop>
-              <S.Title>프로필 사진을 무엇으로 바꿀 예정이신가요?</S.Title>
-              <CloseBtn onClick={openModalHandler} className='closeBtn' />
-            </S.ModalTop>
-            <S.TabMenu>
-              {menuArr.map((menu, i) => {
-                return (
-                  <li
-                    key={menu.name}
-                    className={currentTab === i ? 'submenu focused' : 'submenu'}
-                    onClick={() => handleSelectMenu(i)}
-                  >
-                    {menu.name}
-                  </li>
-                );
-              })}
-            </S.TabMenu>
-            <S.TabContents>{menuArr[currentTab].content()}</S.TabContents>
-          </S.ModalView>
-        </S.ModalBackdrop>
+        <ProfileImgUpdateModal isOpen={isOpen} setIsOpen={setIsOpen} myInfoData={myInfoData} />
       ) : null}
     </S.UserImg>
   );
@@ -81,6 +52,10 @@ const S = {
     }
     &:hover > img {
       transform: scale(1.1);
+    }
+    @media screen and (max-width: 750px) {
+      width: 120px;
+      height: 120px;
     }
   `,
   ImageUploadBtn: styled.button`
@@ -110,20 +85,43 @@ const S = {
     .closeBtn {
       cursor: pointer;
     }
+    @media screen and (max-width: 500px) {
+      width: 95%;
+    }
   `,
   ModalTop: styled.div`
     width: 100%;
     height: 50px;
     display: flex;
     justify-content: flex-end;
-    padding-right: 2rem;
     align-items: center;
     border-bottom: 1px solid var(--color-gray08);
+    position: relative;
   `,
   Title: styled.div`
     font-weight: 400;
     color: var(--color-gray03);
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    margin-right: 1.5rem;
+  `,
+  ReactiveDiv: styled.span`
+    @media screen and (max-width: 330px) {
+      display: block;
+    }
+  `,
+  CloseBtnBtn: styled.button`
     margin-right: 2rem;
+    z-index: 2;
+    height: 3rem;
+    width: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media screen and (max-width: 500px) {
+      margin-right: 0.7rem;
+    }
   `,
   TabMenu: styled.ul`
     border-bottom: 0.05rem solid var(--color-gray08);
@@ -141,13 +139,19 @@ const S = {
       color: var(--color-primary);
       border-bottom: 3px solid var(--color-primary);
     }
-    &:hover {
-      color: var(--color-primary);
-      cursor: pointer;
-    }
     > li {
       padding-bottom: 0.4rem;
       border-bottom: 3px solid transparent;
+      &:focus {
+        outline: 2px solid var(--color-point-lilac);
+      }
+      &:hover {
+        color: var(--color-primary);
+        cursor: pointer;
+      }
+      @media screen and (max-width: 330px) {
+        font-size: 15px;
+      }
     }
     li:first-of-type {
       margin-right: 1rem;
