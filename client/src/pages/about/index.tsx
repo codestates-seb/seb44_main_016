@@ -3,7 +3,6 @@ import { MEMBERS, PLAN, SLOGAN, TEAM_COUNT } from '../../constants/about';
 import { useEffect, useState } from 'react';
 import Tab from '../../components/Tab';
 import { useInView } from 'react-intersection-observer';
-import Image from 'next/image';
 
 export default function About() {
   const [memberIndex, setMemberIndex] = useState(0);

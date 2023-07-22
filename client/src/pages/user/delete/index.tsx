@@ -11,7 +11,7 @@ import getNewError from '../../../utils/inputValidationError';
 import BackBtn from '../../../components/BackBtn';
 import useMutateUser from '../../../services/useMutateUser';
 import HeadMeta from '../../../components/HeadMeta';
-import { userMetaData } from '../../../constants/seo/userMetaData';
+import { USER_META_DATA } from '../../../constants/seo/userMetaData';
 
 export default function UserDelete() {
   const [PwInput, pwValue] = useInput('password', '비밀번호', 'pw', 'current-password');
@@ -68,8 +68,8 @@ export default function UserDelete() {
   return (
     <S.Container>
       <HeadMeta
-        title={userMetaData.userDeletePage.title}
-        description={userMetaData.userDeletePage.description}
+        title={USER_META_DATA.USER_DELETE_PAGE.TITLE}
+        description={USER_META_DATA.USER_DELETE_PAGE.DESCRIPTION}
       />
       <BackBtn />
       <S.FormContainer>

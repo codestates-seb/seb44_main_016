@@ -8,7 +8,7 @@ import Lottie from 'react-lottie-player';
 import deleteAnimation from '../../../../animation/delete.json';
 import Loading from '../../../../components/Loading';
 import HeadMeta from '../../../../components/HeadMeta';
-import { userMetaData } from '../../../../constants/seo/userMetaData';
+import { USER_META_DATA } from '../../../../constants/seo/userMetaData';
 
 export default function GoodBye() {
   const router = useRouter();
@@ -46,8 +46,8 @@ export default function GoodBye() {
   return (
     <S.Container>
       <HeadMeta
-        title={userMetaData.userDeleteSuccessPage.title}
-        description={userMetaData.userDeleteSuccessPage.description}
+        title={USER_META_DATA.USER_DELETE_SUCCESS_PAGE.TITLE}
+        description={USER_META_DATA.USER_DELETE_SUCCESS_PAGE.DESCRIPTION}
       />
       <h1 className='blind'>회원탈퇴 성공</h1>
       <S.HomeBtnBox type='button' onClick={() => router.push(`/`)}>
