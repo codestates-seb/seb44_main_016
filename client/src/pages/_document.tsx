@@ -7,7 +7,6 @@ const Document = () => {
       <Head>
         <meta charSet='UTF-8' />
         <link rel='icon' href='/images/favicon.ico' />
-        <title>제로힙</title>
       </Head>
       <body>
         <Main />
