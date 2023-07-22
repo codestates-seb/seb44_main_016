@@ -4,7 +4,7 @@ import Naver from '../../../../public/images/icon/naver.svg';
 export default function NaverOauth() {
   const clientId = process.env.NEXT_PUBLIC_NAVER_CLIENT_ID;
   const clientSecret = process.env.NEXT_PUBLIC_NAVER_CLIENT_SECRET;
-  const redirectURI = 'http://localhost:3000/oauth/naver';
+  const redirectURI = 'https://www.zerohip.co.kr/oauth/naver';
 
   const naverAuthURL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${clientId}&state=${clientSecret}&redirect_uri=${redirectURI}`;
 

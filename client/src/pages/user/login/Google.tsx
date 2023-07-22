@@ -3,7 +3,7 @@ import Google from '../../../../public/images/icon/google.svg';
 
 export default function GoogleOauth() {
   const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-  const redirectURI = 'http://localhost:3000/oauth/google';
+  const redirectURI = 'https://www.zerohip.co.kr/oauth/google';
   const googleURL = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=${clientId}&scope=openid%20profile%20email&redirect_uri=${redirectURI}`;
 
   const handleGoogleLogin = () => {
