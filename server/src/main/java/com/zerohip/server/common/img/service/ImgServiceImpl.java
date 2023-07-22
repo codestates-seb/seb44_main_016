@@ -60,22 +60,26 @@ public class ImgServiceImpl implements ImgService {
     return imgRepository.findAll();
   }
 
-  // 이미지 수정
-  @Override
-  public void updateImg(Long imgId, ImgDto.Patch patchParam) {
-    Img verifiedImg = findVerifiedImg(imgId);
-    verifiedImg.setFileName(patchParam.getFileName());
-    verifiedImg.setFilePath(patchParam.getFilePath());
-
-    imgRepository.save(verifiedImg);
-  }
-
   // 이미지 삭제
   @Override
-  public void deleteImg(Long imgId) {
-    Img verifiedImg = findVerifiedImg(imgId);
-    imgRepository.delete(verifiedImg);
+  public void deleteImg(Img img) {
+    // S3에서 이미지를 삭제
+//    s3ServiceImpl.deleteFileFromS3(findImg.getFilePath());
+    // DB에서 이미지 정보를 삭제
+    imgRepository.delete(img);
   }
+
+  @Override
+  public void deleteImgs(Article article, List<String> deleteImgPaths) {
+    for (String path : deleteImgPaths) {
+      Img findImg = imgRepository.findByFilePath(path);
+      if (findImg == null) {
+        throw new IllegalArgumentException("해당 이미지가 없습니다.");
+      }
+      deleteImg(findImg);
+    }
+  }
+
 
   // 이미지 검증
   @Override
@@ -83,6 +87,12 @@ public class ImgServiceImpl implements ImgService {
     return imgRepository.findById(imgId).orElseThrow(
         () -> new RuntimeException("존재하지 않는 이미지입니다.")
     );
+  }
+  @Override
+  public Img findVerifiedImg(String filePath) {
+    Img findImg = imgRepository.findByFilePath(filePath);
+    findVerifiedImg(findImg.getId());
+    return findImg;
   }
 
   // 파일명 지정(중복 방지)

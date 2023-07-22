@@ -13,7 +13,9 @@ public interface ImgService {
   List<Img> createImg(Article article, List<MultipartFile> files) throws IOException;
   Img findImg(Long imgId);
   List<Img> findImgs();
-  void updateImg(Long imgId, ImgDto.Patch patchParam);
-  void deleteImg(Long imgId);
+//  void updateImg(Long imgId, ImgDto.Patch patchParam);
+  void deleteImg(Img img);
+  void deleteImgs(Article article, List<String> deleteImgPaths);
   Img findVerifiedImg(Long imgId);
+  Img findVerifiedImg(String filePath);
 }
