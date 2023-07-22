@@ -18,18 +18,22 @@ type Props = {
 };
 
 export default function ImgsCarousel(props: Props) {
-  const [modalVisible, setModalVisible] = useState(false); // 모달 상태
-  const [modalImage, setModalImage] = useState(''); // 모달에 보여질 이미
+  const [isModalVisible, setIsModalVisible] = useState(false); // 모달 상태
+  const [modalImage, setModalImage] = useState(''); // 모달에 보여질 이미지
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const handleImageClick = (e, imgSrc, index) => {
+  const handleImageClick = (
+    e: React.MouseEvent<HTMLImageElement, MouseEvent>,
+    imgSrc: string,
+    index: number
+  ) => {
     e.stopPropagation();
-    setModalVisible(true);
+    setIsModalVisible(true);
     setModalImage(imgSrc);
     setCurrentSlide(index);
   };
   const handleCloseModal = () => {
-    setModalVisible(false);
+    setIsModalVisible(false);
     setModalImage('');
   };
   const windowType = useWindowType();
@@ -69,7 +73,7 @@ export default function ImgsCarousel(props: Props) {
           );
         })}
       </Swiper>
-      {modalVisible && (
+      {isModalVisible ? (
         <S.Modal>
           <S.CloseBtn aria-label='닫기 버튼' onClick={handleCloseModal}>
             {SVGs.whiteCloseBtn}
@@ -100,6 +104,8 @@ export default function ImgsCarousel(props: Props) {
             })}
           </Swiper>
         </S.Modal>
+      ) : (
+        <></>
       )}
     </S.ImgContainer>
   );
