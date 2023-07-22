@@ -70,9 +70,9 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public void deleteUser(User user, String password) {
+    public void deleteUser(String authorId, String password) {
 
-        User findUser = findVerifyUserByLoginId(user.getLoginId());
+        User findUser = findVerifyUserByLoginId(authorId);
         if (checkedPassword(findUser, password)) userRepository.delete(findUser);
     }
 

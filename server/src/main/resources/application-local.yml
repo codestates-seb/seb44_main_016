@@ -36,6 +36,13 @@ server:
   servlet:
     encoding:
       force-response: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 169242830549-appje0sp82r5s1l19bglnsonk40dv7u0.apps.googleusercontent.com  # 환경변수 ${GOOGLE_CLIENT_ID}
+            clientSecret: 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  # 환경변수 ${GOOGLE_CLIENT_SECRET}
 #mail:
 #  address:
 #    admin: admin@gmail.com
