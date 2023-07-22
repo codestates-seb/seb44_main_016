@@ -27,12 +27,6 @@ public abstract class FinancialRecordArticleMapper {
   protected void mapFinancialRecordId(FinancialRecordArticle financialRecordArticle, @MappingTarget FinancialRecordArticleDto.Response response) {
     response.setFinancialRecordId(financialRecordArticle.getFinancialRecord().getFinancialRecordId());
   }
-  @AfterMapping
-  protected void mapFilePath(FinancialRecordArticle financialRecordArticle, @MappingTarget FinancialRecordArticleDto.Patch response) {
-    response.setFilePath(financialRecordArticle.getImgList().stream()
-            .map(Img::getFilePath)  // 가정: Img 엔티티에는 이미지 경로를 반환하는 getPath 메소드가 있다.
-            .collect(Collectors.toList()));
-  }
 
   @AfterMapping
   protected void mapFilesPath(FinancialRecordArticle financialRecordArticle, @MappingTarget FinancialRecordArticleDto.Response response) {
