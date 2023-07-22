@@ -20,28 +20,29 @@ spring:
         registration:
           # KAKAO Client
           kakao:
-            client-id: d2c191a8ffec18a46c5dbd45bd93d36a # ${KAKAO_REST_API_KEY}
-            client-secret: r4HR3YzhRQssPDzrPo6YztSbYz4yS7NX # ${KAKAO_SECRET}
-            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            client-id: 885b0d53f112d820b98cbf506b9010c4  # ${KAKAO_REST_API_KEY}
+            client-secret: ${KAKAO_SECRET}
+            redirect-uri: https://zerohip.co.kr/login/oauth2/code/kakao
             authorization-grant-type: authorization_code
             scope: account_email
             client-authentication-method: POST
 
           # NAVER Client
           naver:
-            client-id: w3cJhS2ijZuO0EaVOqj4 # ${NAVER_CLIENTID}
-            client-secret: 5XY7cpRsj0 # ${NAVER_SECRET}
+            client-id:  fsfWc0ZaaneNhtV0fjkv  # ${NAVER_CLIENTID}
+            client-secret: 1Uw5mk_Nu5  # ${NAVER_SECRET}
             scope: email
-            redirect-uri: http://localhost:8080/login/oauth2/code/naver
+            redirect-uri: https://zerohip.co.kr/login/oauth2/code/naver
             authorization-grant-type: authorization_code
 
           # Google Client
           google:
-            clientId: 169242830549-appje0sp82r5s1l19bglnsonk40dv7u0.apps.googleusercontent.com # ${GOOGLE_CLIENTID}
-            clientSecret: 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 # ${GOOGLE_SECRET}
+            clientId: 633882836521-ci2bo3qfit4jgrhqq39mfjbccb680p13.apps.googleusercontent.com  # ${GOOGLE_CLIENTID}
+            clientSecret: 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  # ${GOOGLE_SECRET}
             scope:
               - email
-              - profile
+            redirectUri: https://zerohip.co.kr/login/oauth2/code/google
+            authorization-grant-type: authorization_code
   h2:
     console:
       enabled: true

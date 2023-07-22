@@ -146,12 +146,12 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 
         return UriComponentsBuilder
                 .newInstance()
-                .scheme("http")
-//                .scheme("https")
-                .host("localhost")
-//                .host("zerohip.co.kr")
-//                .path()
-                .port(3000)
+//                .scheme("http")
+                .scheme("https")
+//                .host("localhost")
+                .host("zerohip.co.kr")
+//                .path(443)
+                .port(443)
                 .queryParams(queryParams)
                 .build()
                 .toUri();
