@@ -187,6 +187,7 @@ const S = {
     align-items: center;
 
     & > div > div > div > div {
+      // ModalImage 바로 윗단계 div
       overflow: visible;
     }
   `,
