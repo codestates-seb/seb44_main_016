@@ -5,6 +5,7 @@ import com.zerohip.server.common.exception.ExceptionCode;
 import com.zerohip.server.user.dto.UserDto;
 import com.zerohip.server.user.entity.User;
 import com.zerohip.server.user.mapper.UserMapper;
+import com.zerohip.server.user.service.UserService;
 import com.zerohip.server.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ import javax.validation.Valid;
 @Validated
 public class UserController {
 
-    private final UserServiceImpl userServiceImpl;
+    private final UserService userService;
     private final UserMapper mapper;
 
     // 회원가입
@@ -34,7 +35,7 @@ public class UserController {
     public ResponseEntity postUser(@Valid @RequestBody UserDto.Post userPostDto) {
 
         User user = mapper.userPostDtoToUser(userPostDto);
-        userServiceImpl.createUser(user);
+        userService.createUser(user);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -49,7 +50,7 @@ public class UserController {
             throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
         }
 
-        userServiceImpl.deleteUser(authorId, checkPasswordDto.getPassword());
+        userService.deleteUser(authorId, checkPasswordDto.getPassword());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -62,7 +63,7 @@ public class UserController {
             throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
         }
 
-        User findUser = userServiceImpl.findUserByLoginId(authorId);
+        User findUser = userService.findUserByLoginId(authorId);
         return new ResponseEntity<>(mapper.userToUserResponseDto(findUser), HttpStatus.OK);
     }
 
@@ -73,6 +74,9 @@ public class UserController {
         if (authorId == null) {
             throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
         }
+
+        User findUser = userService.findUserByLoginId(authorId);
+        return new ResponseEntity<>(mapper.userToUserResponseDto(findUser), HttpStatus.OK);
     }
 }
 
