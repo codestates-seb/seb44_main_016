@@ -17,7 +17,7 @@ public interface FinancialRecordArticleService {
   // 가계부 게시글 조회(전체)
   Page<FinancialRecordArticle> findFaRecArticles(Long FaRecId, int page, int size);
   // 가계부 게시글 수정
-  FinancialRecordArticle updateFaRecArticle(User author, Long faRecArticleId, FinancialRecordArticleDto.Patch patchParam, List<MultipartFile> files) throws IOException;
+  public FinancialRecordArticle updateFaRecArticle(User author, Long faRecArticleId, FinancialRecordArticleDto.Patch patchParam, List<MultipartFile> newFiles);
   // 가계부 게시글 삭제
   void deleteFaRecArticle(User author, Long faRecArticleId);
   // 가계부 게시글 조회 확인

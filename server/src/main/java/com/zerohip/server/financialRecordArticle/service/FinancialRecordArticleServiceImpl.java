@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -72,42 +73,43 @@ public class FinancialRecordArticleServiceImpl implements FinancialRecordArticle
 
   // 가계부 수정
   @Override
-  public FinancialRecordArticle updateFaRecArticle(User author, Long faRecArticleId, FinancialRecordArticleDto.Patch patchParam, List<MultipartFile> files) throws IOException {
+  public FinancialRecordArticle updateFaRecArticle(User author, Long faRecArticleId, FinancialRecordArticleDto.Patch patchParam, List<MultipartFile> newFiles) {
+    // 삭제할 이미지 리스트
+    List<String> deleteImgPaths = patchParam.getDeleteImgPaths();
     // 수정할 게시글 조회
     FinancialRecordArticle findFaRecArticle = findVerifiedFaRecArticle(faRecArticleId);
+
     // 로그인된 사용자와 수정할 게시글의 작성자가 같은지 확인
     VerifiedAuthor(author, findFaRecArticle);
 
     // 검증정보가 일치할 경우 수정
-    findFaRecArticle.setTitle(patchParam.getTitle());
-    findFaRecArticle.setContent(patchParam.getContent());
-    findFaRecArticle.setFaDate(patchParam.getFaDate());
-    findFaRecArticle.setCategory(patchParam.getCategory());
-    findFaRecArticle.setPrice(patchParam.getPrice());
-    findFaRecArticle.setScope(patchParam.getScope());
+    updateFaRecArticleDetails(findFaRecArticle, patchParam);
 
-    for (Img img : findFaRecArticle.getImgList()) {
-      Long imgId = img.getId();
-
-      // 이미지가 유지될 경우 스킵
-      if (patchParam.getKeepImgIds().contains(imgId)) {
-        continue;
-      }
-      // 이미지가 업데이트될 경우
-      if (patchParam.getUpdateImgs().containsKey(imgId)) {
-        MultipartFile newFile = patchParam.getUpdateImgs().get(imgId);
-        imgService.deleteImg(imgId);
-        imgService.createImg(findFaRecArticle, List.of(newFile));
-        continue;
-      }
-      // 이미지 삭제
-      imgService.deleteImg(img.getId());
+    // 새로운 이미지가 있으면 추가
+    if(newFiles != null && !newFiles.isEmpty()) {
+      List<Img> imgList = saveImages(findFaRecArticle, newFiles);
+      findFaRecArticle.getImgList().addAll(imgList);
     }
 
-    // 새 이미지 추가
-    imgService.createImg(findFaRecArticle, files);
+    // 삭제할 이미지 id가 있으면 삭제
+    if(deleteImgPaths != null && !deleteImgPaths.isEmpty()) {
+      imgService.deleteImgs(findFaRecArticle, deleteImgPaths);
+      findFaRecArticle.setImgList(findFaRecArticle.getImgList().stream()
+              .filter(img -> !deleteImgPaths.contains(img.getFilePath()))
+              .collect(Collectors.toList()));
+    }
 
     return repository.save(findFaRecArticle);
+  }
+
+  // Img제외 수정
+  private void updateFaRecArticleDetails(FinancialRecordArticle faRecArticle, FinancialRecordArticleDto.Patch patchParam) {
+    faRecArticle.setTitle(patchParam.getTitle());
+    faRecArticle.setContent(patchParam.getContent());
+    faRecArticle.setFaDate(patchParam.getFaDate());
+    faRecArticle.setCategory(patchParam.getCategory());
+    faRecArticle.setPrice(patchParam.getPrice());
+    faRecArticle.setScope(patchParam.getScope());
   }
 
   @Override
