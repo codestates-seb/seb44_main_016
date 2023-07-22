@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import CommonStyles from '../styles/CommonStyles';
-import BackBtn from '../../public/images/icon/back2.svg';
+import BackBtnIcon from '../../public/images/icon/back2.svg';
 import { useAppDispatch } from './redux/hooks';
 import { changeImgSrc } from './redux/currentImgReducer';
 
-export default function BackBtnBox() {
+export default function BackBtn() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -17,7 +17,7 @@ export default function BackBtnBox() {
   return (
     <S.BackBox>
       <button type='button' aria-label='뒤로 가기' onClick={handleBackBtnClick}>
-        <BackBtn width='25' fill='#b8b7c2' aria-hidden={true} />
+        <BackBtnIcon width='25' fill='#b8b7c2' aria-hidden={true} />
       </button>
     </S.BackBox>
   );

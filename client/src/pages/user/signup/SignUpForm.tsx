@@ -149,6 +149,12 @@ const S = {
     height: 100%;
     padding: 8px;
     margin-top: 20px;
+    @media screen and (max-width: 768px) {
+      width: 400px;
+    }
+    @media screen and (max-width: 480px) {
+      width: 90vw;
+    }
   `,
   SubmitBox: styled.div<SubmitBoxProps>`
     margin: 2rem 0 4rem 0;

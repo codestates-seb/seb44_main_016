@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../components/redux/store';
 import styled from '@emotion/styled';
@@ -17,6 +17,7 @@ export default function Login() {
   const [IdInput, loginId, setLoginId] = useInput('text', '아이디', 'loginId', 'username');
   const [PwInput, pwValue, setPwValue] = useInput('password', '비밀번호', 'pw', 'current-password');
   const [isClickedProps, RefusalAnimation] = useRefusalAni();
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   const router = useRouter();
 
@@ -46,26 +47,41 @@ export default function Login() {
     return;
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 480);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <S.LoginContainer>
       <Head>
         <title>제로힙 로그인 페이지</title>
+        <meta name='description' content='제로힙 서비스를 이용하기 위해 로그인을 하는 페이지입니다.' />
       </Head>
       <S.LoginWrapper>
-        <S.HomeBtnBox type='button' onClick={() => router.push(`/`)}>
-          <Logo width='300' aria-label='제로힙 로고' />
-        </S.HomeBtnBox>
+        <S.HomeBtn type='button' onClick={() => router.push(`/`)}>
+          <Logo width={isSmallScreen ? '260' : '337'} aria-label='제로힙 로고' />
+        </S.HomeBtn>
         <S.LoginFormBox>
           <S.inputBox>{IdInput}</S.inputBox>
           <S.inputBox>{PwInput}</S.inputBox>
-          <S.LoginBox {...isClickedProps}>
+          <S.LoginBtnBox {...isClickedProps}>
             <S.SubmitBtn large onClick={handleLoginSubmit}>
               로그인
             </S.SubmitBtn>
-          </S.LoginBox>
+          </S.LoginBtnBox>
         </S.LoginFormBox>
         <S.Guide>
-          <S.SignUpBtn onClick={() => router.push('/user/signup')}>회원가입</S.SignUpBtn>
+          <S.SignUpBtn type='button' onClick={() => router.push('/user/signup')}>
+            회원가입
+          </S.SignUpBtn>
           <div> | </div>
           <S.FindPasswordBtn>비밀번호 찾기</S.FindPasswordBtn>
         </S.Guide>
@@ -85,11 +101,14 @@ const S = {
     justify-content: space-around;
     align-items: center;
   `,
-  HomeBtnBox: styled.button`
+  HomeBtn: styled.button`
     margin: 0 0.7rem 2.5rem 0;
+    @media screen and (max-width: 768px) {
+      margin: 2.2rem 0em 1.5rem 0;
+    }
   `,
   LoginWrapper: styled.div`
-    width: 28%;
+    width: 300px;
     height: 80%;
     display: flex;
     flex-direction: column;
@@ -108,8 +127,14 @@ const S = {
     &:first-of-type {
       margin-bottom: 0.9rem;
     }
+    @media screen and (max-width: 768px) {
+      width: 260px;
+    }
+    @media screen and (max-width: 480px) {
+      width: 230px;
+    }
   `,
-  LoginBox: styled.div<SubmitBoxProps>`
+  LoginBtnBox: styled.div<SubmitBoxProps>`
     width: 60%;
     margin: 2.3rem 0 3rem 0;
     ${isClickedStyled}
@@ -118,14 +143,14 @@ const S = {
   `,
   Guide: styled.div`
     width: 100%;
+    height: 25px;
     display: flex;
     justify-content: center;
+    align-items: center;
     margin-bottom: 1.8rem;
     color: var(--color-point-gray);
   `,
   SignUpBtn: styled.button`
-    font-size: 1rem;
-    font-weight: 400;
     color: var(--color-gray04);
     margin-right: 1.5rem;
     &:hover {
@@ -133,8 +158,6 @@ const S = {
     }
   `,
   FindPasswordBtn: styled.button`
-    font-size: 1rem;
-    font-weight: 400;
     color: var(--color-gray04);
     margin-left: 1.5rem;
     &:hover {
