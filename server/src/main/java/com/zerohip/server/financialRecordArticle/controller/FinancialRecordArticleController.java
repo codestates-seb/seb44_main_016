@@ -71,12 +71,7 @@ public class FinancialRecordArticleController {
                                              @PathVariable("financial-record-article-id") Long financialRecordArticleId,
                                              @AuthenticationPrincipal User author,
                                              @RequestPart("files") List<MultipartFile> files) {
-    FinancialRecordArticle updatedFaRecArticle = null;
-    try {
-      updatedFaRecArticle = service.updateFaRecArticle(author, financialRecordArticleId, requestbody, files);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+    FinancialRecordArticle updatedFaRecArticle = service.updateFaRecArticle(author, financialRecordArticleId, requestbody, files);
 
     return ResponseEntity.ok(mapper.financialRecordArticleToFinancialRecordArticleResponse(updatedFaRecArticle));
   }
