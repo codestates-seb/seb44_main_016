@@ -1,9 +1,10 @@
-import Head from 'next/head';
 import styled from '@emotion/styled';
 import Logo from '../../../../public/images/logo.svg';
 import SignUpForm from './SignUpForm';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
+import HeadMeta from '../../../components/HeadMeta';
+import { metaData } from '../../../constants/metaDatas/metadata';
 
 export default function SignUp() {
   const router = useRouter();
@@ -23,9 +24,7 @@ export default function SignUp() {
 
   return (
     <S.Container>
-      <Head>
-        <title>제로힙 회원가입 페이지</title>
-      </Head>
+      <HeadMeta title={metaData.signUpPage.title} description={metaData.signUpPage.description} />
       <S.HomeBtnBox type='button' onClick={() => router.push('/')}>
         <h1 className='blind'>회원가입</h1>
         <Logo width={isSmallScreen ? '260' : '337'} />

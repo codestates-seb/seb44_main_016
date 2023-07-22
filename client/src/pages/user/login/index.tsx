@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -12,6 +11,8 @@ import apiUser from '../../../services/apiUser';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 import { toast } from 'react-toastify';
 import useMutateUser from '../../../services/useMutateUser';
+import HeadMeta from '../../../components/HeadMeta';
+import { metaData } from '../../../constants/metaDatas/metadata';
 
 export default function Login() {
   const [IdInput, loginId, setLoginId] = useInput('text', '아이디', 'loginId', 'username');
@@ -61,10 +62,7 @@ export default function Login() {
 
   return (
     <S.LoginContainer>
-      <Head>
-        <title>제로힙 로그인 페이지</title>
-        <meta name='description' content='제로힙 서비스를 이용하기 위해 로그인을 하는 페이지입니다.' />
-      </Head>
+      <HeadMeta title={metaData.loginPage.title} description={metaData.loginPage.description} />
       <S.LoginWrapper>
         <S.HomeBtn type='button' onClick={() => router.push(`/`)}>
           <Logo width={isSmallScreen ? '260' : '337'} aria-label='제로힙 로고' />

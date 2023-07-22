@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { toast } from 'react-toastify';
@@ -8,6 +7,8 @@ import CommonStyles from '../../../../styles/CommonStyles';
 import Lottie from 'react-lottie-player';
 import deleteAnimation from '../../../../animation/delete.json';
 import Loading from '../../../../components/Loading';
+import HeadMeta from '../../../../components/HeadMeta';
+import { metaData } from '../../../../constants/metaDatas/metadata';
 
 export default function GoodBye() {
   const router = useRouter();
@@ -44,9 +45,10 @@ export default function GoodBye() {
 
   return (
     <S.Container>
-      <Head>
-        <title>제로힙 회원 탈퇴 성공 페이지</title>
-      </Head>
+      <HeadMeta
+        title={metaData.userDeleteSuccessPage.title}
+        description={metaData.userDeleteSuccessPage.description}
+      />
       <h1 className='blind'>회원탈퇴 성공</h1>
       <S.HomeBtnBox type='button' onClick={() => router.push(`/`)}>
         <Logo width='155' aria-label='제로힙 로고' />
