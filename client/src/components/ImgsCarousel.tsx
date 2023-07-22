@@ -185,6 +185,10 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    & > div > div > div > div {
+      overflow: visible;
+    }
   `,
 
   ModalImage: styled.img`
