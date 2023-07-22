@@ -63,7 +63,7 @@
 ### 💫 FRONT
 |   이름    |  👑 이선아 |  오은비    |   오현석   |
 |----------|----------|----------|-------------|
-|  이번 <br> 프로젝트를 <br> 한 짤로 <br> 표현한다면? | <img  src="https://media.discordapp.net/attachments/1123432177485500486/1130304142242500628/IMG_7512.jpeg.jpg?width=926&height=1192" alt="이선아" width="200" height="180"/>| <img  src="https://media.discordapp.net/attachments/1123432177485500486/1132179977727656006/FDVGXQ7aMAAQ9qc.png?width=1280&height=1040" alt="오은비" width="200" height="180"/> | <img  src="https://media.discordapp.net/attachments/1123432177485500486/1130337870712950915/3998174577.jpg?width=1590&height=1192" alt="오현석" width="200" height="180"/> 
+|  이번 <br> 프로젝트를 <br> 한 짤로 <br> 표현한다면? | <img  src="https://media.discordapp.net/attachments/1123432177485500486/1130304142242500628/IMG_7512.jpeg.jpg?width=926&height=1192" alt="이선아" width="220" height="210"/>| <img  src="https://media.discordapp.net/attachments/1123432177485500486/1132179977727656006/FDVGXQ7aMAAQ9qc.png?width=1280&height=1040" alt="오은비" width="220" height="210"/> | <img  src="https://media.discordapp.net/attachments/1123432177485500486/1130337870712950915/3998174577.jpg?width=1590&height=1192" alt="오현석" width="220" height="210"/> 
 | 깃헙 주소 | [@ Doyu-Lee](https://github.com/Doyu-Lee) | [@ dreamogu](https://github.com/dreamogu)  |  [@ WAYPIL](https://github.com/waypil) |
 | 역할  |  프로젝트 팀장 | 회의록 서기 | 프로젝트 매니저 (PM) | 
 | 구현한 기능 | - 로그인 및 로그아웃<br>- 회원 CRUD <br>- 네이버, 카카오, 구글 OAuth | - 가계부 CRUD <br>- 가계부 게시글 R<br>- 이미지 줌인,아웃 기능 <br>- 이미지 크롭 기능 <br>- 공통 디자인 컴포넌트| -  | 
@@ -82,7 +82,7 @@
 ### 💫 BACK
 |   이름    |  👑 서재곤 |  김윤희    |   최한별   |
 |----------|----------|----------|-------------|
-| 이번 <br> 프로젝트를 <br> 한 짤로 <br> 표현한다면? | <img  src="https://media.discordapp.net/attachments/1125994197258879058/1132137505148387397/8a6eb22d821350fe.png?width=1112&height=1182" alt="서재곤" width="200" height="180"/>| <img  src="https://media.discordapp.net/attachments/1123432177485500486/1130326842595868682/2023-06-12_115555.png?width=1179&height=1192" alt="김윤희" width="200" height="180"/> | <img  src="https://media.discordapp.net/attachments/1123432177485500486/1131820014777942067/externalFile.jpg?width=1567&height=1182" alt="최한별" width="200" height="180"/> 
+| 이번 <br> 프로젝트를 <br> 한 짤로 <br> 표현한다면? | <img  src="https://media.discordapp.net/attachments/1125994197258879058/1132137505148387397/8a6eb22d821350fe.png?width=1112&height=1182" alt="서재곤" width="220" height="210"/>| <img  src="https://media.discordapp.net/attachments/1123432177485500486/1130326842595868682/2023-06-12_115555.png?width=1179&height=1192" alt="김윤희" width="220" height="210"/> | <img  src="https://media.discordapp.net/attachments/1123432177485500486/1131820014777942067/externalFile.jpg?width=1567&height=1182" alt="최한별" width="220" height="210"/> 
 | 깃헙 주소 | [@Jgone2](https://github.com/Jgone2) | [@YOONHEE-KIM](https://github.com/YOONHEE-KIM)  |  [@onestar](https://github.com/tapdancedorong) |
 | 역할 |  백엔드 팀장 | 멘토링 서기 | 품질 테스트 (QA) |
 | 구현 기능 |  ?? | ?? | - 회원 CRUD, MyPage 구현<br>- Spring Security <br>- OAuth2.0 로그인 인증<br>-JWT 생성 및 발급을 통한 사용자 인증<br>- 비즈니스 로직 예외처리 추상화 및 공통화 | 
