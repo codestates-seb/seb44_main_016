@@ -11,8 +11,8 @@ export const APIfinancialRecord = {
   },
   // 가계부 POST
   createFaRec: async (formData: FormData) => {
-    // const res = await axios.post('/api/financial-record/', formData, {
-    const res = await instance.post(`${BASE_URL}/financial-record`, formData, {
+    const res = await axios.post('/api/financial-record/', formData, {
+      // const res = await instance.post(`${BASE_URL}/financial-record`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

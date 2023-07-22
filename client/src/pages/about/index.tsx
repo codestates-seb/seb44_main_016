@@ -16,8 +16,8 @@ export default function About() {
     setActiveTab(tab);
   };
   const [typedText, setTypedText] = useState('');
-  const speed = 10;
-  const divide = 15;
+  const TYPING_SPEED = 10;
+  const DIVIDE = 15;
   const [counts, setCounts] = useState(TEAM_COUNT.map(() => 0));
   useEffect(() => {
     let interval: number;
@@ -27,8 +27,8 @@ export default function About() {
       const interval = setInterval(() => {
         setCounts((prevCounts) =>
           prevCounts.map((count, i) => {
-            const increment = Math.floor(TEAM_COUNT[i].count / divide);
-            const remainder = TEAM_COUNT[i].count % divide;
+            const increment = Math.floor(TEAM_COUNT[i].count / DIVIDE);
+            const remainder = TEAM_COUNT[i].count % DIVIDE;
             let newCount = count + increment;
 
             if (newCount + increment > TEAM_COUNT[i].count) {
@@ -57,7 +57,7 @@ export default function About() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setTypedText(SLOGAN.slice(0, typedText.length + 1));
-    }, speed);
+    }, TYPING_SPEED);
     return () => clearTimeout(timeout);
   }, [typedText]);
   return (

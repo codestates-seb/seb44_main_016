@@ -31,6 +31,11 @@ type InputData = {
   name: string;
 };
 
+type dataObject = {
+  financialRecordName: string;
+  memo: string;
+  financialRecordId?: number;
+};
 export default function FaRecForm({
   pageType,
   financialRecordId,
@@ -110,13 +115,26 @@ export default function FaRecForm({
     }
 
     const formData = new FormData();
-    formData.append('financialRecordName', faRecName || '');
-    formData.append('memo', faRecDesc || '');
-    formData.append('imgPath', croppedImage || initialImage || randomImg);
-
+    const dataObject: dataObject = {
+      financialRecordName: faRecName || '',
+      memo: faRecDesc || '',
+    };
     if (pageType === 'edit') {
-      formData.append('financialRecordId', `${financialRecordId}`);
+      dataObject.financialRecordId = financialRecordId;
     }
+    formData.append('data', JSON.stringify(dataObject));
+    const imgFile = new Blob([croppedImage || initialImage || randomImg], {
+      type: 'image/*',
+    });
+    formData.append('files', imgFile);
+
+    // formData.append('financialRecordName', faRecName || '');
+    // // formData.append('memo', faRecDesc || '');
+    // // formData.append('imgPath', croppedImage || initialImage || randomImg);
+
+    // if (pageType === 'edit') {
+    //   formData.append('financialRecordId', `${financialRecordId}`);
+    // }
 
     mutate(formData);
   };
