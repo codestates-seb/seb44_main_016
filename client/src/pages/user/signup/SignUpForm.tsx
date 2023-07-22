@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import CommonStyles from '../../../styles/CommonStyles';
 import useInput from '../../../hooks/useComponents';
 import useCheckboxError from '../../../hooks/useCheckoutError';
-import { SIGN_UP_MESSAGES } from '../../../constants/user';
+import { SIGN_UP_MESSAGES } from '../../../constants/messages/user';
 import apiUser from '../../../services/apiUser';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 import PolicyAgreement from './PolicyAgreement';
@@ -132,7 +132,7 @@ export default function SignUpForm() {
           setDomainValue={setDomainValue}
         />
       ))}
-      <PolicyAgreement error={error} CheckboxComponent={CheckboxComponent} />
+      <PolicyAgreement CheckboxComponent={CheckboxComponent} isSignUp={true} />
       <S.SubmitBox {...isClickedProps}>
         <S.SubmitBtn large onClick={handleSignUpSubmit}>
           회원가입

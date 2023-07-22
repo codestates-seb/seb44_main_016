@@ -1,19 +1,21 @@
 import styled from '@emotion/styled';
 import CommonStyles from '../../../styles/CommonStyles';
 import { SignUpError } from '../../../types/user';
+import PersonalInfoLaw from './PersonalInfoLaw';
 
 interface PolicyAgreementProps {
-  error: SignUpError;
   CheckboxComponent: React.ReactNode;
+  isSignUp: boolean;
 }
 
-export default function PolicyAgreement({ CheckboxComponent }: PolicyAgreementProps) {
+export default function PolicyAgreement({ CheckboxComponent, isSignUp }: PolicyAgreementProps) {
   return (
     <S.PolicyContainer>
       <S.PolicyLabel>
         약관동의
         <span>*</span>
       </S.PolicyLabel>
+      {isSignUp ? <PersonalInfoLaw /> : ''}
       {CheckboxComponent}
     </S.PolicyContainer>
   );
