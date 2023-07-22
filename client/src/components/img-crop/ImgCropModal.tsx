@@ -75,7 +75,7 @@ function ImgCropModal({
   }
 
   return (
-    <S.CropWrap>
+    <S.CropWrap className={isMyPage ? 'isMyPage' : ''}>
       <S.CropContainer className={isMyPage ? 'isMyPage' : ''}>
         <Cropper
           image={imgSrc || ''}
@@ -111,6 +111,10 @@ const S = {
     place-items: center;
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(5px);
+    &.isMyPage {
+      background: transparent;
+      backdrop-filter: blur(0px);
+    }
   `,
   CropContainer: styled.div`
     max-width: 400px;
@@ -155,6 +159,9 @@ const S = {
         background: var(--color-white);
         font-weight: 600;
         color: var(--color-primary);
+      }
+      &:focus {
+        outline: 2px solid var(--color-point-yellow);
       }
     }
 

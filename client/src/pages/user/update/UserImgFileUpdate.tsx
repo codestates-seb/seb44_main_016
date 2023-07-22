@@ -7,6 +7,7 @@ import { useImgCrop } from '../../../hooks/useImgCrop';
 import { handleFileChange } from '../../../components/img-crop/imgCropUtils';
 import { store } from '../../../components/redux/store';
 import { UserInfoResData } from '../../../types/user';
+import { useEffect, useRef } from 'react';
 
 interface RandomAvatarUpdateProps {
   myInfoData: UserInfoResData;
@@ -16,6 +17,9 @@ interface RandomAvatarUpdateProps {
 
 export default function UserImgFileUpdate({ myInfoData, setIsOpen, isOpen }: RandomAvatarUpdateProps) {
   const dispatch = useAppDispatch();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const decideBtnRef = useRef<HTMLButtonElement>(null); // Ref for the DecideBtn
+
   const currentImgSrc = store.getState().currentImgReducer.currentImgSrc;
   const { imgSrc, setImgSrc, croppedImage, setCroppedImage, cropModal, setCropModal } = useImgCrop();
 
@@ -33,9 +37,27 @@ export default function UserImgFileUpdate({ myInfoData, setIsOpen, isOpen }: Ran
     setIsOpen(!isOpen);
   };
 
+  const handleFileInputClick = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const prevCropModalRef = useRef(false);
+
+  useEffect(() => {
+    console.log(prevCropModalRef);
+    if (prevCropModalRef.current !== false) {
+      if (!cropModal && decideBtnRef.current) {
+        decideBtnRef.current.focus();
+      }
+    }
+    prevCropModalRef.current = cropModal;
+  }, [cropModal]);
+
   return (
     <>
-      <S.UserImg>
+      <S.UserImgBox>
         {croppedImage ? (
           <img src={croppedImage} />
         ) : currentImgSrc ? (
@@ -43,14 +65,23 @@ export default function UserImgFileUpdate({ myInfoData, setIsOpen, isOpen }: Ran
         ) : (
           <img src={myInfoData?.profileImgPath} alt={`프로필 사진`} />
         )}
-      </S.UserImg>
-      <S.FileInput type='file' id='addUserProfileImg' accept='image/*' onChange={onFileChange} />
-      <FilePlusLabel htmlFor='addUserProfileImg' />
-      <S.ButtonWrap>
-        <button type='button' onClick={handleChooseFileProfileImg}>
+        <S.FileInput
+          type='file'
+          id='addUserProfileImg'
+          accept='image/*'
+          onChange={onFileChange}
+          ref={fileInputRef}
+        />
+        <S.FilePlusIconBox tabIndex={0} onKeyDown={handleFileInputClick}>
+          <FilePlusLabel htmlFor='addUserProfileImg' />
+        </S.FilePlusIconBox>
+      </S.UserImgBox>
+
+      <S.ButtonBox>
+        <S.DecideBtn type='button' ref={decideBtnRef} onClick={handleChooseFileProfileImg}>
           이 사진으로 <br /> 결정하기
-        </button>
-      </S.ButtonWrap>
+        </S.DecideBtn>
+      </S.ButtonBox>
       {cropModal && (
         <ImgCropModal
           isOpen={cropModal}
@@ -66,13 +97,14 @@ export default function UserImgFileUpdate({ myInfoData, setIsOpen, isOpen }: Ran
   );
 }
 const S = {
-  UserImg: styled.div`
+  UserImgBox: styled.div`
     width: 150px;
     height: 150px;
     border-radius: 50%;
     overflow: hidden;
     transition-duration: 0.7s;
     margin-bottom: 1.7rem;
+    position: relative;
     & > img {
       width: 100%;
       height: 100%;
@@ -83,7 +115,7 @@ const S = {
       transform: scale(1.1);
     }
   `,
-  ButtonWrap: styled.div`
+  ButtonBox: styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -101,6 +133,9 @@ const S = {
         font-weight: 600;
         color: var(--color-primary);
       }
+      &:focus {
+        outline: 2px solid var(--color-point-yellow);
+      }
     }
     & > button:nth-of-type(2) {
       border: 2px solid var(--color-point-light-gray);
@@ -114,21 +149,21 @@ const S = {
       }
     }
   `,
-  ImgBox: styled.div`
-    position: relative;
-    width: 12.7rem;
-    height: 12.7rem;
-    border-radius: 100%;
-    overflow: hidden;
-    margin-bottom: 3.125rem;
-    & > img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition-duration: 0.7s;
+  DecideBtn: styled.button`
+    &:focus {
+      outline: 1px solid var(--color-point-yellow);
     }
-    &:hover > img {
-      transform: scale(1.1);
+  `,
+  FilePlusIconBox: styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    height: 20%;
+    border-radius: 50%;
+    &:focus {
+      outline: 3px solid white;
     }
   `,
   FileInput: styled.input`

@@ -36,23 +36,24 @@ export default function RandomAvatarUpdate({ myInfoData, setIsOpen, isOpen }: Ra
 
   return (
     <>
-      <S.UserImg>
+      <S.UserImgBox>
         <img src={avatarImgURL} />
-      </S.UserImg>
-      <S.ButtonWrap>
+      </S.UserImgBox>
+
+      <S.ButtonBox>
         <button type='button' onClick={handleChooseAvatarProfileImg}>
           지금 아바타로 <br /> 결정하기
         </button>
         <button onClick={handleChangeAvatarImg}>
           다시 랜덤으로 <br /> 돌리기
         </button>
-      </S.ButtonWrap>
+      </S.ButtonBox>
     </>
   );
 }
 
 const S = {
-  UserImg: styled.div`
+  UserImgBox: styled.div`
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -69,7 +70,7 @@ const S = {
       transform: scale(1.1);
     }
   `,
-  ButtonWrap: styled.div`
+  ButtonBox: styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,6 +88,9 @@ const S = {
         font-weight: 600;
         color: var(--color-primary);
       }
+      &:focus {
+        outline: 2px solid var(--color-point-yellow);
+      }
     }
     & > button:nth-of-type(2) {
       border: 2px solid var(--color-point-light-gray);
@@ -97,6 +101,9 @@ const S = {
       &:hover {
         background: var(--color-white);
         color: var(--color-point-gray);
+      }
+      &:focus {
+        outline: 2px solid var(--color-primary);
       }
     }
   `,

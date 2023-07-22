@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import Head from 'next/head';
 import styled from '@emotion/styled';
@@ -10,7 +9,7 @@ import useCheckboxError from '../../../hooks/useCheckoutError';
 import apiUser from '../../../services/apiUser';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 import getNewError from '../../../utils/inputValidationError';
-import BackBtnBox from '../../../components/BackBtn';
+import BackBtn from '../../../components/BackBtn';
 import useMutateUser from '../../../services/useMutateUser';
 
 export default function UserDelete() {
@@ -70,12 +69,13 @@ export default function UserDelete() {
       <Head>
         <title>제로힙 회원 탈퇴 페이지</title>
       </Head>
-      <BackBtnBox />
+      <BackBtn />
       <S.FormContainer>
         <S.WarningMessage>
-          {`회원 탈퇴를 할 경우, ${'마마망'}님의 회원 정보, 가계부, 구독 목록 등`}
+          <S.ReactiveBox>회원 탈퇴를 하실 경우, {`${'마마망'}님의 `}</S.ReactiveBox> 회원 정보, 가계부, 구독
+          목록 등
           <br />
-          {`모든 데이터가 삭제되며 되돌릴 수 없습니다.`}
+          모든 데이터가 삭제되며 <S.ReactiveBox>되돌릴 수 없습니다.</S.ReactiveBox>
         </S.WarningMessage>
         <input name='username' autoComplete='사용자명' style={{ display: 'none' }} />
         {inputData.map((el) => (
@@ -84,7 +84,9 @@ export default function UserDelete() {
               <S.Label htmlFor={el.label.htmlFor}>{el.label.text}</S.Label>
             </S.LabelBox>
             <S.InputField>{el.component}</S.InputField>
-            <S.Error htmlFor={el.label.htmlFor}>{el.error}</S.Error>
+            <S.ErrorBox>
+              <S.Error htmlFor={el.label.htmlFor}>{el.error}</S.Error>
+            </S.ErrorBox>
           </S.InputBox>
         ))}
         <S.CheckboxBox>{CheckboxComponent}</S.CheckboxBox>
@@ -108,6 +110,9 @@ const S = {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    @media screen and (max-width: 500px) {
+      padding: 0rem 1rem;
+    }
   `,
   BackBox: styled.div`
     display: flex;
@@ -124,12 +129,17 @@ const S = {
     align-items: center;
   `,
   WarningMessage: styled.div`
-    width: 61%;
+    width: 100%;
     padding: 1rem 0;
     color: var(--color-error-red);
     font-size: 1.1rem;
     font-weight: 500;
     text-align: center;
+  `,
+  ReactiveBox: styled.span`
+    @media screen and (max-width: 450px) {
+      display: block;
+    }
   `,
   SubmitBox: styled.div<SubmitBoxProps>`
     width: 53%;
@@ -138,14 +148,22 @@ const S = {
     font-size: 1.1rem;
     font-weight: 500;
   `,
+  ErrorBox: styled.div`
+    margin-left: 1rem;
+  `,
   Error: styled.label`
-    padding-left: 20px;
     font-size: 0.98rem;
     margin-top: 8px;
     color: var(--color-error-red);
   `,
   InputBox: styled.div`
     width: 53%;
+    @media screen and (max-width: 750px) {
+      width: 70%;
+    }
+    @media screen and (max-width: 500px) {
+      width: 90%;
+    }
   `,
   LabelBox: styled.div`
     margin-bottom: 0.7rem;
@@ -161,5 +179,11 @@ const S = {
   CheckboxBox: styled.div`
     width: 52.5%;
     margin-top: 3rem;
+    @media screen and (max-width: 750px) {
+      width: 70%;
+    }
+    @media screen and (max-width: 500px) {
+      width: 90%;
+    }
   `,
 };

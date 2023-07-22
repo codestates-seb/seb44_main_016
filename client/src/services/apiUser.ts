@@ -7,47 +7,47 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const apiUser = {
   /** 회원 가입 */
   postSignUp: async (signUpData: PostSignUp) => {
-    const res = await axios.post(`${BASE_URL}/user/signup`, signUpData);
-    return res;
+    const response = await axios.post(`${BASE_URL}/user/signup`, signUpData);
+    return response;
   },
 
   /** 로그인 */
   postLogin: async (loginData: LoginReqData): Promise<AxiosResponse> => {
-    const res = await axios.post(`${BASE_URL}/user/login`, loginData, {
+    const response = await axios.post(`${BASE_URL}/user/login`, loginData, {
       withCredentials: true,
     });
-    return res;
+    return response;
   },
 
   /** 로그아웃 */
   deleteLogout: async () => {
-    const res = await instance.delete(`${BASE_URL}/auth/logout`);
-    return res;
+    const response = await instance.delete(`${BASE_URL}/auth/logout`);
+    return response;
   },
 
   /** 회원 탈퇴 */
   deleteMyInfo: async (password: string) => {
-    const res = await instance.delete(`${BASE_URL}/user/delete`, { data: { password: password } });
-    return res;
+    const response = await instance.delete(`${BASE_URL}/user/delete`, { data: { password: password } });
+    return response;
   },
 
   /** 회원 정보 불러오기 */
   getMyInfo: async () => {
-    const res = await instance.get(`${BASE_URL}/user/mypage`);
-    return res.data;
+    const response = await instance.get(`${BASE_URL}/user/mypage`);
+    return response.data;
   },
 
   /** 회원 정보 수정 */
   updateMyInfo: async (userUpdateData: FormData) => {
-    const res = await instance.patch(`${BASE_URL}/user/update`, userUpdateData, {
+    const response = await instance.patch(`${BASE_URL}/user/update`, userUpdateData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
-    return res;
+    return response;
   },
 
   getNewRefresh: async () => {
-    const res = await instance.post(`${BASE_URL}/auth/refresh`);
-    return res;
+    const response = await instance.post(`${BASE_URL}/auth/refresh`);
+    return response;
   },
 };
 

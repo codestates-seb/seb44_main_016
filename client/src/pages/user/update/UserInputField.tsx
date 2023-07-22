@@ -16,7 +16,9 @@ export default function UserInputField({ label, guide, component, error }: Input
         <S.Guide htmlFor={label?.htmlFor || ''}>{guide}</S.Guide>
       </S.LabelBox>
       <S.InputField>{component}</S.InputField>
-      <S.Error htmlFor={label?.htmlFor || ''}>{error} </S.Error>
+      <S.ErrorBox>
+        <S.Error htmlFor={label?.htmlFor || ''}>{error} </S.Error>
+      </S.ErrorBox>
     </S.InputBox>
   );
 }
@@ -25,16 +27,35 @@ const S = {
   InputField: styled.div`
     margin: 0.5rem 0;
   `,
+  ErrorBox: styled.div`
+    margin-left: 1rem;
+  `,
   Error: styled.label`
-    padding-left: 0.5rem;
     font-size: 0.98rem;
     color: var(--color-error-red);
+    border: 1px solid transparent;
   `,
   InputBox: styled.div`
     width: 51%;
+    @media screen and (max-width: 900px) {
+      width: 44%;
+    }
+    @media screen and (max-width: 750px) {
+      width: 51%;
+    }
+    @media screen and (max-width: 500px) {
+      width: 70%;
+    }
+    @media screen and (max-width: 350px) {
+      width: 90%;
+    }
   `,
   LabelBox: styled.div`
     margin-top: 1rem;
+    @media screen and (max-width: 750px) {
+      display: flex;
+      flex-direction: column;
+    }
   `,
   Label: styled.label`
     font-weight: 600;

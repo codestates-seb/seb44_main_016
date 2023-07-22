@@ -1,4 +1,4 @@
-import React, { useState, useCallback, MouseEvent, ChangeEvent } from 'react';
+import React, { useState, useCallback, MouseEvent, ChangeEvent, useEffect } from 'react';
 import CommonStyles from '../styles/CommonStyles';
 import styled from '@emotion/styled';
 import ShowIcon from '../../public/images/icon/show.svg';
@@ -65,15 +65,31 @@ export function useCheckboxInput(type: string, label: string): UseCheckBoxReturn
 
   const Component = useCallback(() => {
     const handleClick = () => {
-      setIsChecked((prev) => !prev);
+      setIsChecked(!isChecked);
     };
 
-    const inputProps = {
-      type,
-      id: label,
-      onClick: handleClick,
+    const handleKeydown = (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        setIsChecked((prev) => !prev);
+      }
     };
-    return <S.Checkbox {...inputProps} />;
+
+    return (
+      <S.InputBox>
+        <S.HiddenCheckbox
+          type={type}
+          id={label}
+          checked={isChecked}
+          onChange={handleClick}
+          onClick={handleClick}
+          onKeyDown={handleKeydown}
+          role='checkbox'
+          tabIndex={0}
+          aria-checked={isChecked}
+        />
+        <S.CustomCheckbox className={isChecked ? 'checked' : ''} htmlFor={label} />
+      </S.InputBox>
+    );
   }, [isChecked]);
 
   return [Component(), isChecked, setIsChecked];
@@ -83,17 +99,31 @@ const S = {
   ...CommonStyles,
   InputBox: styled.div`
     position: relative;
-    width: 100%;
+    /* width: 100%; */
   `,
-  Checkbox: styled.input`
+  HiddenCheckbox: styled.input`
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 1.4rem;
+    height: 1.4rem;
+    cursor: pointer;
+    &:focus {
+      opacity: 0.8;
+      background-color: white;
+    }
+  `,
+  CustomCheckbox: styled.label`
     appearance: none;
+    display: inline-block;
     border: 1.5px solid var(--color-border-gray);
     border-radius: 0.35rem;
     width: 1.4rem;
     height: 1.4rem;
     background-color: white;
     cursor: pointer;
-    &:checked {
+    &.checked {
       border-color: transparent;
       background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e");
       background-color: var(--color-point-lilac);
