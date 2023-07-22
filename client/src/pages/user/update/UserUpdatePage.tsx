@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import CommonStyles from '../../../styles/CommonStyles';
 import useInput from '../../../hooks/useComponents';
-import { USER_UPDATE_MESSAGES } from '../../../constants/user';
+import { USER_UPDATE_MESSAGES } from '../../../constants/messages/user';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 import BackBtn from '../../../components/BackBtn';
 import getNewError from '../../../utils/inputValidationError';

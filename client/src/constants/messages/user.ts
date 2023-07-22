@@ -4,7 +4,7 @@ export const SIGN_UP_MESSAGES = {
   PASSWORD_CONFIRM_GUIDE: '확인을 위해 비밀번호를 다시 입력해주세요.',
   NICKNAME_GUIDE: '닉네임을 입력해주세요. 마이 페이지에서 변경 가능합니다.',
   EMAIL_GUIDE: '유효한 이메일 주소를 입력해주세요.',
-  POLICY_EXPLAIN: '선택항목에 대한 동의 포함',
+  POLICY_EXPLAIN: '개인정보 처리방침에 대한 동의 포함',
   POLICY_GUIDE: '필수 약관에 동의해주세요.',
 };
 

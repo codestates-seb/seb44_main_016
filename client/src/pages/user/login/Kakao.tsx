@@ -3,7 +3,7 @@ import Kakao from '../../../../public/images/icon/kakao.svg';
 
 export default function KakaoOauth() {
   const apiKey = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
-  const redirectURI = 'http://localhost:3000/oauth/kakao';
+  const redirectURI = 'https://www.zerohip.co.kr/oauth/kakao';
   const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${apiKey}&redirect_uri=${redirectURI}&response_type=code`;
 
   const handleKakaoLogin = () => {
