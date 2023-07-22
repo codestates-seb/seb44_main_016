@@ -179,19 +179,17 @@ const S = {
     left: 0;
     width: 100vw;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background-color: rgba(0, 0, 0, 0.8);
     z-index: 999;
 
-    & > button.swiper-button-next {
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
   `,
 
   ModalImage: styled.img`
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 100vw;
+    max-height: 100vh;
   `,
   CloseBtn: styled.button`
     position: absolute;
