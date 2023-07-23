@@ -51,6 +51,20 @@ export interface LoginResData {
   isLoggedIn: boolean;
 }
 
+export interface OAuthData {
+  grantType: string;
+  code: string;
+  state?: string;
+  redirectURI: string;
+  clientId: string;
+  clientSecret: string;
+}
+
+export interface OAuthReqData {
+  oAuthData: OAuthData;
+  targetOAuth: string;
+}
+
 export interface UserUpdateReqData {
   profileImgPath?: string | null;
   nickname?: string | null;
@@ -73,7 +87,7 @@ export interface UserFeedData {
     nickname: string;
     profileImgPath: string;
   };
-  content: 'SKT 가족 할인이 짜장입니다 그 돈 아껴서 태국 스노쿨링 하다 왔어요 거북이도 봤쬬';
+  content: string;
   createdAt: Date;
   modifiedAt: Date;
   imgPath: string;

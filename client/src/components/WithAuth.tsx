@@ -15,7 +15,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   // const accessToken = null; // accessToken 만료 test용 (배포 직전 삭제)
 
   /** refresh 토큰으로 새 access 토큰을 발급받는 api */
-  const { mutate } = useMutation(apiUser.getNewRefresh, {
+  const { mutate } = useMutation(apiUser.getNewAccess, {
     onSuccess: (data) => {
       const newAccessTokenWithBearer = data.headers.authorization;
       const newAccessToken = newAccessTokenWithBearer.split(' ')[1];
