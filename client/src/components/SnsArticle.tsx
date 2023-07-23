@@ -118,7 +118,6 @@ const S = {
   ...CommonStyles,
   SnsArticleContainer: styled.article`
     width: 100%;
-    filter: drop-shadow(0px 3px 3px var(--color-gray07)); // 그림자
     padding: 0 7%;
     display: flex;
     flex-direction: column;
@@ -136,10 +135,13 @@ const S = {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    z-index: 997;
   `,
   Box: styled.div`
     width: 100%;
     background-color: white;
+    box-shadow: var(--shadow-default);
 
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;

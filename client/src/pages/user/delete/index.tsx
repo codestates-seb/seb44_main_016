@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import Head from 'next/head';
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -11,6 +10,8 @@ import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/u
 import getNewError from '../../../utils/inputValidationError';
 import BackBtn from '../../../components/BackBtn';
 import useMutateUser from '../../../services/useMutateUser';
+import HeadMeta from '../../../components/HeadMeta';
+import { USER_META_DATA } from '../../../constants/seo/userMetaData';
 
 export default function UserDelete() {
   const [PwInput, pwValue] = useInput('password', '비밀번호', 'pw', 'current-password');
@@ -66,9 +67,10 @@ export default function UserDelete() {
 
   return (
     <S.Container>
-      <Head>
-        <title>제로힙 회원 탈퇴 페이지</title>
-      </Head>
+      <HeadMeta
+        title={USER_META_DATA.USER_DELETE_PAGE.TITLE}
+        description={USER_META_DATA.USER_DELETE_PAGE.DESCRIPTION}
+      />
       <BackBtn />
       <S.FormContainer>
         <S.WarningMessage>

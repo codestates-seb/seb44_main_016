@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import CommonStyles from '../../../styles/CommonStyles';
-import { SignUpError } from '../../../types/user';
 import PersonalInfoLaw from './PersonalInfoLaw';
 
 interface PolicyAgreementProps {
