@@ -33,9 +33,9 @@ public class FinancialRecordController {
 
   @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity createFinancialRecord(@RequestPart("data") @Valid FinancialRecordDto.Post data,
-                                              @AuthenticationPrincipal User author,
+                                              @AuthenticationPrincipal String authorId,
                                               @RequestPart("file")MultipartFile file) {
-    FinancialRecord createFaRec = faRecService.createFaRec(author, mapper.financialRecordPostToFinancialRecord(data), file);
+    FinancialRecord createFaRec = faRecService.createFaRec(authorId, mapper.financialRecordPostToFinancialRecord(data), file);
     URI uri = URI.create(FINANCIAL_RECORD_DEFAULT_URI + "/" + createFaRec.getFinancialRecordId());
 
     log.info("createFaRec.getCreatedAt() : {}", createFaRec.getCreatedAt());

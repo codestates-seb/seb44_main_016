@@ -33,10 +33,10 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
   private final UserService userService;
   // 가계부 생성
   @Override
-  public FinancialRecord createFaRec(User author, FinancialRecord faRec, MultipartFile file) {
+  public FinancialRecord createFaRec(String authorId, FinancialRecord faRec, MultipartFile file) {
 
 
-    faRec.setUser(findUser(author));
+    faRec.setUser(findUser(authorId));
 
     FinancialRecord savedFaRec = repository.save(faRec);
     // Img 객체 저장
@@ -144,8 +144,8 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
     }
   }
 
-  public User findUser(User author) {
-    return userService.findUserByLoginId(author.getLoginId());
+  public User findUser(String authorId) {
+    return userService.findUserByLoginId(authorId);
   }
 
   private Img saveImg(FinancialRecord faRec, MultipartFile file) {

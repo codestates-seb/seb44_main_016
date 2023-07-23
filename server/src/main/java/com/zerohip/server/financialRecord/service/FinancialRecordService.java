@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface FinancialRecordService {
   // 가계부 생성
-  FinancialRecord createFaRec(User author, FinancialRecord faRec, MultipartFile file);
+  FinancialRecord createFaRec(String authorId, FinancialRecord faRec, MultipartFile file);
 
   // 가계부 조회(단건)
   FinancialRecord findFaRec(User author, Long faRecId);
@@ -27,5 +27,5 @@ public interface FinancialRecordService {
   // 가계부 조회확인
   FinancialRecord findVerifiedFaRec(Long faRecId);
 
-  public User findUser(User author);
+  User findUser(String userId);
 }
