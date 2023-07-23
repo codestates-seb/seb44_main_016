@@ -1,12 +1,13 @@
-import React from 'react'; // useState 사용
+import React, { useEffect, useState } from 'react'; // useState 사용
 import styled from '@emotion/styled';
-
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react'; // Import Swiper React components
 import 'swiper/css'; // Import Swiper styles
 import 'swiper/css/navigation';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 import CommonStyles from '../styles/CommonStyles';
+import SVGs from '../constants/svg';
 import { useWindowType } from '../hooks/useWindowSize';
 
 type Props = {
@@ -17,7 +18,45 @@ type Props = {
 };
 
 export default function ImgsCarousel(props: Props) {
+  const [isModalVisible, setIsModalVisible] = useState(false); // 모달 상태
+  const [modalImage, setModalImage] = useState(''); // 모달에 보여질 이미지
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const handleImageClick = (
+    e: React.MouseEvent<HTMLImageElement, MouseEvent>,
+    imgSrc: string,
+    index: number
+  ) => {
+    e.stopPropagation();
+    setIsModalVisible(true);
+    setModalImage(imgSrc);
+    setCurrentSlide(index);
+  };
+  const handleCloseModal = () => {
+    // if (e.target === e.currentTarget) {
+    setIsModalVisible(false);
+    setModalImage('');
+  };
+  const handleStopPropagation = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    e.stopPropagation();
+  };
   const windowType = useWindowType();
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleCloseModal();
+      }
+    };
+
+    if (isModalVisible) {
+      window.addEventListener('keydown', handleEsc);
+    }
+
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, [isModalVisible]);
 
   return (
     <S.ImgContainer className={windowType}>
@@ -37,19 +76,56 @@ export default function ImgsCarousel(props: Props) {
         }}
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
-        // onSwiper={(swiper) => console.log(swiper)}
-        // onSlideChange={() => console.log('slide change')}
       >
         <S.ImgSlideBtn className='swiper-button-next' type='button' />
         <S.ImgSlideBtn className='swiper-button-prev' type='button' />
         {props.imgPath.map((imgSrc, i) => {
           return (
             <SwiperSlide key={i}>
-              <S.Img src={imgSrc} alt={`사용자가 올린 ${i + 1}번째 사진`} />
+              <S.Img
+                src={imgSrc}
+                alt={`사용자가 올린 ${i + 1}번째 사진`}
+                onClick={(e) => handleImageClick(e, imgSrc, i)}
+              />
             </SwiperSlide>
           );
         })}
       </Swiper>
+      {isModalVisible ? (
+        <S.Modal>
+          <S.CloseBtn aria-label='닫기 버튼' onClick={handleCloseModal}>
+            {SVGs.whiteCloseBtn}
+          </S.CloseBtn>
+          <Swiper
+            modules={[Navigation, Pagination, Scrollbar, A11y]}
+            spaceBetween={0}
+            slidesPerView={1}
+            navigation={{
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            }}
+            initialSlide={currentSlide}
+          >
+            <S.ImgSlideBtn className='swiper-button-next modal' type='button' />
+            <S.ImgSlideBtn className='swiper-button-prev modal' type='button' />
+            {props.imgPath.map((imgSrc, i) => {
+              return (
+                <SwiperSlide key={i} onClick={handleCloseModal}>
+                  <TransformWrapper initialScale={1} minScale={1} maxScale={10}>
+                    <TransformComponent>
+                      <div onClick={handleStopPropagation}>
+                        <S.ModalImage src={imgSrc} alt={`사용자가 올린 ${i + 1}번째 사진`} />
+                      </div>
+                    </TransformComponent>
+                  </TransformWrapper>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        </S.Modal>
+      ) : (
+        <></>
+      )}
     </S.ImgContainer>
   );
 }
@@ -63,6 +139,7 @@ const S = {
     overflow: hidden;
     background-color: #f8f9fc;
     border-bottom: 0.05rem solid var(--color-gray08);
+    cursor: pointer;
 
     & .swiper-initialized {
       height: 100%;
@@ -94,6 +171,9 @@ const S = {
     &.swiper-button-disabled {
       visibility: hidden;
     }
+    &.modal.swiper-button-next {
+      right: 23px;
+    }
   `,
 
   RankIndicator: styled.div`
@@ -106,11 +186,56 @@ const S = {
     align-items: end;
     padding-right: 3rem;
     padding-bottom: 2rem;
-    z-index: 996;
+    z-index: 9999;
   `,
   RankText: styled.h2`
     font-size: 3rem;
     color: white;
     border-bottom: 0.3rem solid white;
+  `,
+  Modal: styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 999;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > div > div > div {
+      // 사진 확대 시 이전/다음 페이지 영역 침범 방지
+      overflow: hidden;
+    }
+
+    & > div > div > div > div {
+      // ModalImage 바로 윗단계 div
+      overflow: visible;
+    }
+  `,
+
+  ModalImage: styled.img`
+    max-width: 100vw;
+    max-height: 100vh;
+  `,
+  CloseBtn: styled.button`
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    width: 2rem;
+    height: 2rem;
+    z-index: 1000;
+    transition-duration: 0.3s;
+    & > svg {
+      width: 100%;
+      height: 100%;
+      color: #fff;
+    }
+    &:active {
+      transform: scale(0.95);
+    }
   `,
 };

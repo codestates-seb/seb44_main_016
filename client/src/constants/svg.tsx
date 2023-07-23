@@ -262,6 +262,12 @@ const SVGs = {
       />
     </svg>
   ),
+  whiteCloseBtn: (
+    <svg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
+      <path d='M13.5 1L1 13.5' stroke='#FFFFFF' />
+      <path d='M13.5 13.5L1 0.999999' stroke='#FFFFFF' />
+    </svg>
+  ),
   aboutIcon0: (
     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 79.7 79.7'>
       <g id='ICON'>
