@@ -14,6 +14,7 @@ const KakaoOauthRedirection = () => {
     const codeValue = new URLSearchParams(window.location.search).get('code');
     if (codeValue) {
       code = codeValue;
+      console.log(code);
     }
   }, []);
 
@@ -28,6 +29,7 @@ const KakaoOauthRedirection = () => {
       };
       const targetOAuth = 'kakao';
       const oAuthReqBody = { oAuthData, targetOAuth };
+      console.log(oAuthReqBody);
 
       const { LoginMutate } = useMutateUser.login(apiUser.postOAuthCode);
       LoginMutate(oAuthReqBody);
