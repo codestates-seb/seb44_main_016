@@ -14,6 +14,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @AuthenticationPrincipal : 필터에서 검증된 jwt 사용자 정보를 스프링 시큐리티가 User author 에게 주입해주는 에너테이션
@@ -64,6 +68,36 @@ public class UserController {
 
         User findUserInfo = userService.findUserByLoginId(authorId);
         return new ResponseEntity<>(mapper.userToUserResponseDto(findUserInfo), HttpStatus.OK);
+    }
+
+    @GetMapping("/mypage")
+    public ResponseEntity<?> getMyPage(@AuthenticationPrincipal String authorId) {
+
+        if (authorId == null) {
+            throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
+        }
+
+        User author = userService.findUserByLoginId(authorId);
+
+        User newAuthor = new User(author.getUserId(), author.getLoginId(), author.getNickname());
+
+        List<User> followingList = Arrays.asList(
+                new User(5L, "junp", "준프님", false),
+                new User(6L, "hahan", "선빵이", true)
+        );
+
+        List<User> followerList = Arrays.asList(
+                new User(10L, "ogu", "햄구맘", true),
+                new User(11L, "apple", "망고친구", false),
+                new User(12L, "maximum123", "나그네입니다최대글자", false)
+        );
+
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("User", newAuthor);
+        response.put("followingList", followingList);
+        response.put("followerList", followerList);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
 

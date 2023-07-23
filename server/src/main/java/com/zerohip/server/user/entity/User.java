@@ -1,5 +1,6 @@
 package com.zerohip.server.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.zerohip.server.common.audit.Auditable;
 import lombok.*;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "USERS")
+@JsonInclude(JsonInclude.Include.NON_NULL)  // test 후 기능 완료되면 삭제 예정 (mypage 조회용)
 public class User extends Auditable {
 
     @Id
@@ -34,6 +36,25 @@ public class User extends Auditable {
 
     @Column
     private Provider provider;
+
+    // 테스트 중
+    @Column
+    private Boolean followed;
+
+    // 테스트 중
+    public User(Long userId, String loginId, String nickname) {
+        this.userId = userId;
+        this.loginId = loginId;
+        this.nickname = nickname;
+    }
+
+    // 테스트 중
+    public User(Long userId, String loginId, String nickname, Boolean followed) {
+        this.userId = userId;
+        this.loginId = loginId;
+        this.nickname = nickname;
+        this.followed = followed;
+    }
 
     public User(String email, String loginId, String password, String nickname, String provider) {
         this.email = email;
