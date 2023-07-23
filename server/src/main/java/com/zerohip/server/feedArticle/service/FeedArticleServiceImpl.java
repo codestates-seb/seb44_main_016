@@ -9,10 +9,10 @@ import com.zerohip.server.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 
@@ -25,7 +25,7 @@ public class FeedArticleServiceImpl implements FeedArticleService {
 
     //피드게시글 작성
     @Override
-    public FeedArticle createFeedArticle(User author, FeedArticle feedArticle) {
+    public FeedArticle createFeedArticle(String author, FeedArticle feedArticle) {
         validateFeedArticle(feedArticle);
         return feedArticleRepository.save(feedArticle);
     }
@@ -40,20 +40,31 @@ public class FeedArticleServiceImpl implements FeedArticleService {
 
     //피드 게시글 조회
     @Override
-    public FeedArticle findFeedArticle(Long feedArticleId) {
-        return findVerifiedFeedArticle(feedArticleId);
+    public FeedArticle findFeedArticle(Long articleId) {
+        return findVerifiedFeedArticle(articleId);
     }
 
     //피드 조회
     @Override
-    public Page<FeedArticle> findFeedArticles(Long feedArticleId, int page, int size) {
+    public Page<FeedArticle> findFeedArticles(Long articleId, int page, int size) {
         return feedArticleRepository.findAll(PageRequest.of(page -1, size));
+    }
+
+    // 특정 사용자의 피드 게시글 조회
+    @Override
+    public Page<FeedArticle> findUserFeedArticles(Long userId, int page, int size) {
+        User user = userService.findUserByUserId(userId);
+        if (user == null) {
+            throw new IllegalArgumentException("User not found with ID: " + userId);
+        }
+
+        return feedArticleRepository.findByUser(user, PageRequest.of(page - 1, size, Sort.by("createdAt").descending()));
     }
 
     //피드 게시글 수정
     @Override
-    public FeedArticle updateFeedArticle(User author, Long feedArticleId, FeedArticleDto.Patch patchParam) {
-        FeedArticle findFeedArticle = findVerifiedFeedArticle(feedArticleId);
+    public FeedArticle updateFeedArticle(String author, Long articleId, FeedArticleDto.Patch patchParam) {
+        FeedArticle findFeedArticle = findVerifiedFeedArticle(articleId);
         findFeedArticle.setContent(patchParam.getContent());
         findFeedArticle.setFeedType(patchParam.getFeedType());
         findFeedArticle.setScope(patchParam.getScope());
@@ -64,13 +75,13 @@ public class FeedArticleServiceImpl implements FeedArticleService {
 
     //피드 게시글 삭제
     @Override
-    public void deleteFeedArticle(User author, Long feedArticleId) {
-        FeedArticle findFeedArticle = findVerifiedFeedArticle(feedArticleId);
+    public void deleteFeedArticle(String author, Long articleId) {
+        FeedArticle findFeedArticle = findVerifiedFeedArticle(articleId);
         feedArticleRepository.delete(findFeedArticle);
     }
     @Override
-    public FeedArticle findVerifiedFeedArticle(Long feedArticleId){
-        Optional<FeedArticle> optionalFeedArticle = feedArticleRepository.findById(feedArticleId);
+    public FeedArticle findVerifiedFeedArticle(Long articleId){
+        Optional<FeedArticle> optionalFeedArticle = feedArticleRepository.findById(articleId);
         FeedArticle findFeedArticle = optionalFeedArticle.orElseThrow(() -> new RuntimeException("게시글이 존재하지 않습니다."));
         return findFeedArticle;
     }
