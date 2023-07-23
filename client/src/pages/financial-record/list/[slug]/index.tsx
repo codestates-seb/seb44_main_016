@@ -7,7 +7,7 @@ import Tab from '../../../../components/Tab';
 import FaRecHeader from './FaRecHeader';
 import FaRecArticle from './FaRecArticle';
 import { APIfinancialRecord } from '../../../../services/apiFinancial';
-import { FaRecData } from '../../../../types/article';
+import { FaRecArticleResType } from '../../../../types/article';
 import SnsArticle from '../../../../components/SnsArticle';
 import Loading from '../../../../components/Loading';
 import Pagination from '../../../../components/Pagination';
@@ -81,7 +81,7 @@ function FinancialPage() {
   }
 
   const filteredData = timelineData?.pages.flatMap(
-    (pageData) => pageData.data?.filter((el: FaRecData) => el.scope === '가계부 타임라인') || []
+    (pageData) => pageData.data?.filter((el: FaRecArticleResType) => el.scope === '가계부 타임라인') || []
   );
   return (
     <S.Container>
@@ -99,7 +99,7 @@ function FinancialPage() {
           {isArticleError ? (
             <ErrorComponent message={(faRecError as Error).message} />
           ) : articleData?.data?.length > 0 ? (
-            articleData.data.map((el: FaRecData) => {
+            articleData.data.map((el: FaRecArticleResType) => {
               return (
                 <FaRecArticle
                   key={el.financialRecordArticleId}
@@ -129,7 +129,7 @@ function FinancialPage() {
         <>
           <S.ContentWrap id='timeline'>
             {filteredData && filteredData?.length > 0 ? (
-              filteredData?.map((filteredEl: FaRecData) => (
+              filteredData?.map((filteredEl: FaRecArticleResType) => (
                 <SnsArticle key={filteredEl.financialRecordArticleId} data={filteredEl} type='timeline' />
               ))
             ) : (

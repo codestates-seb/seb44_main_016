@@ -1,6 +1,6 @@
 /** Vote 부분은 추후 생성 예정 */
 
-export interface FaRecData {
+export interface FaRecArticleResType {
   financialRecordId: number; // BigInt
   financialRecordArticleId: number; // BigInt
   category: string;

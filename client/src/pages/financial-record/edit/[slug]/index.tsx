@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import { PAGE_NAMES } from '../../../../constants/pageNames';
 import withAuth from '../../../../components/WithAuth';
 
-type FaRecData = {
+type FaRecArticleResType = {
   financialRecordId: number;
   financialRecordName: string;
   memo: string;
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 function FaRecEditPage() {
   const router = useRouter();
   const financialRecordId = router.query.slug ? Number(router.query.slug) : 0;
-  const { isLoading, isError, error, data, isSuccess } = useQuery<FaRecData>(
+  const { isLoading, isError, error, data, isSuccess } = useQuery<FaRecArticleResType>(
     ['reFac'],
     () => APIfinancialRecord.getFaRec(financialRecordId),
     { staleTime: 1000 * 60 * 30 }

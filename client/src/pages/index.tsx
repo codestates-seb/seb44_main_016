@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 
 import SnsArticle from '../components/SnsArticle';
 
-import { FeedArticleResType, FaRecData } from '../types/article';
+import { FeedArticleResType, FaRecArticleResType } from '../types/article';
 
-const TimelineArticleDummyA: FaRecData = {
+const TimelineArticleDummyA: FaRecArticleResType = {
   financialRecordId: 0, // 지출/수입이 속한 가계부 ID
   financialRecordArticleId: 0,
   category: '생활비',
@@ -29,7 +29,7 @@ const TimelineArticleDummyA: FaRecData = {
   ],
 };
 
-const TimelineArticleDummyB: FaRecData = {
+const TimelineArticleDummyB: FaRecArticleResType = {
   financialRecordId: 0, // 지출/수입이 속한 가계부 ID
   financialRecordArticleId: 0,
   category: '',
