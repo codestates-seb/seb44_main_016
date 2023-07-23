@@ -7,6 +7,7 @@ const KakaoOauthRedirection = () => {
   let code: string | null = null;
   const clientId = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
   const clientSecret = process.env.NEXT_PUBLIC_KAKAO_CLIENT_SECRET;
+
   const { LoginMutate } = useMutateUser.login(apiUser.postOAuthCode);
 
   useEffect(() => {
