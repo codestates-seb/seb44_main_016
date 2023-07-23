@@ -45,6 +45,25 @@ public class UserServiceImpl implements UserService{
     }
 
 
+
+    @Override
+    public User updateUser(User user) {
+
+        User findUser = findVerifyUserByLoginId(user.getLoginId());
+
+
+        Optional.ofNullable(user.getNickname())
+                .ifPresent(nickname -> findUser.setNickname(nickname));
+        Optional.ofNullable(user.getPassword())
+                .ifPresent(password -> findUser.setPassword(passwordEncoder.encode(password)));
+        Optional.ofNullable(user.getProfileImgPath())
+                .ifPresent(profileImgPath -> findUser.setProfileImgPath(profileImgPath));
+
+        return userRepository.save(findUser);
+    }
+
+
+
     @Override
     public User findUserByUserId(Long userId) {
         return null;
@@ -69,10 +88,6 @@ public class UserServiceImpl implements UserService{
     }
 
 
-    @Override
-    public User updateUser(User user) {
-        return null;
-    }
 
 
     @Override
