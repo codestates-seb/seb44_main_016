@@ -9,6 +9,8 @@ const NaverOauthRedirection = () => {
   const clientId = process.env.NEXT_PUBLIC_NAVER_CLIENT_ID;
   const clientSecret = process.env.NEXT_PUBLIC_NAVER_CLIENT_SECRET;
 
+  const { LoginMutate } = useMutateUser.login(apiUser.postOAuthCode);
+
   useEffect(() => {
     const codeValue = new URLSearchParams(window.location.search).get('code');
     const stateValue = new URLSearchParams(window.location.search).get('state');
@@ -18,22 +20,25 @@ const NaverOauthRedirection = () => {
     }
   }, []);
 
-  useEffect(() => {
+  const handleOAuthLogin = () => {
     if (code && state && clientId && clientSecret) {
       const oAuthData = {
         grantType: 'authorization_code',
         code: code,
         state: state,
-        redirectURI: 'https://zerohip.co.kr',
+        redirectURI: 'https://zerohip.co.kr/oauth/naver',
         clientId,
         clientSecret,
       };
-      const targetOAuth = 'naver';
+      const targetOAuth = 'kakao';
       const oAuthReqBody = { oAuthData, targetOAuth };
-
-      const { LoginMutate } = useMutateUser.login(apiUser.postOAuthCode);
+      console.log(oAuthReqBody);
       LoginMutate(oAuthReqBody);
     }
+  };
+
+  useEffect(() => {
+    handleOAuthLogin();
   }, [code]);
 
   return <Loading />;
