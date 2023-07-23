@@ -4,7 +4,6 @@ import com.zerohip.server.financialRecordArticle.dto.FinancialRecordArticleDto;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import com.zerohip.server.financialRecordArticle.mapper.FinancialRecordArticleMapper;
 import com.zerohip.server.financialRecordArticle.service.FinancialRecordArticleService;
-import com.zerohip.server.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -36,10 +35,10 @@ public class FinancialRecordArticleController {
   @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity createFinancialRecordArticle(@RequestPart("data") @Valid FinancialRecordArticleDto.Post data,
                                                      @PathVariable("financial-record-id") Long financialRecordId,
-                                                     @AuthenticationPrincipal User author,
+                                                     @AuthenticationPrincipal String authorId,
                                                      @RequestPart("files") List<MultipartFile> files) {
 
-    FinancialRecordArticle saveFaRecArticle = service.createFaRecArticle(financialRecordId, author, mapper.financialRecordArticlePostToFinancialRecordArticle(data), files);
+    FinancialRecordArticle saveFaRecArticle = service.createFaRecArticle(financialRecordId, authorId, mapper.financialRecordArticlePostToFinancialRecordArticle(data), files);
 
     URI uri = URI.create("/financial-record/" + financialRecordId + "/article/" + saveFaRecArticle.getArticleId());
 
@@ -50,7 +49,8 @@ public class FinancialRecordArticleController {
 
   @GetMapping("/{financial-record-article-id}")
   public ResponseEntity getFinancialRecordArticles(@PathVariable("financial-record-id") Long financialRecordId,
-                                                   @PathVariable("financial-record-article-id") Long financialRecordArticleId) {
+                                                   @PathVariable("financial-record-article-id") Long financialRecordArticleId,
+                                                   @AuthenticationPrincipal String authorId) {
     FinancialRecordArticle verifiedFaRecArticle = service.findVerifiedFaRecArticle(financialRecordArticleId);
 
     return ResponseEntity.ok(mapper.financialRecordArticleToFinancialRecordArticleResponse(verifiedFaRecArticle));
@@ -59,7 +59,8 @@ public class FinancialRecordArticleController {
   @GetMapping
   public ResponseEntity getFinancialRecordArticles(@PathVariable("financial-record-id") Long financialRecordId,
                                                    @Positive @RequestParam int page,
-                                                   @Positive @RequestParam int size) {
+                                                   @Positive @RequestParam int size,
+                                                   @AuthenticationPrincipal String authorId) {
     Page<FinancialRecordArticle> pageFaRecArticles = service.findFaRecArticles(financialRecordId, page, size);
     List<FinancialRecordArticle> allFaRecArticles = pageFaRecArticles.getContent();
     return ResponseEntity.ok(mapper.financialRecordArticlesToFinancialRecordArticleResponses(allFaRecArticles));
@@ -68,17 +69,17 @@ public class FinancialRecordArticleController {
   @PatchMapping(value = "/{financial-record-article-id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity patchFinancialRecord(@RequestPart("data") @Valid FinancialRecordArticleDto.Patch data,
                                              @PathVariable("financial-record-article-id") Long financialRecordArticleId,
-                                             @AuthenticationPrincipal User author,
+                                             @AuthenticationPrincipal String authorId,
                                              @RequestPart("files") List<MultipartFile> files) {
-    FinancialRecordArticle updatedFaRecArticle = service.updateFaRecArticle(author, financialRecordArticleId, data, files);
+    FinancialRecordArticle updatedFaRecArticle = service.updateFaRecArticle(authorId, financialRecordArticleId, data, files);
 
     return ResponseEntity.ok(mapper.financialRecordArticleToFinancialRecordArticleResponse(updatedFaRecArticle));
   }
 
   @DeleteMapping("/{financial-record-article-id}")
   public ResponseEntity deleteFinancialRecord(@PathVariable("financial-record-article-id") Long financialRecordArticleId,
-                                              @AuthenticationPrincipal User author) {
-    service.deleteFaRecArticle(author, financialRecordArticleId);
+                                              @AuthenticationPrincipal String authorId) {
+    service.deleteFaRecArticle(authorId, financialRecordArticleId);
 
     return ResponseEntity.noContent().build();
   }

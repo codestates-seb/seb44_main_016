@@ -11,17 +11,17 @@ import java.util.List;
 
 public interface FinancialRecordArticleService {
   // 가계부 게시글 생성
-  FinancialRecordArticle createFaRecArticle(Long financialRecordId, User author, FinancialRecordArticle faRecArticle, List<MultipartFile> files);
+  FinancialRecordArticle createFaRecArticle(Long financialRecordId, String authorId, FinancialRecordArticle faRecArticle, List<MultipartFile> files);
   // 가계부 게시글 조회(단건)
   FinancialRecordArticle findFaRecArticle(Long faRecArticleId);
   // 가계부 게시글 조회(전체)
   Page<FinancialRecordArticle> findFaRecArticles(Long FaRecId, int page, int size);
   // 가계부 게시글 수정
-  public FinancialRecordArticle updateFaRecArticle(User author, Long faRecArticleId, FinancialRecordArticleDto.Patch patchParam, List<MultipartFile> newFiles);
+  public FinancialRecordArticle updateFaRecArticle(String authorId, Long faRecArticleId, FinancialRecordArticleDto.Patch patchParam, List<MultipartFile> newFiles);
   // 가계부 게시글 삭제
-  void deleteFaRecArticle(User author, Long faRecArticleId);
+  void deleteFaRecArticle(String authorId, Long faRecArticleId);
   // 가계부 게시글 조회 확인
   FinancialRecordArticle findVerifiedFaRecArticle(Long faRecArticleId);
 
-  User findUser(User author);
+  User findUser(String authorId);
 }
