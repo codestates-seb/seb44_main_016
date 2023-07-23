@@ -1,8 +1,9 @@
 package com.zerohip.server.financialRecord.service;
 
-import com.zerohip.server.common.article.Article;
 import com.zerohip.server.common.exception.BusinessLogicException;
 import com.zerohip.server.common.exception.ExceptionCode;
+import com.zerohip.server.common.img.entity.Img;
+import com.zerohip.server.common.img.service.ImgService;
 import com.zerohip.server.common.scope.Scope;
 import com.zerohip.server.financialRecord.dto.FinancialRecordDto;
 import com.zerohip.server.financialRecord.entity.FinancialRecord;
@@ -11,12 +12,11 @@ import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import com.zerohip.server.user.entity.User;
 import com.zerohip.server.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,13 +29,21 @@ import java.util.Optional;
 public class FinancialRecordServiceImpl implements FinancialRecordService {
 
   private final FinancialRecordRepository repository;
+  private final ImgService imgService;
   private final UserService userService;
   // 가계부 생성
   @Override
-  public FinancialRecord createFaRec(User author, FinancialRecord faRec) {
+  public FinancialRecord createFaRec(User author, FinancialRecord faRec, MultipartFile file) {
+
+
     faRec.setUser(findUser(author));
-    // 저장된 가계부(saveFaRec)를 반환
-    return repository.save(faRec);
+
+    FinancialRecord savedFaRec = repository.save(faRec);
+    // Img 객체 저장
+    Img img = saveImg(savedFaRec, file);
+    savedFaRec.setProfileImg(img);
+
+    return savedFaRec;
   }
 
   // 가계부 조회(단건)
@@ -60,18 +68,36 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
 
   // 가계부 수정
   @Override
-  public FinancialRecord updateFaRec(User author, Long faRecId, FinancialRecordDto.Patch patchParam) {
+  public FinancialRecord updateFaRec(User author, Long faRecId, FinancialRecordDto.Patch patchParam, MultipartFile file) {
+    // 삭제할 이미지
+    String deleteFilePath = patchParam.getDeleteFilePath();
+
     // 수정할 가계부 조회
     FinancialRecord findFaRec = findVerifiedFaRec(faRecId);
 
     // 로그인한 사용자와 가계부 소유자가 같은지 확인
     VerifiedAuthor(author, findFaRec);
 
-    // 수정
-    findFaRec.setFinancialRecordName(patchParam.getFinancialRecordName());
-    findFaRec.setMemo(patchParam.getMemo());
+    // 검증정보가 일치할 경우 수정
+    updateFaRecDetails(patchParam, findFaRec);
+
+    // 삭제할 이미지가 있을 경우 삭제
+    if(deleteFilePath != null) {
+      imgService.deleteImg(findFaRec.getProfileImg());
+    }
+
+    // 새로운 이미지가 있으면 추가
+    if(file != null) {
+      Img img = saveImg(findFaRec, file);
+      findFaRec.setProfileImg(img);
+    }
 
     return repository.save(findFaRec);
+  }
+
+  private static void updateFaRecDetails(FinancialRecordDto.Patch patchParam, FinancialRecord findFaRec) {
+    findFaRec.setFinancialRecordName(patchParam.getFinancialRecordName());
+    findFaRec.setMemo(patchParam.getMemo());
   }
 
   // 가계부 삭제
@@ -120,5 +146,13 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
 
   public User findUser(User author) {
     return userService.findUserByLoginId(author.getLoginId());
+  }
+
+  private Img saveImg(FinancialRecord faRec, MultipartFile file) {
+    try {
+      return imgService.createImg(faRec, file);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 }

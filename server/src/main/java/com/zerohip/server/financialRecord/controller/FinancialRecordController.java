@@ -8,10 +8,12 @@ import com.zerohip.server.financialRecord.service.FinancialRecordService;
 import com.zerohip.server.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -29,10 +31,11 @@ public class FinancialRecordController {
   private final FinancialRecordService faRecService;
   private final FinancialRecordMapper mapper;
 
-  @PostMapping
-  public ResponseEntity createFinancialRecord(@Valid @RequestBody FinancialRecordDto.Post requestbody,
-                                              @AuthenticationPrincipal User author) {
-    FinancialRecord createFaRec = faRecService.createFaRec(author, mapper.financialRecordPostToFinancialRecord(requestbody));
+  @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  public ResponseEntity createFinancialRecord(@RequestPart("data") @Valid FinancialRecordDto.Post data,
+                                              @AuthenticationPrincipal User author,
+                                              @RequestPart("file")MultipartFile file) {
+    FinancialRecord createFaRec = faRecService.createFaRec(author, mapper.financialRecordPostToFinancialRecord(data), file);
     URI uri = URI.create(FINANCIAL_RECORD_DEFAULT_URI + "/" + createFaRec.getFinancialRecordId());
 
     log.info("createFaRec.getCreatedAt() : {}", createFaRec.getCreatedAt());
@@ -54,11 +57,12 @@ public class FinancialRecordController {
     return ResponseEntity.ok(new MultiResponseDto<>(mapper.financialRecordsToFinancialRecordResponses(myFaRec)));
   }
 
-  @PatchMapping("/{financial-record-id}")
+  @PatchMapping(value = "/{financial-record-id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity patchFinancialRecord(@PathVariable("financial-record-id") Long financialRecordId,
-                                             @Valid @RequestBody FinancialRecordDto.Patch requestbody,
-                                             @AuthenticationPrincipal User author) {
-    FinancialRecord updateFaRec = faRecService.updateFaRec(author, financialRecordId, requestbody);
+                                             @RequestPart("data") @Valid FinancialRecordDto.Patch data,
+                                             @AuthenticationPrincipal User author,
+                                             @RequestPart("file") MultipartFile file) {
+    FinancialRecord updateFaRec = faRecService.updateFaRec(author, financialRecordId, data, file);
 
     return ResponseEntity.ok(mapper.financialRecordToFinancialRecordResponse(updateFaRec));
   }

@@ -1,6 +1,7 @@
 package com.zerohip.server.financialRecord.entity;
 
 import com.zerohip.server.common.audit.Auditable;
+import com.zerohip.server.common.img.entity.Img;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import com.zerohip.server.user.entity.User;
 import lombok.AllArgsConstructor;
@@ -53,6 +54,9 @@ public class FinancialRecord extends Auditable {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
+
+  @OneToOne(mappedBy = "financialRecord", cascade = CascadeType.ALL)
+  private Img profileImg;
 
   public FinancialRecord(String financialRecordName, String memo) {
     this.financialRecordName = financialRecordName;

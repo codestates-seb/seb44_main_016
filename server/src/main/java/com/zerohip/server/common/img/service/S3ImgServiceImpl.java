@@ -6,6 +6,7 @@ import com.zerohip.server.common.img.dto.ImgDto;
 import com.zerohip.server.common.img.entity.Img;
 import com.zerohip.server.common.img.repository.ImgRepository;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
+import com.zerohip.server.financialRecord.entity.FinancialRecord;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.zerohip.server.common.img.service.ImgServiceImpl.setArticle;
+import static com.zerohip.server.common.img.service.ImgServiceImpl.setProfileImg;
 
 @Slf4j
 @Service
@@ -37,11 +39,11 @@ public class S3ImgServiceImpl implements ImgService {
     String dirName = "zerohip"; // 해당 이미지를 저장할 S3 bucket의 디렉토리 이름을 지정하세요.
 
     // S3에 파일들을 업로드하고, 그 URL 리스트를 저장
-    List<String> imageKeys = s3ServiceImpl.uploadFiles(files, dirName);
+    List<String> imgKeys = s3ServiceImpl.uploadFiles(files, dirName);
 
-    for (String imageKey : imageKeys) {
+    for (String imgKey : imgKeys) {
       // 키로 부터 사전 서명된 URL을 가져옴
-      String imageUrl = s3ServiceImpl.generatePresignedUrl(imageKey);
+      String imageUrl = s3ServiceImpl.generatePresignedUrl(imgKey);
 
       // 이미지 생성자로 파일명, 파일경로 넘겨줌
       Img img = setImg(imageUrl);
@@ -53,6 +55,23 @@ public class S3ImgServiceImpl implements ImgService {
       imgList.add(img);
     }
     return imgRepository.saveAll(imgList);
+  }
+
+  public Img createImg(FinancialRecord financialRecord, MultipartFile files) throws IOException {
+    String dirName = "zerohip"; // 해당 이미지를 저장할 S3 bucket의 디렉토리 이름을 지정하세요.
+
+    // S3에 파일들을 업로드하고, 그 URL 리스트를 저장
+    String imgKey = s3ServiceImpl.uploadFile(files, dirName);
+    String imageUrl = s3ServiceImpl.generatePresignedUrl(imgKey);
+
+    // 이미지 생성자로 파일명, 파일경로 넘겨줌
+    Img img = setImg(imageUrl);
+
+    // 게시판 글과 이미지 연결
+    setProfileImg(financialRecord, img);
+
+    // 파일 경로를 리스트에 저장
+    return imgRepository.save(img);
   }
 
   private static Img setImg(String imageUrl) {
@@ -75,7 +94,7 @@ public class S3ImgServiceImpl implements ImgService {
   @Override
   public void deleteImg(Img img) {
     // S3에서 이미지를 삭제
-//    s3ServiceImpl.deleteFileFromS3(findImg.getFilePath());
+    s3ServiceImpl.deleteFileFromS3(img.getFilePath());
     // DB에서 이미지 정보를 삭제
     imgRepository.delete(img);
   }

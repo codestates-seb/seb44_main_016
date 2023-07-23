@@ -18,6 +18,8 @@ public class FinancialRecordDto {
     @Size(min = 1, max = 30)
     private String financialRecordName;
     private String memo;
+
+    private String filePath;
   }
 
   @Getter
@@ -27,6 +29,9 @@ public class FinancialRecordDto {
     @Size(min = 1, max = 30)
     private String financialRecordName;
     private String memo;
+
+    private String filePath;
+    private String deleteFilePath;
   }
 
   @Getter
@@ -43,5 +48,10 @@ public class FinancialRecordDto {
     private LocalDateTime modifiedAt;
 
     private UserDto.Response user;
+    private String filePath;
+
+    public void setFilePath(String filePath) {
+      this.filePath = filePath;
+    }
   }
 }

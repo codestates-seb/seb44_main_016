@@ -1,10 +1,12 @@
 package com.zerohip.server.common.img.service;
 
+import com.zerohip.server.aws.config.S3ServiceImpl;
 import com.zerohip.server.common.article.Article;
 import com.zerohip.server.common.img.dto.ImgDto;
 import com.zerohip.server.common.img.entity.Img;
 import com.zerohip.server.common.img.repository.ImgRepository;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
+import com.zerohip.server.financialRecord.entity.FinancialRecord;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ import java.util.UUID;
 public class ImgServiceImpl implements ImgService {
 
   private final ImgRepository imgRepository;
+  private final S3ServiceImpl s3ServiceImpl;
 
   // 이미지 저장
   @Override
@@ -48,6 +51,11 @@ public class ImgServiceImpl implements ImgService {
     return imgRepository.saveAll(imgList);
   }
 
+  @Override
+  public Img createImg(FinancialRecord faRec, MultipartFile file) throws IOException {
+    return null;
+  }
+
   // 이미지 조회
   @Override
   public Img findImg(Long imgId) {
@@ -64,7 +72,7 @@ public class ImgServiceImpl implements ImgService {
   @Override
   public void deleteImg(Img img) {
     // S3에서 이미지를 삭제
-//    s3ServiceImpl.deleteFileFromS3(findImg.getFilePath());
+    s3ServiceImpl.deleteFileFromS3(img.getFilePath());
     // DB에서 이미지 정보를 삭제
     imgRepository.delete(img);
   }
@@ -138,5 +146,9 @@ public class ImgServiceImpl implements ImgService {
     } else {
       throw new RuntimeException("존재하지 않는 게시글입니다.");
     }
+  }
+
+  static void setProfileImg(FinancialRecord faRec, Img img) {
+    img.setFinancialRecord(faRec);
   }
 }

@@ -3,6 +3,7 @@ package com.zerohip.server.common.img.entity;
 
 import com.zerohip.server.common.article.Article;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
+import com.zerohip.server.financialRecord.entity.FinancialRecord;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,6 +39,10 @@ public class Img {
   @ManyToOne
   @JoinColumn(name = "feed_article_id")
   private FeedArticle feedArticle;
+
+  @OneToOne
+  @JoinColumn(name = "financial_record_id")
+  private FinancialRecord financialRecord;
 
   public Img(String fileName, String filePath) {
     this.fileName = fileName;
