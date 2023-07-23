@@ -15,7 +15,7 @@ public class ImgDto {
     @Size(max = 3000)
     private String filePath;
 
-    private Long financialRecordArticleId;
+    private Long Id;
   }
 
   @Getter
@@ -36,7 +36,7 @@ public class ImgDto {
     @Size(max = 3000)
     private String filePath;
 
-    private Long financialRecordArticleId;
+    private Long Id;
   }
 }
 
