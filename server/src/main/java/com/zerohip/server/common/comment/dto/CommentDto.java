@@ -18,8 +18,6 @@ public class CommentDto {
     @NotBlank
     private String content;
     @NotNull
-    private UserDto.Response user;
-    @NotNull
     private Long ArticleId;
   }
 
