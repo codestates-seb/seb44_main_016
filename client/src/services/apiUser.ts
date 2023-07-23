@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { PostSignUp, LoginReqData } from '../types/user';
+import { PostSignUp, LoginReqData, OAuthReqData } from '../types/user';
 import { instance } from './tokenInstance';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -13,9 +13,16 @@ const apiUser = {
 
   /** 로그인 */
   postLogin: async (loginData: LoginReqData): Promise<AxiosResponse> => {
-    const response = await axios.post(`${BASE_URL}/user/login`, loginData, {
-      withCredentials: true,
-    });
+    const response = await axios.post(`${BASE_URL}/user/login`, loginData);
+    return response;
+  },
+
+  /** OAuth 인증코드 보내기 */
+  postOAuthCode: async (OAuthReqData: OAuthReqData) => {
+    const response = await axios.post(
+      `${BASE_URL}/login/oauth2/code/${OAuthReqData.targetOAuth}`,
+      OAuthReqData.oAuthData
+    );
     return response;
   },
 
@@ -37,6 +44,13 @@ const apiUser = {
     return response.data;
   },
 
+  getMyFeeds: async (userId: number, page: number, size: number) => {
+    const res = await instance.get(`${BASE_URL}/user/${userId}/feedArticles?page=${page}&size=${size}`);
+    // return res.data;
+    const { data, pageData } = res.data;
+    return { data, pageData };
+  },
+
   /** 회원 정보 수정 */
   updateMyInfo: async (userUpdateData: FormData) => {
     const response = await instance.patch(`${BASE_URL}/user/update`, userUpdateData, {
@@ -45,7 +59,8 @@ const apiUser = {
     return response;
   },
 
-  getNewRefresh: async () => {
+  /** Access Token 갱신 */
+  getNewAccess: async () => {
     const response = await instance.post(`${BASE_URL}/auth/refresh`);
     return response;
   },

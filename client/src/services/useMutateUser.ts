@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useAppDispatch } from '../components/redux/hooks';
 import { login, logout } from '../components/redux/authnReducer';
 import { AxiosResponse } from 'axios';
-import { LoginReqData, PostSignUp } from '../types/user';
+import { LoginReqData, OAuthReqData, PostSignUp } from '../types/user';
 import { changeImgSrc } from '../components/redux/currentImgReducer';
 
 interface LoginErrorResponse {
@@ -38,7 +38,7 @@ const useMutateUser = {
     return { SignUpMutate: mutate, data };
   },
 
-  login: (mutateFunction: (loginData: LoginReqData) => Promise<AxiosResponse>) => {
+  login: (mutateFunction: (loginData: LoginReqData | OAuthReqData) => Promise<AxiosResponse>) => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const { mutate, data } = useMutation(['login'], mutateFunction, {

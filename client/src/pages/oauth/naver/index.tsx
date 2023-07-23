@@ -1,36 +1,40 @@
 import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import axios from 'axios';
 import Loading from '../../../components/Loading';
+import useMutateUser from '../../../services/useMutateUser';
+import apiUser from '../../../services/apiUser';
 
 const NaverOauthRedirection = () => {
+  let code: string | null = null;
+  let state: string | null = null;
+  const clientId = process.env.NEXT_PUBLIC_NAVER_CLIENT_ID;
+  const clientSecret = process.env.NEXT_PUBLIC_NAVER_CLIENT_SECRET;
+
   useEffect(() => {
-    const code = new URLSearchParams(window.location.search).get('code');
-    const state = new URLSearchParams(window.location.search).get('state');
-    console.log(code);
-    console.log(state);
+    const codeValue = new URLSearchParams(window.location.search).get('code');
+    const stateValue = new URLSearchParams(window.location.search).get('state');
+    if (codeValue && stateValue) {
+      code = codeValue;
+      state = stateValue;
+    }
   }, []);
 
-  const router = useRouter();
+  useEffect(() => {
+    if (code && state && clientId && clientSecret) {
+      const oAuthData = {
+        grantType: 'authorization_code',
+        code: code,
+        state: state,
+        redirectURI: 'https://zerohip.co.kr',
+        clientId,
+        clientSecret,
+      };
+      const targetOAuth = 'naver';
+      const oAuthReqBody = { oAuthData, targetOAuth };
 
-  //! 백엔드로 토큰 보내기
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.post(`${process.env.REACT_APP_URL}kakaoLogin${code}`);
-  //       const userData = response.data;
-  //       localStorage.setItem('name', userData.user_name);
-  //       router.push('/');
-  //     } catch (error) {
-  //       console.error('Error:', error);
-  //       router.push('/404');
-
-  //       // Handle error cases here
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [code, navigate]);
+      const { LoginMutate } = useMutateUser.login(apiUser.postOAuthCode);
+      LoginMutate(oAuthReqBody);
+    }
+  }, [code]);
 
   return <Loading />;
 };
