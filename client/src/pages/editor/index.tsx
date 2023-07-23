@@ -9,10 +9,12 @@ import StyledDatePicker from './StyledDatePicker';
 import InputNaturalNumber from './InputNaturalNumber';
 import RadioSet from './RadioSet';
 import ImgsUploader from './ImgsUploader';
+import withAuth from '../../components/WithAuth';
 
 import { CATEGORY } from '../../constants/category';
+import { FaRecArticleReqType, FeedArticleReqType } from '../../types/article';
 
-export default function EditorPage() {
+function EditorPage() {
   // 일부 값들은 Enum으로 바꾸는 걸 권장
 
   const [articleType, setArticleType] = React.useState(0); // 가계부/절약팁/허락해줘 (라디오 버튼)
@@ -24,7 +26,7 @@ export default function EditorPage() {
   const [faType, setFaType] = React.useState(0); // 지출/수입 (라디오 버튼)
   const [title, setTitle] = React.useState(''); // 제목(내역)
   /* ↓ 모든 articleType에 표시 ↓ */
-  // const [images, setImages] = React.useState([]); // 이미지 (0~4장)
+  const [imgSrcs, setImgSrcs] = React.useState(['', '', '', '']); // 이미지 (0~4장)
   const [content, setContent] = React.useState(''); // 내용(본문)
   const [scope, setScope] = React.useState(1); // 가계부에만/타임라인에도
 
@@ -60,34 +62,47 @@ export default function EditorPage() {
   const handleChangeScope = (id: number) => {
     setScope(id);
   };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if (articleType === 1) {
+      const formData = new FormData();
+      imgSrcs.forEach((imgSrc) => {
+        formData.append('files', imgSrc);
+      });
+
+      if (articleType === 0) {
         // 가계부
-        const body = {
+        const body: FaRecArticleReqType = {
           financialRecordId: faRecId,
           category,
-          financialRecordDate: faDate,
+          faDate: faDate.toISOString(),
+          title,
           price,
           content,
-          scope,
-          // imageId: , (미구현 & 필수 사항 아님)
-          userId: 0,
-          // "voteId": , (가계부에는 절약/Flex 기능을 사용하지 않음)
-          // "financialRecordArticleHashTagId": , (미구현 & 필수 사항 아님)
+          scope: scope === 0 ? '가계부 게시글' : '가계부 타임라인',
         };
-        await axios.post(`http://localhost:8080/financialrecord/${faRecId}/article/'`, body);
+        formData.append('data', JSON.stringify(body));
+
+        await axios.post(`https://www.zerohip.co.kr/financial-record/${faRecId}/article'`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
       } else {
         // 절약팁/허락해줘
-        const body = {
+        const body: FeedArticleReqType = {
+          feedType: articleType === 1 ? '절약팁' : '허락해줘',
           content,
-          scope,
-          userId: 0,
         };
-        await axios.post('http://localhost:8080/feedArticles/article', body);
+        formData.append('data', JSON.stringify(body));
+
+        await axios.post('https://www.zerohip.co.kr/feedArticles', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
       }
-      console.log(`Requset 성공: 게시글 작성`);
     } catch (error) {
       console.error('Requset 에러 발생:', error);
     }
@@ -153,7 +168,7 @@ export default function EditorPage() {
       {/* ↓ 모든 articleType에 표시 ↓ */}
       {/* 이미지 */}
       <S.Row>
-        <ImgsUploader />
+        <ImgsUploader setImgSrcs={setImgSrcs} />
       </S.Row>
       {/* 내용(본문) */}
       <S.InputContainer>
@@ -172,7 +187,9 @@ export default function EditorPage() {
         )}
         {/* Submit 버튼 */}
         <S.SubmitBtnContainer>
-          <S.SubmitBtn type='submit'>편집 완료</S.SubmitBtn>
+          <S.SubmitBtn type='submit' onClick={handleSubmit}>
+            편집 완료
+          </S.SubmitBtn>
         </S.SubmitBtnContainer>
       </S.Row>
     </S.EditorContainer>
@@ -228,3 +245,5 @@ const S = {
     font-weight: bold;
   `,
 };
+
+export default withAuth(EditorPage);

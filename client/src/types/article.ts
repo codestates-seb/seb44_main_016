@@ -47,3 +47,18 @@ export type FeedArticleResType = {
   createdAt: string; // ISO-8601
   modifiedAt: string; // ISO-8601
 };
+
+export type FaRecArticleReqType = {
+  financialRecordId: number; // BigInt
+  category: string;
+  faDate: string;
+  title: string;
+  price: number;
+  content: string;
+  scope: '가계부 게시글' | '가계부 타임라인';
+};
+
+export type FeedArticleReqType = {
+  feedType: '절약팁' | '허락해줘';
+  content: string;
+};
