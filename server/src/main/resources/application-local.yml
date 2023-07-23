@@ -20,7 +20,7 @@ spring:
         registration:
           # KAKAO Client
           kakao:
-            client-id: 885b0d53f112d820b98cbf506b9010c4  # ${KAKAO_REST_API_KEY}
+            client-id: ${KAKAO_REST_API_KEY}
             client-secret: ${KAKAO_SECRET}
             redirect-uri: https://zerohip.co.kr/login/oauth2/code/kakao
             authorization-grant-type: authorization_code
@@ -29,20 +29,21 @@ spring:
 
           # NAVER Client
           naver:
-            client-id:  fsfWc0ZaaneNhtV0fjkv  # ${NAVER_CLIENTID}
-            client-secret: 1Uw5mk_Nu5  # ${NAVER_SECRET}
+            client-id: ${NAVER_CLIENTID}
+            client-secret: ${NAVER_SECRET}
             scope: email
             redirect-uri: https://zerohip.co.kr/login/oauth2/code/naver
             authorization-grant-type: authorization_code
 
           # Google Client
           google:
-            clientId: 633882836521-ci2bo3qfit4jgrhqq39mfjbccb680p13.apps.googleusercontent.com  # ${GOOGLE_CLIENTID}
-            clientSecret: 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  # ${GOOGLE_SECRET}
+            clientId: ${GOOGLE_CLIENTID}
+            clientSecret: ${GOOGLE_SECRET}
             scope:
               - email
             redirectUri: https://zerohip.co.kr/login/oauth2/code/google
             authorization-grant-type: authorization_code
+
   h2:
     console:
       enabled: true
@@ -91,11 +92,11 @@ jwt:
 cloud:
   aws:
     s3:
-      bucket: zerohip # ${AWS_S3_BUCKET}
+      bucket: ${AWS_S3_BUCKET}
     region:
-      static: ap-northeast-2  #${AWS_REGION}
+      static: ${AWS_REGION}
     credentials:
-      access-key: AKIAXB5GMO2SQMTJM3QR  # ${AWS_ACCESS_KEY}
-      secret-key: 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  # ${AWS_SECRET_KEY}
+      access-key: ${AWS_ACCESS_KEY}
+      secret-key: ${AWS_SECRET_KEY}
     stack:
       auto: false
