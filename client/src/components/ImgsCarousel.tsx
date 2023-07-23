@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // useState 사용
+import React, { useEffect, useState } from 'react'; // useState 사용
 import styled from '@emotion/styled';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react'; // Import Swiper React components
@@ -33,10 +33,30 @@ export default function ImgsCarousel(props: Props) {
     setCurrentSlide(index);
   };
   const handleCloseModal = () => {
+    // if (e.target === e.currentTarget) {
     setIsModalVisible(false);
     setModalImage('');
   };
+  const handleStopPropagation = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    e.stopPropagation();
+  };
   const windowType = useWindowType();
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleCloseModal();
+      }
+    };
+
+    if (isModalVisible) {
+      window.addEventListener('keydown', handleEsc);
+    }
+
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, [isModalVisible]);
 
   return (
     <S.ImgContainer className={windowType}>
@@ -56,8 +76,6 @@ export default function ImgsCarousel(props: Props) {
         }}
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
-        // onSwiper={(swiper) => console.log(swiper)}
-        // onSlideChange={() => console.log('slide change')}
       >
         <S.ImgSlideBtn className='swiper-button-next' type='button' />
         <S.ImgSlideBtn className='swiper-button-prev' type='button' />
@@ -78,7 +96,6 @@ export default function ImgsCarousel(props: Props) {
           <S.CloseBtn aria-label='닫기 버튼' onClick={handleCloseModal}>
             {SVGs.whiteCloseBtn}
           </S.CloseBtn>
-
           <Swiper
             modules={[Navigation, Pagination, Scrollbar, A11y]}
             spaceBetween={0}
@@ -93,10 +110,12 @@ export default function ImgsCarousel(props: Props) {
             <S.ImgSlideBtn className='swiper-button-prev modal' type='button' />
             {props.imgPath.map((imgSrc, i) => {
               return (
-                <SwiperSlide key={i}>
+                <SwiperSlide key={i} onClick={handleCloseModal}>
                   <TransformWrapper initialScale={1} minScale={1} maxScale={10}>
                     <TransformComponent>
-                      <S.ModalImage src={imgSrc} alt={`사용자가 올린 ${i + 1}번째 사진`} />
+                      <div onClick={handleStopPropagation}>
+                        <S.ModalImage src={imgSrc} alt={`사용자가 올린 ${i + 1}번째 사진`} />
+                      </div>
                     </TransformComponent>
                   </TransformWrapper>
                 </SwiperSlide>
@@ -120,6 +139,7 @@ const S = {
     overflow: hidden;
     background-color: #f8f9fc;
     border-bottom: 0.05rem solid var(--color-gray08);
+    cursor: pointer;
 
     & .swiper-initialized {
       height: 100%;
