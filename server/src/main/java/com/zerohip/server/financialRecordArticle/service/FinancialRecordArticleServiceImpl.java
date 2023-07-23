@@ -3,7 +3,6 @@ package com.zerohip.server.financialRecordArticle.service;
 import com.zerohip.server.common.article.Article;
 import com.zerohip.server.common.exception.BusinessLogicException;
 import com.zerohip.server.common.exception.ExceptionCode;
-import com.zerohip.server.common.img.dto.ImgDto;
 import com.zerohip.server.common.img.entity.Img;
 import com.zerohip.server.common.img.service.ImgService;
 import com.zerohip.server.common.scope.Scope;
@@ -40,13 +39,13 @@ public class FinancialRecordArticleServiceImpl implements FinancialRecordArticle
   private final FinancialRecordArticleRepository repository;
 
   @Override
-  public FinancialRecordArticle createFaRecArticle(Long financialRecordId, User author, FinancialRecordArticle faRecArticle, List<MultipartFile> files) {
+  public FinancialRecordArticle createFaRecArticle(Long financialRecordId, String authorId, FinancialRecordArticle faRecArticle, List<MultipartFile> files) {
     // 해당 가계부가 존재하는지 확인 -> 없으면 예외를 발생시키고 있으면 해당 가계부를 반환
-    FinancialRecord faRec = financialRecordService.findFaRec(author, financialRecordId);
+    FinancialRecord faRec = financialRecordService.findFaRec(authorId, financialRecordId);
 
     // FinancialRecordArticle과 FinancialRecord의 관계를 설정
     faRecArticle.setFinancialRecord(faRec);
-    faRecArticle.setUser(findUser(author));
+    faRecArticle.setUser(findUser(authorId));
 
     // FinancialRecordArticle의 유효성 검사 및 저장
     validateFaRecArticle(faRecArticle);
@@ -73,14 +72,14 @@ public class FinancialRecordArticleServiceImpl implements FinancialRecordArticle
 
   // 가계부 수정
   @Override
-  public FinancialRecordArticle updateFaRecArticle(User author, Long faRecArticleId, FinancialRecordArticleDto.Patch patchParam, List<MultipartFile> newFiles) {
+  public FinancialRecordArticle updateFaRecArticle(String authorId, Long faRecArticleId, FinancialRecordArticleDto.Patch patchParam, List<MultipartFile> newFiles) {
     // 삭제할 이미지 리스트
     List<String> deleteImgPaths = patchParam.getDeleteImgPaths();
     // 수정할 게시글 조회
     FinancialRecordArticle findFaRecArticle = findVerifiedFaRecArticle(faRecArticleId);
 
     // 로그인된 사용자와 수정할 게시글의 작성자가 같은지 확인
-    VerifiedAuthor(author, findFaRecArticle);
+    VerifiedAuthor(authorId, findFaRecArticle);
 
     // 검증정보가 일치할 경우 수정
     updateFaRecArticleDetails(findFaRecArticle, patchParam);
@@ -113,11 +112,11 @@ public class FinancialRecordArticleServiceImpl implements FinancialRecordArticle
   }
 
   @Override
-  public void deleteFaRecArticle(User author, Long faRecArticleId) {
+  public void deleteFaRecArticle(String authorId, Long faRecArticleId) {
     // 삭제할 게시물 조회
     FinancialRecordArticle findFaRecArticle = findVerifiedFaRecArticle(faRecArticleId);
     // 로그인된 사용자와 삭제할 게시글의 작성자가 같은지 확인
-    VerifiedAuthor(author, findFaRecArticle);
+    VerifiedAuthor(authorId, findFaRecArticle);
 
     // 검증정보가 일치할 경우 삭제
     repository.delete(findFaRecArticle);
@@ -142,21 +141,21 @@ public class FinancialRecordArticleServiceImpl implements FinancialRecordArticle
   }
 
   // 로그인한 사용자와 게시글 작성자가 같은지 확인
-  private void VerifiedAuthor(User author, Article article) {
+  private void VerifiedAuthor(String authorId, Article article) {
     // 사용자 인증 실패
-    if(author == null) {
+    if(authorId == null) {
       throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
     }
     // article to FinancialRecordArticle
     FinancialRecordArticle faRecArticle = (FinancialRecordArticle) article;
 
-    if(!author.getLoginId().equals(faRecArticle.getUser().getLoginId())) {
+    if(!authorId.equals(faRecArticle.getUser().getLoginId())) {
       throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
     }
   }
 
-  public User findUser(User author) {
-    return userService.findUserByLoginId(author.getLoginId());
+  public User findUser(String authorId) {
+    return userService.findUserByLoginId(authorId);
   }
 
   private List<Img> saveImgs(FinancialRecordArticle faRecArticle, List<MultipartFile> files) {
