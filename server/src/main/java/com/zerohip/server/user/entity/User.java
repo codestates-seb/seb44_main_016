@@ -26,28 +26,47 @@ public class User extends Auditable {
     @Column(nullable = false, unique = true, updatable = false)
     private String loginId;
 
-    @Column(nullable = false, length = 150)
+    @Column(length = 150)
     private String password;
 
     @Column
     private String nickname;
 
     @Column
-    private String provider;
+    private Provider provider;
 
     public User(String email, String loginId, String password, String nickname, String provider) {
         this.email = email;
         this.loginId = loginId;
         this.password = password;
         this.nickname = nickname;
-        this.provider = provider;
+
+        switch (provider) {
+            case "google":
+                this.provider = Provider.GOOGLE;
+                break;
+            case "naver":
+                this.provider = Provider.NAVER;
+                break;
+            case "kakao":
+                this.provider = Provider.KAKAO;
+                break;
+            default:
+                this.provider = null;
+        }
+    }
+
+    @Getter
+    public enum Provider {
+        GOOGLE, NAVER, KAKAO;
     }
 
     @Builder.Default
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-  /** 연관관계 매핑
+
+    /** 연관관계 매핑
      *  userImage
      *  faRec
      *  aRecBoard

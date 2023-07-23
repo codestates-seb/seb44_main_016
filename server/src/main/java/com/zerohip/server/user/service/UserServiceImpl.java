@@ -56,6 +56,12 @@ public class UserServiceImpl implements UserService{
         return findVerifyUserByLoginId(loginId);
     }
 
+    @Override
+    public User findUserByEmail(String email) {
+
+        return findVerifyUserByEmail(email);
+    }
+
 
     @Override
     public List<User> findUsers() {
@@ -102,6 +108,7 @@ public class UserServiceImpl implements UserService{
         return foundUser;
     }
 
+
     private void verifyExistsLoginId(String loginId) {
 
         Optional<User> user = userRepository.findUserByLoginId(loginId);
@@ -109,6 +116,18 @@ public class UserServiceImpl implements UserService{
             throw new BusinessLogicException(ExceptionCode.LoginId_EXISTS);
         }
     }
+
+
+    private User findVerifyUserByEmail(String email) {
+
+        Optional<User> optionalUser = userRepository.findUserByEmail(email);
+        User foundUser = optionalUser.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+
+        return foundUser;
+    }
+
+
 
     private void verifyExistsEmail(String email) {
 

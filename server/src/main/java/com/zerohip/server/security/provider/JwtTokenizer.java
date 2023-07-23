@@ -1,7 +1,5 @@
 package com.zerohip.server.security.provider;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zerohip.server.security.auth.NeverLandUserDetailsService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -16,7 +14,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import javax.security.auth.Subject;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Calendar;

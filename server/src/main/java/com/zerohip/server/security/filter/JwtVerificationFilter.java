@@ -2,7 +2,6 @@ package com.zerohip.server.security.filter;
 
 import com.zerohip.server.security.provider.JwtTokenizer;
 import com.zerohip.server.security.utils.CustomAuthorityUtils;
-import com.zerohip.server.user.entity.User;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
