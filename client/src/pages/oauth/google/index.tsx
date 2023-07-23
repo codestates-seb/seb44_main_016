@@ -1,36 +1,38 @@
 import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import axios from 'axios';
 import Loading from '../../../components/Loading';
+import useMutateUser from '../../../services/useMutateUser';
+import apiUser from '../../../services/apiUser';
 
-const KakaoOauthRedirection = () => {
+const GoogleOauthRedirection = () => {
+  let code: string | null = null;
+  const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+  const clientSecret = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET;
+
   useEffect(() => {
-    const code = new URLSearchParams(window.location.search).get('code');
-    console.log(code);
+    const codeValue = new URLSearchParams(window.location.search).get('code');
+    if (codeValue) {
+      code = codeValue;
+    }
   }, []);
 
-  const router = useRouter();
+  useEffect(() => {
+    if (code && clientId && clientSecret) {
+      const oAuthData = {
+        grantType: 'authorization_code',
+        code: code,
+        redirectURI: 'https://zerohip.co.kr',
+        clientId,
+        clientSecret,
+      };
+      const targetOAuth = 'google';
+      const oAuthReqBody = { oAuthData, targetOAuth };
 
-  //! 백엔드로 토큰 보내기
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.post(`${process.env.REACT_APP_URL}kakaoLogin${code}`);
-  //       const userData = response.data;
-  //       localStorage.setItem('name', userData.user_name);
-  //       router.push('/');
-  //     } catch (error) {
-  //       console.error('Error:', error);
-  //       router.push('/404');
-
-  //       // Handle error cases here
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [code, navigate]);
+      const { LoginMutate } = useMutateUser.login(apiUser.postOAuthCode);
+      LoginMutate(oAuthReqBody);
+    }
+  }, [code]);
 
   return <Loading />;
 };
 
-export default KakaoOauthRedirection;
+export default GoogleOauthRedirection;
