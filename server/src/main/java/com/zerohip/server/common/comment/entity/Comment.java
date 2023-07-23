@@ -4,6 +4,7 @@ import com.zerohip.server.common.audit.Auditable;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import com.zerohip.server.user.entity.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,10 +15,12 @@ import javax.validation.constraints.Size;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-@NoArgsConstructor
+@Entity
+@Table(name = "comments")
 @Getter
 @Setter
-@Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Comment extends Auditable {
   @Id
   @GeneratedValue(strategy = IDENTITY)

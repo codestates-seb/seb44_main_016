@@ -43,6 +43,10 @@ public class S3ServiceImpl {
     return uploadImgUrlList;  // 파일 URL 리스트 반환
   }
 
+  public String uploadFile(MultipartFile multipartFile, String dirName) throws IOException {
+    return putS3(multipartFile, dirName);// S3에 파일 업로드하고 URL을 가져옴
+  }
+
   private String putS3(MultipartFile multipartFile, String dirName) throws IOException {
     // 파일 이름을 UUID를 이용해서 생성
     String fileName = setFileName(multipartFile, dirName);  // 파일 이름 설정
