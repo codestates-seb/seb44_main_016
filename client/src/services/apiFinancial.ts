@@ -43,6 +43,9 @@ export const APIfinancialRecord = {
   },
   // 가계부 게시글 GET
   getRecordArticle: async (financialRecordId: number, page: number, size: number) => {
+    // const res = await axios.get(
+    //   `/api/financial-record/${financialRecordId}/article?page=${page}&size=${size}`
+    // );
     const res = await instance.get(
       `${BASE_URL}/financial-record/${financialRecordId}/article?page=${page}&size=${size}`
     );
