@@ -1,4 +1,4 @@
-import React, { useState, useCallback, MouseEvent, ChangeEvent, useEffect } from 'react';
+import React, { useState, useCallback, MouseEvent, ChangeEvent } from 'react';
 import CommonStyles from '../styles/CommonStyles';
 import styled from '@emotion/styled';
 import ShowIcon from '../../public/images/icon/show.svg';

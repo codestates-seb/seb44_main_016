@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import Head from 'next/head';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import CommonStyles from '../../../styles/CommonStyles';
@@ -10,6 +9,8 @@ import withAuth from '../../../components/WithAuth';
 import apiUser from '../../../services/apiUser';
 import Loading from '../../../components/Loading';
 import { FeedArticleResType } from '../../../types/article';
+import HeadMeta from '../../../components/HeadMeta';
+import { USER_META_DATA } from '../../../constants/seo/userMetaData';
 
 function MyPage() {
   const router = useRouter();
@@ -26,15 +27,13 @@ function MyPage() {
 
   return (
     <>
+      <HeadMeta title={USER_META_DATA.MY_PAGE.TITLE} description={USER_META_DATA.MY_PAGE.DESCRIPTION} />
       {isMyInfoLoading ? (
         <Loading />
       ) : (
         myInfoData && (
           <S.Container>
             <S.UserProfileContainer>
-              <Head>
-                <title>제로힙 마이페이지</title>
-              </Head>
               <h1 className='blind'>마이페이지</h1>
               <S.UserProfileImgBox>
                 <img src={myInfoData?.profileImgPath} alt='프로필 사진' />

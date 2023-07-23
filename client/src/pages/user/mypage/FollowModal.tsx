@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CloseBtnIcon from '../../../../public/images/icon/closeBtn.svg';
 import FollowList from './FollowList';
 import { FollowUsersInfoData } from '../../../types/user';

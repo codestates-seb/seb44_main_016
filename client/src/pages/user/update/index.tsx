@@ -2,13 +2,9 @@ import { toast } from 'react-toastify';
 import { useQuery } from '@tanstack/react-query';
 import apiUser from '../../../services/apiUser';
 import Loading from '../../../components/Loading';
-import { Metadata } from 'next';
 import UserUpdatePage from './UserUpdatePage';
-
-export const metadata: Metadata = {
-  title: '회원 정보 수정 페이지',
-  description: '프로필 사진, 닉네임, 비밀번호를 변경할 수 있습니다.',
-};
+import HeadMeta from '../../../components/HeadMeta';
+import { USER_META_DATA } from '../../../constants/seo/userMetaData';
 
 export default function UserUpdate() {
   const {
@@ -22,5 +18,13 @@ export default function UserUpdate() {
     toast.info('다시 시도해주세요.');
   }
 
-  return <>{isMyInfoLoading ? <Loading /> : myInfoData && <UserUpdatePage myInfoData={myInfoData} />}</>;
+  return (
+    <>
+      <HeadMeta
+        title={USER_META_DATA.USER_UPDATE_PAGE.TITLE}
+        description={USER_META_DATA.USER_UPDATE_PAGE.DESCRIPTION}
+      />
+      {isMyInfoLoading ? <Loading /> : myInfoData && <UserUpdatePage myInfoData={myInfoData} />}
+    </>
+  );
 }
