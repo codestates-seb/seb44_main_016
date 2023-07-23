@@ -45,32 +45,32 @@ public class FinancialRecordController {
 
   @GetMapping("/{financial-record-id}")
   public ResponseEntity getFinancialRecord(@PathVariable("financial-record-id") Long financialRecordId,
-                                           @AuthenticationPrincipal User author) {
-    FinancialRecord findFaRec = faRecService.findFaRec(author, financialRecordId);
+                                           @AuthenticationPrincipal String authorId) {
+    FinancialRecord findFaRec = faRecService.findFaRec(authorId, financialRecordId);
 
     return ResponseEntity.ok(mapper.financialRecordToFinancialRecordResponse(findFaRec));
   }
 
   @GetMapping
-  public ResponseEntity getFinancialRecords(@AuthenticationPrincipal User author) {
-    List<FinancialRecord> myFaRec = faRecService.findFaRecs(author);
+  public ResponseEntity getFinancialRecords(@AuthenticationPrincipal String authorId) {
+    List<FinancialRecord> myFaRec = faRecService.findFaRecs(authorId);
     return ResponseEntity.ok(new MultiResponseDto<>(mapper.financialRecordsToFinancialRecordResponses(myFaRec)));
   }
 
   @PatchMapping(value = "/{financial-record-id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity patchFinancialRecord(@PathVariable("financial-record-id") Long financialRecordId,
                                              @RequestPart("data") @Valid FinancialRecordDto.Patch data,
-                                             @AuthenticationPrincipal User author,
+                                             @AuthenticationPrincipal String authorId,
                                              @RequestPart("file") MultipartFile file) {
-    FinancialRecord updateFaRec = faRecService.updateFaRec(author, financialRecordId, data, file);
+    FinancialRecord updateFaRec = faRecService.updateFaRec(authorId, financialRecordId, data, file);
 
     return ResponseEntity.ok(mapper.financialRecordToFinancialRecordResponse(updateFaRec));
   }
 
   @DeleteMapping("/{financial-record-id}")
   public ResponseEntity deleteFinancialRecord(@PathVariable("financial-record-id") Long financialRecordId,
-                                              @AuthenticationPrincipal User author) {
-    faRecService.deleteFaRec(author, financialRecordId);
+                                              @AuthenticationPrincipal String authorId) {
+    faRecService.deleteFaRec(authorId, financialRecordId);
 
     return ResponseEntity.noContent().build();
   }
