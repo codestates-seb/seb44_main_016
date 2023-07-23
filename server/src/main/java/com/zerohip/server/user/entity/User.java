@@ -2,6 +2,9 @@ package com.zerohip.server.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.zerohip.server.common.audit.Auditable;
+import com.zerohip.server.feedArticle.entity.FeedArticle;
+import com.zerohip.server.financialRecord.entity.FinancialRecord;
+import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import lombok.*;
 
 import javax.persistence.*;
@@ -87,11 +90,20 @@ public class User extends Auditable {
     private List<String> roles = new ArrayList<>();
 
 
+    // 트랜잭션 전략 설정 필요
+    @OneToMany(mappedBy = "user")
+    private List<FeedArticle> feedArticles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<FinancialRecord> financialRecords = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<FinancialRecordArticle> financialRecordArticles = new ArrayList<>();
+
     /** 연관관계 매핑
      *  userImage
-     *  faRec
-     *  aRecBoard
+
      *  friend
-     *  article
+
      */
 }
