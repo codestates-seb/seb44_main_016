@@ -14,6 +14,8 @@ public interface UserService {
 
     User findUserByLoginId(String loginId);
 
+    User findUserByEmail(String email);
+
 
     // User 조회(전체)
     List<User> findUsers();
