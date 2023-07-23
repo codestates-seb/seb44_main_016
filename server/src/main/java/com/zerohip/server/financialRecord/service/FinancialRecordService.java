@@ -10,22 +10,22 @@ import java.util.List;
 
 public interface FinancialRecordService {
   // 가계부 생성
-  FinancialRecord createFaRec(User author, FinancialRecord faRec, MultipartFile file);
+  FinancialRecord createFaRec(String authorId, FinancialRecord faRec, MultipartFile file);
 
   // 가계부 조회(단건)
-  FinancialRecord findFaRec(User author, Long faRecId);
+  FinancialRecord findFaRec(String authorId, Long faRecId);
 
   // 가계부 전체 조회(동적쿼리 사용 예정)
-  List<FinancialRecord> findFaRecs(User author);
+  List<FinancialRecord> findFaRecs(String authorId);
 
   // 가계부 수정
-  FinancialRecord updateFaRec(User author, Long faRecId, FinancialRecordDto.Patch patchParam, MultipartFile file);
+  FinancialRecord updateFaRec(String authorId, Long faRecId, FinancialRecordDto.Patch patchParam, MultipartFile file);
 
   // 가계부 삭제
-  void deleteFaRec(User author, Long faRecId);
+  void deleteFaRec(String authorId, Long faRecId);
 
   // 가계부 조회확인
   FinancialRecord findVerifiedFaRec(Long faRecId);
 
-  public User findUser(User author);
+  User findUser(String userId);
 }
