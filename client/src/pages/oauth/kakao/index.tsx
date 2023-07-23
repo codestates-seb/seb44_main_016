@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import axios from 'axios';
 import Loading from '../../../components/Loading';
 import useMutateUser from '../../../services/useMutateUser';
 import apiUser from '../../../services/apiUser';
@@ -15,11 +13,10 @@ const KakaoOauthRedirection = () => {
     const codeValue = new URLSearchParams(window.location.search).get('code');
     if (codeValue) {
       code = codeValue;
-      console.log(code);
     }
   }, []);
 
-  useEffect(() => {
+  const handleOAuthLogin = () => {
     if (code && clientId && clientSecret) {
       const oAuthData = {
         grantType: 'authorization_code',
@@ -35,6 +32,10 @@ const KakaoOauthRedirection = () => {
       const { LoginMutate } = useMutateUser.login(apiUser.postOAuthCode);
       LoginMutate(oAuthReqBody);
     }
+  };
+
+  useEffect(() => {
+    handleOAuthLogin();
   }, [code]);
 
   return <Loading />;
