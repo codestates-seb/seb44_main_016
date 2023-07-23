@@ -24,7 +24,7 @@ const KakaoOauthRedirection = () => {
       const oAuthData = {
         grantType: 'authorization_code',
         code: code,
-        redirectURI: 'https://zerohip.co.kr',
+        redirectURI: 'https://zerohip.co.kr/oauth/kakao',
         clientId,
         clientSecret,
       };
