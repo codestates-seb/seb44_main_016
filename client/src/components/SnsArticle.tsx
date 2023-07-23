@@ -1,5 +1,7 @@
 import React from 'react'; // useState 사용
 import styled from '@emotion/styled';
+import axios from 'axios';
+import Link from 'next/link';
 
 import CommonStyles from '../styles/CommonStyles';
 
@@ -20,6 +22,8 @@ type PropsTimeline = {
   type: 'timeline';
   data: FaRecArticleResType;
 };
+
+function getEditorQuery() {}
 
 export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
   const windowType = useWindowType();
@@ -63,6 +67,18 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
           ];
   }
 
+  const handleDeleteArticle = async () => {
+    try {
+      if (type === 'feed') {
+        const res = await axios.delete(`https://www.zerohip.co.kr/feedArticles/${data.feedArticleId}`);
+      } else {
+        const res = await axios.delete(
+          `https://www.zerohip.co.kr/financial-record/${data.financialRecordId}/article/${data.financialRecordArticleId}`
+        );
+      }
+    } catch (error) {}
+  };
+
   return (
     <S.SnsArticleContainer>
       <Label>{labelText}</Label>
@@ -102,8 +118,8 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
           {type !== 'feed' || <VoteForm feedArticleId={data.feedArticleId} />}
           <S.UDForm>
             {/* CRUD의 U, D */}
-            <S.UDBtn>수정</S.UDBtn>
-            <S.UDBtn>삭제</S.UDBtn>
+            <S.LinkBtn href={`/editor?farecid=1`}>수정</S.LinkBtn>
+            <S.UDBtn onClick={handleDeleteArticle}>삭제</S.UDBtn>
           </S.UDForm>
           {/* <Comments /> 후순위 기능*/}
         </S.ArtileMain>
@@ -168,6 +184,10 @@ const S = {
     gap: 0.8rem;
   `,
   UDBtn: styled.button`
+    font-size: 0.9rem;
+    color: var(--color-text-lightgray);
+  `,
+  LinkBtn: styled(Link)`
     font-size: 0.9rem;
     color: var(--color-text-lightgray);
   `,
