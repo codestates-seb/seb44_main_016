@@ -62,3 +62,8 @@ export type FeedArticleReqType = {
   feedType: '절약팁' | '허락해줘';
   content: string;
 };
+
+export type VoteType = {
+  flexCount: number;
+  savingCount: number;
+};

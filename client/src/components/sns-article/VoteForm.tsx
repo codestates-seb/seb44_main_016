@@ -1,29 +1,66 @@
+import React from 'react'; // useState 사용
 import styled from '@emotion/styled';
+import axios from 'axios';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
+import { VoteType } from '../../types/article';
+
+async function getVote(feedArticleId: number) {
+  const res = await axios.get(`https://www.zerohip.co.kr/feedArticles/${feedArticleId}/vote`);
+  const voteData: VoteType = res.data;
+  return voteData;
+}
 type Props = {
-  savingCount: number;
-  flexCount: number;
+  feedArticleId: number;
 };
 
 // 양수: 1 반환, 0: 0 반환, 음수: -1 반환
 const checkSign = (num: number): number => (num > 0 ? 1 : num < 0 ? -1 : 0);
 
 export default function VoteFormComponent(props: Props) {
-  const sign = checkSign(props.savingCount - props.flexCount);
+  const { data, isLoading, isError } = useQuery<VoteType, Error>(['vote', props.feedArticleId], () =>
+    getVote(props.feedArticleId)
+  );
+
+  const [savingCount, setSavingCount] = React.useState(0);
+  const [flexCount, setFlexCount] = React.useState(0);
+
+  // 데이터를 가져온 후, 상태에 반영
+  React.useEffect(() => {
+    if (data) {
+      setSavingCount(data.savingCount);
+      setFlexCount(data.flexCount);
+    }
+  }, [data]);
+
+  let sign = 0;
+  if (data) {
+    sign = checkSign(data.savingCount - data.flexCount);
+  }
 
   const SavingCount = styled(S.SavingCount)`
-    ${sign >= 0 ? 'font-weight: bold' : ''}
+    ${sign > 0 ? 'font-weight: bold' : ''}
   `;
   const FlexCount = styled(S.FlexCount)`
-    ${sign <= 0 ? 'font-weight: bold' : ''}
+    ${sign < 0 ? 'font-weight: bold' : ''}
   `;
+
+  const handleBtnClick = async (pushed: 'saving' | 'flex') => {
+    try {
+      const res = await axios.get(
+        `https://www.zerohip.co.kr/feedArticles/${props.feedArticleId}/vote?pushed=${pushed}`
+      );
+      setSavingCount(res.data.savingCount);
+      setFlexCount(res.data.flexCount);
+    } catch (error) {}
+  };
 
   return (
     <S.VoteForm>
-      <SavingCount>{props.savingCount}</SavingCount>
-      <S.SavingBtn>👍절약</S.SavingBtn>
-      <S.FlexBtn>💸Flex</S.FlexBtn>
-      <FlexCount>{props.flexCount}</FlexCount>
+      <SavingCount>{savingCount}</SavingCount>
+      <S.SavingBtn onClick={() => handleBtnClick('saving')}>👍절약</S.SavingBtn>
+      <S.FlexBtn onClick={() => handleBtnClick('flex')}>💸Flex</S.FlexBtn>
+      <FlexCount>{flexCount}</FlexCount>
     </S.VoteForm>
   );
 }
