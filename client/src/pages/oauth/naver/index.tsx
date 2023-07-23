@@ -30,7 +30,7 @@ const NaverOauthRedirection = () => {
         clientId,
         clientSecret,
       };
-      const targetOAuth = 'kakao';
+      const targetOAuth = 'naver';
       const oAuthReqBody = { oAuthData, targetOAuth };
       console.log(oAuthReqBody);
       LoginMutate(oAuthReqBody);
