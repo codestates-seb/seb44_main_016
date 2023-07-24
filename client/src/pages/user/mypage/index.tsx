@@ -72,7 +72,7 @@ function MyPage() {
     <>
       <HeadMeta title={USER_META_DATA.MY_PAGE.TITLE} description={USER_META_DATA.MY_PAGE.DESCRIPTION} />
       {isMyInfoError ? (
-        <ErrorComponent message={'에러에러'} />
+        <ErrorComponent />
       ) : isMyInfoLoading ? (
         <Loading />
       ) : (
@@ -81,13 +81,13 @@ function MyPage() {
             <MyPageUserInfo myInfoData={myInfoData} />
             <S.UserArticleContainer>
               <h2 className='blind'>내가 쓴 글</h2>
-              {isMyFeedError ? (
+              {/* {isMyFeedError ? (
                 <ErrorComponent />
               ) : filteredData ? (
                 filteredData.map((el: FeedArticleResType) => {
                   return <SnsArticle key={el.feedArticleId} type='feed' data={el} />;
                 })
-              ) : null}
+              ) : null} */}
               <S.AddWrap ref={ref}>
                 <S.AddBtn onClick={() => fetchNextPage()} disabled={!hasNextPage}>
                   {!hasNextPage ? '피드를 모두 확인하셨습니다.' : '계속해서 불러오기'}

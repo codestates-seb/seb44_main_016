@@ -52,6 +52,7 @@ const apiUser = {
   /** 회원정보 불러오기 */
   getUserInfo: async () => {
     const response = await instance.get(`${BASE_URL}/user/info`);
+    console.log(response);
     return response.data;
   },
 
