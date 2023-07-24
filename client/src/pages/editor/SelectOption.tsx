@@ -8,6 +8,7 @@ type Props = {
   options: string[];
   handler: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   disabled?: boolean;
+  initIndex: number;
 };
 
 export default function SelectOption(props: Props) {
@@ -18,7 +19,7 @@ export default function SelectOption(props: Props) {
     setDOMs(
       <S.SelectOptionContainer>
         <S.SelectOptionLegend>{props.legend}</S.SelectOptionLegend>
-        <S.Select onChange={props.handler} disabled={props.disabled}>
+        <S.Select onChange={props.handler} disabled={props.disabled} defaultValue={props.selectedIndex}>
           {props.options.map((optionName, i) => {
             return (
               <S.Option key={i} value={i}>

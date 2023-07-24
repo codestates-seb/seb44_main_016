@@ -116,7 +116,7 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
           {type !== 'feed' || <VoteForm feedArticleId={data.feedArticleId} />}
           <S.UDForm>
             {/* CRUD의 U, D */}
-            <S.LinkBtn href={`/editor?farecid=1`}>수정</S.LinkBtn>
+            <S.LinkBtn href={`/editor?faRecId=1`}>수정</S.LinkBtn>
             <S.UDBtn onClick={handleDeleteArticle}>삭제</S.UDBtn>
           </S.UDForm>
           {/* <Comments /> 후순위 기능*/}

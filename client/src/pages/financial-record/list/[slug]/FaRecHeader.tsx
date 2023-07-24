@@ -47,7 +47,7 @@ export default function FaRecHeader({ setActiveTab, isLoading, isError, error, d
                   >
                     가계부 편집
                   </S.LinkBtn>
-                  <S.LinkBtn href={`/editor?farecid=${faRecId}`} size='small'>
+                  <S.LinkBtn href={`/editor?faRecId=${faRecId}`} size='small'>
                     가계부 작성
                   </S.LinkBtn>
                 </S.LinkWrap>

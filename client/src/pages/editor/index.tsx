@@ -14,12 +14,16 @@ import withAuth from '../../components/WithAuth';
 import { CATEGORY } from '../../constants/category';
 import { FaRecArticleReqType, FeedArticleReqType } from '../../types/article';
 
-function EditorPage() {
-  // 일부 값들은 Enum으로 바꾸는 걸 권장
+async function getFeedArticle(page: number, size: number) {
+  const res = await axios.get(`https://www.zerohip.co.kr/feedArticles`);
+  return res.data;
+}
 
+function EditorPage() {
+  const [isEdit, setIsEdit] = React.useState(false);
   const [articleType, setArticleType] = React.useState(0); // 가계부/절약팁/허락해줘 (라디오 버튼)
   /* ↓ 'articleType=가계부'일 경우에만 표시 ↓ */
-  const [faRecId, setFaRecId] = React.useState(0); // 가계부의 고유번호
+  const [faRecId, setFaRecId] = React.useState(NaN); // 가계부의 고유번호
   const [faDate, setFaDate] = React.useState(new Date()); // 날짜+시간
   const [category, setCategory] = React.useState(''); // 카테고리명
   const [price, setPrice] = React.useState(0); // 금액
@@ -28,7 +32,30 @@ function EditorPage() {
   /* ↓ 모든 articleType에 표시 ↓ */
   const [imgSrcs, setImgSrcs] = React.useState(['', '', '', '']); // 이미지 (0~4장)
   const [content, setContent] = React.useState(''); // 내용(본문)
-  const [scope, setScope] = React.useState(1); // 가계부에만/타임라인에도
+  const [scope, setScope] = React.useState(0); // 가계부에만/타임라인에도
+
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
+    const paramFaRecId = params.get('faRecId');
+    const paramFaRecArticleId = params.get('faRecArticleId');
+    const paramFeedArticleId = params.get('feedArticleId');
+
+    setIsEdit(!!(paramFaRecId || paramFaRecArticleId || paramFeedArticleId));
+
+    if (paramFaRecId) {
+      if (paramFaRecArticleId) {
+        // const {} = getFaRecArticle(paramFaRecArticleId);
+      } else {
+        setFaRecId(Number(paramFaRecId));
+      }
+      if (paramFeedArticleId) {
+        // getFeedArticle(paramFeedArticleId);
+      }
+    } else {
+      setFaRecId(0);
+    }
+  }, []);
 
   const handleChangeArticleType = (id: number) => {
     setArticleType(id);
@@ -110,27 +137,35 @@ function EditorPage() {
 
   return (
     <S.EditorContainer onSubmit={handleSubmit}>
-      <S.Row>
-        {/* 가계부/절약팁/허락해줘 (라디오 버튼) */}
-        <RadioSet
-          legend=''
-          options={['가계부', '절약 팁', '허락해줘!']}
-          checkValue={articleType}
-          handler={handleChangeArticleType}
-          isCenter={true}
-        />
-      </S.Row>
+      {!isEdit ? (
+        <S.Row>
+          <RadioSet
+            legend=''
+            options={['가계부', '절약 팁', '허락해줘!']}
+            checkValue={articleType}
+            handler={handleChangeArticleType}
+            isCenter={true}
+          />
+        </S.Row>
+      ) : (
+        <></>
+      )}
       {/* ↓ 'articleType=가계부'일 경우에만 표시 ↓ */}
       {articleType === 0 && (
         <>
           {/* 작성할 가계부 (셀렉트) */}
-          <S.Row>
-            <SelectOption
-              legend='가계부 이름'
-              options={['가계부A', '가계부B', '가계부C']}
-              handler={handleChangeFaRecId}
-            />
-          </S.Row>
+          {Number.isNaN(faRecId) ? (
+            <></>
+          ) : (
+            <S.Row>
+              <SelectOption
+                legend='가계부 이름'
+                options={['가계부A', '가계부B', '가계부C']}
+                handler={handleChangeFaRecId}
+                initIndex={faRecId}
+              />
+            </S.Row>
+          )}
           <S.Row>
             {/* 날짜+시간 */}
             <StyledDatePicker legend={'날짜'} selected={faDate} handler={handleChangeDate} />
@@ -140,6 +175,7 @@ function EditorPage() {
               options={CATEGORY.flatMap((cate) => cate.name)}
               handler={handleChangeCategory}
               disabled={faType !== 0}
+              initIndex={faType}
             />
           </S.Row>
           <S.Row>
