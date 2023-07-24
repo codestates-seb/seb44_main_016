@@ -1,12 +1,12 @@
 import CommonStyles from '../../styles/CommonStyles';
 import styled from '@emotion/styled';
 import ListItem from './ListItem';
-import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { APIfinancialRecord } from '../../services/apiFinancial';
 import useInput from '../../hooks/useComponents';
 import SVGs from '../../constants/svg';
 import Loading from '../../components/Loading';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ErrorComponent from '../../components/ErrorComponent';
 import { FAREC_MESSAGES } from '../../constants/messages/faRec';
 import withAuth from '../../components/WithAuth';
@@ -27,30 +27,10 @@ export type RecordData = {
 };
 
 function FinancialListPage() {
-  // const { data, error, isError, isLoading } = useQuery(['recordList-1'], APIfinancialRecord.getRecordList);
-  // console.log(data);
+  const { data, error, isError, isLoading } = useQuery(['recordList-1'], APIfinancialRecord.getRecordList);
+  console.log(data);
   const [searchInput, search] = useInput('text', '검색어를 입력해주세요', 'faRecSearch', 'on');
   const [isSearching, setIsSearching] = useState(false);
-
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const recordList = await APIfinancialRecord.getRecordList();
-        setData(recordList);
-        setIsLoading(false);
-      } catch (err) {
-        setError(err);
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const handleSearch = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -76,11 +56,9 @@ function FinancialListPage() {
         <S.LinkBtn href='/financial-record/create'>새 가계부 만들기</S.LinkBtn>
       </S.FormWrap>
 
-      {/* {isError ? ( */}
-      {/* <ErrorComponent message={(error as Error).message} /> */}
-      {/* ) : */}
-
-      {isLoading ? (
+      {isError ? (
+        <ErrorComponent message={(error as Error).message} />
+      ) : isLoading ? (
         <Loading />
       ) : displayData && displayData.length > 0 ? (
         <S.FaRecList>
