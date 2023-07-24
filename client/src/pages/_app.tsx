@@ -51,21 +51,18 @@ const App = ({ Component, pageProps }: AppProps) => {
             <GlobalStyles />
             <S.RootScreen>
               <S.AppContainer maxWidth={maxWidth}>
-                <Hydrate state={pageProps.dehydratedState}>
-                  <S.FlexPage bgColor={bgColor}>
-                    {isShowNav && <Aside isLoggedIn={true} windowType={windowType} />}
-                    <S.SubPage>
-                      {isShowHeader && <HomeHeader windowType={windowType} />}
-                      <S.Main isShowNav={isShowNav} isShowHeader={isShowHeader} windowType={windowType}>
-                        <Component {...pageProps} />
-                      </S.Main>
-                    </S.SubPage>
-                  </S.FlexPage>
-                </Hydrate>
+                <S.FlexPage bgColor={bgColor}>
+                  {isShowNav && <Aside isLoggedIn={true} windowType={windowType} />}
+                  <S.SubPage>
+                    {isShowHeader && <HomeHeader windowType={windowType} />}
+                    <S.Main isShowNav={isShowNav} isShowHeader={isShowHeader} windowType={windowType}>
+                      <Component {...pageProps} />
+                    </S.Main>
+                  </S.SubPage>
+                </S.FlexPage>
               </S.AppContainer>
             </S.RootScreen>
           </Hydrate>
-
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </Providers>
