@@ -1,11 +1,9 @@
-import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { useInView } from 'react-intersection-observer';
 import CommonStyles from '../../../styles/CommonStyles';
 import SnsArticle from '../../../components/SnsArticle';
-import FollowModal from './FollowModal';
 import withAuth from '../../../components/WithAuth';
 import apiUser from '../../../services/apiUser';
 import Loading from '../../../components/Loading';
@@ -28,13 +26,11 @@ function MyPage() {
   const userId = 332; //
   const {
     data: myFeedData,
-    isLoading: IsmyFeedLoading,
     error: isMyFeedError,
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery(['myFeedsList'], ({ pageParam = 1 }) => apiUser.getMyFeeds(userId, pageParam, 4), {
     getNextPageParam: (lastPage) => {
-      console.log(lastPage);
       const currentPage = Number(lastPage.pageData?.page);
       const totalPages = Number(lastPage.pageData?.totalPages);
       if (isNaN(currentPage) || isNaN(totalPages)) {
@@ -47,7 +43,7 @@ function MyPage() {
     enabled: !!userId,
   });
 
-  const filteredData = myFeedData?.pages.flatMap((el) => el.data.filter((el) => el.feedArticleId));
+  const filteredData = myFeedData?.pages.flatMap((response) => response.data);
 
   if (isMyInfoError || isMyFeedError) {
     toast.info('잠시 후에 다시 시도해주세요.');

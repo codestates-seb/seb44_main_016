@@ -4,7 +4,11 @@ import CommonStyles from '../../../styles/CommonStyles';
 import FollowModal from './FollowModal';
 import { UserInfoResData } from '../../../types/user';
 
-export default function MyPageUserInfo({ myInfoData }: UserInfoResData) {
+interface MyPageUserInfoProps {
+  myInfoData: UserInfoResData;
+}
+
+export default function MyPageUserInfo({ myInfoData }: MyPageUserInfoProps) {
   const router = useRouter();
 
   return (
