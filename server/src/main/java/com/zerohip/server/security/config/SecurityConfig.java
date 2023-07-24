@@ -82,8 +82,10 @@ public class SecurityConfig {
         configuration.addAllowedOriginPattern("https://zerohip.co.kr");
         configuration.addAllowedOriginPattern("https://www.zerohip.co.kr");
         configuration.addAllowedOriginPattern("https://api.zerohip.co.kr");
-        configuration.addAllowedOriginPattern("");
-        configuration.addAllowedMethod("");
+        configuration.addAllowedOriginPattern("*");
+        configuration.addAllowedMethod("*");
+        configuration.addExposedHeader("Authorization");
+        configuration.addExposedHeader("Refresh");
         configuration.addAllowedHeader("*");
 
         source.registerCorsConfiguration("/**", configuration);
