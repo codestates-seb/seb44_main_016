@@ -51,7 +51,7 @@
 
 ## ⭐️ 팀 소개
 
-<p align='center'> 팀명 : 선빵 👊🏼 </p>
+> **팀명** : 선빵 👊🏼 
 
 
 <p align='center'><img  src="https://media.discordapp.net/attachments/1130797744487944193/1130798066539171860/Screenshot_20230705-173533_Instagram.jpg?width=727&height=1182" alt="팀 선빵 소개" width="400" height="600"/> </p>
@@ -92,6 +92,8 @@
 
 
 ## ⚒ 기술 스택
+
+<br />
 
 <p align='center'><img  src="https://media.discordapp.net/attachments/1123432177485500486/1132589548191371264/ZeroHip_3.png?width=2182&height=1295" alt="제로힙 시술스택" width="600" height="400"/> </p>
 
@@ -139,7 +141,7 @@
 </details>
 
 <details>
-  <summary> Figma 화면 접근성 </summary>
+  <summary> Figma 화면 정의서 </summary>
 
 - [링크](https://www.figma.com/file/sdzWtE9uQQKCuij5Jclrk0/ZEROHIP?type=design&node-id=1202%3A688&mode=design&t=McLJaOYw9Bfg6lZt-1)
 
@@ -161,7 +163,7 @@
 <details>
   <summary> API 명세서 </summary>
 
-- [노션](https://docs.google.com/spreadsheets/d/1e8pn8s0n09KRMwWzdX84FUiZ9hj2ncbnB9sBrImGdbY/edit#gid=562356072)
+- [ API 명세서 - 링크 ](https://docs.google.com/spreadsheets/d/1e8pn8s0n09KRMwWzdX84FUiZ9hj2ncbnB9sBrImGdbY/edit#gid=562356072)
 
 </details>
 
@@ -184,5 +186,5 @@
 
 ## 🗂 팀 문서
 
-- [팀 컨벤션](https://valuable-trawler-3af.notion.site/adbf58de29ae4e72a6440b503eca393c)
-- [주차별 회고](https://docs.google.com/spreadsheets/d/1l6ei2woahjQa9vhu7PVF4UweVAJmt1R6bvugwV5ATOM/edit#gid=0)
+- [팀 컨벤션 - 링크 ](https://valuable-trawler-3af.notion.site/adbf58de29ae4e72a6440b503eca393c)
+- [주차별 회고 - 링크](https://docs.google.com/spreadsheets/d/1l6ei2woahjQa9vhu7PVF4UweVAJmt1R6bvugwV5ATOM/edit#gid=0)
