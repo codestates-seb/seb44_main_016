@@ -3,6 +3,7 @@
  */
 module.exports = {
   // reactStrictMode: true,
+  crossOrigin: 'anonymous',
   experimental: {
     scrollRestoration: true,
   },
