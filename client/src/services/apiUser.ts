@@ -13,7 +13,9 @@ const apiUser = {
 
   /** 로그인 */
   postLogin: async (loginData: LoginReqData): Promise<AxiosResponse> => {
-    const response = await axios.post(`${BASE_URL}/user/login`, loginData);
+    const response = await axios.post(`${BASE_URL}/user/login`, loginData, {
+      withCredentials: true,
+    });
     return response;
   },
 
@@ -21,7 +23,10 @@ const apiUser = {
   postOAuthCode: async (OAuthReqData: OAuthReqData) => {
     const response = await axios.post(
       `${BASE_URL}/login/oauth2/code/${OAuthReqData.targetOAuth}`,
-      OAuthReqData.oAuthData
+      OAuthReqData.oAuthData,
+      {
+        withCredentials: true,
+      }
     );
     return response;
   },
