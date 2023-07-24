@@ -14,7 +14,7 @@ export default function PolicyAgreement({ CheckboxComponent, isSignUp }: PolicyA
         약관동의
         <span>*</span>
       </S.PolicyLabel>
-      {isSignUp ? <PersonalInfoLaw /> : ''}
+      {/* {isSignUp ? <PersonalInfoLaw /> : ''} */}
       {CheckboxComponent}
     </S.PolicyContainer>
   );
