@@ -40,6 +40,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
 
   useEffect(() => {
     if (myInfoData) {
+      console.log('myInfoData있어.');
       const userId = myInfoData.data.userId;
       const loginId = myInfoData.data.loginId;
       const nickname = myInfoData.data.nickname;
