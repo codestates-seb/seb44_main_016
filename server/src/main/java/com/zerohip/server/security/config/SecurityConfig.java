@@ -24,6 +24,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
@@ -48,9 +49,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-                .cors().and() // CORS 설정 활성화
+                .cors()
+                .and()
                 .csrf().disable()
-                .addFilterBefore(corsFilter(), JwtAuthenticationFilter.class) // CorsFilter를 JwtAuthenticationFilter 이전에 추가
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().disable()
@@ -70,22 +71,24 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CorsFilter corsFilter() {
+    public CorsConfigurationSource corsConfigurationSource() {
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration configuration = new CorsConfiguration();
+
         configuration.setAllowCredentials(true);
         configuration.addAllowedOriginPattern("http://localhost:3000");
         configuration.addAllowedOriginPattern("http://localhost:5173");
         configuration.addAllowedOriginPattern("https://zerohip.co.kr");
         configuration.addAllowedOriginPattern("https://www.zerohip.co.kr");
         configuration.addAllowedOriginPattern("https://api.zerohip.co.kr");
-        configuration.addAllowedOriginPattern(""); // 특정 요청의 출처를 허용하려면 해당 출처를 추가하세요.
-        configuration.addAllowedMethod(""); // 허용할 HTTP 메서드를 추가하세요.
-        configuration.addAllowedHeader("*"); // 클라이언트가 서버에 요청을 보낼 때, 헤더에 토큰 등을 담아 요청하는 것을 허용
+        configuration.addAllowedOriginPattern("");
+        configuration.addAllowedMethod("");
+        configuration.addAllowedHeader("*");
 
         source.registerCorsConfiguration("/**", configuration);
 
-        return new CorsFilter(source);
+        return source;
     }
 
 
