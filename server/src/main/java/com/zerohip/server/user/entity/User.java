@@ -49,18 +49,20 @@ public class User extends Auditable {
     private Boolean followed;
 
     // 테스트 중
-    public User(Long userId, String loginId, String nickname) {
+    public User(Long userId, String loginId, String nickname, String profileImgPath) {
         this.userId = userId;
         this.loginId = loginId;
         this.nickname = nickname;
+        this.profileImgPath = profileImgPath;
     }
 
     // 테스트 중
-    public User(Long userId, String loginId, String nickname, Boolean followed) {
+    public User(Long userId, String loginId, String nickname, Boolean followed, String profileImgPath) {
         this.userId = userId;
         this.loginId = loginId;
         this.nickname = nickname;
         this.followed = followed;
+        this.profileImgPath = profileImgPath;
     }
 
     public User(String email, String loginId, String password, String nickname, String provider) {

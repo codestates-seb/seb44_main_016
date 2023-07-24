@@ -81,17 +81,17 @@ public class UserController {
 
         User author = userService.findUserByLoginId(authorId);
 
-        User newAuthor = new User(author.getUserId(), author.getLoginId(), author.getNickname());
+        User newAuthor = new User(author.getUserId(), author.getLoginId(), author.getNickname(), author.getProfileImgPath());
 
         List<User> followingList = Arrays.asList(
-                new User(5L, "junp", "준프님", false),
-                new User(6L, "hahan", "선빵이", true)
+                new User(5L, "junp", "준프님", false, "https://source.boringavatars.com/beam/150/junp"),
+                new User(6L, "hahan", "선빵이", true, "https://source.boringavatars.com/beam/150/arthur5")
         );
 
         List<User> followerList = Arrays.asList(
-                new User(10L, "ogu", "햄구맘", true),
-                new User(11L, "apple", "망고친구", false),
-                new User(12L, "maximum123", "나그네입니다최대글자", false)
+                new User(10L, "ogu", "햄구맘", true, "https://source.boringavatars.com/beam/150/waypil"),
+                new User(11L, "apple", "망고친구", false, "https://source.boringavatars.com/beam/150/yoonhee"),
+                new User(12L, "maximum123", "나그네입니다최대글자", false, "https://source.boringavatars.com/beam/150/hanstar")
         );
 
         Map<String, Object> response = new LinkedHashMap<>();
