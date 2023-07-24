@@ -14,9 +14,6 @@ type Props = {
   feedArticleId: number;
 };
 
-// 양수: 1 반환, 0: 0 반환, 음수: -1 반환
-const checkSign = (num: number): number => (num > 0 ? 1 : num < 0 ? -1 : 0);
-
 export default function VoteFormComponent(props: Props) {
   const { data, isLoading, isError } = useQuery<VoteType, Error>(['vote', props.feedArticleId], () =>
     getVote(props.feedArticleId)
