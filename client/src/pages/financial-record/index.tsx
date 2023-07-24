@@ -1,22 +1,17 @@
 import CommonStyles from '../../styles/CommonStyles';
 import styled from '@emotion/styled';
-import { PAGE_NAMES } from '../../constants/pageNames';
 import ListItem from './ListItem';
 import { useQuery } from '@tanstack/react-query';
-import { Metadata } from 'next';
 import { APIfinancialRecord } from '../../services/apiFinancial';
 import useInput from '../../hooks/useComponents';
 import SVGs from '../../constants/svg';
 import Loading from '../../components/Loading';
 import { useState } from 'react';
 import ErrorComponent from '../../components/ErrorComponent';
-import { FAREC_MESSAGES } from '../../constants/faRec';
+import { FAREC_MESSAGES } from '../../constants/messages/faRec';
 import withAuth from '../../components/WithAuth';
-
-export const metadata: Metadata = {
-  title: `${PAGE_NAMES.FINANCIAL_RECORD_LIST}`,
-  description: `${PAGE_NAMES.FINANCIAL_RECORD_LIST} 페이지입니다.`,
-};
+import HeadMeta from '../../components/HeadMeta';
+import { FAREC_META_DATA } from '../../constants/seo/faRecMetaData';
 
 export type UserData = {
   userId: number;
@@ -52,7 +47,10 @@ function FinancialListPage() {
   }
   return (
     <S.ListWrap>
-      <h1 className='blind'>{PAGE_NAMES.FINANCIAL_RECORD_LIST}</h1>
+      <HeadMeta
+        title={FAREC_META_DATA.FINANCIAL_RECORD_LIST_PAGE.TITLE}
+        description={FAREC_META_DATA.FINANCIAL_RECORD_LIST_PAGE.DESCRIPTION}
+      />
       <S.FormWrap>
         <S.InputWrap>
           {searchInput}

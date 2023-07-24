@@ -13,8 +13,10 @@ import Loading from '../../../../components/Loading';
 import Pagination from '../../../../components/Pagination';
 import CommonStyles from '../../../../styles/CommonStyles';
 import ErrorComponent from '../../../../components/ErrorComponent';
-import { FAREC_MESSAGES } from '../../../../constants/faRec';
+import { FAREC_MESSAGES } from '../../../../constants/messages/faRec';
 import withAuth from '../../../../components/WithAuth';
+import HeadMeta from '../../../../components/HeadMeta';
+import { FAREC_META_DATA } from '../../../../constants/seo/faRecMetaData';
 
 function FinancialPage() {
   const router = useRouter();
@@ -85,6 +87,10 @@ function FinancialPage() {
   );
   return (
     <S.Container>
+      <HeadMeta
+        title={FAREC_META_DATA.FINANCIAL_RECORD_PAGE.TITLE}
+        description={FAREC_META_DATA.FINANCIAL_RECORD_PAGE.DESCRIPTION}
+      />
       <FaRecHeader
         setActiveTab={setActiveTab}
         isLoading={isFaRecLoading}

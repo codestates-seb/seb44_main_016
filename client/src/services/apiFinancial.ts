@@ -17,6 +17,9 @@ export const APIfinancialRecord = {
         'Content-Type': 'multipart/form-data',
       },
     });
+    if (!res.data.success) {
+      throw new Error(res.data.message || 'Error creating financial record');
+    }
     return res.data;
   },
   // 가계부 1개 조회 GET
@@ -33,6 +36,9 @@ export const APIfinancialRecord = {
         'Content-Type': 'multipart/form-data',
       },
     });
+    if (!res.data.success) {
+      throw new Error(res.data.message || 'Error updating financial record');
+    }
     return res.data;
   },
   // 가계부 DELETE

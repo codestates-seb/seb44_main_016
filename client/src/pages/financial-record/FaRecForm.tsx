@@ -12,7 +12,7 @@ import { APIfinancialRecord } from '../../services/apiFinancial';
 import InputField from '../../components/InputField';
 import { getRandomImageUrl } from '../../utils/randomImg';
 import { RANDOM_IMG_URLS } from '../../constants/faRecImgUrls';
-import { FAREC_MESSAGES } from '../../constants/faRec';
+import { FAREC_MESSAGES } from '../../constants/messages/faRec';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../hooks/useRefusalAni';
 import ImgBox from './ImgBox';
 
