@@ -4,7 +4,7 @@ import CommonStyles from '../styles/CommonStyles';
 import Head from 'next/head';
 
 interface ErrorComponentProps {
-  message: string;
+  message?: string;
 }
 
 export default function ErrorComponent({ message }: ErrorComponentProps) {
@@ -18,7 +18,7 @@ export default function ErrorComponent({ message }: ErrorComponentProps) {
       </Head>
       <S.CommentBox>
         <S.MajorComment>오류가 발생 했어요!</S.MajorComment>
-        <S.ExplainComment>{message}</S.ExplainComment>
+        {message && <S.ExplainComment>{message}</S.ExplainComment>}
         <S.SubmitBtn type='button' small onClick={handleRetry}>
           다시 시도하기
         </S.SubmitBtn>

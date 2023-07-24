@@ -12,6 +12,7 @@ const initialState: AuthnState = {
     loginId: null,
     nickname: null,
     isLoggedIn: false,
+    profileImgPath: null,
   },
 };
 
