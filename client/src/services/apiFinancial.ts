@@ -7,6 +7,8 @@ export const APIfinancialRecord = {
     const res = await instance.get(`${BASE_URL}/financial-record`, {
       withCredentials: true,
     });
+    console.log('레코드리스트야!');
+    console.log(res);
     // const res = await axios.get('/data/recordList.json');
     return res.data;
   },

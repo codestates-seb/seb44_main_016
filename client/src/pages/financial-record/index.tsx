@@ -39,7 +39,7 @@ export type RecordData = {
 };
 
 function FinancialListPage() {
-  const { data, error, isError, isLoading } = useQuery(['recordList'], APIfinancialRecord.getRecordList);
+  const { data, error, isError, isLoading } = useQuery(['recordList-1'], APIfinancialRecord.getRecordList);
   console.log(data);
   const [searchInput, search] = useInput('text', '검색어를 입력해주세요', 'faRecSearch', 'on');
   const [isSearching, setIsSearching] = useState(false);
