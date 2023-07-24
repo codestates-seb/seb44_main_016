@@ -28,7 +28,6 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-@Slf4j
 public class FinancialRecordServiceImpl implements FinancialRecordService {
 
   private final FinancialRecordRepository repository;

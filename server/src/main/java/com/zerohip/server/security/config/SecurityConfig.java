@@ -23,6 +23,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 /**
@@ -37,7 +39,6 @@ public class SecurityConfig {
 
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
-    private final CorsFilter corsFilter;
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserService userService;
     private final UserRepository userRepository;
@@ -47,9 +48,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-                .headers().frameOptions().sameOrigin().disable() // https 적용 후 수정예정
+                .cors().and() // CORS 설정 활성화
                 .csrf().disable()
-                .addFilter(corsFilter)
+                .addFilterBefore(corsFilter(), JwtAuthenticationFilter.class) // CorsFilter를 JwtAuthenticationFilter 이전에 추가
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().disable()
@@ -58,16 +59,36 @@ public class SecurityConfig {
                 .authenticationEntryPoint(new UserAuthenticationEntryPoint())
                 .accessDeniedHandler(new UserAccessDeniedHandler())
                 .and()
-                .apply(new CustomFilterConfig()) // 커스터마이징 된 CustomFilterConfigurer 추가
+                .apply(new CustomFilterConfig())
                 .and()
                 .authorizeRequests(authorize -> authorize
-                        .anyRequest().permitAll()   // role : 현재 user 권한만 있기 때문에 세부 권한 지정 필요 x
-                )
+                        .anyRequest().permitAll())
                 .oauth2Login(oauth2 -> oauth2
-                .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, authorityUtils, userService, userRepository, refreshTokenRepository)));
+                        .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, authorityUtils, userService, userRepository, refreshTokenRepository)));
 
         return http.build();
     }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowCredentials(true);
+        configuration.addAllowedOriginPattern("http://localhost:3000");
+        configuration.addAllowedOriginPattern("http://localhost:5173");
+        configuration.addAllowedOriginPattern("https://zerohip.co.kr");
+        configuration.addAllowedOriginPattern("https://www.zerohip.co.kr");
+        configuration.addAllowedOriginPattern("https://api.zerohip.co.kr");
+        configuration.addAllowedOriginPattern(""); // 특정 요청의 출처를 허용하려면 해당 출처를 추가하세요.
+        configuration.addAllowedMethod(""); // 허용할 HTTP 메서드를 추가하세요.
+        configuration.addAllowedHeader("*"); // 클라이언트가 서버에 요청을 보낼 때, 헤더에 토큰 등을 담아 요청하는 것을 허용
+
+        source.registerCorsConfiguration("/**", configuration);
+
+        return new CorsFilter(source);
+    }
+
+
 
 
 
@@ -96,6 +117,34 @@ public class SecurityConfig {
                     .addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class);
         }
     }
+
+
+
+    // CustomFilterConfigurer 등록
+//    public class CustomFilterConfig extends AbstractHttpConfigurer<CustomFilterConfig, HttpSecurity> {
+//
+//        @Override
+//        public void configure(HttpSecurity builder) throws Exception {
+//
+//            // AuthenticationManager 객체를 가져오는데, Spring Security 설정을 구성하는 SecurityConfigurer 간에 공유되는 객체를 가져옴
+//            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
+//
+//            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer, refreshTokenRepository);
+//            jwtAuthenticationFilter.setFilterProcessesUrl("/user/login");   // 로그인 url 지정
+//            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new UserAuthenticationSuccessHandler());
+//            jwtAuthenticationFilter.setAuthenticationFailureHandler(new UserAuthenticationFailureHandler());
+//
+//            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
+//
+//            builder // 시큐리티 필터에 추가 (필터 순서에 유의)
+////                    .addFilter(corsFilter)              // SecurityCorsConfig 클래스에 설정한 cors 정책 추가
+//                    .addFilter(jwtAuthenticationFilter) // Spring Security Filter Chain 에 추가
+//
+//                    // 로그인 인증에 성공한 후 발급받은 JWT가 클라이언트의 request header(Authorization 헤더)에 포함되어 있을 경우에만 동작
+//                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class)
+//                    .addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class);
+//        }
+//    }
 
 
 

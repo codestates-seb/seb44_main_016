@@ -64,7 +64,7 @@ spring:
       data-locations: classpath*:db/h2/data.sql
   servlet:
     multipart:
-     # 각 파일의 최대 크기와 전체 요청 본문의 최대크기 설정
+      # 각 파일의 최대 크기와 전체 요청 본문의 최대크기 설정
       max-file-size: 10MB
       max-request-size: 10MB
   web:
@@ -85,9 +85,9 @@ server:
 #  address:
 #    admin: admin@gmail.com
 jwt:
-  key: ${JWT_KEY}
-  access-token-expiration-minutes: ${JWT_ACCESS_TOKEN}
-  refresh-token-expiration-minutes: ${JWT_REFRESH_TOKEN}
+  key: neverland123123123123123123123123123123 # 환경변수 ${JWT_KEY}
+  access-token-expiration-minutes: 60          # 환경변수 ${JWT_ACCESS_TOKEN}
+  refresh-token-expiration-minutes: 10080      # 환경변수 ${JWT_REFRESH_TOKEN}
 
 cloud:
   aws:
@@ -100,3 +100,4 @@ cloud:
       secret-key: ${AWS_SECRET_KEY}
     stack:
       auto: false
+
