@@ -15,7 +15,7 @@ import { CATEGORY } from '../../constants/category';
 import { FaRecArticleReqType, FeedArticleReqType } from '../../types/article';
 
 async function getFeedArticle(page: number, size: number) {
-  const res = await axios.get(`https://www.zerohip.co.kr/feedArticles`);
+  const res = await axios.get(`/feedArticles`);
   return res.data;
 }
 
@@ -111,7 +111,7 @@ function EditorPage() {
         };
         formData.append('data', JSON.stringify(body));
 
-        await axios.post(`https://www.zerohip.co.kr/financial-record/${faRecId}/article'`, formData, {
+        await axios.post(`/financial-record/${faRecId}/article'`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -124,7 +124,7 @@ function EditorPage() {
         };
         formData.append('data', JSON.stringify(body));
 
-        await axios.post('https://www.zerohip.co.kr/feedArticles', formData, {
+        await axios.post('/feedArticles', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },

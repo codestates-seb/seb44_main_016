@@ -6,7 +6,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { VoteType } from '../../types/article';
 
 async function getVote(feedArticleId: number) {
-  const res = await axios.get(`https://www.zerohip.co.kr/feedArticles/${feedArticleId}/vote`);
+  const res = await axios.get(`/feedArticles/${feedArticleId}/vote`);
   const voteData: VoteType = res.data;
   return voteData;
 }
@@ -33,9 +33,7 @@ export default function VoteFormComponent(props: Props) {
   const handleBtnClick = async (e: React.MouseEvent<HTMLButtonElement>, pushed: 'saving' | 'flex') => {
     e.preventDefault();
     try {
-      const res = await axios.get(
-        `https://www.zerohip.co.kr/feedArticles/${props.feedArticleId}/vote?pushed=${pushed}`
-      );
+      const res = await axios.get(`/feedArticles/${props.feedArticleId}/vote?pushed=${pushed}`);
       setSavingCount(res.data.savingCount);
       setFlexCount(res.data.flexCount);
     } catch (error) {}

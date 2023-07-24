@@ -68,10 +68,10 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
   const handleDeleteArticle = async () => {
     try {
       if (type === 'feed') {
-        const res = await axios.delete(`https://www.zerohip.co.kr/feedArticles/${data.feedArticleId}`);
+        const res = await axios.delete(`/feedArticles/${data.feedArticleId}`);
       } else {
         const res = await axios.delete(
-          `https://www.zerohip.co.kr/financial-record/${data.financialRecordId}/article/${data.financialRecordArticleId}`
+          `/financial-record/${data.financialRecordId}/article/${data.financialRecordArticleId}`
         );
       }
     } catch (error) {}
