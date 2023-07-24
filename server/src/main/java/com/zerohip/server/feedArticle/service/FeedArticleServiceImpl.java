@@ -46,7 +46,7 @@ public class FeedArticleServiceImpl implements FeedArticleService {
 
     //피드 조회
     @Override
-    public Page<FeedArticle> findFeedArticles(Long articleId, int page, int size) {
+    public Page<FeedArticle> findFeedArticles(int page, int size) {
         return feedArticleRepository.findAll(PageRequest.of(page -1, size));
     }
 

@@ -15,7 +15,7 @@ public interface FeedArticleService {
   FeedArticle findFeedArticle(Long articleId);
 
   // 피드 게시글 조회(전체)
-  Page<FeedArticle> findFeedArticles(Long articleId, int page, int size);
+  Page<FeedArticle> findFeedArticles(int page, int size);
 
   // 특정 사용자의 피드 게시글 조회
   Page<FeedArticle> findUserFeedArticles(Long userId, int page, int size);

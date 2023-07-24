@@ -52,10 +52,8 @@ public class FeedArticleController {
 
     // 피드 조회
     @GetMapping
-    public ResponseEntity getAllFeedArticles(@Valid @RequestBody Long articleId,
-                                             @RequestParam @Positive int page,
-                                             @RequestParam @Positive int size) {
-        Page<FeedArticle> pageFeedArticles = feedArticleService.findFeedArticles(articleId, page, size);
+    public ResponseEntity getAllFeedArticles(@Positive int page, @Positive int size) {
+        Page<FeedArticle> pageFeedArticles = feedArticleService.findFeedArticles(page, size);
         List<FeedArticle> allFeedArticles = pageFeedArticles.getContent();
         return ResponseEntity.ok(feedArticleMapper.feedArticlesToFeedArticleResponses(allFeedArticles));
     }
