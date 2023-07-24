@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app';
 import GlobalStyles from '../styles/GlobalStyles';
 import { useRouter } from 'next/router';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import styled from '@emotion/styled';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Providers } from '../components/redux/provider';
@@ -48,15 +48,17 @@ const App = ({ Component, pageProps }: AppProps) => {
           <GlobalStyles />
           <S.RootScreen>
             <S.AppContainer maxWidth={maxWidth}>
-              <S.FlexPage bgColor={bgColor}>
-                {isShowNav && <Aside isLoggedIn={true} windowType={windowType} />}
-                <S.SubPage>
-                  {isShowHeader && <HomeHeader windowType={windowType} />}
-                  <S.Main isShowNav={isShowNav} isShowHeader={isShowHeader} windowType={windowType}>
-                    <Component {...pageProps} />
-                  </S.Main>
-                </S.SubPage>
-              </S.FlexPage>
+              <Hydrate state={pageProps.dehydratedState}>
+                <S.FlexPage bgColor={bgColor}>
+                  {isShowNav && <Aside isLoggedIn={true} windowType={windowType} />}
+                  <S.SubPage>
+                    {isShowHeader && <HomeHeader windowType={windowType} />}
+                    <S.Main isShowNav={isShowNav} isShowHeader={isShowHeader} windowType={windowType}>
+                      <Component {...pageProps} />
+                    </S.Main>
+                  </S.SubPage>
+                </S.FlexPage>
+              </Hydrate>
             </S.AppContainer>
           </S.RootScreen>
           <ReactQueryDevtools initialIsOpen={false} />
