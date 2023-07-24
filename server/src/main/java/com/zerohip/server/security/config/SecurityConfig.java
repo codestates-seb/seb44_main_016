@@ -35,13 +35,6 @@ import org.springframework.web.filter.CorsFilter;
 @EnableWebSecurity
 public class SecurityConfig {
 
-//    @Value("${spring.security.oauth2.client.registration.google.clientId}")
-//    private String clientId;
-//
-//    @Value("${spring.security.oauth2.client.registration.google.clientSecret}")
-//    private String clientSecret;
-
-
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
     private final CorsFilter corsFilter;
@@ -56,6 +49,7 @@ public class SecurityConfig {
         http
                 .headers().frameOptions().sameOrigin().disable() // https 적용 후 수정예정
                 .csrf().disable()
+                .addFilter(corsFilter)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().disable()
@@ -72,18 +66,9 @@ public class SecurityConfig {
                 .oauth2Login(oauth2 -> oauth2
                 .successHandler(new OAuth2UserSuccessHandler(jwtTokenizer, authorityUtils, userService, userRepository, refreshTokenRepository)));
 
-
-
         return http.build();
     }
 
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//        return ((web) -> web
-//                .ignoring()
-//                .antMatchers("/courses/{coursesId}/share")
-//                .antMatchers("/posts/read/**"));
-//    }
 
 
     // CustomFilterConfigurer 등록
@@ -103,7 +88,7 @@ public class SecurityConfig {
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
 
             builder // 시큐리티 필터에 추가 (필터 순서에 유의)
-                    .addFilter(corsFilter)  // SecurityCorsConfig 클래스에 설정한 cors 정책 추가
+//                    .addFilter(corsFilter)              // SecurityCorsConfig 클래스에 설정한 cors 정책 추가
                     .addFilter(jwtAuthenticationFilter) // Spring Security Filter Chain 에 추가
 
                     // 로그인 인증에 성공한 후 발급받은 JWT가 클라이언트의 request header(Authorization 헤더)에 포함되어 있을 경우에만 동작
