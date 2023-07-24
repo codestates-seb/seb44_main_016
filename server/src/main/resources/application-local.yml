@@ -43,6 +43,7 @@ spring:
               - email
             redirectUri: https://zerohip.co.kr/login/oauth2/code/google
             authorization-grant-type: authorization_code
+
   h2:
     console:
       enabled: true
@@ -84,9 +85,10 @@ server:
 #  address:
 #    admin: admin@gmail.com
 jwt:
-  key: ${JWT_KEY}
-  access-token-expiration-minutes: ${JWT_ACCESS_TOKEN}
-  refresh-token-expiration-minutes: ${JWT_REFRESH_TOKEN}
+  key: neverland123123123123123123123123123123 # 환경변수 ${JWT_KEY}
+  access-token-expiration-minutes: 60          # 환경변수 ${JWT_ACCESS_TOKEN}
+  refresh-token-expiration-minutes: 10080      # 환경변수 ${JWT_REFRESH_TOKEN}
+
 cloud:
   aws:
     s3:

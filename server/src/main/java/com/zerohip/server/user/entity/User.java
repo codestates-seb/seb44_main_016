@@ -40,6 +40,10 @@ public class User extends Auditable {
     @Column
     private Provider provider;
 
+    // 프로필 url 추가
+    @Column
+    private String profileImgPath;
+
     // 테스트 중
     @Column
     private Boolean followed;

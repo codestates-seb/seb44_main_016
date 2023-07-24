@@ -47,6 +47,9 @@ public class UserDto {
         @Size(min = 4, max = 10, message = "닉네임은 4 ~ 10자 사이여야 합니다.")
         private String nickname;
 
+        @NotBlank
+        private String profileImgPath;
+
     }
 
     @Getter
@@ -55,16 +58,12 @@ public class UserDto {
     @Builder
     public static class Patch {
 
-        //        private Long UserId;
-//        private String email;
         private String loginId;
 
-        @NotBlank(message = "패스워드는 공백이 아니여야 합니다.")
         @Pattern(regexp = "^[a-zA-Z0-9!@#$%^&*()]*$", message = "비밀번호는 영문 대소문자와 키패드 1~0까지의 특수문자만 가능합니다.")
         @Size(min = 8, max = 16, message = "비밀번호는 8~16자 사이여야 합니다.")
         private String password;
 
-        @NotBlank(message = "닉네임은 공백이 아니어야 합니다.")
         @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "닉네임은 영문 대소문자와 숫자만 가능합니다.")
         @Size(min = 4, max = 10, message = "닉네임은 4 ~ 10자 사이여야 합니다.")
         private String nickname;
@@ -127,6 +126,7 @@ public class UserDto {
         private String email;
         private String loginId;
         private String nickname;
+        private String profileImgPath;
         private String provider;
         private LocalDateTime createdAt;
 
