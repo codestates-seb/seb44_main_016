@@ -1,17 +1,15 @@
-import { Metadata } from 'next';
-import { PAGE_NAMES } from '../../../constants/pageNames';
 import FaRecForm from '../FaRecForm';
 import withAuth from '../../../components/WithAuth';
-
-export const metadata: Metadata = {
-  title: PAGE_NAMES.FINANCIAL_RECORD_CREATE,
-  description: `${PAGE_NAMES.FINANCIAL_RECORD_CREATE} 페이지입니다.`,
-};
+import { FAREC_META_DATA } from '../../../constants/seo/faRecMetaData';
+import HeadMeta from '../../../components/HeadMeta';
 
 function FaRecCreatePage() {
   return (
     <>
-      <h1 className='blind'>{PAGE_NAMES.FINANCIAL_RECORD_CREATE} 페이지</h1>
+      <HeadMeta
+        title={FAREC_META_DATA.FINANCIAL_RECORD_CREATE_PAGE.TITLE}
+        description={FAREC_META_DATA.FINANCIAL_RECORD_CREATE_PAGE.DESCRIPTION}
+      />
       <FaRecForm pageType='create' />
     </>
   );
