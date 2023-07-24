@@ -7,6 +7,7 @@ export const APIfinancialRecord = {
   getRecordList: async () => {
     const res = await instance.get(`${BASE_URL}/financial-record`, {
       withCredentials: true,
+      timeout: 5000,
     });
     // const res = await axios.get('/data/recordList.json');
     return res.data;
