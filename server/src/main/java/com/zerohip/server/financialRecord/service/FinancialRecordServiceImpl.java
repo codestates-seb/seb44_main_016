@@ -24,6 +24,7 @@ import java.util.Optional;
 /**
  * User 추가하기
  */
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor

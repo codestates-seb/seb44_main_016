@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@Table(name = "financialRecords")
+@Table(name = "financial_records")
 @Setter
 @Getter
 @NoArgsConstructor
