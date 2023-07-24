@@ -14,8 +14,10 @@ import withAuth from '../../components/WithAuth';
 import { CATEGORY } from '../../constants/category';
 import { FaRecArticleReqType, FeedArticleReqType } from '../../types/article';
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 async function getFeedArticle(page: number, size: number) {
-  const res = await axios.get(`/feedArticles`);
+  const res = await axios.get(`${BASE_URL}/feedArticles`);
   return res.data;
 }
 
@@ -111,7 +113,7 @@ function EditorPage() {
         };
         formData.append('data', JSON.stringify(body));
 
-        await axios.post(`/financial-record/${faRecId}/article'`, formData, {
+        await axios.post(`${BASE_URL}/financial-record/${faRecId}/article'`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -124,7 +126,7 @@ function EditorPage() {
         };
         formData.append('data', JSON.stringify(body));
 
-        await axios.post('/feedArticles', formData, {
+        await axios.post(`${BASE_URL}/feedArticles`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },

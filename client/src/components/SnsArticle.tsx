@@ -13,6 +13,8 @@ import { FeedArticleResType, FaRecArticleResType, VoteType } from '../types/arti
 import { useWindowType, useWindowSize } from '../hooks/useWindowSize';
 import { ScreenEnum } from '../constants/enums';
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 /* type은 추후 다른 파일로 분리하고 Import할 예정 */
 type PropsFeed = {
   type: 'feed';
@@ -68,10 +70,10 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
   const handleDeleteArticle = async () => {
     try {
       if (type === 'feed') {
-        const res = await axios.delete(`/feedArticles/${data.feedArticleId}`);
+        const res = await axios.delete(`${BASE_URL}/feedArticles/${data.feedArticleId}`);
       } else {
         const res = await axios.delete(
-          `/financial-record/${data.financialRecordId}/article/${data.financialRecordArticleId}`
+          `${BASE_URL}/financial-record/${data.financialRecordId}/article/${data.financialRecordArticleId}`
         );
       }
     } catch (error) {}
