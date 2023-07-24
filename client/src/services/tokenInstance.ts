@@ -13,6 +13,7 @@ instance.interceptors.request.use(
     const accessToken = store.getState().authnReducer.login.accessToken;
     if (accessToken) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
+      console.log('액세스 있어서 통과');
     }
     return config;
   },
@@ -24,6 +25,8 @@ instance.interceptors.request.use(
 /** RESPONSE INTERCEPTORS */
 instance.interceptors.response.use(
   (response) => {
+    console.log('리스펀스!');
+
     return response;
   },
   async (error) => {
@@ -43,11 +46,13 @@ instance.interceptors.response.use(
 
         /** CHANGE ACCESS TOKEN AND RETRY THE REQUEST*/
         originalRequest.headers['Authorization'] = res.headers.authorization;
-        console.log(res.headers.authorization);
+        console.log('액세스 없어서 다시 받아왔음!!');
+        console.log(res.headers);
+
         return axios(originalRequest);
       }
     } catch (error) {
-      // toast.info('로그인이 필요한 서비스입니다.'); 서버 연결 후 살릴 예정
+      toast.info('로그인이 필요한 서비스입니다.');
       return false;
     }
     return Promise.reject(error);
