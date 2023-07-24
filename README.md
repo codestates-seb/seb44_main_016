@@ -51,9 +51,8 @@
 
 ## ⭐️ 팀 소개
 
-> **팀명** : 선빵 👊🏼 
-<br> **프로젝트명** : 제로힙(ZEROHIP)
-<br>  **개발기간** : 2023.06.28 ~ 2023.7.27
+<p align='center'> 팀명 : 선빵 👊🏼 </p>
+
 
 <p align='center'><img  src="https://media.discordapp.net/attachments/1130797744487944193/1130798066539171860/Screenshot_20230705-173533_Instagram.jpg?width=727&height=1182" alt="팀 선빵 소개" width="400" height="600"/> </p>
 
@@ -132,7 +131,15 @@
 </details>
 
 <details>
-  <summary> Figma 디자인 </summary>
+  <summary> Figma 디자인 목업 </summary>
+
+- [링크](https://www.figma.com/file/sdzWtE9uQQKCuij5Jclrk0/ZEROHIP?type=design&node-id=1202%3A688&mode=design&t=McLJaOYw9Bfg6lZt-1)
+
+
+</details>
+
+<details>
+  <summary> Figma 화면 접근성 </summary>
 
 - [링크](https://www.figma.com/file/sdzWtE9uQQKCuij5Jclrk0/ZEROHIP?type=design&node-id=1202%3A688&mode=design&t=McLJaOYw9Bfg6lZt-1)
 
@@ -175,8 +182,7 @@
 <br>
 
 
-## ⚡️ 팀 문서
-
+## 🗂 팀 문서
 
 - [팀 컨벤션](https://valuable-trawler-3af.notion.site/adbf58de29ae4e72a6440b503eca393c)
 - [주차별 회고](https://docs.google.com/spreadsheets/d/1l6ei2woahjQa9vhu7PVF4UweVAJmt1R6bvugwV5ATOM/edit#gid=0)
