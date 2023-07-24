@@ -74,6 +74,7 @@ public class SecurityConfig {
         return http.build();
     }
 
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
 
@@ -96,9 +97,6 @@ public class SecurityConfig {
 
         return source;
     }
-
-
-
 
 
     // CustomFilterConfigurer 등록
@@ -129,31 +127,6 @@ public class SecurityConfig {
 
 
 
-    // CustomFilterConfigurer 등록
-//    public class CustomFilterConfig extends AbstractHttpConfigurer<CustomFilterConfig, HttpSecurity> {
-//
-//        @Override
-//        public void configure(HttpSecurity builder) throws Exception {
-//
-//            // AuthenticationManager 객체를 가져오는데, Spring Security 설정을 구성하는 SecurityConfigurer 간에 공유되는 객체를 가져옴
-//            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
-//
-//            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer, refreshTokenRepository);
-//            jwtAuthenticationFilter.setFilterProcessesUrl("/user/login");   // 로그인 url 지정
-//            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new UserAuthenticationSuccessHandler());
-//            jwtAuthenticationFilter.setAuthenticationFailureHandler(new UserAuthenticationFailureHandler());
-//
-//            JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
-//
-//            builder // 시큐리티 필터에 추가 (필터 순서에 유의)
-////                    .addFilter(corsFilter)              // SecurityCorsConfig 클래스에 설정한 cors 정책 추가
-//                    .addFilter(jwtAuthenticationFilter) // Spring Security Filter Chain 에 추가
-//
-//                    // 로그인 인증에 성공한 후 발급받은 JWT가 클라이언트의 request header(Authorization 헤더)에 포함되어 있을 경우에만 동작
-//                    .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class)
-//                    .addFilterAfter(jwtVerificationFilter, OAuth2LoginAuthenticationFilter.class);
-//        }
-//    }
 
 
 

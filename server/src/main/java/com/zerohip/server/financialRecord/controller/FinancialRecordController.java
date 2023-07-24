@@ -54,6 +54,7 @@ public class FinancialRecordController {
 
   @GetMapping
   public ResponseEntity getFinancialRecords(@AuthenticationPrincipal String authorId) {
+
     List<FinancialRecord> myFaRec = faRecService.findFaRecs(authorId);
     return ResponseEntity.ok(new MultiResponseDto<>(mapper.financialRecordsToFinancialRecordResponses(myFaRec)));
   }
