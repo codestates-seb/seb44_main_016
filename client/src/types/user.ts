@@ -99,5 +99,4 @@ export interface UserInfoResData {
   profileImgPath: string;
   followingList: FollowUsersInfoData[];
   followerList: FollowUsersInfoData[];
-  myContents?: UserFeedData[];
 }
