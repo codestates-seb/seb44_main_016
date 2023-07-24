@@ -15,7 +15,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   // const accessToken = null; // accessToken 만료 test용 (배포 직전 삭제)
 
   const { data: myInfoData } = useQuery(['myInfo'], apiUser.getUserInfo, {
-    enabled: !accessToken, // accessToken이 없을 때에만 요청합니다.
+    enabled: !!accessToken,
   });
 
   /** refresh 토큰으로 새 access 토큰을 발급받는 api */
