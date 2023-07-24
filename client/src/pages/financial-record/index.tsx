@@ -6,7 +6,7 @@ import { APIfinancialRecord } from '../../services/apiFinancial';
 import useInput from '../../hooks/useComponents';
 import SVGs from '../../constants/svg';
 import Loading from '../../components/Loading';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ErrorComponent from '../../components/ErrorComponent';
 import { FAREC_MESSAGES } from '../../constants/messages/faRec';
 import withAuth from '../../components/WithAuth';
@@ -27,6 +27,18 @@ export type RecordData = {
 };
 
 function FinancialListPage() {
+  const [isDelay, setIsDelay] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsDelay(false);
+    }, 5000);
+  }, []);
+
+  if (isDelay) {
+    return null;
+  }
+
   const { data, error, isError, isLoading } = useQuery<RecordData[]>(
     ['recordList'],
     APIfinancialRecord.getRecordList
