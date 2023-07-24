@@ -21,6 +21,7 @@ public class SecurityCorsConfig {
         configuration.addAllowedOriginPattern("http://localhost:5173");
         configuration.addAllowedOriginPattern("https://zerohip.co.kr");
         configuration.addAllowedOriginPattern("https://www.zerohip.co.kr");
+        configuration.addAllowedOriginPattern("https://api.zerohip.co.kr");
         configuration.addAllowedOriginPattern("*");
         configuration.addAllowedMethod("*");
         configuration.addExposedHeader("Authorization");    // 응답 헤더 노출
