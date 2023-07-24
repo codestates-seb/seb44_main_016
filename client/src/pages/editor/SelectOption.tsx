@@ -19,7 +19,7 @@ export default function SelectOption(props: Props) {
     setDOMs(
       <S.SelectOptionContainer>
         <S.SelectOptionLegend>{props.legend}</S.SelectOptionLegend>
-        <S.Select onChange={props.handler} disabled={props.disabled} defaultValue={props.selectedIndex}>
+        <S.Select onChange={props.handler} disabled={props.disabled} defaultValue={props.initIndex}>
           {props.options.map((optionName, i) => {
             return (
               <S.Option key={i} value={i}>
