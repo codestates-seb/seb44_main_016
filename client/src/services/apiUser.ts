@@ -64,7 +64,6 @@ const apiUser = {
   /** 내가 쓴 글 불러오기 */
   getMyFeeds: async (userId: number, page: number, size: number) => {
     const res = await instance.get(`${BASE_URL}/user/${userId}/feedArticles?page=${page}&size=${size}`);
-    console.log(res);
     const { data, pageData } = res.data;
     return { data, pageData };
   },

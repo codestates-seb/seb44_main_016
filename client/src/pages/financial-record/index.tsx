@@ -12,6 +12,7 @@ import { FAREC_MESSAGES } from '../../constants/messages/faRec';
 import withAuth from '../../components/WithAuth';
 import HeadMeta from '../../components/HeadMeta';
 import { FAREC_META_DATA } from '../../constants/seo/faRecMetaData';
+import apiUser from '../../services/apiUser';
 
 export type UserData = {
   userId: number;
@@ -27,24 +28,32 @@ export type RecordData = {
 };
 
 function FinancialListPage() {
-  const { data, error, isError, isLoading } = useQuery(['recordList-1'], APIfinancialRecord.getRecordList);
-  console.log(data);
-  const [searchInput, search] = useInput('text', '검색어를 입력해주세요', 'faRecSearch', 'on');
-  const [isSearching, setIsSearching] = useState(false);
+  // const { data, error, isError, isLoading } = useQuery(['recordList-1'], APIfinancialRecord.getRecordList);
+  // console.log(data);
 
-  const handleSearch = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setIsSearching(true);
-  };
+  const {
+    isLoading: isMyInfoLoading,
+    error: myInfoError,
+    data: myInfoData,
+  } = useQuery(['myInfo'], apiUser.getMyInfo);
+  console.log('financial');
+  console.log(myInfoData);
+  // const [searchInput, search] = useInput('text', '검색어를 입력해주세요', 'faRecSearch', 'on');
+  // const [isSearching, setIsSearching] = useState(false);
 
-  let displayData = data;
+  // const handleSearch = (e: React.MouseEvent<HTMLButtonElement>) => {
+  //   e.preventDefault();
+  //   setIsSearching(true);
+  // };
 
-  if (isSearching && search) {
-    displayData = data?.filter((el: RecordData) => el.financialRecordName?.includes(search));
-  }
+  // let displayData = data;
+
+  // if (isSearching && search) {
+  //   displayData = data?.filter((el: RecordData) => el.financialRecordName?.includes(search));
+  // }
   return (
     <S.ListWrap>
-      <HeadMeta
+      {/* <HeadMeta
         title={FAREC_META_DATA.FINANCIAL_RECORD_LIST_PAGE.TITLE}
         description={FAREC_META_DATA.FINANCIAL_RECORD_LIST_PAGE.DESCRIPTION}
       />
@@ -67,7 +76,7 @@ function FinancialListPage() {
         </S.FaRecList>
       ) : (
         <S.ErrorText>{FAREC_MESSAGES.FAREC_EMPTY}</S.ErrorText>
-      )}
+      )} */}
     </S.ListWrap>
   );
 }
