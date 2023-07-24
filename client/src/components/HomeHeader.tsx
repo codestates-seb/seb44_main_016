@@ -46,9 +46,11 @@ export default function HomeHeader(props: Props) {
         <S.HomeHeaderBtn href='/' onClick={handleClickHomeBtn} className={getClsName(isHomeBtnActive)}>
           홈
         </S.HomeHeaderBtn>
+        {/*
         <S.HomeHeaderBtn href='' onClick={handleClickFollowerBtn} className={getClsName(isFollowerBtnActive)}>
           구독
         </S.HomeHeaderBtn>
+        */}
         <S.HomeHeaderBtn
           href='/?rank=true&top=3'
           onClick={handleClickRankBtn}
