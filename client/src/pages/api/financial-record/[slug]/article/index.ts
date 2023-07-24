@@ -13,14 +13,14 @@ export default function financialRecordEdit(req: NextApiRequest, res: NextApiRes
   const startIndex = (page - 1) * size;
   const endIndex = startIndex + size;
   const pageOfRecords = recordArticle.slice(startIndex, endIndex);
-  const pageData = { page: Math.ceil(page), totalPages: Math.ceil(recordArticle.length / size) };
+  const pageInfo = { page: Math.ceil(page), totalPages: Math.ceil(recordArticle.length / size) };
 
   if (pageOfRecords.length > 0) {
-    res.status(200).json({ data: pageOfRecords, pageData: pageData });
+    res.status(200).json({ data: pageOfRecords, pageInfo: pageInfo });
   } else {
     res.status(200).json({
       data: [],
-      pageData: { page: Math.ceil(page), totalPages: Math.ceil(recordArticle.length / size) },
+      pageInfo: { page: Math.ceil(page), totalPages: Math.ceil(recordArticle.length / size) },
     });
   }
 }

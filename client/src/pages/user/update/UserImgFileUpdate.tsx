@@ -63,7 +63,7 @@ export default function UserImgFileUpdate({ myInfoData, setIsOpen, isOpen }: Ran
         ) : currentImgSrc ? (
           <img src={currentImgSrc} alt={`프로필 사진`} />
         ) : (
-          <img src={myInfoData?.profileImgPath} alt={`프로필 사진`} />
+          <img src={myInfoData?.User.profileImgPath} alt={`프로필 사진`} />
         )}
         <S.FileInput
           type='file'

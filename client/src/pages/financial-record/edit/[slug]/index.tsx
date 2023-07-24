@@ -1,23 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 import FaRecForm from '../../FaRecForm';
 import { APIfinancialRecord } from '../../../../services/apiFinancial';
-import { Metadata } from 'next';
 import Loading from '../../../../components/Loading';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import { PAGE_NAMES } from '../../../../constants/pageNames';
 import withAuth from '../../../../components/WithAuth';
+import HeadMeta from '../../../../components/HeadMeta';
+import { FAREC_META_DATA } from '../../../../constants/seo/faRecMetaData';
 
 type FaRecArticleResType = {
   financialRecordId: number;
   financialRecordName: string;
   memo: string;
   imgPath: string;
-};
-
-export const metadata: Metadata = {
-  title: PAGE_NAMES.FINANCIAL_RECORD_UPDATE,
-  description: `${PAGE_NAMES.FINANCIAL_RECORD_UPDATE} 페이지입니다.`,
 };
 
 function FaRecEditPage() {
@@ -45,7 +40,10 @@ function FaRecEditPage() {
 
   return (
     <>
-      <h1 className='blind'>{PAGE_NAMES.FINANCIAL_RECORD_UPDATE} 페이지</h1>
+      <HeadMeta
+        title={FAREC_META_DATA.FINANCIAL_RECORD_UPDATE_PAGE.TITLE}
+        description={FAREC_META_DATA.FINANCIAL_RECORD_UPDATE_PAGE.DESCRIPTION}
+      />
       {isSuccess && (
         <FaRecForm
           pageType='edit'

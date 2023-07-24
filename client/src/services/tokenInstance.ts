@@ -2,10 +2,10 @@ import axios from 'axios';
 import { store } from '../components/redux/store';
 import { toast } from 'react-toastify';
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 /** INSTANCE WITH TOKEN */
-export const instance = axios.create({
-  withCredentials: true,
-});
+export const instance = axios.create({});
 
 /** REQUEST INTERCEPTORS */
 instance.interceptors.request.use(
@@ -14,6 +14,7 @@ instance.interceptors.request.use(
     if (accessToken) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
+    config.withCredentials = true;
     return config;
   },
   (error) => {
@@ -23,30 +24,25 @@ instance.interceptors.request.use(
 
 /** RESPONSE INTERCEPTORS */
 instance.interceptors.response.use(
-  (response) => {
+  async (response) => {
     return response;
   },
   async (error) => {
     try {
       const { response, config } = error;
       const originalRequest = config;
-
-      if (response.data.status === 403) {
-        /** GET : NEW ACCESS TOKEN */
-        const res = await axios.post(`/auth/refresh`, null, {
-          // 서버 배포 링크로 추후 변경 예정
+      if (response.data.status) {
+        const res = await axios.post(`${BASE_URL}/auth/refresh`, null, {
           headers: {
             'Content-Type': 'application/json',
           },
           withCredentials: true,
         });
-
-        /** CHANGE ACCESS TOKEN AND RETRY THE REQUEST*/
         originalRequest.headers['Authorization'] = res.headers.authorization;
         return axios(originalRequest);
       }
     } catch (error) {
-      // toast.info('로그인이 필요한 서비스입니다.'); 서버 연결 후 살릴 예정
+      toast.info('로그인이 필요한 서비스입니다.');
       return false;
     }
     return Promise.reject(error);

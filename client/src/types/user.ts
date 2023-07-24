@@ -45,10 +45,11 @@ export interface LoginReqData {
 
 export interface LoginResData {
   userId?: number | null;
-  loginId?: number | null;
+  loginId?: string | null;
   nickname?: string | null;
-  accessToken?: string | null | unknown;
-  isLoggedIn: boolean;
+  accessToken?: string | null | undefined;
+  isLoggedIn?: boolean;
+  profileImgPath?: string | null;
 }
 
 export interface OAuthData {
@@ -73,7 +74,7 @@ export interface UserUpdateReqData {
 
 export interface FollowUsersInfoData {
   userId: number;
-  imgId: string;
+  profileImgPath: string;
   isAlsoFollowed: boolean;
   loginId: string;
   nickname: string;
@@ -92,12 +93,16 @@ export interface UserFeedData {
   modifiedAt: Date;
   imgPath: string;
 }
-export interface UserInfoResData {
+
+export interface User {
   userId: string;
   loginId: string;
   nickname: string;
   profileImgPath: string;
+}
+
+export interface UserInfoResData {
+  User: User;
   followingList: FollowUsersInfoData[];
   followerList: FollowUsersInfoData[];
-  myContents?: UserFeedData[];
 }

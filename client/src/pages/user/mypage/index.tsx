@@ -1,59 +1,102 @@
-import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
+import { useInView } from 'react-intersection-observer';
 import CommonStyles from '../../../styles/CommonStyles';
 import SnsArticle from '../../../components/SnsArticle';
-import FollowModal from './FollowModal';
 import withAuth from '../../../components/WithAuth';
 import apiUser from '../../../services/apiUser';
 import Loading from '../../../components/Loading';
 import { FeedArticleResType } from '../../../types/article';
 import HeadMeta from '../../../components/HeadMeta';
 import { USER_META_DATA } from '../../../constants/seo/userMetaData';
+import ErrorComponent from '../../../components/ErrorComponent';
+import { useEffect } from 'react';
+import MyPageUserInfo from './MyPageUserInfo';
+import useGlobalUserInfo, { userInfo } from '../../../components/redux/getUserInfo';
 
 function MyPage() {
-  const router = useRouter();
+  const { ref, inView } = useInView();
+
+  const isLoggedIn = useGlobalUserInfo();
+  console.log(isLoggedIn);
+
   const {
     isLoading: isMyInfoLoading,
-    error: myInfoError,
+    error: isMyInfoError,
     data: myInfoData,
   } = useQuery(['myInfo'], apiUser.getMyInfo);
 
-  if (myInfoError) {
-    toast.error('오류가 발생했습니다.');
+  const { userId } = userInfo();
+  console.log(userId);
+  console.log(myInfoData);
+  const {
+    data: myFeedData,
+    error: isMyFeedError,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery(
+    ['myFeedsList'],
+    ({ pageParam = 1 }) => {
+      if (userId) {
+        return apiUser.getMyFeeds(userId, pageParam, 4);
+      }
+      return;
+    },
+    {
+      getNextPageParam: (lastPage) => {
+        if (lastPage) {
+          const currentPage = Number(lastPage.pageData?.page);
+          const totalPages = Number(lastPage.pageData?.totalPages);
+          if (isNaN(currentPage) || isNaN(totalPages)) {
+            return undefined;
+          }
+          const nextPage = lastPage.pageData?.page + 1;
+          return nextPage > lastPage.pageData?.totalPages ? undefined : nextPage;
+        }
+      },
+      staleTime: 1000 * 60 * 10,
+      enabled: !!userId,
+    }
+  );
+
+  const filteredData = myFeedData?.pages.flatMap((response) => (response ? response.data : null));
+  console.log(filteredData);
+  if (isMyInfoError || isMyFeedError) {
     toast.info('잠시 후에 다시 시도해주세요.');
   }
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage]);
 
   return (
     <>
       <HeadMeta title={USER_META_DATA.MY_PAGE.TITLE} description={USER_META_DATA.MY_PAGE.DESCRIPTION} />
-      {isMyInfoLoading ? (
+      {isMyInfoError ? (
+        <ErrorComponent />
+      ) : isMyInfoLoading ? (
         <Loading />
       ) : (
         myInfoData && (
           <S.Container>
-            <S.UserProfileContainer>
-              <h1 className='blind'>마이페이지</h1>
-              <S.UserProfileImgBox>
-                <img src={myInfoData?.profileImgPath} alt='프로필 사진' />
-              </S.UserProfileImgBox>
-              <S.UserName>
-                <S.Nickname>{myInfoData.nickname}</S.Nickname>
-              </S.UserName>
-              <S.UserSubInfoBox>
-                <FollowModal title='구독함' followList={myInfoData.followingList} />
-                <FollowModal title='구독됨' followList={myInfoData.followerList} />
-                <S.UserInfoModifyBtn type='button' onClick={() => router.push('/user/update')}>
-                  설정
-                </S.UserInfoModifyBtn>
-              </S.UserSubInfoBox>
-            </S.UserProfileContainer>
+            <MyPageUserInfo myInfoData={myInfoData} />
             <S.UserArticleContainer>
               <h2 className='blind'>내가 쓴 글</h2>
-              {myInfoData.myContents.map((el: FeedArticleResType) => {
-                return <SnsArticle key={el.feedArticleId} type='feed' data={el} />;
-              })}
+              {isMyFeedError ? (
+                <ErrorComponent />
+              ) : filteredData ? (
+                filteredData.map((el: FeedArticleResType) => {
+                  return <SnsArticle key={el.feedArticleId} type='feed' data={el} />;
+                })
+              ) : null}
+              <S.AddWrap ref={ref}>
+                <S.AddBtn onClick={() => fetchNextPage()} disabled={!hasNextPage}>
+                  {!hasNextPage ? '피드를 모두 확인하셨습니다.' : '계속해서 불러오기'}
+                </S.AddBtn>
+              </S.AddWrap>
             </S.UserArticleContainer>
           </S.Container>
         )
@@ -70,80 +113,7 @@ const S = {
     flex-direction: column;
     align-items: center;
   `,
-  UserProfileContainer: styled.section`
-    width: 90%;
-    border-bottom: 1.5px solid var(--color-point-light-gray);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 2.7rem 0 3.5rem 0;
-  `,
-  UserProfileImgBox: styled.div`
-    transition: transform 0.3s ease-in-out;
-    border-radius: 50%;
-    overflow: hidden;
-    &:hover {
-      transform: scale(1.5) translateY(0.55rem);
-    }
-    > img {
-      width: 100%;
-      height: 100%;
-    }
-    @media screen and (max-width: 750px) {
-      width: 120px;
-      height: 120px;
-    }
-  `,
-  UserName: styled.div`
-    margin: 1rem 0;
-  `,
-  Nickname: styled.div`
-    font-size: 1.5rem;
-    font-weight: 600;
-    background-image: linear-gradient(to right, #0d0d0d, var(--color-primary));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  `,
-  UserSubInfoBox: styled.div`
-    margin: 0 0 1.5rem 0;
-    display: flex;
-  `,
-  UserInfoModifyBtn: styled.button`
-    position: relative;
-    display: inline-block;
-    color: black;
-    padding: 0.7rem 1rem;
-    border-radius: 100px;
-    overflow: hidden;
-    background-color: white;
-    z-index: 1;
-    &:hover {
-      color: var(--color-primary);
-      background-color: white;
-      transition-duration: 0.7s;
-      font-weight: 600;
-    }
-    &::before {
-      content: '';
-      position: absolute;
-      width: 20rem;
-      height: 20rem;
-      top: -4rem;
-      left: -4rem;
-      z-index: -1;
-      border-radius: 100%;
-      background: #dee2f1;
-      transition: 0.7s;
-    }
-    &:hover::before {
-      top: 2.5rem;
-      left: 2.5rem;
-    }
-    font-size: 1.1rem;
-    font-weight: 500;
-  `,
+
   UserArticleContainer: styled.section`
     display: flex;
     flex-direction: column;
@@ -178,6 +148,15 @@ const S = {
       margin-top: 25px;
       color: #4000c7;
     }
+  `,
+  AddWrap: styled.div`
+    display: flex;
+    justify-content: center;
+    margin: 1.3rem 0 1rem 0;
+  `,
+  AddBtn: styled.button`
+    text-align: center;
+    color: var(--color-primary);
   `,
 };
 
