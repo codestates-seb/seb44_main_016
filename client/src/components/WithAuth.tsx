@@ -15,7 +15,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   const accessToken = useAccessToken();
   // const accessToken = null; // accessToken 만료 test용 (배포 직전 삭제)
 
-  const { data: myInfoData } = useQuery(['myInfo'], apiUser.getUserInfo);
+  const { data: myInfoData } = useQuery(['userInfo'], apiUser.getUserInfo);
 
   /** refresh 토큰으로 새 access 토큰을 발급받는 api */
   const { mutate } = useMutation(apiUser.getNewAccess, {
@@ -40,6 +40,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   useEffect(() => {
     if (accessToken) {
       queryClient.invalidateQueries(['myInfo']);
+      console.log('액세스 다시 갱신!');
     }
 
     if (myInfoData) {
