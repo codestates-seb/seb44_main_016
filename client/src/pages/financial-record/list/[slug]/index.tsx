@@ -26,7 +26,7 @@ function FinancialPage() {
   };
   const tabs = ['가계부', '타임라인'];
   const [page, setPage] = useState(1);
-  const size = 2;
+  const size = 10;
   console.log(financialRecordId);
   // 데이터 요청
   const {

@@ -11,8 +11,8 @@ export const APIfinancialRecord = {
   },
   // 가계부 POST
   createFaRec: async (formData: FormData) => {
-    const res = await axios.post('/api/financial-record/', formData, {
-      // const res = await instance.post(`${BASE_URL}/financial-record`, formData, {
+    // const res = await axios.post('/api/financial-record/', formData, {
+    const res = await instance.post(`${BASE_URL}/financial-record`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -21,13 +21,12 @@ export const APIfinancialRecord = {
   },
   // 가계부 1개 조회 GET
   getFaRec: async (financialRecordId: number) => {
-    const res = await instance.get(`${BASE_URL}/financial-record/${financialRecordId}`);
-    // const res = await axios.get(`/data/recordHeader.json`);
+    // const res = await instance.get(`${BASE_URL}/financial-record/${financialRecordId}`);
+    const res = await axios.get(`/data/recordHeader.json`);
     return res.data;
   },
   // 가계부 UPDATE
-  updateFaRec: async (formData: FormData) => {
-    const financialRecordId = Number(formData.get('financialRecordId'));
+  updateFaRec: async (formData: FormData, financialRecordId: number) => {
     // const res = await axios.patch(`/api/financial-record/${financialRecordId}`, formData, {
     const res = await instance.patch(`${BASE_URL}/financial-record/${financialRecordId}`, formData, {
       headers: {

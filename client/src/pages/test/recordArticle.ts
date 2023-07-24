@@ -28,7 +28,7 @@ export const recordArticle = [
     title: '스테이크',
     price: -45000,
     content: '고기의 진수를 느낄 수 있는 스테이크 집에서 저녁을 즐겼다. 맛있어서 기분이 좋아졌다~',
-    scope: '가계부 게시글',
+    scope: '가계부 타임라인',
     imgPath: [
       'https://images.unsplash.com/photo-1615937657715-bc7b4b7962c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
     ],
@@ -47,7 +47,7 @@ export const recordArticle = [
     title: '강아지 사료',
     price: -30000,
     content: '강아지 사료를 새로 샀다. 좋아하면 좋겠다~',
-    scope: '가계부 타임라인',
+    scope: '가계부',
     imgPath: [],
     userId: 2,
     user: {
@@ -65,7 +65,7 @@ export const recordArticle = [
     title: '피자',
     price: -28000,
     content: '치즈가 덩어리로 올라간 피자를 먹었다. 진짜 맛있다~',
-    scope: '가계부 게시글',
+    scope: '가계부 타임라인',
     imgPath: [
       'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWgelHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1176&q=80',
     ],
@@ -84,7 +84,7 @@ export const recordArticle = [
     title: '전기세',
     price: -60000,
     content: '이번 달 전기세를 납부하였다. 에어컨을 많이 써서 그런지 좀 많이 나왔다~',
-    scope: '가계부 타임라인',
+    scope: '가계부',
     imgPath: [],
     user: {
       userId: 2,
@@ -121,7 +121,7 @@ export const recordArticle = [
     title: '월급 받았어요',
     price: 30000000,
     content: '월급날이다!! 방탕하게 써주지',
-    scope: '가계부 타임라인',
+    scope: '가계부',
     imgPath: [],
     user: {
       userId: 2,
