@@ -63,7 +63,9 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
   // 가계부 전체 조회(동적쿼리 사용 예정)
   @Override
   public List<FinancialRecord> findFaRecs(String authorId) {
-    return repository.findByUser(authorId);
+    User findUser = userService.findUserByLoginId(authorId);
+    List<FinancialRecord> financialRecords = findUser.getFinancialRecords();
+    return financialRecords;
   }
 
   // 가계부 수정
