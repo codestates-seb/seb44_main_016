@@ -35,23 +35,23 @@ instance.interceptors.response.use(
       const originalRequest = config;
       console.log('액세스 없어세 에러났어 ');
       console.log(error);
-      if (response.data.status === 403 || response.data.status === 404) {
-        /** GET : NEW ACCESS TOKEN */
-        const res = await axios.post(`/auth/refresh`, null, {
-          // 서버 배포 링크로 추후 변경 예정
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          withCredentials: true,
-        });
+      // if (response.data.status === 403 || response.data.status === 404) {
+      /** GET : NEW ACCESS TOKEN */
+      const res = await axios.post(`/auth/refresh`, null, {
+        // 서버 배포 링크로 추후 변경 예정
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      });
 
-        /** CHANGE ACCESS TOKEN AND RETRY THE REQUEST*/
-        originalRequest.headers['Authorization'] = res.headers.authorization;
-        console.log('액세스 없어서 다시 받아왔음!!');
-        console.log(res.headers);
+      /** CHANGE ACCESS TOKEN AND RETRY THE REQUEST*/
+      originalRequest.headers['Authorization'] = res.headers.authorization;
+      console.log('액세스 없어서 다시 받아왔음!!');
+      console.log(res.headers);
 
-        return axios(originalRequest);
-      }
+      return axios(originalRequest);
+      // }
     } catch (error) {
       toast.info('로그인이 필요한 서비스입니다.');
       return false;
