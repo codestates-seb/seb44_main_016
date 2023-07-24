@@ -33,11 +33,6 @@ export default function VoteFormComponent(props: Props) {
     }
   }, [data]);
 
-  let sign = 0;
-  if (data) {
-    sign = checkSign(data.savingCount - data.flexCount);
-  }
-
   const handleBtnClick = async (e: React.MouseEvent<HTMLButtonElement>, pushed: 'saving' | 'flex') => {
     e.preventDefault();
     try {
