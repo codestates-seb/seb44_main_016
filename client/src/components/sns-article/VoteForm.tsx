@@ -45,7 +45,8 @@ export default function VoteFormComponent(props: Props) {
     ${sign < 0 ? 'font-weight: bold' : ''}
   `;
 
-  const handleBtnClick = async (pushed: 'saving' | 'flex') => {
+  const handleBtnClick = async (e: React.MouseEvent<HTMLButtonElement>, pushed: 'saving' | 'flex') => {
+    e.preventDefault();
     try {
       const res = await axios.get(
         `https://www.zerohip.co.kr/feedArticles/${props.feedArticleId}/vote?pushed=${pushed}`
@@ -58,8 +59,8 @@ export default function VoteFormComponent(props: Props) {
   return (
     <S.VoteForm>
       <SavingCount>{savingCount}</SavingCount>
-      <S.SavingBtn onClick={() => handleBtnClick('saving')}>👍절약</S.SavingBtn>
-      <S.FlexBtn onClick={() => handleBtnClick('flex')}>💸Flex</S.FlexBtn>
+      <S.SavingBtn onClick={(e) => handleBtnClick(e, 'saving')}>👍절약</S.SavingBtn>
+      <S.FlexBtn onClick={(e) => handleBtnClick(e, 'flex')}>💸Flex</S.FlexBtn>
       <FlexCount>{flexCount}</FlexCount>
     </S.VoteForm>
   );
