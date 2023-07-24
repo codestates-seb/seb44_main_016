@@ -94,7 +94,7 @@ export default function FaRecForm({
             ? `${FAREC_MESSAGES.FAREC_CREATE_SUCCESS}`
             : `${FAREC_MESSAGES.FAREC_UPDATE_SUCCESS}`;
         toast.success(successMessage);
-        router.push(`/financialrecord`);
+        router.push(`/financial-record`);
       },
       onError: () => {
         const errorMessage =

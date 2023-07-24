@@ -58,7 +58,7 @@ function FinancialListPage() {
           {searchInput}
           <S.Button onClick={handleSearch}>{SVGs.searchFarec}</S.Button>
         </S.InputWrap>
-        <S.LinkBtn href='/financialrecord/create'>새 가계부 만들기</S.LinkBtn>
+        <S.LinkBtn href='/financial-record/create'>새 가계부 만들기</S.LinkBtn>
       </S.FormWrap>
 
       {isError ? (

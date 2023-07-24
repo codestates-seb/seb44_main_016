@@ -14,7 +14,7 @@ export default function ListItem({ item }: Props) {
   const { financialRecordId, financialRecordName, users } = item;
 
   return (
-    <Link href={`/financialrecord/list/${financialRecordId}`}>
+    <Link href={`/financial-record/list/${financialRecordId}`}>
       <S.ItemWrap>
         <div>
           <S.ItemTitle>가계부명</S.ItemTitle>

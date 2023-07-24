@@ -77,7 +77,7 @@ export default function EditorPage() {
           // "voteId": , (가계부에는 절약/Flex 기능을 사용하지 않음)
           // "financialRecordArticleHashTagId": , (미구현 & 필수 사항 아님)
         };
-        await axios.post(`http://localhost:8080/financialrecord/${faRecId}/article/'`, body);
+        await axios.post(`http://localhost:8080/financial-record/${faRecId}/article/'`, body);
       } else {
         // 절약팁/허락해줘
         const body = {
