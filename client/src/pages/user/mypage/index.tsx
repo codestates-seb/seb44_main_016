@@ -24,7 +24,7 @@ function MyPage() {
     toast.error('오류가 발생했습니다.');
     toast.info('잠시 후에 다시 시도해주세요.');
   }
-
+  console.log(myInfoData);
   return (
     <>
       <HeadMeta title={USER_META_DATA.MY_PAGE.TITLE} description={USER_META_DATA.MY_PAGE.DESCRIPTION} />
