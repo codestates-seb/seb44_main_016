@@ -179,7 +179,4 @@
 
 
 - [팀 컨벤션](https://valuable-trawler-3af.notion.site/adbf58de29ae4e72a6440b503eca393c)
-
-<br />
-
 - [주차별 회고](https://docs.google.com/spreadsheets/d/1l6ei2woahjQa9vhu7PVF4UweVAJmt1R6bvugwV5ATOM/edit#gid=0)
