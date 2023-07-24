@@ -12,6 +12,7 @@ import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import com.zerohip.server.user.entity.User;
 import com.zerohip.server.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +27,7 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class FinancialRecordServiceImpl implements FinancialRecordService {
 
   private final FinancialRecordRepository repository;
@@ -63,17 +65,12 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
   // 가계부 전체 조회(동적쿼리 사용 예정)
   @Override
   public List<FinancialRecord> findFaRecs(String authorId) {
-
-    User newUser = userService.findUserByLoginId(authorId);
-
-    Optional<List<FinancialRecord>> optionalFinancialRecords = repository.findByUser(newUser);
-
-    List<FinancialRecord> records = optionalFinancialRecords.orElseThrow(() -> new BusinessLogicException(ExceptionCode.FFFFFFFFF_fFFFFFFFFF));
-
-    return records;
-//    return repository.findByUser(authorId);
-
+    User findUser = userService.findUserByLoginId(authorId);
+    List<FinancialRecord> financialRecords = findUser.getFinancialRecords();
+    log.info("financialRecords : {}", financialRecords.toString());
+    return financialRecords;
   }
+
 
   // 가계부 수정
   @Override
