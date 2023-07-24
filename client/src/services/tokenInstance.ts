@@ -43,6 +43,7 @@ instance.interceptors.response.use(
 
         /** CHANGE ACCESS TOKEN AND RETRY THE REQUEST*/
         originalRequest.headers['Authorization'] = res.headers.authorization;
+        console.log(res.headers.authorization);
         return axios(originalRequest);
       }
     } catch (error) {

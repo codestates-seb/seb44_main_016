@@ -26,6 +26,7 @@ function MyPage() {
 
   const { userId } = userInfo();
   console.log(userId);
+  console.log(myInfoData);
   const {
     data: myFeedData,
     error: isMyFeedError,
