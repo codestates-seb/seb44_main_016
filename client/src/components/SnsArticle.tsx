@@ -23,8 +23,6 @@ type PropsTimeline = {
   data: FaRecArticleResType;
 };
 
-function getEditorQuery() {}
-
 export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
   const windowType = useWindowType();
   const [width, height] = useWindowSize();
