@@ -24,7 +24,7 @@ export default function UserUpdatePage({ myInfoData }: UserUpdatePageProps) {
   const router = useRouter();
 
   const currentImgSrc = useSelector<RootState>((state) => state.currentImgReducer.currentImgSrc);
-  const originalNickname = myInfoData ? myInfoData.nickname : '';
+  const originalNickname = myInfoData ? myInfoData.User.nickname : '';
 
   const [nicknameInput, nickname] = useInput('text', originalNickname, 'nickname', 'nickname');
   const [PwInput, pwValue] = useInput('password', '비밀번호', 'pw', 'current-password');

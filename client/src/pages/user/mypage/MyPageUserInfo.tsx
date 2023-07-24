@@ -15,10 +15,10 @@ export default function MyPageUserInfo({ myInfoData }: MyPageUserInfoProps) {
     <S.UserProfileContainer>
       <h1 className='blind'>마이페이지</h1>
       <S.UserProfileImgBox>
-        <img src={myInfoData?.profileImgPath} alt='프로필 사진' />
+        <img src={myInfoData?.User.profileImgPath} alt='프로필 사진' />
       </S.UserProfileImgBox>
       <S.UserName>
-        <S.Nickname>{myInfoData?.nickname}</S.Nickname>
+        <S.Nickname>{myInfoData?.User.nickname}</S.Nickname>
       </S.UserName>
       <S.UserSubInfoBox>
         <FollowModal title='구독함' followList={myInfoData?.followingList} />

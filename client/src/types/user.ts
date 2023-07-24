@@ -93,11 +93,16 @@ export interface UserFeedData {
   modifiedAt: Date;
   imgPath: string;
 }
-export interface UserInfoResData {
+
+export interface User {
   userId: string;
   loginId: string;
   nickname: string;
   profileImgPath: string;
+}
+
+export interface UserInfoResData {
+  User: User;
   followingList: FollowUsersInfoData[];
   followerList: FollowUsersInfoData[];
 }

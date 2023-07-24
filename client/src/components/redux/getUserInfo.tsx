@@ -23,6 +23,5 @@ export function userInfo(): LoginResData {
   const isLoggedIn = useSelector<RootState, boolean | undefined>(
     (state) => state.authnReducer.login.isLoggedIn
   );
-  console.log(userId, loginId, nickname, isLoggedIn);
   return { userId, accessToken, loginId, nickname, isLoggedIn };
 }
