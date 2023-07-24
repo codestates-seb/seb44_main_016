@@ -40,8 +40,8 @@ export default function FaRecHeader({ setActiveTab, isLoading, isError, error, d
                 <S.FaRecName>{financialRecordName}</S.FaRecName>
                 <S.LinkWrap>
                   <S.LinkBtn
-                    href='/financial-record/edit/[slug]'
-                    as={`/financial-record/edit/${faRecId}`}
+                    href='/financialrecord/edit/[slug]'
+                    as={`/financialrecord/edit/${faRecId}`}
                     color='--color-point-lilac'
                     size='small'
                   >
