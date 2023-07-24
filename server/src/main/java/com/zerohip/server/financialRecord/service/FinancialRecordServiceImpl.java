@@ -72,6 +72,7 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
 
     return records;
 //    return repository.findByUser(authorId);
+
   }
 
   // 가계부 수정
