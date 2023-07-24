@@ -12,6 +12,7 @@ import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import com.zerohip.server.user.entity.User;
 import com.zerohip.server.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +24,7 @@ import java.util.Optional;
 /**
  * User 추가하기
  */
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -65,6 +67,7 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
   public List<FinancialRecord> findFaRecs(String authorId) {
     User findUser = userService.findUserByLoginId(authorId);
     List<FinancialRecord> financialRecords = findUser.getFinancialRecords();
+    log.info("financialRecords : {}", financialRecords.toString());
     return financialRecords;
   }
 
