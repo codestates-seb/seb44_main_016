@@ -18,11 +18,11 @@ export default function MyPageUserInfo({ myInfoData }: MyPageUserInfoProps) {
         <img src={myInfoData?.profileImgPath} alt='프로필 사진' />
       </S.UserProfileImgBox>
       <S.UserName>
-        <S.Nickname>{myInfoData.nickname}</S.Nickname>
+        <S.Nickname>{myInfoData?.nickname}</S.Nickname>
       </S.UserName>
       <S.UserSubInfoBox>
-        <FollowModal title='구독함' followList={myInfoData.followingList} />
-        <FollowModal title='구독됨' followList={myInfoData.followerList} />
+        <FollowModal title='구독함' followList={myInfoData?.followingList} />
+        <FollowModal title='구독됨' followList={myInfoData?.followerList} />
         <S.UserInfoModifyBtn type='button' onClick={() => router.push('/user/update')}>
           설정
         </S.UserInfoModifyBtn>

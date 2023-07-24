@@ -20,7 +20,9 @@ export function userInfo(): LoginResData {
   const nickname = useSelector<RootState, string | null | undefined>(
     (state) => state.authnReducer.login.nickname
   );
-  const isLoggedIn = useSelector<RootState, boolean>((state) => state.authnReducer.login.isLoggedIn);
+  const isLoggedIn = useSelector<RootState, boolean | undefined>(
+    (state) => state.authnReducer.login.isLoggedIn
+  );
   console.log(userId, loginId, nickname, isLoggedIn);
   return { userId, accessToken, loginId, nickname, isLoggedIn };
 }
