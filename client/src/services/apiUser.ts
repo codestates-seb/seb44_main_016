@@ -58,7 +58,6 @@ const apiUser = {
     const response = await instance.get(`${BASE_URL}/user/info`, {
       withCredentials: true,
     });
-    console.log(response);
     return response.data;
   },
 
