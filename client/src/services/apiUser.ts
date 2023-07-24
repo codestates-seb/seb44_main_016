@@ -38,15 +38,21 @@ const apiUser = {
     return response;
   },
 
-  /** 회원 정보 불러오기 */
+  /** 마이 페이지 불러오기 */
   getMyInfo: async () => {
     const response = await instance.get(`${BASE_URL}/user/mypage`);
     return response.data;
   },
 
+  /** 회원정보 불러오기 */
+  getUserInfo: async () => {
+    const response = await instance.get(`${BASE_URL}/user/info`);
+    return response.data;
+  },
+
+  /** 내가 쓴 글 불러오기 */
   getMyFeeds: async (userId: number, page: number, size: number) => {
     const res = await instance.get(`${BASE_URL}/user/${userId}/feedArticles?page=${page}&size=${size}`);
-    // return res.data;
     const { data, pageData } = res.data;
     return { data, pageData };
   },

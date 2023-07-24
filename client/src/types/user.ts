@@ -45,10 +45,11 @@ export interface LoginReqData {
 
 export interface LoginResData {
   userId?: number | null;
-  loginId?: number | null;
+  loginId?: string | null;
   nickname?: string | null;
-  accessToken?: string | null | unknown;
-  isLoggedIn: boolean;
+  accessToken?: string | null | undefined;
+  isLoggedIn?: boolean;
+  profileImgPath?: string | null;
 }
 
 export interface OAuthData {

@@ -13,6 +13,7 @@ import { USER_META_DATA } from '../../../constants/seo/userMetaData';
 import ErrorComponent from '../../../components/ErrorComponent';
 import { useEffect } from 'react';
 import MyPageUserInfo from './MyPageUserInfo';
+import { userInfo } from '../../../components/redux/getUserInfo';
 
 function MyPage() {
   const { ref, inView } = useInView();
@@ -23,27 +24,39 @@ function MyPage() {
     data: myInfoData,
   } = useQuery(['myInfo'], apiUser.getMyInfo);
 
-  const userId = 332; //
+  const { userId } = userInfo();
+  console.log(userId);
   const {
     data: myFeedData,
     error: isMyFeedError,
     fetchNextPage,
     hasNextPage,
-  } = useInfiniteQuery(['myFeedsList'], ({ pageParam = 1 }) => apiUser.getMyFeeds(userId, pageParam, 4), {
-    getNextPageParam: (lastPage) => {
-      const currentPage = Number(lastPage.pageData?.page);
-      const totalPages = Number(lastPage.pageData?.totalPages);
-      if (isNaN(currentPage) || isNaN(totalPages)) {
-        return undefined;
+  } = useInfiniteQuery(
+    ['myFeedsList'],
+    ({ pageParam = 1 }) => {
+      if (userId) {
+        return apiUser.getMyFeeds(userId, pageParam, 4);
       }
-      const nextPage = lastPage.pageData?.page + 1;
-      return nextPage > lastPage.pageData?.totalPages ? undefined : nextPage;
+      return;
     },
-    staleTime: 1000 * 60 * 10,
-    enabled: !!userId,
-  });
+    {
+      getNextPageParam: (lastPage) => {
+        if (lastPage) {
+          const currentPage = Number(lastPage.pageData?.page);
+          const totalPages = Number(lastPage.pageData?.totalPages);
+          if (isNaN(currentPage) || isNaN(totalPages)) {
+            return undefined;
+          }
+          const nextPage = lastPage.pageData?.page + 1;
+          return nextPage > lastPage.pageData?.totalPages ? undefined : nextPage;
+        }
+      },
+      staleTime: 1000 * 60 * 10,
+      enabled: !!userId,
+    }
+  );
 
-  const filteredData = myFeedData?.pages.flatMap((response) => response.data);
+  const filteredData = myFeedData?.pages.flatMap((response) => (response ? response.data : null));
 
   if (isMyInfoError || isMyFeedError) {
     toast.info('잠시 후에 다시 시도해주세요.');
