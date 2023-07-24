@@ -14,11 +14,11 @@ import {
 } from '../constants/articleDummyData';
 import { FeedArticleResType } from '../types/article';
 
-const PAGE_SIZE = 10; // 한 번에 가져올 아이템 개수
+const PAGE_SIZE = 10; // 한 번에 가져올 게시글 개수
 
 async function getFeedArticles(page: number, size: number) {
   const paramsStr = new URLSearchParams(window.location.search).toString();
-  const newQueries = paramsStr === '' ? `page=${page}&size=${size}` : paramsStr;
+  const newQueries = paramsStr === '' ? `page=${page}&size=${size}` : paramsStr; // 홈 | 랭킹(명예의 전당) 구분
 
   const res = await axios.get(`https://www.zerohip.co.kr/feedArticles?${newQueries}`);
   const { data, pageInfo } = res.data;
