@@ -27,22 +27,12 @@ export type RecordData = {
 };
 
 function FinancialListPage() {
-  const [isDelay, setIsDelay] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsDelay(false);
-    }, 5000);
-  }, []);
-
-  if (isDelay) {
-    return null;
-  }
-
-  const { data, error, isError, isLoading } = useQuery<RecordData[]>(
-    ['recordList'],
-    APIfinancialRecord.getRecordList
-  );
+  const { data, error, isError, isLoading } = useQuery<RecordData[]>({
+    queryKey: ['recordList'],
+    queryFn: APIfinancialRecord.getRecordList,
+    retry: 10,
+    retryDelay: 1000,
+  });
 
   const [searchInput, search] = useInput('text', '검색어를 입력해주세요', 'faRecSearch', 'on');
   const [isSearching, setIsSearching] = useState(false);
