@@ -13,18 +13,6 @@ import withAuth from '../../components/WithAuth';
 import HeadMeta from '../../components/HeadMeta';
 import { FAREC_META_DATA } from '../../constants/seo/faRecMetaData';
 
-export async function getStaticProps() {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery(['recordList'], APIfinancialRecord.getRecordList);
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
-
 export type UserData = {
   userId: number;
   nickname: string;
@@ -39,10 +27,30 @@ export type RecordData = {
 };
 
 function FinancialListPage() {
-  const { data, error, isError, isLoading } = useQuery(['recordList-1'], APIfinancialRecord.getRecordList);
-  console.log(data);
+  // const { data, error, isError, isLoading } = useQuery(['recordList-1'], APIfinancialRecord.getRecordList);
+  // console.log(data);
   const [searchInput, search] = useInput('text', '검색어를 입력해주세요', 'faRecSearch', 'on');
   const [isSearching, setIsSearching] = useState(false);
+
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const recordList = await APIfinancialRecord.getRecordList();
+        setData(recordList);
+        setIsLoading(false);
+      } catch (err) {
+        setError(err);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleSearch = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -68,9 +76,11 @@ function FinancialListPage() {
         <S.LinkBtn href='/financial-record/create'>새 가계부 만들기</S.LinkBtn>
       </S.FormWrap>
 
-      {isError ? (
-        <ErrorComponent message={(error as Error).message} />
-      ) : isLoading ? (
+      {/* {isError ? ( */}
+      {/* <ErrorComponent message={(error as Error).message} /> */}
+      {/* ) : */}
+
+      {isLoading ? (
         <Loading />
       ) : displayData && displayData.length > 0 ? (
         <S.FaRecList>
