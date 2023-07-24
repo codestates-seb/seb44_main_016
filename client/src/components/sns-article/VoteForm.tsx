@@ -38,13 +38,6 @@ export default function VoteFormComponent(props: Props) {
     sign = checkSign(data.savingCount - data.flexCount);
   }
 
-  const SavingCount = styled(S.SavingCount)`
-    ${sign > 0 ? 'font-weight: bold' : ''}
-  `;
-  const FlexCount = styled(S.FlexCount)`
-    ${sign < 0 ? 'font-weight: bold' : ''}
-  `;
-
   const handleBtnClick = async (e: React.MouseEvent<HTMLButtonElement>, pushed: 'saving' | 'flex') => {
     e.preventDefault();
     try {
@@ -58,10 +51,10 @@ export default function VoteFormComponent(props: Props) {
 
   return (
     <S.VoteForm>
-      <SavingCount>{savingCount}</SavingCount>
-      <S.SavingBtn onClick={(e) => handleBtnClick(e, 'saving')}>👍절약</S.SavingBtn>
-      <S.FlexBtn onClick={(e) => handleBtnClick(e, 'flex')}>💸Flex</S.FlexBtn>
-      <FlexCount>{flexCount}</FlexCount>
+      <S.SavingCount>{savingCount}</S.SavingCount>
+      <S.SavingBtn onClick={(e) => handleBtnClick(e, 'saving')}>👍 절약</S.SavingBtn>
+      <S.FlexBtn onClick={(e) => handleBtnClick(e, 'flex')}>💸 Flex</S.FlexBtn>
+      <S.FlexCount>{flexCount}</S.FlexCount>
     </S.VoteForm>
   );
 }

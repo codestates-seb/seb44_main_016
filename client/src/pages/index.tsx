@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-
-import { instance } from '../services/tokenInstance';
+import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
@@ -18,7 +17,10 @@ import { FeedArticleResType } from '../types/article';
 const PAGE_SIZE = 10; // 한 번에 가져올 아이템 개수
 
 async function getFeedArticles(page: number, size: number) {
-  const res = await instance.get(`https://www.zerohip.co.kr/feedArticles?page=${page}&size=${size}`);
+  const currnetQueries = new URLSearchParams(window.location.search).toString();
+  const newQueries = currnetQueries === '' ? `page=${page}&size=${size}` : currnetQueries;
+
+  const res = await axios.get(`https://www.zerohip.co.kr/feedArticles?${newQueries}`);
   const { data, pageInfo } = res.data;
   return { data, pageInfo };
 }
