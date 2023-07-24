@@ -84,9 +84,9 @@ public class AuthService {
         JwtStatus jwtStatus = jwtTokenizer.validateToken(refreshToken);
 
         if (jwtStatus == JwtStatus.EXPIRED || refreshTokenRepository.findByToken(refreshToken).isEmpty()) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
 

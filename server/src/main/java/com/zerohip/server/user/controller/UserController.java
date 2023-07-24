@@ -35,7 +35,7 @@ public class UserController {
 
     // 회원 가입
     @PostMapping("/signup")
-    public ResponseEntity postUser(@Valid @RequestBody UserDto.Post userPostDto) {
+    public ResponseEntity postUser(@RequestBody @Valid UserDto.Post userPostDto) {
 
         User user = mapper.userPostDtoToUser(userPostDto);
         userService.createUser(user);
@@ -70,6 +70,8 @@ public class UserController {
         return new ResponseEntity<>(mapper.userToUserResponseDto(findUserInfo), HttpStatus.OK);
     }
 
+
+    // 마이페이지
     @GetMapping("/mypage")
     public ResponseEntity<?> getMyPage(@AuthenticationPrincipal String authorId) {
 
@@ -98,6 +100,22 @@ public class UserController {
         response.put("followerList", followerList);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+    // 회원 정보 수정
+    @PatchMapping("/mypage/update")
+    public ResponseEntity<?> patchUser(@AuthenticationPrincipal String authorId,
+                                       @RequestBody @Valid UserDto.Patch userPatchDto) {
+
+        if (authorId == null) {
+            throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
+        }
+
+        userPatchDto.setLoginId(authorId);
+        userService.updateUser(mapper.userPatchDtoToUser(userPatchDto));
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 

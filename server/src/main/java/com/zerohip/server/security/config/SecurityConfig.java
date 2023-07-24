@@ -66,7 +66,7 @@ public class SecurityConfig {
                 .and()
                 .apply(new CustomFilterConfig()) // 커스터마이징 된 CustomFilterConfigurer 추가
                 .and()
-                .authorizeHttpRequests(authorize -> authorize
+                .authorizeRequests(authorize -> authorize
                         .anyRequest().permitAll()   // role : 현재 user 권한만 있기 때문에 세부 권한 지정 필요 x
                 )
                 .oauth2Login(oauth2 -> oauth2

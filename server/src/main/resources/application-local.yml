@@ -43,6 +43,7 @@ spring:
               - email
             redirectUri: https://zerohip.co.kr/login/oauth2/code/google
             authorization-grant-type: authorization_code
+
   h2:
     console:
       enabled: true
@@ -87,6 +88,7 @@ jwt:
   key: ${JWT_KEY}
   access-token-expiration-minutes: ${JWT_ACCESS_TOKEN}
   refresh-token-expiration-minutes: ${JWT_REFRESH_TOKEN}
+
 cloud:
   aws:
     s3:
