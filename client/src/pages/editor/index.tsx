@@ -10,13 +10,25 @@ import InputNaturalNumber from './InputNaturalNumber';
 import RadioSet from './RadioSet';
 import ImgsUploader from './ImgsUploader';
 import withAuth from '../../components/WithAuth';
-
 import { CATEGORY } from '../../constants/category';
-import { FaRecArticleReqType, FeedArticleReqType } from '../../types/article';
+import {
+  FaRecArticleReqType,
+  FaRecArticleResType,
+  FeedArticleReqType,
+  FeedArticleResType,
+} from '../../types/article';
 
-async function getFeedArticle(page: number, size: number) {
-  const res = await axios.get(`https://www.zerohip.co.kr/feedArticles`);
-  return res.data;
+async function getFaRecArticle(paramFaRecId: number, paramFaRecArticleId: number) {
+  const res = await axios.get(
+    `https://api.zerohip.co.kr/finanacial-record/${paramFaRecId}/article/${paramFaRecArticleId}`
+  );
+  const data: FaRecArticleResType = res.data;
+  return data;
+}
+async function getFeedArticle(paramFaRecArticleId: number) {
+  const res = await axios.get(`https://api.zerohip.co.kr/feedArticles/${paramFaRecArticleId}`);
+  const data: FeedArticleResType = res.data;
+  return data;
 }
 
 function EditorPage() {
@@ -26,35 +38,52 @@ function EditorPage() {
   const [faRecId, setFaRecId] = React.useState(NaN); // 가계부의 고유번호
   const [faDate, setFaDate] = React.useState(new Date()); // 날짜+시간
   const [category, setCategory] = React.useState(''); // 카테고리명
+  const [title, setTitle] = React.useState(''); // 제목(내역)
   const [price, setPrice] = React.useState(0); // 금액
   const [faType, setFaType] = React.useState(0); // 지출/수입 (라디오 버튼)
-  const [title, setTitle] = React.useState(''); // 제목(내역)
   /* ↓ 모든 articleType에 표시 ↓ */
   const [imgSrcs, setImgSrcs] = React.useState(['', '', '', '']); // 이미지 (0~4장)
   const [content, setContent] = React.useState(''); // 내용(본문)
   const [scope, setScope] = React.useState(0); // 가계부에만/타임라인에도
 
+  // 수정할 게시글 받아오기
   React.useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    const fetchData = async () => {
+      const params = new URLSearchParams(window.location.search);
+      const paramFaRecId = Number(params.get('faRecId'));
+      const paramFaRecArticleId = Number(params.get('faRecArticleId'));
+      const paramFeedArticleId = Number(params.get('feedArticleId'));
 
-    const paramFaRecId = params.get('faRecId');
-    const paramFaRecArticleId = params.get('faRecArticleId');
-    const paramFeedArticleId = params.get('feedArticleId');
+      setIsEdit(!!(paramFaRecId || paramFaRecArticleId || paramFeedArticleId));
 
-    setIsEdit(!!(paramFaRecId || paramFaRecArticleId || paramFeedArticleId));
-
-    if (paramFaRecId) {
-      if (paramFaRecArticleId) {
-        // const {} = getFaRecArticle(paramFaRecArticleId);
+      if (paramFaRecId) {
+        if (paramFaRecArticleId) {
+          const data = await getFaRecArticle(paramFaRecId, paramFaRecArticleId);
+          setFaRecId(data.financialRecordId); // BigInt
+          // financialRecordArticleId: number; // BigInt
+          setCategory(data.category);
+          setFaDate(new Date(data.faDate));
+          setTitle(data.title);
+          setPrice(data.price);
+          setContent(data.content);
+          setScope(data.scope === '가계부 게시글' ? 0 : 1);
+          setImgSrcs((arr) => {
+            arr.forEach((_, i) => {
+              arr[i] = data.imgPath[i] || '';
+            });
+            return arr;
+          });
+        } else {
+          setFaRecId(paramFaRecId);
+        }
+        if (paramFeedArticleId) {
+          // getFeedArticle(paramFeedArticleId);
+        }
       } else {
-        setFaRecId(Number(paramFaRecId));
+        setFaRecId(0);
       }
-      if (paramFeedArticleId) {
-        // getFeedArticle(paramFeedArticleId);
-      }
-    } else {
-      setFaRecId(0);
-    }
+    };
+    fetchData();
   }, []);
 
   const handleChangeArticleType = (id: number) => {
