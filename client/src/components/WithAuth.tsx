@@ -40,7 +40,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
 
   useEffect(() => {
     if (myInfoData) {
-      const { userId, loginId, nickname } = myInfoData;
+      const { userId, loginId, nickname } = myInfoData.data;
       dispatch(login({ userId, loginId, nickname }));
     }
   }, [myInfoData]);
