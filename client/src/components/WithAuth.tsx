@@ -44,13 +44,11 @@ const withAuth = (Component: ComponentType) => (props: object) => {
     }
 
     if (myInfoData) {
-      console.log('myInfoData있어.');
-      console.log(myInfoData);
-      const userId = myInfoData.userId;
-      const loginId = myInfoData.loginId;
-      const nickname = myInfoData.nickname;
-      console.log(userId, loginId, nickname);
-      dispatch(login({ userId, loginId, nickname }));
+      const { userId, loginId, nickname } = myInfoData;
+      // const userId = myInfoData.userId;
+      // const loginId = myInfoData.loginId;
+      // const nickname = myInfoData.nickname;
+      dispatch(login({ userId, loginId, nickname, isLoggedIn: true }));
     }
   }, [accessToken, myInfoData]);
 
