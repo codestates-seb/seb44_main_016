@@ -58,7 +58,7 @@ function MyPage() {
   );
 
   const filteredData = myFeedData?.pages.flatMap((response) => (response ? response.data : null));
-
+  console.log(filteredData);
   if (isMyInfoError || isMyFeedError) {
     toast.info('잠시 후에 다시 시도해주세요.');
   }
@@ -82,13 +82,13 @@ function MyPage() {
             <MyPageUserInfo myInfoData={myInfoData} />
             <S.UserArticleContainer>
               <h2 className='blind'>내가 쓴 글</h2>
-              {/* {isMyFeedError ? (
+              {isMyFeedError ? (
                 <ErrorComponent />
               ) : filteredData ? (
                 filteredData.map((el: FeedArticleResType) => {
                   return <SnsArticle key={el.feedArticleId} type='feed' data={el} />;
                 })
-              ) : null} */}
+              ) : null}
               <S.AddWrap ref={ref}>
                 <S.AddBtn onClick={() => fetchNextPage()} disabled={!hasNextPage}>
                   {!hasNextPage ? '피드를 모두 확인하셨습니다.' : '계속해서 불러오기'}

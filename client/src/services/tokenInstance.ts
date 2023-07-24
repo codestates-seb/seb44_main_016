@@ -31,7 +31,6 @@ instance.interceptors.response.use(
     try {
       const { response, config } = error;
       const originalRequest = config;
-      console.log('액세스 없어세 에러났어 ');
       if (response.data.status) {
         const res = await axios.post(`${BASE_URL}/auth/refresh`, null, {
           headers: {

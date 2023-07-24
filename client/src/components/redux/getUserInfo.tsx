@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from './store';
 import { LoginResData } from '../../types/user';
 
-export default function useAccessToken() {
+export default function useGlobalUserInfo() {
   const accessToken = useSelector<RootState>((state) => state.authnReducer.login.accessToken);
   return accessToken;
 }
