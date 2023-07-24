@@ -4,8 +4,6 @@ import { instance } from './tokenInstance';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-axios.defaults.withCredentials = true;
-
 const apiUser = {
   /** 회원 가입 */
   postSignUp: async (signUpData: PostSignUp) => {
@@ -35,7 +33,9 @@ const apiUser = {
 
   /** 로그아웃 */
   deleteLogout: async () => {
-    const response = await instance.delete(`${BASE_URL}/auth/logout`);
+    const response = await instance.delete(`${BASE_URL}/auth/logout`, {
+      withCredentials: true,
+    });
     return response;
   },
 
@@ -47,13 +47,17 @@ const apiUser = {
 
   /** 마이 페이지 불러오기 */
   getMyInfo: async () => {
-    const response = await instance.get(`${BASE_URL}/user/mypage`);
+    const response = await instance.get(`${BASE_URL}/user/mypage`, {
+      withCredentials: true,
+    });
     return response.data;
   },
 
   /** 회원정보 불러오기 */
   getUserInfo: async () => {
-    const response = await instance.get(`${BASE_URL}/user/info`);
+    const response = await instance.get(`${BASE_URL}/user/info`, {
+      withCredentials: true,
+    });
     console.log(response);
     return response.data;
   },
