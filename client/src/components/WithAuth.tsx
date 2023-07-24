@@ -17,7 +17,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   const { data: myInfoData } = useQuery(['myInfo'], apiUser.getUserInfo, {
     enabled: !!accessToken,
   });
-  console.log(myInfoData);
+
   /** refresh 토큰으로 새 access 토큰을 발급받는 api */
   const { mutate } = useMutation(apiUser.getNewAccess, {
     onSuccess: (data) => {
@@ -41,6 +41,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   useEffect(() => {
     if (myInfoData) {
       console.log('myInfoData있어.');
+      console.log(myInfoData);
       const userId = myInfoData.data.userId;
       const loginId = myInfoData.data.loginId;
       const nickname = myInfoData.data.nickname;
