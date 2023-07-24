@@ -13,10 +13,13 @@ import { USER_META_DATA } from '../../../constants/seo/userMetaData';
 import ErrorComponent from '../../../components/ErrorComponent';
 import { useEffect } from 'react';
 import MyPageUserInfo from './MyPageUserInfo';
-import { userInfo } from '../../../components/redux/getUserInfo';
+import useGlobalUserInfo, { userInfo } from '../../../components/redux/getUserInfo';
 
 function MyPage() {
   const { ref, inView } = useInView();
+
+  const isLoggedIn = useGlobalUserInfo();
+  console.log(isLoggedIn);
 
   const {
     isLoading: isMyInfoLoading,
