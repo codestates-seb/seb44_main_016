@@ -3,9 +3,7 @@ import { store } from '../components/redux/store';
 import { toast } from 'react-toastify';
 
 /** INSTANCE WITH TOKEN */
-export const instance = axios.create({
-  withCredentials: true,
-});
+export const instance = axios.create({});
 
 /** REQUEST INTERCEPTORS */
 instance.interceptors.request.use(
@@ -15,6 +13,7 @@ instance.interceptors.request.use(
       config.headers['Authorization'] = `Bearer ${accessToken}`;
       console.log('액세스 있어서 통과');
     }
+    config.withCredentials = true;
     return config;
   },
   (error) => {
@@ -48,7 +47,6 @@ instance.interceptors.response.use(
       originalRequest.headers['Authorization'] = res.headers.authorization;
       console.log('액세스 없어서 다시 받아왔음!!');
       console.log(res);
-
       return axios(originalRequest);
     } catch (error) {
       toast.info('로그인이 필요한 서비스입니다.');
