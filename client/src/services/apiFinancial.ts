@@ -21,8 +21,8 @@ export const APIfinancialRecord = {
   },
   // 가계부 1개 조회 GET
   getFaRec: async (financialRecordId: number) => {
-    // const res = await instance.get(`${BASE_URL}/financial-record/${financialRecordId}`);
-    const res = await axios.get(`/data/recordHeader.json`);
+    const res = await instance.get(`${BASE_URL}/financial-record/${financialRecordId}`);
+    // const res = await axios.get(`/data/recordHeader.json`);
     return res.data;
   },
   // 가계부 UPDATE
