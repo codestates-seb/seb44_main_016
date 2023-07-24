@@ -26,6 +26,7 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
+@Table(name = "financial_record_articles")
 @NoArgsConstructor
 @AllArgsConstructor
 public class FinancialRecordArticle extends Article {
@@ -49,7 +50,7 @@ public class FinancialRecordArticle extends Article {
 
   // 가계부 매핑
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "financial_Record_id")
+  @JoinColumn(name = "financial_record_id")
   private FinancialRecord financialRecord;
 
   // 이미지 매핑
