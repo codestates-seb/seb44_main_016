@@ -5,15 +5,15 @@ import com.zerohip.server.common.comment.entity.Comment;
 import org.springframework.data.domain.Page;
 
 public interface CommentService {
-  Comment createComment(Comment comment);
+  Comment createComment(String authorId, Long articleId, Comment comment);
 
-  Comment findComment(Long commentId);
+  Comment findComment(Long articleId, Long commentId);
 
-  Page<Comment> findComments(int page, int size);
+  Page<Comment> findComments(Long articleId, int page, int size);
 
-  Comment updateComment(Long commentId, CommentDto.Patch patchParam);
+  Comment updateComment(String authorId, Long aritlceId, Long commentId, CommentDto.Patch patchParam);
 
-  void deleteComment(Long commentId);
+  void deleteComment(String authorId, Long aritlceId, Long commentId);
 
   Comment findVerifiedComment(Long commentId);
 }

@@ -19,23 +19,29 @@ public class CommentServiceImpl implements CommentService {
 
   private final CommentRepository repository;
 
+
   @Override
-  public Comment createComment(Comment postParam) {
-    return repository.save(postParam);
+  public Comment createComment(String authorId, Long articleId, Comment postParam) {
+
+    Comment savedComment = repository.save(postParam);
+
+
+
+    return savedComment;
   }
 
   @Override
-  public Comment findComment(Long commentId) {
+  public Comment findComment(Long articleId, Long commentId) {
     return findVerifiedComment(commentId);
   }
 
   @Override
-  public Page<Comment> findComments(int page, int size) {
+  public Page<Comment> findComments(Long articleId, int page, int size) {
     return repository.findAll(PageRequest.of(page -1, size, Sort.by("commentId").descending()));
   }
 
   @Override
-  public Comment updateComment(Long commentId, CommentDto.Patch patchParam) {
+  public Comment updateComment(String authorId, Long articleId, Long commentId, CommentDto.Patch patchParam) {
     Comment findComment = findVerifiedComment(commentId);
     findComment.setContent(patchParam.getContent());
 
@@ -44,7 +50,7 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public void deleteComment(Long commentId) {
+  public void deleteComment(String authorId, Long articleId, Long commentId) {
     Comment findComment = findVerifiedComment(commentId);
     repository.delete(findComment);
   }

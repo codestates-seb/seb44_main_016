@@ -54,7 +54,11 @@ public class CommentController {
                                       @PathVariable("article-id") Long articleId,
                                       @PathVariable("comment-id") Long commentId,
                                       @AuthenticationPrincipal String authorId) {
-    Comment updatedComment = service.updateComment(authorId, articleId, commentId, mapper.commentPatchToComment(data));
+    Comment updatedComment = service.updateComment(authorId, articleId, commentId, data);
+
     return ResponseEntity.ok(mapper.commentToCommentResponse(updatedComment));
   }
+
+  @DeleteMapping("/{comment-id}")
+  public Response
 }
