@@ -8,11 +8,19 @@ import { handleFileChange } from '../../components/img-crop/imgCropUtils';
 
 type Props = {
   id: number;
+  setImgSrcs: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 export default function ImgBox(props: Props) {
   const inputImgBtnId = `addArticleImg${props.id}`;
   const { imgSrc, setImgSrc, croppedImage, setCroppedImage, cropModal, setCropModal } = useImgCrop();
+
+  React.useEffect(() => {
+    props.setImgSrcs((arr) => {
+      arr[props.id] = imgSrc || '';
+      return arr;
+    });
+  }, [imgSrc]);
 
   // 파일을 crop img로 변경해주는 함수
   const onFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -9,24 +9,55 @@ import StyledDatePicker from './StyledDatePicker';
 import InputNaturalNumber from './InputNaturalNumber';
 import RadioSet from './RadioSet';
 import ImgsUploader from './ImgsUploader';
+import withAuth from '../../components/WithAuth';
 
 import { CATEGORY } from '../../constants/category';
+import { FaRecArticleReqType, FeedArticleReqType } from '../../types/article';
 
-export default function EditorPage() {
-  // 일부 값들은 Enum으로 바꾸는 걸 권장
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+async function getFeedArticle(page: number, size: number) {
+  const res = await axios.get(`${BASE_URL}/feedArticles`);
+  return res.data;
+}
+
+function EditorPage() {
+  const [isEdit, setIsEdit] = React.useState(false);
   const [articleType, setArticleType] = React.useState(0); // 가계부/절약팁/허락해줘 (라디오 버튼)
   /* ↓ 'articleType=가계부'일 경우에만 표시 ↓ */
-  const [faRecId, setFaRecId] = React.useState(0); // 가계부의 고유번호
+  const [faRecId, setFaRecId] = React.useState(NaN); // 가계부의 고유번호
   const [faDate, setFaDate] = React.useState(new Date()); // 날짜+시간
   const [category, setCategory] = React.useState(''); // 카테고리명
   const [price, setPrice] = React.useState(0); // 금액
   const [faType, setFaType] = React.useState(0); // 지출/수입 (라디오 버튼)
   const [title, setTitle] = React.useState(''); // 제목(내역)
   /* ↓ 모든 articleType에 표시 ↓ */
-  // const [images, setImages] = React.useState([]); // 이미지 (0~4장)
+  const [imgSrcs, setImgSrcs] = React.useState(['', '', '', '']); // 이미지 (0~4장)
   const [content, setContent] = React.useState(''); // 내용(본문)
-  const [scope, setScope] = React.useState(1); // 가계부에만/타임라인에도
+  const [scope, setScope] = React.useState(0); // 가계부에만/타임라인에도
+
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
+    const paramFaRecId = params.get('faRecId');
+    const paramFaRecArticleId = params.get('faRecArticleId');
+    const paramFeedArticleId = params.get('feedArticleId');
+
+    setIsEdit(!!(paramFaRecId || paramFaRecArticleId || paramFeedArticleId));
+
+    if (paramFaRecId) {
+      if (paramFaRecArticleId) {
+        // const {} = getFaRecArticle(paramFaRecArticleId);
+      } else {
+        setFaRecId(Number(paramFaRecId));
+      }
+      if (paramFeedArticleId) {
+        // getFeedArticle(paramFeedArticleId);
+      }
+    } else {
+      setFaRecId(0);
+    }
+  }, []);
 
   const handleChangeArticleType = (id: number) => {
     setArticleType(id);
@@ -60,34 +91,47 @@ export default function EditorPage() {
   const handleChangeScope = (id: number) => {
     setScope(id);
   };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if (articleType === 1) {
+      const formData = new FormData();
+      imgSrcs.forEach((imgSrc) => {
+        formData.append('files', imgSrc);
+      });
+
+      if (articleType === 0) {
         // 가계부
-        const body = {
+        const body: FaRecArticleReqType = {
           financialRecordId: faRecId,
           category,
-          financialRecordDate: faDate,
+          faDate: faDate.toISOString(),
+          title,
           price,
           content,
-          scope,
-          // imageId: , (미구현 & 필수 사항 아님)
-          userId: 0,
-          // "voteId": , (가계부에는 절약/Flex 기능을 사용하지 않음)
-          // "financialRecordArticleHashTagId": , (미구현 & 필수 사항 아님)
+          scope: scope === 0 ? '가계부 게시글' : '가계부 타임라인',
         };
-        await axios.post(`http://localhost:8080/financial-record/${faRecId}/article/'`, body);
+        formData.append('data', JSON.stringify(body));
+
+        await axios.post(`${BASE_URL}/financial-record/${faRecId}/article'`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
       } else {
         // 절약팁/허락해줘
-        const body = {
+        const body: FeedArticleReqType = {
+          feedType: articleType === 1 ? '절약팁' : '허락해줘',
           content,
-          scope,
-          userId: 0,
         };
-        await axios.post('http://localhost:8080/feedArticles/article', body);
+        formData.append('data', JSON.stringify(body));
+
+        await axios.post(`${BASE_URL}/feedArticles`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
       }
-      console.log(`Requset 성공: 게시글 작성`);
     } catch (error) {
       console.error('Requset 에러 발생:', error);
     }
@@ -95,27 +139,35 @@ export default function EditorPage() {
 
   return (
     <S.EditorContainer onSubmit={handleSubmit}>
-      <S.Row>
-        {/* 가계부/절약팁/허락해줘 (라디오 버튼) */}
-        <RadioSet
-          legend=''
-          options={['가계부', '절약 팁', '허락해줘!']}
-          checkValue={articleType}
-          handler={handleChangeArticleType}
-          isCenter={true}
-        />
-      </S.Row>
+      {!isEdit ? (
+        <S.Row>
+          <RadioSet
+            legend=''
+            options={['가계부', '절약 팁', '허락해줘!']}
+            checkValue={articleType}
+            handler={handleChangeArticleType}
+            isCenter={true}
+          />
+        </S.Row>
+      ) : (
+        <></>
+      )}
       {/* ↓ 'articleType=가계부'일 경우에만 표시 ↓ */}
       {articleType === 0 && (
         <>
           {/* 작성할 가계부 (셀렉트) */}
-          <S.Row>
-            <SelectOption
-              legend='가계부 이름'
-              options={['가계부A', '가계부B', '가계부C']}
-              handler={handleChangeFaRecId}
-            />
-          </S.Row>
+          {Number.isNaN(faRecId) ? (
+            <></>
+          ) : (
+            <S.Row>
+              <SelectOption
+                legend='가계부 이름'
+                options={['가계부A', '가계부B', '가계부C']}
+                handler={handleChangeFaRecId}
+                initIndex={faRecId}
+              />
+            </S.Row>
+          )}
           <S.Row>
             {/* 날짜+시간 */}
             <StyledDatePicker legend={'날짜'} selected={faDate} handler={handleChangeDate} />
@@ -125,6 +177,7 @@ export default function EditorPage() {
               options={CATEGORY.flatMap((cate) => cate.name)}
               handler={handleChangeCategory}
               disabled={faType !== 0}
+              initIndex={faType}
             />
           </S.Row>
           <S.Row>
@@ -153,7 +206,7 @@ export default function EditorPage() {
       {/* ↓ 모든 articleType에 표시 ↓ */}
       {/* 이미지 */}
       <S.Row>
-        <ImgsUploader />
+        <ImgsUploader setImgSrcs={setImgSrcs} />
       </S.Row>
       {/* 내용(본문) */}
       <S.InputContainer>
@@ -172,7 +225,9 @@ export default function EditorPage() {
         )}
         {/* Submit 버튼 */}
         <S.SubmitBtnContainer>
-          <S.SubmitBtn type='submit'>편집 완료</S.SubmitBtn>
+          <S.SubmitBtn type='submit' onClick={handleSubmit}>
+            편집 완료
+          </S.SubmitBtn>
         </S.SubmitBtnContainer>
       </S.Row>
     </S.EditorContainer>
@@ -228,3 +283,5 @@ const S = {
     font-weight: bold;
   `,
 };
+
+export default withAuth(EditorPage);
