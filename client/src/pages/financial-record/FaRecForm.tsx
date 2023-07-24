@@ -12,9 +12,9 @@ import { APIfinancialRecord } from '../../services/apiFinancial';
 import InputField from '../../components/InputField';
 import { getRandomImageUrl } from '../../utils/randomImg';
 import { RANDOM_IMG_URLS } from '../../constants/faRecImgUrls';
-import FilePlusLabel from '../../components/FilePlusLabel';
 import { FAREC_MESSAGES } from '../../constants/faRec';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../hooks/useRefusalAni';
+import ImgBox from './ImgBox';
 
 type PageType = 'create' | 'edit';
 
@@ -79,7 +79,14 @@ export default function FaRecForm({
   };
 
   const { mutate } = useMutation(
-    pageType === 'create' ? APIfinancialRecord.createFaRec : APIfinancialRecord.updateFaRec,
+    pageType === 'create'
+      ? APIfinancialRecord.createFaRec
+      : (formData: FormData) => {
+          if (financialRecordId === undefined) {
+            return Promise.reject(new Error('financialRecordId is undefined'));
+          }
+          return APIfinancialRecord.updateFaRec(formData, financialRecordId);
+        },
     {
       onSuccess: () => {
         const successMessage =
@@ -126,15 +133,7 @@ export default function FaRecForm({
     const imgFile = new Blob([croppedImage || initialImage || randomImg], {
       type: 'image/*',
     });
-    formData.append('files', imgFile);
-
-    // formData.append('financialRecordName', faRecName || '');
-    // // formData.append('memo', faRecDesc || '');
-    // // formData.append('imgPath', croppedImage || initialImage || randomImg);
-
-    // if (pageType === 'edit') {
-    //   formData.append('financialRecordId', `${financialRecordId}`);
-    // }
+    formData.append('file', imgFile);
 
     mutate(formData);
   };
@@ -142,18 +141,14 @@ export default function FaRecForm({
   return (
     <S.Form onSubmit={handleSubmit}>
       <S.Container>
-        <S.ImgBox>
-          {croppedImage ? (
-            <img src={croppedImage} alt={faRecName ? `${faRecName} 프로필 사진` : '프로필 사진'} />
-          ) : initialImage ? (
-            <img src={initialImage} alt={`${initialFaRecName} 프로필 사진`} />
-          ) : (
-            <img src={randomImg} alt={`${faRecName} 프로필 사진`} />
-          )}
-
-          <S.FileInput type='file' id='addFaRecImg' accept='image/*' onChange={onFileChange} />
-          <FilePlusLabel htmlFor='addFaRecImg' />
-        </S.ImgBox>
+        <ImgBox
+          croppedImage={croppedImage}
+          initialImage={initialImage}
+          faRecName={faRecName}
+          initialFaRecName={initialFaRecName}
+          randomImg={randomImg}
+          onFileChange={onFileChange}
+        />
         {cropModal && (
           <ImgCropModal
             isOpen={cropModal}
@@ -165,20 +160,18 @@ export default function FaRecForm({
           />
         )}
         <S.InputFieldWrap>
-          <S.InputFieldWrap>
-            <InputField
-              inputComponent={nameInput}
-              error={errors.faRecName}
-              label={inputData[0].name}
-              id={inputData[0].id}
-            />
-            <InputField
-              inputComponent={descInput}
-              error={errors.faRecDesc}
-              label={inputData[1].name}
-              id={inputData[1].id}
-            />
-          </S.InputFieldWrap>
+          <InputField
+            inputComponent={nameInput}
+            error={errors.faRecName}
+            label={inputData[0].name}
+            id={inputData[0].id}
+          />
+          <InputField
+            inputComponent={descInput}
+            error={errors.faRecDesc}
+            label={inputData[1].name}
+            id={inputData[1].id}
+          />
         </S.InputFieldWrap>
         <S.SubmitBox {...isClickedProps}>
           <S.SubmitBtn>완료</S.SubmitBtn>
@@ -217,25 +210,7 @@ const S = {
     max-width: 516px;
     width: 100%;
   `,
-  ImgBox: styled.div`
-    position: relative;
-    width: 12.7rem;
-    height: 12.7rem;
-    border-radius: 100%;
-    overflow: hidden;
-    margin-bottom: 3.125rem;
 
-    & > img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition-duration: 0.7s;
-    }
-
-    &:hover > img {
-      transform: scale(1.1);
-    }
-  `,
   PlusBtn: styled.button`
     width: 100px;
   `,
@@ -248,9 +223,6 @@ const S = {
     top: 50%;
     right: 1.25rem;
     transform: translateY(-50%);
-  `,
-  FileInput: styled.input`
-    display: none;
   `,
 
   InputFieldWrap: styled.div`

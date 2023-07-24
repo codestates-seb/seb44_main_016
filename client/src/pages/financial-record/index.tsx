@@ -20,6 +20,7 @@ export const metadata: Metadata = {
 
 export type UserData = {
   userId: number;
+  nickname: string;
   profileImgPath: string;
 };
 
