@@ -43,7 +43,7 @@ public class UserDto {
         private String password;
 
         @NotBlank(message = "닉네임은 공백이 아니어야 합니다.")
-        @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "닉네임은 영문 대소문자와 숫자만 가능합니다.")
+        @Pattern(regexp = "^[\\uAC00-\\uD7AF\\u1100-\\u11FF\\u3130-\\u318F\\uA960-\\uA97F\\uAC00-\\uD7A3a-zA-Z0-9]*$", message = "닉네임은 영문 대소문자와 한글, 숫자만 가능합니다.")
         @Size(min = 4, max = 10, message = "닉네임은 4 ~ 10자 사이여야 합니다.")
         private String nickname;
 
@@ -64,7 +64,7 @@ public class UserDto {
         @Size(min = 8, max = 16, message = "비밀번호는 8~16자 사이여야 합니다.")
         private String password;
 
-        @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "닉네임은 영문 대소문자와 숫자만 가능합니다.")
+        @Pattern(regexp = "^[\\uAC00-\\uD7AF\\u1100-\\u11FF\\u3130-\\u318F\\uA960-\\uA97F\\uAC00-\\uD7A3a-zA-Z0-9]*$", message = "닉네임은 영문 대소문자와 한글, 숫자만 가능합니다.")
         @Size(min = 4, max = 10, message = "닉네임은 4 ~ 10자 사이여야 합니다.")
         private String nickname;
 

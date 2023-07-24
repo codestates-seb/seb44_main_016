@@ -85,9 +85,9 @@ server:
 #  address:
 #    admin: admin@gmail.com
 jwt:
-  key: neverland123123123123123123123123123123 # 환경변수 ${JWT_KEY}
-  access-token-expiration-minutes: 60          # 환경변수 ${JWT_ACCESS_TOKEN}
-  refresh-token-expiration-minutes: 10080      # 환경변수 ${JWT_REFRESH_TOKEN}
+  key: ${JWT_KEY}
+  access-token-expiration-minutes: ${JWT_ACCESS_TOKEN}
+  refresh-token-expiration-minutes: ${JWT_REFRESH_TOKEN}
 
 cloud:
   aws:
