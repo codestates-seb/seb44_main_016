@@ -11,12 +11,14 @@ import Toast from '../components/Toast';
 import 'react-toastify/dist/ReactToastify.css';
 import { useWindowType } from '../hooks/useWindowSize';
 import { ScreenEnum } from '../constants/enums';
+import React from 'react';
 
 const queryClient = new QueryClient();
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
   const windowType = useWindowType();
+  const [queryClient] = React.useState(() => new QueryClient());
 
   let isShowNav = true;
   let isShowHeader = false;
@@ -45,22 +47,25 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Providers>
         <Toast />
         <QueryClientProvider client={queryClient}>
-          <GlobalStyles />
-          <S.RootScreen>
-            <S.AppContainer maxWidth={maxWidth}>
-              <Hydrate state={pageProps.dehydratedState}>
-                <S.FlexPage bgColor={bgColor}>
-                  {isShowNav && <Aside isLoggedIn={true} windowType={windowType} />}
-                  <S.SubPage>
-                    {isShowHeader && <HomeHeader windowType={windowType} />}
-                    <S.Main isShowNav={isShowNav} isShowHeader={isShowHeader} windowType={windowType}>
-                      <Component {...pageProps} />
-                    </S.Main>
-                  </S.SubPage>
-                </S.FlexPage>
-              </Hydrate>
-            </S.AppContainer>
-          </S.RootScreen>
+          <Hydrate state={pageProps.dehydratedState}>
+            <GlobalStyles />
+            <S.RootScreen>
+              <S.AppContainer maxWidth={maxWidth}>
+                <Hydrate state={pageProps.dehydratedState}>
+                  <S.FlexPage bgColor={bgColor}>
+                    {isShowNav && <Aside isLoggedIn={true} windowType={windowType} />}
+                    <S.SubPage>
+                      {isShowHeader && <HomeHeader windowType={windowType} />}
+                      <S.Main isShowNav={isShowNav} isShowHeader={isShowHeader} windowType={windowType}>
+                        <Component {...pageProps} />
+                      </S.Main>
+                    </S.SubPage>
+                  </S.FlexPage>
+                </Hydrate>
+              </S.AppContainer>
+            </S.RootScreen>
+          </Hydrate>
+
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </Providers>

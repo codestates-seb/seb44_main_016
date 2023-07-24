@@ -1,7 +1,7 @@
 import CommonStyles from '../../styles/CommonStyles';
 import styled from '@emotion/styled';
 import ListItem from './ListItem';
-import { useQuery } from '@tanstack/react-query';
+import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 import { APIfinancialRecord } from '../../services/apiFinancial';
 import useInput from '../../hooks/useComponents';
 import SVGs from '../../constants/svg';
@@ -12,6 +12,18 @@ import { FAREC_MESSAGES } from '../../constants/messages/faRec';
 import withAuth from '../../components/WithAuth';
 import HeadMeta from '../../components/HeadMeta';
 import { FAREC_META_DATA } from '../../constants/seo/faRecMetaData';
+
+export async function getStaticProps() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery(['recordList'], APIfinancialRecord.getRecordList);
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+}
 
 export type UserData = {
   userId: number;
