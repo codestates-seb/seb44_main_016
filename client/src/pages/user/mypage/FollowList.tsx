@@ -12,7 +12,7 @@ export default function FollowList({ title, userInfo }: FollowListProps) {
       <S.UserInfo>
         <S.UserImgInfoBox>
           <S.UserImgBox>
-            <S.UserImg src={userInfo?.imgId} alt='유저 프로필 사진' />
+            <S.UserImg src={userInfo?.profileImgPath} alt='유저 프로필 사진' />
           </S.UserImgBox>
           <S.UserNickNameIdBox>
             <S.UserNickname tabIndex={0}>

@@ -35,7 +35,7 @@ instance.interceptors.response.use(
       const originalRequest = config;
       console.log('액세스 없어세 에러났어 ');
       console.log(error);
-      if (response.data.status === 403) {
+      if (response.data.status === 403 || response.data.status === 404) {
         /** GET : NEW ACCESS TOKEN */
         const res = await axios.post(`/auth/refresh`, null, {
           // 서버 배포 링크로 추후 변경 예정

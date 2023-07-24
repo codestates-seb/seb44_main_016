@@ -74,7 +74,7 @@ export interface UserUpdateReqData {
 
 export interface FollowUsersInfoData {
   userId: number;
-  imgId: string;
+  profileImgPath: string;
   isAlsoFollowed: boolean;
   loginId: string;
   nickname: string;
