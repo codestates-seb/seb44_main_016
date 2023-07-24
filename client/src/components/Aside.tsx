@@ -67,16 +67,17 @@ export default function Aside(props: Props) {
               <AsideBtn onClick={handleOpenOrCloseNoticeTab} leftIcon={svgs.notice} className={asideClsName}>
                 알림
               </AsideBtn>
-              {/* href='/financial-record' */}
               <AsideBtn
+                href='/financial-record'
                 leftIcon={svgs.faRec}
-                rightIcon={svgs.dropdown}
+                // rightIcon={svgs.dropdown}
                 isReverse={isBookmarkedFaRecListOpened}
                 onClickRight={handleOpenOrCloseBookmarkedFaRecList}
                 className={asideClsName}
               >
                 내 가계부
               </AsideBtn>
+              {/*
               {isBookmarkedFaRecListOpened || isShrinkOrMobile ? (
                 <></>
               ) : (
@@ -92,6 +93,7 @@ export default function Aside(props: Props) {
                   </AsideBtn>
                 </ol>
               )}
+              */}
             </>
           )}
           <AsideBtn onClick={handleOpenOrCloseSearchTab} leftIcon={svgs.search} className={asideClsName}>
