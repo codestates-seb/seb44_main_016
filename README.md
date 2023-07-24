@@ -54,7 +54,7 @@
 > **팀명** : 선빵 👊🏼 
 
 
-<p align='center'><img  src="https://media.discordapp.net/attachments/1130797744487944193/1130798066539171860/Screenshot_20230705-173533_Instagram.jpg?width=727&height=1182" alt="팀 선빵 소개" width="400" height="600"/> </p>
+<p align='center'><img  src="https://media.discordapp.net/attachments/1130797744487944193/1130798066539171860/Screenshot_20230705-173533_Instagram.jpg?width=727&height=1182" alt="팀 선빵 소개" width="400" height="630"/> </p>
 
 <br />
 
@@ -128,14 +128,14 @@
 <details>
   <summary> <제로힙> 기획서 </summary>
 
-- [기획서 링크](https://www.notion.so/b00b1a9985714bce8409e35b5119e530)
+- [ <제로힙> 기획서 - 링크](https://www.notion.so/b00b1a9985714bce8409e35b5119e530)
 
 </details>
 
 <details>
   <summary> Figma 디자인 목업 </summary>
 
-- [링크](https://www.figma.com/file/sdzWtE9uQQKCuij5Jclrk0/ZEROHIP?type=design&node-id=1202%3A688&mode=design&t=McLJaOYw9Bfg6lZt-1)
+- [Figma 디자인 목업 - 링크](https://www.figma.com/file/sdzWtE9uQQKCuij5Jclrk0/ZEROHIP?type=design&node-id=1202%3A688&mode=design&t=McLJaOYw9Bfg6lZt-1)
 
 
 </details>
@@ -143,7 +143,7 @@
 <details>
   <summary> Figma 화면 정의서 </summary>
 
-- [링크](https://www.figma.com/file/sdzWtE9uQQKCuij5Jclrk0/ZEROHIP?type=design&node-id=1202%3A688&mode=design&t=McLJaOYw9Bfg6lZt-1)
+- [Figma 화면 정의서 - 링크](https://www.figma.com/file/sdzWtE9uQQKCuij5Jclrk0/ZEROHIP?type=design&node-id=1202%3A688&mode=design&t=McLJaOYw9Bfg6lZt-1)
 
 
 </details>
