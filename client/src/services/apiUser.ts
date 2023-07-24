@@ -4,6 +4,8 @@ import { instance } from './tokenInstance';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+axios.defaults.withCredentials = true;
+
 const apiUser = {
   /** 회원 가입 */
   postSignUp: async (signUpData: PostSignUp) => {
