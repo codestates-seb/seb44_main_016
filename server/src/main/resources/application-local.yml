@@ -100,4 +100,3 @@ cloud:
       secret-key: ${AWS_SECRET_KEY}
     stack:
       auto: false
-
