@@ -25,7 +25,7 @@ export default function ListItem({ item }: Props) {
           <S.ItemUserList>
             {users?.map((el) => (
               <li key={el.userId}>
-                <img src={el.profileImgPath} alt='user profile' />
+                <img src={el.profileImgPath} alt={`${el.nickname} 프로필 사진`} />
               </li>
             ))}
           </S.ItemUserList>
