@@ -8,7 +8,7 @@ import withAuth from '../../../../components/WithAuth';
 import HeadMeta from '../../../../components/HeadMeta';
 import { FAREC_META_DATA } from '../../../../constants/seo/faRecMetaData';
 
-type FaRecData = {
+type FaRecArticleResType = {
   financialRecordId: number;
   financialRecordName: string;
   memo: string;
@@ -18,7 +18,7 @@ type FaRecData = {
 function FaRecEditPage() {
   const router = useRouter();
   const financialRecordId = router.query.slug ? Number(router.query.slug) : 0;
-  const { isLoading, isError, error, data, isSuccess } = useQuery<FaRecData>(
+  const { isLoading, isError, error, data, isSuccess } = useQuery<FaRecArticleResType>(
     ['reFac'],
     () => APIfinancialRecord.getFaRec(financialRecordId),
     { staleTime: 1000 * 60 * 30 }

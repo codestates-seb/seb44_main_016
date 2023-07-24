@@ -43,14 +43,19 @@ export default function HomeHeader(props: Props) {
       {props.windowType === ScreenEnum.MOBILE ? <MobileHomeHeaderLogo /> : <></>}
 
       <S.HomeHeaderTabBtns>
-        <S.HomeHeaderBtn href='' onClick={handleClickHomeBtn} className={getClsName(isHomeBtnActive)}>
+        <S.HomeHeaderBtn href='/' onClick={handleClickHomeBtn} className={getClsName(isHomeBtnActive)}>
           홈
         </S.HomeHeaderBtn>
-        {/* href='/?filterfollower=true' // 쿼리 미확정 */}
+        {/*
         <S.HomeHeaderBtn href='' onClick={handleClickFollowerBtn} className={getClsName(isFollowerBtnActive)}>
-          팔로워
+          구독
         </S.HomeHeaderBtn>
-        <S.HomeHeaderBtn href='' onClick={handleClickRankBtn} className={getClsName(isRankBtnActive)}>
+        */}
+        <S.HomeHeaderBtn
+          href='/?rank=true&top=3'
+          onClick={handleClickRankBtn}
+          className={getClsName(isRankBtnActive)}
+        >
           랭킹
         </S.HomeHeaderBtn>
       </S.HomeHeaderTabBtns>

@@ -1,5 +1,7 @@
 import React from 'react'; // useState 사용
 import styled from '@emotion/styled';
+import axios from 'axios';
+import Link from 'next/link';
 
 import CommonStyles from '../styles/CommonStyles';
 
@@ -7,9 +9,11 @@ import ArticleHeader from './sns-article/ArticleHeader';
 import ImgsCarousel from '../components/ImgsCarousel';
 import VoteForm from './sns-article/VoteForm';
 // import Comments from './sns-article/Comments';
-import { FeedArticleResType, FaRecData } from '../types/article';
+import { FeedArticleResType, FaRecArticleResType, VoteType } from '../types/article';
 import { useWindowType, useWindowSize } from '../hooks/useWindowSize';
 import { ScreenEnum } from '../constants/enums';
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 /* type은 추후 다른 파일로 분리하고 Import할 예정 */
 type PropsFeed = {
@@ -18,15 +22,13 @@ type PropsFeed = {
 };
 type PropsTimeline = {
   type: 'timeline';
-  data: FaRecData;
+  data: FaRecArticleResType;
 };
 
 export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
   const windowType = useWindowType();
   const [width, height] = useWindowSize();
   const isNarrowScreen = width <= 400;
-
-  const [dummySavingCount, dummyFlexCount] = [256, 48];
 
   let labelText, Label;
   if (type === 'feed') {
@@ -65,6 +67,18 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
           ];
   }
 
+  const handleDeleteArticle = async () => {
+    try {
+      if (type === 'feed') {
+        const res = await axios.delete(`${BASE_URL}/feedArticles/${data.feedArticleId}`);
+      } else {
+        const res = await axios.delete(
+          `${BASE_URL}/financial-record/${data.financialRecordId}/article/${data.financialRecordArticleId}`
+        );
+      }
+    } catch (error) {}
+  };
+
   return (
     <S.SnsArticleContainer>
       <Label>{labelText}</Label>
@@ -101,11 +115,11 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
         <S.ArtileMain windowType={windowType}>
           {type !== 'feed' && data.title !== '' ? <S.TitleText>{data.title}</S.TitleText> : <></>}
           <S.ContextText>{data.content}</S.ContextText>
-          {type !== 'feed' || <VoteForm savingCount={dummySavingCount} flexCount={dummyFlexCount} />}
+          {type !== 'feed' || <VoteForm feedArticleId={data.feedArticleId} />}
           <S.UDForm>
             {/* CRUD의 U, D */}
-            <S.UDBtn>수정</S.UDBtn>
-            <S.UDBtn>삭제</S.UDBtn>
+            <S.LinkBtn href={`/editor?faRecId=1`}>수정</S.LinkBtn>
+            <S.UDBtn onClick={handleDeleteArticle}>삭제</S.UDBtn>
           </S.UDForm>
           {/* <Comments /> 후순위 기능*/}
         </S.ArtileMain>
@@ -170,6 +184,10 @@ const S = {
     gap: 0.8rem;
   `,
   UDBtn: styled.button`
+    font-size: 0.9rem;
+    color: var(--color-text-lightgray);
+  `,
+  LinkBtn: styled(Link)`
     font-size: 0.9rem;
     color: var(--color-text-lightgray);
   `,
