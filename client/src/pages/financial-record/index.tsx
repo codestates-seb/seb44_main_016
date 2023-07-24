@@ -27,13 +27,8 @@ export type RecordData = {
 };
 
 function FinancialListPage() {
-  const { data, error, isError, isLoading } = useQuery<RecordData[]>({
-    queryKey: ['recordList'],
-    queryFn: APIfinancialRecord.getRecordList,
-    retry: 10,
-    retryDelay: 1000,
-  });
-
+  const { data, error, isError, isLoading } = useQuery(['recordList'], APIfinancialRecord.getRecordList);
+  console.log(data);
   const [searchInput, search] = useInput('text', '검색어를 입력해주세요', 'faRecSearch', 'on');
   const [isSearching, setIsSearching] = useState(false);
 
@@ -45,7 +40,7 @@ function FinancialListPage() {
   let displayData = data;
 
   if (isSearching && search) {
-    displayData = data?.filter((el) => el.financialRecordName?.includes(search));
+    displayData = data?.filter((el: RecordData) => el.financialRecordName?.includes(search));
   }
   return (
     <S.ListWrap>
