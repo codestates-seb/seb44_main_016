@@ -39,11 +39,16 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
 
 
     faRec.setUser(findUser(authorId));
+    Img img = saveImg(faRec, file);
+    faRec.setProfileImg(img);
 
     FinancialRecord savedFaRec = repository.save(faRec);
-    // Img 객체 저장
-    Img img = saveImg(savedFaRec, file);
-    savedFaRec.setProfileImg(img);
+    log.info("savedFaRec.getArticleId() : {}", savedFaRec.getFinancialRecordId());
+    log.info("savedFaRec.getFinancialRecordName() : {}", savedFaRec.getFinancialRecordName());
+    log.info("savedFaRec.getMemo() : {}", savedFaRec.getMemo());
+    log.info("savedFaRec.getProfileImg() : {}", savedFaRec.getProfileImg().getFilePath());
+    log.info("savedFaRec.getTotalCount() : {}", savedFaRec.getTotalCount());
+    log.info("savedFaRec.getTimeLineCount() : {}", savedFaRec.getTimeLineCount());
 
     return savedFaRec;
   }
@@ -62,6 +67,7 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
     return findFaRec;
   }
 
+  @Transactional(readOnly = true)
   // 가계부 전체 조회(동적쿼리 사용 예정)
   @Override
   public List<FinancialRecord> findFaRecs(String authorId) {

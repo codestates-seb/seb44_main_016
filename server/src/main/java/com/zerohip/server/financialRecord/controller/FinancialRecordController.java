@@ -36,6 +36,7 @@ public class FinancialRecordController {
                                               @AuthenticationPrincipal String authorId,
                                               @RequestPart("file")MultipartFile file) {
     FinancialRecord createFaRec = faRecService.createFaRec(authorId, mapper.financialRecordPostToFinancialRecord(data), file);
+    log.info("createFaRec.getFinancialRecordId() : {}", createFaRec.getFinancialRecordId());
     URI uri = URI.create(FINANCIAL_RECORD_DEFAULT_URI + "/" + createFaRec.getFinancialRecordId());
 
     log.info("createFaRec.getCreatedAt() : {}", createFaRec.getCreatedAt());
