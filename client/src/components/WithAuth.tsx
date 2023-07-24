@@ -40,11 +40,12 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   useEffect(() => {
     if (accessToken) {
       queryClient.invalidateQueries(['myInfo']);
-      console.log('액세스 다시 갱신!');
+      console.log(accessToken);
     }
 
     if (myInfoData) {
       const { userId, loginId, nickname } = myInfoData;
+
       dispatch(login({ userId, loginId, nickname, isLoggedIn: true }));
     }
   }, [accessToken, myInfoData]);
