@@ -2,7 +2,7 @@ import axios from 'axios';
 import { store } from '../components/redux/store';
 import { toast } from 'react-toastify';
 
-const isRefreshing = false;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 /** INSTANCE WITH TOKEN */
 export const instance = axios.create({});
@@ -38,7 +38,7 @@ instance.interceptors.response.use(
       console.log('액세스 없어세 에러났어 ');
       if (response.data.status) {
         console.log(response.data.status);
-        const res = await axios.post(`/auth/refresh`, null, {
+        const res = await axios.post(`${BASE_URL}/auth/refresh`, null, {
           headers: {
             'Content-Type': 'application/json',
           },
