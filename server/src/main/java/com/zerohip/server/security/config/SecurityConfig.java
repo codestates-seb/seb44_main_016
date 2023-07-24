@@ -23,7 +23,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 /**
@@ -38,8 +37,7 @@ public class SecurityConfig {
 
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
-//    private final CorsFilter corsFilter;
-    private final CorsConfigurationSource configurationSource;
+    private final CorsFilter corsFilter;
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserService userService;
     private final UserRepository userRepository;
@@ -49,11 +47,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-                .cors().configurationSource(configurationSource)
-                .and()
                 .headers().frameOptions().sameOrigin().disable() // https 적용 후 수정예정
                 .csrf().disable()
-//                .addFilter(corsFilter)
+                .addFilter(corsFilter)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().disable()
