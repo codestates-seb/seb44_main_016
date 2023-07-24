@@ -10,6 +10,7 @@ public enum ExceptionCode {
     USER_EXISTS(409, 1002, "이미 존재하는 사용자입니다."),
     USER_LOGIN_ID_EXISTS(409, 1003, "이미 존재하는 아이디 입니다."),
     USER_EMAIL_EXISTS(409, 1004, "이미 존재하는 Email 입니다."),
+    FFFFFFFFF_fFFFFFFFFF(409, 1005, "FFFFFFFFFFFFFFFFF"),
 
     // 인증 & 인가
     AUTHOR_UNAUTHORIZED(403, 5000, "인증된 사용자 정보를 찾을 수 없습니다."),
