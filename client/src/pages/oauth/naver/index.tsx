@@ -32,7 +32,6 @@ const NaverOauthRedirection = () => {
       };
       const targetOAuth = 'naver';
       const oAuthReqBody = { oAuthData, targetOAuth };
-      console.log(oAuthReqBody);
       LoginMutate(oAuthReqBody);
     }
   };

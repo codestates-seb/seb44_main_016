@@ -28,7 +28,6 @@ const useMutateUser = {
       },
 
       onError: (error: LoginErrorResponse) => {
-        console.log(error);
         if (error.response.data.message) {
           toast.error(error.response.data.message);
           return;
@@ -43,7 +42,6 @@ const useMutateUser = {
     const dispatch = useAppDispatch();
     const { mutate, data } = useMutation(['login'], mutateFunction, {
       onSuccess: (data) => {
-        console.log(data);
         if (data.status === 200) {
           const accessTokenWithBearer = data.headers.authorization;
           const accessToken = accessTokenWithBearer.split(' ')[1];
