@@ -12,6 +12,7 @@ import svgs from '../constants/svg';
 import { ScreenEnum } from '../constants/enums';
 import useUserGlobalValue from './redux/getUserInfo';
 import withAuth from '../components/WithAuth';
+import { useWindowType } from '../hooks/useWindowSize';
 
 function getClsName(isTabClosed: boolean, windowType: ScreenEnum) {
   let asideClsName = '';
@@ -24,19 +25,16 @@ function getClsName(isTabClosed: boolean, windowType: ScreenEnum) {
   return asideClsName;
 }
 
-type Props = {
-  windowType: ScreenEnum;
-};
-
-function Aside(props: Props) {
+function Aside() {
   const { isLoggedIn } = useUserGlobalValue();
+  const windowType = useWindowType();
 
   const [isBookmarkedFaRecListOpened, setIsBookmarkedFaRecListOpened] = React.useState(true);
   const [isSearchTabOpened, setIsSearchTabOpened] = React.useState(false);
   const [isNoticeTabOpened, setIsNoticeTabOpened] = React.useState(false);
   const isTabClosed = !isSearchTabOpened && !isNoticeTabOpened;
 
-  const asideClsName = getClsName(isTabClosed, props.windowType);
+  const asideClsName = getClsName(isTabClosed, windowType);
   const isShrinkOrMobile = ['shrink', 'mobile'].includes(asideClsName || '');
   const isMobile = asideClsName === 'mobile';
 
