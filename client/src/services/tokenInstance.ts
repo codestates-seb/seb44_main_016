@@ -34,7 +34,6 @@ instance.interceptors.response.use(
 
       if (!originalRequest.isRetryAttempted && response.data.status) {
         originalRequest.isRetryAttempted = true;
-        console.log('재시도');
 
         const res = await axios.post(`${BASE_URL}/auth/refresh`, null, {
           headers: {
