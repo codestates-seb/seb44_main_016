@@ -31,11 +31,12 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   });
 
   useEffect(() => {
-    if (!accessToken) {
+    if (!changedAccessToken) {
       mutate();
     } else if (changedAccessToken && myInfoData) {
       const { userId, loginId, nickname, profileImgPath } = myInfoData;
       console.log(profileImgPath);
+      console.log('here!');
       dispatch(
         login({
           userId,
