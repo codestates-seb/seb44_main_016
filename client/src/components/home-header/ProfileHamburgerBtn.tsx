@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 
 import useMutateUser from '../../services/useMutateUser';
 import apiUser from '../../services/apiUser';
+import { useQuery } from '@tanstack/react-query';
 
 type Props = {
   className: string;
@@ -15,6 +16,7 @@ export default function ProfileHamburgerBtn(props: Props) {
 
   const [isHamburgerOpened, setIsHamburgerOpened] = React.useState(false);
   const { LogOutMutate } = useMutateUser.logout(apiUser.deleteLogout);
+  const { data: myInfoData } = useQuery(['userInfo'], apiUser.getUserInfo);
 
   const handleLogout = () => {
     setIsHamburgerOpened(false);
@@ -26,7 +28,7 @@ export default function ProfileHamburgerBtn(props: Props) {
     <>
       <S.MobileHomeHeaderProfileDiv className={props.className}>
         <S.ProfileBtn onClick={() => setIsHamburgerOpened(true)}>
-          <S.ProfileImg />
+          <img src={myInfoData && myInfoData.profileImgPath} alt='프로필 사진' />
         </S.ProfileBtn>
         {isHamburgerOpened ? (
           <>
@@ -73,6 +75,10 @@ const S = {
     flex-shrink: 0;
     overflow: hidden;
     border-radius: var(--rounded-full);
+    > img {
+      width: 100%;
+      height: 100%;
+    }
   `,
   ProfileImg: styled.img`
     width: 100%;
