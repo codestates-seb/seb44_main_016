@@ -30,6 +30,7 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
         Long userId = userDetails.getUserId();
         String loginId = userDetails.getLoginId();
         String nickname = userDetails.getNickname();
+        String profileImgPath = userDetails.getProfileImgPath();
 
 
 
@@ -37,6 +38,7 @@ public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHa
         userInfo.put("userId", userId);
         userInfo.put("loginId", loginId);
         userInfo.put("nickname", nickname);
+        userInfo.put("profileImgPath", profileImgPath);
 
         String jsonResponse = new ObjectMapper().writeValueAsString(userInfo);
 

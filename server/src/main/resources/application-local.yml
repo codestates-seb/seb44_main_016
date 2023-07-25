@@ -87,7 +87,7 @@ server:
 jwt:
   key: ${JWT_KEY}
   access-token-expiration-minutes: ${JWT_ACCESS_TOKEN}
-  refresh-token-expiration-minutes: ${JWT_REFRESH_TOKEN}
+  refresh-token-expiration-minutes:  ${JWT_REFRESH_TOKEN}
 
 cloud:
   aws:
