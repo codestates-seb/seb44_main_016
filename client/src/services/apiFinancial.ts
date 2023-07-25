@@ -4,7 +4,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 export const APIfinancialRecord = {
   // 가계부 전체조회 GET
   getRecordList: async () => {
-    const res = await instance.get(`${BASE_URL}/financial-record`, {
+    const res = await instance.get(`${BASE_URL}/financialrecord`, {
       withCredentials: true,
     });
     console.log('레코드리스트야!');
