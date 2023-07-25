@@ -21,7 +21,12 @@ const authnReducer = createSlice({
   initialState,
   reducers: {
     login: (state, action: PayloadAction<LoginResData>) => {
-      state.login = action.payload;
+      state.login.userId = action.payload.userId;
+      state.login.accessToken = action.payload.accessToken;
+      state.login.loginId = action.payload.loginId;
+      state.login.nickname = action.payload.nickname;
+      state.login.isLoggedIn = action.payload.isLoggedIn;
+      state.login.profileImgPath = action.payload.profileImgPath;
     },
     logout: (state) => {
       state.login = initialState.login;
