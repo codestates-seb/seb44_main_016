@@ -64,7 +64,7 @@ export default function Aside(props: Props) {
           <AsideBtn leftIcon={svgs.home} className={asideClsName} href='/'>
             홈
           </AsideBtn>
-          {!!isLoggedIn && (
+          {isLoggedIn ? (
             <>
               <AsideBtn onClick={handleOpenOrCloseNoticeTab} leftIcon={svgs.notice} className={asideClsName}>
                 알림
@@ -97,6 +97,8 @@ export default function Aside(props: Props) {
               )}
               */}
             </>
+          ) : (
+            <></>
           )}
           <AsideBtn onClick={handleOpenOrCloseSearchTab} leftIcon={svgs.search} className={asideClsName}>
             검색
@@ -127,7 +129,7 @@ export default function Aside(props: Props) {
                   <S.LinkBtn href={'/editor'}>글쓰기</S.LinkBtn>
                 )}
               </>
-            ) : !isShrinkOrMobile ? (
+            ) : isShrinkOrMobile ? (
               <AsideBtn href='/user/login' leftIcon={svgs.person} />
             ) : (
               <S.LinkBtn href='/user/login'>로그인</S.LinkBtn>
