@@ -64,7 +64,7 @@ export default function Aside(props: Props) {
           <AsideBtn leftIcon={svgs.home} className={asideClsName} href='/'>
             홈
           </AsideBtn>
-          {isLoggedIn && (
+          {!!isLoggedIn && (
             <>
               <AsideBtn onClick={handleOpenOrCloseNoticeTab} leftIcon={svgs.notice} className={asideClsName}>
                 알림
