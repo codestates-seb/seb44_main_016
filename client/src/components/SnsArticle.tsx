@@ -142,10 +142,16 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
           <S.ContextText>{data.content}</S.ContextText>
           {type !== 'feed' || <VoteForm feedArticleId={data.feedArticleId} />}
           <S.UDForm>
-            {/* CRUD의 U, D */}
-            <S.UDBtn onClick={handleEditArticle}>수정</S.UDBtn>
-            <S.UDBtn onClick={handleDeleteArticle}>삭제</S.UDBtn>
+            {data.user.userId === userId ? (
+              <>
+                <S.UDBtn onClick={handleEditArticle}>수정</S.UDBtn>
+                <S.UDBtn onClick={handleDeleteArticle}>삭제</S.UDBtn>
+              </>
+            ) : (
+              <></>
+            )}
           </S.UDForm>
+
           {/* <Comments /> 후순위 기능*/}
         </S.ArtileMain>
       </S.Box>
