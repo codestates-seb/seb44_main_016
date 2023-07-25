@@ -28,6 +28,7 @@ type PropsTimeline = {
 export default function ArticleHeaderComponent(props: PropsFeed | PropsTimeline) {
   const [dateStr, setDateStr] = React.useState('');
 
+  // Date 객체의 hydration 에러로 인한 useEffect 처리
   React.useEffect(() => {
     if (props.type === 'feed') {
       setDateStr(convertToKoreanDate(new Date(props.createdAt)));

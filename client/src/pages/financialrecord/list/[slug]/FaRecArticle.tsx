@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import SVGs from '../../../../constants/svg';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { keyframes } from '@emotion/react';
 import { numToStrWithSign } from '../../../../utils/numToStrWithSign';
 import { convertToKoreanDate, convertToKoreanMonthDay } from '../../../../utils/convertToKoreanDate';
@@ -19,6 +19,13 @@ interface FaRecArticleProps {
 }
 
 export default function FaRecArticle(props: FaRecArticleProps) {
+  const [dateStr, setDateStr] = useState('');
+
+  // Date 객체의 hydration 에러로 인한 useEffect 처리
+  useEffect(() => {
+    setDateStr(convertToKoreanDate(new Date(faDate)));
+  });
+
   if (!props) {
     return null;
   }
@@ -51,7 +58,7 @@ export default function FaRecArticle(props: FaRecArticleProps) {
         <S.Contents>
           <div>
             <span>{title}</span>
-            <span>{faDate && convertToKoreanDate(faDate)}</span>
+            <span>{faDate && dateStr}</span>
           </div>
           <div>{content}</div>
 
