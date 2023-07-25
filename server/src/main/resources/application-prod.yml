@@ -22,7 +22,7 @@ spring:
           kakao:
             client-id: ${KAKAO_REST_API_KEY}
             client-secret: ${KAKAO_SECRET}
-            redirect-uri: https://zerohip.co.kr/login/oauth2/code/kakao
+            redirect-uri: https://api.zerohip.co.kr/login/oauth2/code/kakao
             authorization-grant-type: authorization_code
             scope: account_email
             client-authentication-method: POST
@@ -32,7 +32,7 @@ spring:
             client-id: ${NAVER_CLIENTID}
             client-secret: ${NAVER_SECRET}
             scope: email
-            redirect-uri: https://zerohip.co.kr/login/oauth2/code/naver
+            redirect-uri: https://api.zerohip.co.kr/login/oauth2/code/naver
             authorization-grant-type: authorization_code
 
           # Google Client
@@ -41,7 +41,7 @@ spring:
             clientSecret: ${GOOGLE_SECRET}
             scope:
               - email
-            redirectUri: https://zerohip.co.kr/login/oauth2/code/google
+            redirectUri: https://api.zerohip.co.kr/login/oauth2/code/google
             authorization-grant-type: authorization_code
   datasource:
     url: ${MYSQL_SECRET_URL}
