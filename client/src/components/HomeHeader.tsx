@@ -4,16 +4,18 @@ import Link from 'next/link';
 
 import MobileHomeHeaderLogo from './home-header/MobileHomeHeaderLogo';
 import ProfileHamburgerBtn from './home-header/ProfileHamburgerBtn';
+import MobileLoginBtn from './home-header/MobileLoginBtn';
 import CommonStyles from '../styles/CommonStyles';
 import { ScreenEnum } from '../constants/enums';
 
 type Props = {
+  isLoggedIn: boolean;
   windowType: ScreenEnum;
 };
 
 export default function HomeHeader(props: Props) {
   const [isHomeBtnActive, setIsHomeBtnActive] = React.useState(true);
-  const [isFollowerBtnActive, setIsFollowerBtnActive] = React.useState(false);
+  // const [isFollowerBtnActive, setIsFollowerBtnActive] = React.useState(false);
   const [isRankBtnActive, setIsRankBtnActive] = React.useState(false);
 
   const windowTypeStr = props.windowType.toString();
@@ -24,17 +26,19 @@ export default function HomeHeader(props: Props) {
 
   const handleClickHomeBtn = () => {
     setIsHomeBtnActive(true);
-    setIsFollowerBtnActive(false);
+    // setIsFollowerBtnActive(false);
     setIsRankBtnActive(false);
   };
+  /*
   const handleClickFollowerBtn = () => {
     setIsHomeBtnActive(false);
     setIsFollowerBtnActive(true);
     setIsRankBtnActive(false);
   };
+  */
   const handleClickRankBtn = () => {
     setIsHomeBtnActive(false);
-    setIsFollowerBtnActive(false);
+    // setIsFollowerBtnActive(false);
     setIsRankBtnActive(true);
   };
 
@@ -59,7 +63,16 @@ export default function HomeHeader(props: Props) {
           랭킹
         </S.HomeHeaderBtn>
       </S.HomeHeaderTabBtns>
-      {props.windowType === ScreenEnum.MOBILE ? <ProfileHamburgerBtn className={props.windowType} /> : <></>}
+
+      {props.windowType === ScreenEnum.MOBILE ? (
+        props.isLoggedIn ? (
+          <ProfileHamburgerBtn className={props.windowType} />
+        ) : (
+          <MobileLoginBtn />
+        )
+      ) : (
+        <></>
+      )}
     </S.HomeHeaderContainer>
   );
 }

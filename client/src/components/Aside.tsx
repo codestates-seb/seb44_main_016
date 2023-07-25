@@ -53,6 +53,8 @@ export default function Aside(props: Props) {
     setIsSearchTabOpened(false);
   };
 
+  console.log(isShrinkOrMobile);
+
   return (
     <S.AsideContainer className={asideClsName}>
       <S.LeftOfAsideCover />
@@ -126,9 +128,9 @@ export default function Aside(props: Props) {
                 )}
               </>
             ) : isShrinkOrMobile ? (
-              <S.LinkBtn href='/user/login'>로그인</S.LinkBtn>
-            ) : (
               <AsideBtn href='/user/login' leftIcon={svgs.person} />
+            ) : (
+              <S.LinkBtn href='/user/login'>로그인</S.LinkBtn>
             )}
           </S.Lower>
         )}
