@@ -12,7 +12,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useWindowType } from '../hooks/useWindowSize';
 import { ScreenEnum } from '../constants/enums';
 import React from 'react';
-import { useUserGlobalValue } from '../components/redux/getUserInfo';
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
@@ -40,9 +39,6 @@ const App = ({ Component, pageProps }: AppProps) => {
     }
   }
 
-  const { isLoggedIn } = useUserGlobalValue();
-  console.log(isLoggedIn);
-
   return (
     <>
       {/*모든 ReactDOM에 margin: 0; padding: 0; box-sizing: border-box; 적용 */}
@@ -54,7 +50,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             <S.RootScreen>
               <S.AppContainer maxWidth={maxWidth}>
                 <S.FlexPage bgColor={bgColor}>
-                  {isShowNav && <Aside isLoggedIn={isLoggedIn} windowType={windowType} />}
+                  {isShowNav && <Aside windowType={windowType} />}
                   <S.SubPage>
                     {isShowHeader && <HomeHeader windowType={windowType} />}
                     <S.Main isShowNav={isShowNav} isShowHeader={isShowHeader} windowType={windowType}>

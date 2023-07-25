@@ -5,7 +5,7 @@ import { useAppDispatch } from './redux/hooks';
 import { login, logout } from './redux/authnReducer';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import apiUser from '../services/apiUser';
-import { useUserGlobalValue } from './redux/getUserInfo';
+import useUserGlobalValue from './redux/getUserInfo';
 
 const withAuth = (Component: ComponentType) => (props: object) => {
   const router = useRouter();

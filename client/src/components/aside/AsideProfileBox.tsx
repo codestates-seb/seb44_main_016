@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 
 import AsideHamburgerBtn from './AsideHamburgerBtn';
-import { useUserGlobalValue } from '../redux/getUserInfo';
+import useUserGlobalValue from '../redux/getUserInfo';
 
 type Props = {
   href?: string;

@@ -13,7 +13,7 @@ import { USER_META_DATA } from '../../../constants/seo/userMetaData';
 import ErrorComponent from '../../../components/ErrorComponent';
 import { useEffect } from 'react';
 import MyPageUserInfo from './MyPageUserInfo';
-import { useUserGlobalValue } from '../../../components/redux/getUserInfo';
+import useUserGlobalValue from '../../../components/redux/getUserInfo';
 
 function MyPage() {
   const { ref, inView } = useInView();
