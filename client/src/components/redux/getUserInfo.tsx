@@ -2,12 +2,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from './store';
 import { LoginResData } from '../../types/user';
 
-export default function useGlobalUserInfo() {
-  const accessToken = useSelector<RootState>((state) => state.authnReducer.login.accessToken);
-  return accessToken;
-}
-
-export function userInfo(): LoginResData {
+export function useUserGlobalValue(): LoginResData {
   const userId = useSelector<RootState, number | null | undefined>(
     (state) => state.authnReducer.login.userId
   );

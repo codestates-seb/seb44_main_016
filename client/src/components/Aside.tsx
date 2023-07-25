@@ -23,7 +23,7 @@ function getClsName(isTabClosed: boolean, windowType: ScreenEnum) {
 }
 
 type Props = {
-  isLoggedIn: boolean;
+  isLoggedIn: boolean | undefined;
   windowType: ScreenEnum;
 };
 
