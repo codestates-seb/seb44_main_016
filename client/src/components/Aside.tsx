@@ -53,8 +53,6 @@ export default function Aside(props: Props) {
     setIsSearchTabOpened(false);
   };
 
-  console.log(isShrinkOrMobile);
-
   return (
     <S.AsideContainer className={asideClsName}>
       <S.LeftOfAsideCover />
