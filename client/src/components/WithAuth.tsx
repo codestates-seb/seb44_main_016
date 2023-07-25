@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ComponentType } from 'react';
 import { useRouter } from 'next/router';
 import { useAppDispatch } from './redux/hooks';
@@ -12,8 +12,9 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
 
-  // const { accessToken } = useUserGlobalValue();
-  let accessToken: string | null = null; // accessToken 만료 test용 (배포 직전 삭제)
+  // const accessToken = useUserGlobalValue();
+  // const accessToken = null; // accessToken 만료 test용 (배포 직전 삭제)
+  const [accessToken, setAccessToken] = useState(null);
 
   const { data: myInfoData } = useQuery(['userInfo'], apiUser.getUserInfo);
 
@@ -21,8 +22,8 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   const { mutate } = useMutation(apiUser.getNewAccess, {
     onSuccess: (data) => {
       const newAccessTokenWithBearer = data.headers.authorization;
-      accessToken = newAccessTokenWithBearer.split(' ')[1];
-      console.log(accessToken);
+      const newAccessToken = newAccessTokenWithBearer.split(' ')[1];
+      setAccessToken(newAccessToken);
     },
     onError: (err) => {
       // dispatch(logout()); 배포 때 살릴 예정
@@ -34,18 +35,12 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   useEffect(() => {
     if (!accessToken) {
       mutate();
-    }
-  }, []);
-
-  useEffect(() => {
-    if (accessToken) {
+    } else if (accessToken) {
+      console.log(accessToken);
       queryClient.invalidateQueries(['myInfo']);
-    }
-
-    if (myInfoData && accessToken) {
-      console.log(myInfoData);
       const { userId, loginId, nickname, profileImgPath } = myInfoData;
-      dispatch(login({ userId, loginId, accessToken, nickname, profileImgPath, isLoggedIn: true }));
+      console.log(profileImgPath);
+      dispatch(login({ userId, loginId, nickname, accessToken, profileImgPath, isLoggedIn: true }));
     }
   }, [accessToken, myInfoData]);
 
