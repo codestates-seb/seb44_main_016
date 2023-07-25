@@ -43,7 +43,6 @@ spring:
               - email
             redirectUri: https://zerohip.co.kr/login/oauth2/code/google
             authorization-grant-type: authorization_code
-
   h2:
     console:
       enabled: true
@@ -54,7 +53,7 @@ spring:
     url: jdbc:h2:mem:test
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
