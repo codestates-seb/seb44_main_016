@@ -37,7 +37,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
       mutate();
     } else if (accessToken) {
       console.log(accessToken);
-      queryClient.invalidateQueries(['myInfo']);
+      queryClient.invalidateQueries(['userInfo']);
       const { userId, loginId, nickname, profileImgPath } = myInfoData;
       console.log(profileImgPath);
       dispatch(login({ userId, loginId, nickname, accessToken, profileImgPath, isLoggedIn: true }));
