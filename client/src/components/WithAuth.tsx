@@ -24,21 +24,17 @@ const withAuth = (Component: ComponentType) => (props: object) => {
       setChangedAccessToken(newAccessToken);
     },
     onError: (err) => {
-      // dispatch(logout()); 배포 때 살릴 예정
-      // router.push('/'); 배포 때 살릴 예정
+      dispatch(logout());
+      router.push('/');
       throw err;
     },
   });
 
   useEffect(() => {
-    console.log('유즈이펙!');
     if (!changedAccessToken) {
-      console.log('액세스 없음!');
       mutate();
     } else if (changedAccessToken && myInfoData) {
       const { userId, loginId, nickname, profileImgPath } = myInfoData;
-      console.log(profileImgPath);
-      console.log('둘 다 있음!');
       dispatch(
         login({
           userId,

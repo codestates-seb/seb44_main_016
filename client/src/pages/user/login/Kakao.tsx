@@ -6,7 +6,8 @@ export default function KakaoOauth() {
   const redirectURI = 'https://www.zerohip.co.kr/oauth/kakao';
   const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${apiKey}&redirect_uri=${redirectURI}&response_type=code`;
 
-  const handleKakaoLogin = () => {
+  const handleKakaoLogin = (e: React.MouseEvent) => {
+    e.preventDefault();
     window.location.href = kakaoAuthURL;
   };
 
