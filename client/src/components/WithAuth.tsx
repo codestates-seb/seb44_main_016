@@ -48,7 +48,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
         })
       );
     }
-  }, [accessToken, myInfoData]);
+  }, [changedAccessToken, myInfoData]);
 
   return <Component {...props} />;
 };
