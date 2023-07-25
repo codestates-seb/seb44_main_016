@@ -6,7 +6,7 @@ import { APIfinancialRecord } from '../../services/apiFinancial';
 import useInput from '../../hooks/useComponents';
 import SVGs from '../../constants/svg';
 import Loading from '../../components/Loading';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ErrorComponent from '../../components/ErrorComponent';
 import { FAREC_MESSAGES } from '../../constants/messages/faRec';
 import withAuth from '../../components/WithAuth';
@@ -27,25 +27,8 @@ export type RecordData = {
 };
 
 function FinancialListPage() {
-  const [data, setData] = useState<RecordData[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const result = await APIfinancialRecord.getRecordList();
-        setData(result);
-      } catch (error) {
-        setError(error);
-      }
-      setLoading(false);
-    };
-
-    fetchData();
-  }, []);
-  console.log(data);
+  const { data, error, isError, isLoading } = useQuery(['recordList'], APIfinancialRecord.getRecordList);
+  console.log('리스트 데이터', data);
   const [searchInput, search] = useInput('text', '검색어를 입력해주세요', 'faRecSearch', 'on');
   const [isSearching, setIsSearching] = useState(false);
 
@@ -73,9 +56,9 @@ function FinancialListPage() {
         <S.LinkBtn href='/financialrecord/create'>새 가계부 만들기</S.LinkBtn>
       </S.FormWrap>
 
-      {error ? (
+      {isError ? (
         <ErrorComponent message={(error as Error).message} />
-      ) : loading ? (
+      ) : isLoading ? (
         <Loading />
       ) : displayData && displayData.length > 0 ? (
         <S.FaRecList>
