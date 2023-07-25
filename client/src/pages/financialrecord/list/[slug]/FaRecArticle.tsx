@@ -19,11 +19,13 @@ interface FaRecArticleProps {
 }
 
 export default function FaRecArticle(props: FaRecArticleProps) {
-  const [dateStr, setDateStr] = useState('');
+  const [fullDateStr, setFullDateStr] = useState('');
+  const [monthDayDateStr, setMonthDayDateStr] = useState('');
 
   // Date 객체의 hydration 에러로 인한 useEffect 처리
   useEffect(() => {
-    setDateStr(convertToKoreanDate(new Date(faDate)));
+    setFullDateStr(convertToKoreanDate(new Date(faDate)));
+    setMonthDayDateStr(convertToKoreanMonthDay(faDate));
   });
 
   if (!props) {
@@ -45,7 +47,7 @@ export default function FaRecArticle(props: FaRecArticleProps) {
         <S.FinancialText isIncome={isIncome}>{numToStrWithSign(price)}</S.FinancialText>
         <S.ImgAndDate>
           <span>{imgPath !== undefined && imgPath.length >= 1 ? SVGs.imgIcon : <></>}</span>
-          <span>{faDate ? convertToKoreanMonthDay(faDate) : ''}</span>
+          <span>{faDate ? monthDayDateStr : ''}</span>
         </S.ImgAndDate>
         <S.DropdownIcon isOpen={isOpen}>{SVGs.dropdown}</S.DropdownIcon>
       </S.Header>
@@ -58,7 +60,7 @@ export default function FaRecArticle(props: FaRecArticleProps) {
         <S.Contents>
           <div>
             <span>{title}</span>
-            <span>{faDate && dateStr}</span>
+            <span>{faDate && fullDateStr}</span>
           </div>
           <div>{content}</div>
 
