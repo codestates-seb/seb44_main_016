@@ -12,8 +12,8 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
 
-  const accessToken = useUserGlobalValue();
-  // const accessToken = null; // accessToken 만료 test용 (배포 직전 삭제)
+  // const { accessToken } = useUserGlobalValue();
+  const accessToken = null; // accessToken 만료 test용 (배포 직전 삭제)
 
   const { data: myInfoData } = useQuery(['userInfo'], apiUser.getUserInfo);
 
@@ -53,7 +53,6 @@ const withAuth = (Component: ComponentType) => (props: object) => {
 
     if (myInfoData) {
       const { userId, loginId, nickname, profileImgPath } = myInfoData;
-      console.log(profileImgPath);
       dispatch(login({ userId, loginId, nickname, profileImgPath, isLoggedIn: true }));
     }
   }, [accessToken, myInfoData]);
