@@ -43,6 +43,7 @@ public class NeverLandUserDetailsService implements UserDetailsService {
             setLoginId(user.getLoginId());
             setPassword(user.getPassword());
             setNickname(user.getNickname());
+            setProfileImgPath(user.getProfileImgPath());
             setRoles(user.getRoles());  // 2. loadUserByUsername 메서드로 찾은 유저에게 권한 정보 전달
         }
 
