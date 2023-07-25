@@ -1,7 +1,7 @@
 import React from 'react'; // useState 사용
 import styled from '@emotion/styled';
 import axios from 'axios';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import CommonStyles from '../styles/CommonStyles';
 
@@ -12,6 +12,7 @@ import VoteForm from './sns-article/VoteForm';
 import { FeedArticleResType, FaRecArticleResType, VoteType } from '../types/article';
 import { useWindowType, useWindowSize } from '../hooks/useWindowSize';
 import { ScreenEnum } from '../constants/enums';
+import useUserGlobalValue from './redux/getUserInfo';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -26,6 +27,9 @@ type PropsTimeline = {
 };
 
 export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
+  const { userId } = useUserGlobalValue();
+  const router = useRouter();
+
   const windowType = useWindowType();
   const [width, height] = useWindowSize();
   const isNarrowScreen = width <= 400;
@@ -67,16 +71,37 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
           ];
   }
 
+  const handleEditArticle = async () => {
+    if (userId === null) {
+      alert('로그인이 필요합니다.');
+      router.push('/user/login');
+    } else if (data.user.userId === userId) {
+      alert('준비 중입니다!');
+    } else {
+      alert('권한이 없습니다.');
+    }
+  };
+
   const handleDeleteArticle = async () => {
-    try {
-      if (type === 'feed') {
-        const res = await axios.delete(`${BASE_URL}/feedArticles/${data.feedArticleId}`);
-      } else {
-        const res = await axios.delete(
-          `${BASE_URL}/financialrecord/${data.financialRecordId}/article/${data.financialRecordArticleId}`
-        );
+    if (userId === null) {
+      alert('로그인이 필요합니다.');
+      router.push('/user/login');
+    } else if (data.user.userId === userId) {
+      if (confirm('삭제한 게시글은 다시 복구할 수 없습니다. 정말로 삭제하시겠습니까?')) {
+        // 예 (삭제하겠습니다)
+        try {
+          if (type === 'feed') {
+            const res = await axios.delete(`${BASE_URL}/feedArticles/${data.feedArticleId}`);
+          } else {
+            const res = await axios.delete(
+              `${BASE_URL}/financialrecord/${data.financialRecordId}/article/${data.financialRecordArticleId}`
+            );
+          }
+        } catch (error) {}
       }
-    } catch (error) {}
+    } else {
+      alert('권한이 없습니다.');
+    }
   };
 
   return (
@@ -118,7 +143,7 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
           {type !== 'feed' || <VoteForm feedArticleId={data.feedArticleId} />}
           <S.UDForm>
             {/* CRUD의 U, D */}
-            <S.LinkBtn href={`/editor?faRecId=1`}>수정</S.LinkBtn>
+            <S.UDBtn onClick={handleEditArticle}>수정</S.UDBtn>
             <S.UDBtn onClick={handleDeleteArticle}>삭제</S.UDBtn>
           </S.UDForm>
           {/* <Comments /> 후순위 기능*/}
@@ -184,10 +209,6 @@ const S = {
     gap: 0.8rem;
   `,
   UDBtn: styled.button`
-    font-size: 0.9rem;
-    color: var(--color-text-lightgray);
-  `,
-  LinkBtn: styled(Link)`
     font-size: 0.9rem;
     color: var(--color-text-lightgray);
   `,
