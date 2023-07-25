@@ -109,7 +109,7 @@ export default function Aside(props: Props) {
           <MobileEditBtn />
         ) : (
           <S.Lower>
-            {!isLoggedIn ? (
+            {isLoggedIn ? (
               <>
                 {/* href='/user/mypage' */}
                 {isShrinkOrMobile && !isMobile ? (
