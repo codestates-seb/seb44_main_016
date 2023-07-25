@@ -13,8 +13,6 @@ import { useWindowType } from '../hooks/useWindowSize';
 import { ScreenEnum } from '../constants/enums';
 import React from 'react';
 
-const queryClient = new QueryClient();
-
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
   const windowType = useWindowType();

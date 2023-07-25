@@ -17,7 +17,6 @@ export default function signUp(req: NextApiRequest, res: NextApiResponse) {
     };
 
     userData.unshift(newUser);
-    console.log(userData);
 
     const responseBody = JSON.stringify(newUser);
     res.status(201).json(responseBody);
