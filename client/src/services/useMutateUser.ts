@@ -48,8 +48,8 @@ const useMutateUser = {
           const accessTokenWithBearer = data.headers.authorization;
           const accessToken = accessTokenWithBearer.split(' ')[1];
 
-          const { userId, loginId, nickname } = data.data;
-          dispatch(login({ accessToken, userId, loginId, nickname, isLoggedIn: true }));
+          const { userId, loginId, nickname, profileImgPath } = data.data;
+          dispatch(login({ accessToken, userId, loginId, nickname, profileImgPath, isLoggedIn: true }));
 
           toast(`${nickname}님, 환영합니다!`);
           router.push(`/`);

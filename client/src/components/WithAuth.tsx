@@ -22,6 +22,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
     onSuccess: (data) => {
       const newAccessTokenWithBearer = data.headers.authorization;
       accessToken = newAccessTokenWithBearer.split(' ')[1];
+      console.log(accessToken);
     },
     onError: (err) => {
       // dispatch(logout()); 배포 때 살릴 예정
@@ -32,10 +33,12 @@ const withAuth = (Component: ComponentType) => (props: object) => {
 
   useEffect(() => {
     if (!accessToken) {
-      console.log('액세스 받아오기 시도!');
       mutate();
-    } else if (accessToken && !myInfoData) {
-      console.log('myinfo 쿼리');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (accessToken) {
       queryClient.invalidateQueries(['myInfo']);
     }
 

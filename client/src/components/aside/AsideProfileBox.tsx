@@ -12,7 +12,6 @@ type Props = {
 export default function AsideProfileBox(props: Props) {
   const isShrinkOrMobile = ['shrink', 'mobile'].includes(props.className || '');
   const { nickname, loginId, profileImgPath } = useUserGlobalValue();
-  console.log(profileImgPath);
 
   let hamburgerBtn = <></>;
 
