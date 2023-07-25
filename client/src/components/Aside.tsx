@@ -63,7 +63,7 @@ function Aside() {
           <AsideBtn leftIcon={svgs.home} className={asideClsName} href='/'>
             홈
           </AsideBtn>
-          {isLoggedIn && (
+          {isLoggedIn ? (
             <>
               <AsideBtn onClick={handleOpenOrCloseNoticeTab} leftIcon={svgs.notice} className={asideClsName}>
                 알림
@@ -96,6 +96,8 @@ function Aside() {
               )}
               */}
             </>
+          ) : (
+            <></>
           )}
           <AsideBtn onClick={handleOpenOrCloseSearchTab} leftIcon={svgs.search} className={asideClsName}>
             검색
@@ -108,7 +110,7 @@ function Aside() {
           <MobileEditBtn />
         ) : (
           <S.Lower>
-            {!isLoggedIn ? (
+            {isLoggedIn ? (
               <>
                 {/* href='/user/mypage' */}
                 {isShrinkOrMobile && !isMobile ? (
