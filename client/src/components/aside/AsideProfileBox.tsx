@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 
 import AsideHamburgerBtn from './AsideHamburgerBtn';
+import { useUserGlobalValue } from '../redux/getUserInfo';
 
 type Props = {
   href?: string;
@@ -10,21 +11,21 @@ type Props = {
 
 export default function AsideProfileBox(props: Props) {
   const isShrinkOrMobile = ['shrink', 'mobile'].includes(props.className || '');
+  const { nickname, loginId, profileImgPath } = useUserGlobalValue();
 
-  let nickname = '';
-  let loginId = '';
   let hamburgerBtn = <></>;
 
   if (!isShrinkOrMobile) {
-    nickname = '마마망';
-    loginId = '@doyu';
     hamburgerBtn = <AsideHamburgerBtn />;
   }
 
   return (
     <S.ProfileBoxContainer>
       <S.ProfileLeftBtn href='/user/mypage'>
-        <S.ProfileImg />
+        <S.UserProfileImgBox>
+          <img src={profileImgPath ?? ''} alt='프로필 사진' />
+        </S.UserProfileImgBox>
+
         <S.ProfileTexts>
           <S.Nickname>{nickname}</S.Nickname>
           <span>{loginId}</span>
@@ -70,12 +71,15 @@ const S = {
   Nickname: styled.span`
     font-weight: bold;
   `,
-  ProfileImg: styled.img`
-    width: 2.5rem; // 40px
-    height: 2.5rem; // 40px
-    border-radius: var(--rounded-full);
+  UserProfileImgBox: styled.div`
+    transition: transform 0.3s ease-in-out;
+    border-radius: 50%;
     overflow: hidden;
-    flex-shrink: 0;
-    background-color: black;
+    width: 2.5rem;
+    height: 2.5rem;
+    > img {
+      width: 100%;
+      height: 100%;
+    }
   `,
 };
