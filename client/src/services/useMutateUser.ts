@@ -62,7 +62,6 @@ const useMutateUser = {
           return;
         }
         toast.error('로그인에 실패했습니다.');
-        toast.info('다시 시도해주세요.');
       },
     });
     return { LoginMutate: mutate, data };

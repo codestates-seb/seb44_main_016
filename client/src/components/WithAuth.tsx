@@ -22,10 +22,13 @@ const withAuth = (Component: ComponentType) => (props: object) => {
     onSuccess: (data) => {
       const newAccessTokenWithBearer = data.headers.authorization;
       const newAccessToken = newAccessTokenWithBearer.split(' ')[1];
+      console.log('액세스 받아옴!');
       console.log(newAccessToken);
       dispatch(login({ accessToken: newAccessToken, isLoggedIn: true }));
     },
     onError: (err) => {
+      console.log('액세스 받는데 실패!');
+
       // dispatch(logout()); 배포 때 살릴 예정
       // router.push('/'); 배포 때 살릴 예정
       throw err;
@@ -34,18 +37,23 @@ const withAuth = (Component: ComponentType) => (props: object) => {
 
   useEffect(() => {
     if (!accessToken) {
+      console.log('액세스 받아오기 시도!');
+
       mutate();
     }
   }, []);
 
   useEffect(() => {
     if (accessToken) {
+      console.log('액세스 있음!');
+      console.log(accessToken);
+
       queryClient.invalidateQueries(['myInfo']);
     }
 
     if (myInfoData) {
       const { userId, loginId, nickname, profileImgPath } = myInfoData;
-
+      console.log(profileImgPath);
       dispatch(login({ userId, loginId, nickname, profileImgPath, isLoggedIn: true }));
     }
   }, [accessToken, myInfoData]);
