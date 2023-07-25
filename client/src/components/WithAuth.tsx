@@ -22,6 +22,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
     onSuccess: (data) => {
       const newAccessTokenWithBearer = data.headers.authorization;
       accessToken = newAccessTokenWithBearer.split(' ')[1];
+      console.log(accessToken);
     },
     onError: (err) => {
       // dispatch(logout()); 배포 때 살릴 예정
@@ -42,6 +43,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
     }
 
     if (myInfoData && accessToken) {
+      console.log(myInfoData);
       const { userId, loginId, nickname, profileImgPath } = myInfoData;
       dispatch(login({ userId, loginId, accessToken, nickname, profileImgPath, isLoggedIn: true }));
     }
