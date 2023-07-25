@@ -28,6 +28,8 @@ type Props = {
 };
 
 export default function Aside(props: Props) {
+  const { isLoggedIn } = useUserGlobalValue();
+
   const [isBookmarkedFaRecListOpened, setIsBookmarkedFaRecListOpened] = React.useState(true);
   const [isSearchTabOpened, setIsSearchTabOpened] = React.useState(false);
   const [isNoticeTabOpened, setIsNoticeTabOpened] = React.useState(false);
@@ -36,9 +38,6 @@ export default function Aside(props: Props) {
   const asideClsName = getClsName(isTabClosed, props.windowType);
   const isShrinkOrMobile = ['shrink', 'mobile'].includes(asideClsName || '');
   const isMobile = asideClsName === 'mobile';
-
-  const { isLoggedIn } = useUserGlobalValue();
-  console.log(isLoggedIn);
 
   const handleOpenOrCloseBookmarkedFaRecList = () => {
     setIsBookmarkedFaRecListOpened((prevBool) => !prevBool);
@@ -128,10 +127,10 @@ export default function Aside(props: Props) {
                   <S.LinkBtn href={'/editor'}>글쓰기</S.LinkBtn>
                 )}
               </>
-            ) : !isShrinkOrMobile ? (
-              <S.LinkBtn href='/user/login'>로그인</S.LinkBtn>
-            ) : (
+            ) : isShrinkOrMobile ? (
               <AsideBtn href='/user/login' leftIcon={svgs.person} />
+            ) : (
+              <S.LinkBtn href='/user/login'>로그인</S.LinkBtn>
             )}
           </S.Lower>
         )}
