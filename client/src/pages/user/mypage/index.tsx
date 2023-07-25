@@ -93,7 +93,7 @@ function MyPage() {
               ) : null}
               <S.AddWrap ref={ref}>
                 <S.AddBtn onClick={() => fetchNextPage()} disabled={!hasNextPage}>
-                  {!hasNextPage ? '피드를 모두 확인하셨습니다.' : '계속해서 불러오기'}
+                  {!hasNextPage ? '피드가 없습니다.' : '계속해서 불러오기'}
                 </S.AddBtn>
               </S.AddWrap>
             </S.UserArticleContainer>
