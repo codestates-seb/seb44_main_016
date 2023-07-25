@@ -7,13 +7,15 @@ import ProfileHamburgerBtn from './home-header/ProfileHamburgerBtn';
 import MobileLoginBtn from './home-header/MobileLoginBtn';
 import CommonStyles from '../styles/CommonStyles';
 import { ScreenEnum } from '../constants/enums';
+import useUserGlobalValue from './redux/getUserInfo';
 
 type Props = {
-  isLoggedIn: boolean;
   windowType: ScreenEnum;
 };
 
 export default function HomeHeader(props: Props) {
+  const { isLoggedIn } = useUserGlobalValue();
+
   const [isHomeBtnActive, setIsHomeBtnActive] = React.useState(true);
   // const [isFollowerBtnActive, setIsFollowerBtnActive] = React.useState(false);
   const [isRankBtnActive, setIsRankBtnActive] = React.useState(false);
@@ -65,7 +67,7 @@ export default function HomeHeader(props: Props) {
       </S.HomeHeaderTabBtns>
 
       {props.windowType === ScreenEnum.MOBILE ? (
-        props.isLoggedIn ? (
+        isLoggedIn ? (
           <ProfileHamburgerBtn className={props.windowType} />
         ) : (
           <MobileLoginBtn />

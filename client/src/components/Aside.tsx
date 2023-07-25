@@ -24,11 +24,12 @@ function getClsName(isTabClosed: boolean, windowType: ScreenEnum) {
 }
 
 type Props = {
-  isLoggedIn: boolean;
   windowType: ScreenEnum;
 };
 
 export default function Aside(props: Props) {
+  const { isLoggedIn } = useUserGlobalValue();
+
   const [isBookmarkedFaRecListOpened, setIsBookmarkedFaRecListOpened] = React.useState(true);
   const [isSearchTabOpened, setIsSearchTabOpened] = React.useState(false);
   const [isNoticeTabOpened, setIsNoticeTabOpened] = React.useState(false);
@@ -37,8 +38,6 @@ export default function Aside(props: Props) {
   const asideClsName = getClsName(isTabClosed, props.windowType);
   const isShrinkOrMobile = ['shrink', 'mobile'].includes(asideClsName || '');
   const isMobile = asideClsName === 'mobile';
-
-  const { isLoggedIn } = useUserGlobalValue();
 
   const handleOpenOrCloseBookmarkedFaRecList = () => {
     setIsBookmarkedFaRecListOpened((prevBool) => !prevBool);
