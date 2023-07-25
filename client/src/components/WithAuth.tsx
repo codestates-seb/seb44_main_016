@@ -40,7 +40,6 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   useEffect(() => {
     if (accessToken) {
       queryClient.invalidateQueries(['myInfo']);
-      console.log(accessToken);
     }
 
     if (myInfoData) {

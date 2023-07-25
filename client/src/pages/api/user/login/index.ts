@@ -6,7 +6,6 @@ export default function logIn(req: NextApiRequest, res: NextApiResponse) {
   const { loginId, password } = req.body;
 
   const user = userData.find((user) => user.loginId === loginId);
-  console.log(user);
   const salt = Math.floor(Math.random() * 100);
 
   if (user && user.password === password) {

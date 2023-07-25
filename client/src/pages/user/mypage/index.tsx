@@ -18,7 +18,7 @@ import useGlobalUserInfo, { userInfo } from '../../../components/redux/getUserIn
 function MyPage() {
   const { ref, inView } = useInView();
 
-  const isLoggedIn = useGlobalUserInfo();
+  const { isLoggedIn } = userInfo();
   console.log(isLoggedIn);
 
   const {
