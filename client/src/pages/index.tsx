@@ -35,7 +35,7 @@ export default function HomePage() {
     {
       getNextPageParam: (lastPage, allPages) => {
         // 현재 페이지 번호가 마지막 페이지 번호보다 작으면 다음 페이지 호출
-        if (lastPage.pageInfo.currentPage < lastPage.pageInfo.totalPages) {
+        if (lastPage?.pageInfo?.currentPage < lastPage?.pageInfo?.totalPages) {
           return lastPage.pageInfo.currentPage + 1;
         }
         return undefined; // 더 이상 페이지가 없으면 undefined 반환하여 더 이상 호출하지 않음
@@ -77,7 +77,7 @@ export default function HomePage() {
 
       {/* 데이터를 출력하는 로직 */}
       {data?.pages.map((page) => {
-        return page.data.map((item: FeedArticleResType) => (
+        return page.data?.map((item: FeedArticleResType) => (
           <SnsArticle key={item.feedArticleId} data={item} type='feed' />
         ));
       })}
