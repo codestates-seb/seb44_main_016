@@ -67,6 +67,7 @@ export interface OAuthReqData {
 }
 
 export interface UserUpdateReqData {
+  loginId: string | null | undefined;
   profileImgPath?: string | null;
   nickname?: string | null;
   password?: string | null;

@@ -16,20 +16,22 @@ import { useSelector } from 'react-redux';
 import UserInputField from './UserInputField';
 import { UserInfoResData } from '../../../types/user';
 import useMutateUser from '../../../services/useMutateUser';
+import useUserGlobalValue from '../../../components/redux/getUserInfo';
 
 interface UserUpdatePageProps {
   myInfoData: UserInfoResData;
 }
+
 export default function UserUpdatePage({ myInfoData }: UserUpdatePageProps) {
   const router = useRouter();
 
   const currentImgSrc = useSelector<RootState>((state) => state.currentImgReducer.currentImgSrc);
+  const { loginId } = useUserGlobalValue();
   const originalNickname = myInfoData ? myInfoData.User.nickname : '';
 
   const [nicknameInput, nickname] = useInput('text', originalNickname, 'nickname', 'nickname');
   const [PwInput, pwValue] = useInput('password', '비밀번호', 'pw', 'current-password');
   const [PwConfirmInput, password] = useInput('password', '비밀번호 확인', 'pwConfirm', 'current-password');
-  const formData = new FormData();
 
   const [error, setError] = useState({
     nickname: '',
@@ -75,9 +77,15 @@ export default function UserUpdatePage({ myInfoData }: UserUpdatePageProps) {
   ];
 
   const { updateUserMutate } = useMutateUser.update(apiUser.updateMyInfo);
-
+  const requestBody = {
+    loginId,
+    password,
+    nickname,
+    profileImgPath: typeof currentImgSrc === 'string' ? currentImgSrc : null,
+  };
   const handleUpdateUserSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (
       (nickname && error.nickname) ||
       (pwValue && !password) ||
@@ -96,11 +104,7 @@ export default function UserUpdatePage({ myInfoData }: UserUpdatePageProps) {
       return;
     }
 
-    formData.append('nickname', nickname ? nickname : '');
-    formData.append('password', pwValue ? pwValue : '');
-    formData.append('profileImgPath', typeof currentImgSrc === 'string' ? currentImgSrc : '');
-
-    updateUserMutate(formData);
+    updateUserMutate(requestBody);
   };
 
   const handleMoveDeletePage = () => {

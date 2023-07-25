@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { PostSignUp, LoginReqData, OAuthReqData } from '../types/user';
+import { PostSignUp, LoginReqData, OAuthReqData, UserUpdateReqData } from '../types/user';
 import { instance } from './tokenInstance';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -70,10 +70,8 @@ const apiUser = {
   },
 
   /** 회원 정보 수정 */
-  updateMyInfo: async (userUpdateData: FormData) => {
-    const response = await instance.patch(`${BASE_URL}/user/update`, userUpdateData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+  updateMyInfo: async (userUpdateData: UserUpdateReqData) => {
+    const response = await instance.patch(`${BASE_URL}/user/update`, userUpdateData);
     return response;
   },
 
