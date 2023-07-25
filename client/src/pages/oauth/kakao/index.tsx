@@ -28,7 +28,6 @@ const KakaoOauthRedirection = () => {
       };
       const targetOAuth = 'kakao';
       const oAuthReqBody = { oAuthData, targetOAuth };
-      console.log(oAuthReqBody);
       LoginMutate(oAuthReqBody);
     }
   };

@@ -28,7 +28,6 @@ const GoogleOauthRedirection = () => {
       };
       const targetOAuth = 'google';
       const oAuthReqBody = { oAuthData, targetOAuth };
-      console.log(oAuthReqBody);
       LoginMutate(oAuthReqBody);
     }
   };

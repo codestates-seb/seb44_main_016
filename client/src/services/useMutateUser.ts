@@ -1,10 +1,10 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import { useAppDispatch } from '../components/redux/hooks';
 import { login, logout } from '../components/redux/authnReducer';
 import { AxiosResponse } from 'axios';
-import { LoginReqData, OAuthReqData, PostSignUp } from '../types/user';
+import { LoginReqData, OAuthReqData, PostSignUp, UserUpdateReqData } from '../types/user';
 import { changeImgSrc } from '../components/redux/currentImgReducer';
 
 interface LoginErrorResponse {
@@ -28,7 +28,6 @@ const useMutateUser = {
       },
 
       onError: (error: LoginErrorResponse) => {
-        console.log(error);
         if (error.response.data.message) {
           toast.error(error.response.data.message);
           return;
@@ -43,7 +42,6 @@ const useMutateUser = {
     const dispatch = useAppDispatch();
     const { mutate, data } = useMutation(['login'], mutateFunction, {
       onSuccess: (data) => {
-        console.log(data);
         if (data.status === 200) {
           const accessTokenWithBearer = data.headers.authorization;
           const accessToken = accessTokenWithBearer.split(' ')[1];
@@ -85,13 +83,16 @@ const useMutateUser = {
     return { LogOutMutate: mutate };
   },
 
-  update: (mutateFunction: (formData: FormData) => Promise<AxiosResponse>) => {
+  update: (mutateFunction: (userUpdateData: UserUpdateReqData) => Promise<AxiosResponse>) => {
     const router = useRouter();
     const dispatch = useAppDispatch();
+    const queryClient = useQueryClient();
+
     const { mutate, data } = useMutation(['update'], mutateFunction, {
       onSuccess: () => {
         toast.success('회원 정보가 수정되었습니다.');
         dispatch(changeImgSrc({ currentImgSrc: '', isAvatar: false }));
+        queryClient.invalidateQueries(['myInfo']);
         router.push(`/user/mypage`);
       },
 
