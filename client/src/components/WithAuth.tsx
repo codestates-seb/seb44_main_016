@@ -12,10 +12,9 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   const dispatch = useAppDispatch();
 
   const { accessToken } = useUserGlobalValue();
-  const [changedAccessToken, setChangedAccessToken] = useState(null);
+  const [changedAccessToken, setChangedAccessToken] = useState(accessToken);
 
   const { data: myInfoData } = useQuery(['userInfo'], apiUser.getUserInfo, { enabled: !!changedAccessToken });
-  console.log(myInfoData);
 
   /** refresh 토큰으로 새 access 토큰을 발급받는 api */
   const { mutate } = useMutation(apiUser.getNewAccess, {
@@ -34,7 +33,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   useEffect(() => {
     if (!accessToken) {
       mutate();
-    } else if (changedAccessToken || myInfoData) {
+    } else if (changedAccessToken) {
       const { userId, loginId, nickname, profileImgPath } = myInfoData;
       console.log(profileImgPath);
       dispatch(
@@ -48,7 +47,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
         })
       );
     }
-  }, [changedAccessToken, myInfoData]);
+  }, [changedAccessToken]);
 
   return <Component {...props} />;
 };

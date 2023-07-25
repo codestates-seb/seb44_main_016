@@ -15,7 +15,6 @@ export default function UserUpdate() {
 
   if (myInfoError) {
     toast.error('오류가 발생했습니다.');
-    toast.info('다시 시도해주세요.');
   }
 
   return (
