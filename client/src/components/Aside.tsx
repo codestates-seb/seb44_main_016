@@ -69,7 +69,7 @@ function Aside() {
                 알림
               </AsideBtn>
               <AsideBtn
-                href='/financial-record'
+                href='/financialrecord'
                 leftIcon={svgs.faRec}
                 // rightIcon={svgs.dropdown}
                 isReverse={isBookmarkedFaRecListOpened}

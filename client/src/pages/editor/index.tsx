@@ -113,7 +113,7 @@ function EditorPage() {
         };
         formData.append('data', JSON.stringify(body));
 
-        await axios.post(`${BASE_URL}/financial-record/${faRecId}/article'`, formData, {
+        await axios.post(`${BASE_URL}/financialrecord/${faRecId}/article'`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
