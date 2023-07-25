@@ -101,7 +101,7 @@ export default function SignUpForm() {
     loginId,
     password,
     nickname,
-    profileImgPath: `https://source.boringavatars.com/beam/150/${nickname}`,
+    profileImgPath: `https://source.boringavatars.com/beam/150/${loginId}`,
   };
 
   const { SignUpMutate } = useMutateUser.signUp(apiUser.postSignUp);
