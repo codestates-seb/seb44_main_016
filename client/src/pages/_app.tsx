@@ -13,8 +13,6 @@ import { useWindowType } from '../hooks/useWindowSize';
 import { ScreenEnum } from '../constants/enums';
 import React from 'react';
 
-const queryClient = new QueryClient();
-
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
   const windowType = useWindowType();
@@ -52,7 +50,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             <S.RootScreen>
               <S.AppContainer maxWidth={maxWidth}>
                 <S.FlexPage bgColor={bgColor}>
-                  {isShowNav && <Aside isLoggedIn={true} windowType={windowType} />}
+                  {isShowNav && <Aside windowType={windowType} />}
                   <S.SubPage>
                     {isShowHeader && <HomeHeader windowType={windowType} />}
                     <S.Main isShowNav={isShowNav} isShowHeader={isShowHeader} windowType={windowType}>

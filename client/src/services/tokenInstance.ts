@@ -3,6 +3,7 @@ import { store } from '../components/redux/store';
 import { toast } from 'react-toastify';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const MAX_RETRY_COUNT = 3;
 
 /** INSTANCE WITH TOKEN */
 export const instance = axios.create({});
@@ -31,7 +32,12 @@ instance.interceptors.response.use(
     try {
       const { response, config } = error;
       const originalRequest = config;
-      if (response.data.status) {
+      const shouldRetry = response.data.status;
+      originalRequest._retryCount < MAX_RETRY_COUNT;
+
+      if (shouldRetry) {
+        originalRequest._retryCount = (originalRequest._retryCount || 0) + 1;
+
         const res = await axios.post(`${BASE_URL}/auth/refresh`, null, {
           headers: {
             'Content-Type': 'application/json',

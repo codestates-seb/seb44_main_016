@@ -13,13 +13,10 @@ import { USER_META_DATA } from '../../../constants/seo/userMetaData';
 import ErrorComponent from '../../../components/ErrorComponent';
 import { useEffect } from 'react';
 import MyPageUserInfo from './MyPageUserInfo';
-import useGlobalUserInfo, { userInfo } from '../../../components/redux/getUserInfo';
+import useUserGlobalValue from '../../../components/redux/getUserInfo';
 
 function MyPage() {
   const { ref, inView } = useInView();
-
-  const isLoggedIn = useGlobalUserInfo();
-  console.log(isLoggedIn);
 
   const {
     isLoading: isMyInfoLoading,
@@ -27,7 +24,7 @@ function MyPage() {
     data: myInfoData,
   } = useQuery(['myInfo'], apiUser.getMyInfo);
 
-  const { userId } = userInfo();
+  const { userId } = useUserGlobalValue();
 
   const {
     data: myFeedData,
@@ -60,6 +57,7 @@ function MyPage() {
   );
 
   const filteredData = myFeedData?.pages.flatMap((response) => (response ? response.data : null));
+  console.log('피드 데이터');
   console.log(filteredData);
   if (isMyInfoError || isMyFeedError) {
     toast.info('잠시 후에 다시 시도해주세요.');
@@ -93,7 +91,7 @@ function MyPage() {
               ) : null}
               <S.AddWrap ref={ref}>
                 <S.AddBtn onClick={() => fetchNextPage()} disabled={!hasNextPage}>
-                  {!hasNextPage ? '피드를 모두 확인하셨습니다.' : '계속해서 불러오기'}
+                  {!hasNextPage ? '피드가 없습니다.' : '계속해서 불러오기'}
                 </S.AddBtn>
               </S.AddWrap>
             </S.UserArticleContainer>
