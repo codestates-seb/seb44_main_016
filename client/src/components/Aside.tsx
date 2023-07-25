@@ -10,6 +10,7 @@ import ProfileHamburgerBtn from '../components/home-header/ProfileHamburgerBtn';
 
 import svgs from '../constants/svg';
 import { ScreenEnum } from '../constants/enums';
+import useUserGlobalValue from './redux/getUserInfo';
 
 function getClsName(isTabClosed: boolean, windowType: ScreenEnum) {
   let asideClsName = '';
@@ -37,6 +38,9 @@ export default function Aside(props: Props) {
   const isShrinkOrMobile = ['shrink', 'mobile'].includes(asideClsName || '');
   const isMobile = asideClsName === 'mobile';
 
+  const { isLoggedIn } = useUserGlobalValue();
+  console.log(isLoggedIn);
+
   const handleOpenOrCloseBookmarkedFaRecList = () => {
     setIsBookmarkedFaRecListOpened((prevBool) => !prevBool);
   };
@@ -62,7 +66,7 @@ export default function Aside(props: Props) {
           <AsideBtn leftIcon={svgs.home} className={asideClsName} href='/'>
             홈
           </AsideBtn>
-          {props.isLoggedIn && (
+          {isLoggedIn && (
             <>
               <AsideBtn onClick={handleOpenOrCloseNoticeTab} leftIcon={svgs.notice} className={asideClsName}>
                 알림
@@ -107,7 +111,7 @@ export default function Aside(props: Props) {
           <MobileEditBtn />
         ) : (
           <S.Lower>
-            {props.isLoggedIn ? (
+            {isLoggedIn ? (
               <>
                 {/* href='/user/mypage' */}
                 {isShrinkOrMobile && !isMobile ? (
