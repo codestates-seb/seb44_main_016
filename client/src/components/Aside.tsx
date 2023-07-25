@@ -38,7 +38,6 @@ export default function Aside(props: Props) {
   const isMobile = asideClsName === 'mobile';
 
   const { isLoggedIn } = useUserGlobalValue();
-  console.log(isLoggedIn);
 
   const handleOpenOrCloseBookmarkedFaRecList = () => {
     setIsBookmarkedFaRecListOpened((prevBool) => !prevBool);
@@ -110,7 +109,7 @@ export default function Aside(props: Props) {
           <MobileEditBtn />
         ) : (
           <S.Lower>
-            {isLoggedIn ? (
+            {!isLoggedIn ? (
               <>
                 {/* href='/user/mypage' */}
                 {isShrinkOrMobile && !isMobile ? (
