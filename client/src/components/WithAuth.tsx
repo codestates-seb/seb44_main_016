@@ -3,7 +3,7 @@ import { ComponentType } from 'react';
 import { useRouter } from 'next/router';
 import { useAppDispatch } from './redux/hooks';
 import { login, logout } from './redux/authnReducer';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import apiUser from '../services/apiUser';
 import useUserGlobalValue from './redux/getUserInfo';
 
@@ -14,7 +14,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   const { accessToken } = useUserGlobalValue();
   const [changedAccessToken, setChangedAccessToken] = useState(accessToken);
 
-  const { data: myInfoData } = useQuery(['userInfo'], apiUser.getUserInfo, { enabled: !!changedAccessToken });
+  const { data: myInfoData } = useQuery(['userInfo'], apiUser.getUserInfo);
 
   /** refresh 토큰으로 새 access 토큰을 발급받는 api */
   const { mutate } = useMutation(apiUser.getNewAccess, {
@@ -31,12 +31,14 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   });
 
   useEffect(() => {
+    console.log('유즈이펙!');
     if (!changedAccessToken) {
+      console.log('액세스 없음!');
       mutate();
     } else if (changedAccessToken && myInfoData) {
       const { userId, loginId, nickname, profileImgPath } = myInfoData;
       console.log(profileImgPath);
-      console.log('here!');
+      console.log('둘 다 있음!');
       dispatch(
         login({
           userId,
