@@ -74,6 +74,7 @@ const useMutateUser = {
     const { mutate } = useMutation(['logout'], mutateFunction, {
       onSuccess: () => {
         dispatch(logout());
+        window.location.reload();
         router.push('/');
         toast.success('로그아웃 되었습니다.');
       },
