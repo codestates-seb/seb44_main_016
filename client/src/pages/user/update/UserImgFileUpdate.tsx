@@ -46,7 +46,6 @@ export default function UserImgFileUpdate({ myInfoData, setIsOpen, isOpen }: Ran
   const prevCropModalRef = useRef(false);
 
   useEffect(() => {
-    console.log(prevCropModalRef);
     if (prevCropModalRef.current !== false) {
       if (!cropModal && decideBtnRef.current) {
         decideBtnRef.current.focus();
