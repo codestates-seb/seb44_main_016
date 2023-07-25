@@ -4,9 +4,9 @@ import ListItem from './ListItem';
 import { useQuery } from '@tanstack/react-query';
 import { APIfinancialRecord } from '../../services/apiFinancial';
 import useInput from '../../hooks/useComponents';
-// import SVGs from '../../constants/svg';
+import SVGs from '../../constants/svg';
 import Loading from '../../components/Loading';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ErrorComponent from '../../components/ErrorComponent';
 import { FAREC_MESSAGES } from '../../constants/messages/faRec';
 import withAuth from '../../components/WithAuth';
@@ -27,7 +27,24 @@ export type RecordData = {
 };
 
 function FinancialListPage() {
-  const { data, error, isError, isLoading } = useQuery(['recordList'], APIfinancialRecord.getRecordList);
+  const [data, setData] = useState<RecordData[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const result = await APIfinancialRecord.getRecordList();
+        setData(result);
+      } catch (error) {
+        setError(error);
+      }
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
   console.log(data);
   const [searchInput, search] = useInput('text', '검색어를 입력해주세요', 'faRecSearch', 'on');
   const [isSearching, setIsSearching] = useState(false);
@@ -51,14 +68,14 @@ function FinancialListPage() {
       <S.FormWrap>
         <S.InputWrap>
           {searchInput}
-          {/* <S.Button onClick={handleSearch}>{SVGs.searchFarec}</S.Button> */}
+          <S.Button onClick={handleSearch}>{SVGs.searchFarec}</S.Button>
         </S.InputWrap>
-        <S.LinkBtn href='/financial-record/create'>새 가계부 만들기</S.LinkBtn>
+        <S.LinkBtn href='/financialrecord/create'>새 가계부 만들기</S.LinkBtn>
       </S.FormWrap>
 
-      {isError ? (
+      {error ? (
         <ErrorComponent message={(error as Error).message} />
-      ) : isLoading ? (
+      ) : loading ? (
         <Loading />
       ) : displayData && displayData.length > 0 ? (
         <S.FaRecList>
