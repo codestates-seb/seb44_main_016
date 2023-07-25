@@ -55,6 +55,7 @@ public class OAuth2Attribute {
 
     private static OAuth2Attribute ofKakao(String attributeKey,
                                            Map<String, Object> attributes) {
+
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
 
         return OAuth2Attribute.builder()
@@ -67,6 +68,7 @@ public class OAuth2Attribute {
 
     private static OAuth2Attribute ofNaver(String attributeKey,
                                            Map<String, Object> attributes) {
+
         Map<String, Object> naverResponse = (Map<String, Object>) attributes.get("response");
 
         System.out.println("naverResponse = " + naverResponse);
