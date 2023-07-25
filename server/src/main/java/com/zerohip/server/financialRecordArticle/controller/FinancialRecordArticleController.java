@@ -26,7 +26,7 @@ import java.util.List;
 @Validated
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/financial-record/{financial-record-id}/article")
+@RequestMapping("/financialrecord/{financial-record-id}/article")
 public class FinancialRecordArticleController {
 
   private final FinancialRecordArticleService service;

@@ -24,10 +24,10 @@ import java.util.List;
 @Validated
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/financial-record")
+@RequestMapping("/financialrecord")
 public class FinancialRecordController {
 
-  private final static String FINANCIAL_RECORD_DEFAULT_URI = "/financial-record";
+  private final static String FINANCIAL_RECORD_DEFAULT_URI = "/financialrecord";
   private final FinancialRecordService faRecService;
   private final FinancialRecordMapper mapper;
 
