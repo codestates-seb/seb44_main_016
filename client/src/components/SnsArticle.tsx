@@ -73,7 +73,7 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
         const res = await axios.delete(`${BASE_URL}/feedArticles/${data.feedArticleId}`);
       } else {
         const res = await axios.delete(
-          `${BASE_URL}/financial-record/${data.financialRecordId}/article/${data.financialRecordArticleId}`
+          `${BASE_URL}/financialrecord/${data.financialRecordId}/article/${data.financialRecordArticleId}`
         );
       }
     } catch (error) {}

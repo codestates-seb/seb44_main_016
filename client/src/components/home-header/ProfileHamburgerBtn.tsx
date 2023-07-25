@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import useMutateUser from '../../services/useMutateUser';
 import apiUser from '../../services/apiUser';
@@ -10,12 +11,15 @@ type Props = {
 };
 
 export default function ProfileHamburgerBtn(props: Props) {
+  const router = useRouter();
+
   const [isHamburgerOpened, setIsHamburgerOpened] = React.useState(false);
   const { LogOutMutate } = useMutateUser.logout(apiUser.deleteLogout);
 
   const handleLogout = () => {
     setIsHamburgerOpened(false);
     LogOutMutate();
+    router.reload();
   };
 
   return (
@@ -36,7 +40,7 @@ export default function ProfileHamburgerBtn(props: Props) {
                 <S.LinkBtn href='/user/update' onClick={() => setIsHamburgerOpened(false)}>
                   회원정보 수정
                 </S.LinkBtn>
-                <S.LinkBtn href='' onClick={handleLogout}>
+                <S.LinkBtn href='/' onClick={handleLogout}>
                   로그아웃
                 </S.LinkBtn>
               </S.LinkBtnList>
