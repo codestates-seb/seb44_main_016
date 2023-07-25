@@ -109,7 +109,7 @@ export default function Aside(props: Props) {
           <MobileEditBtn />
         ) : (
           <S.Lower>
-            {isLoggedIn ? (
+            {!isLoggedIn ? (
               <>
                 {/* href='/user/mypage' */}
                 {isShrinkOrMobile && !isMobile ? (
@@ -127,7 +127,7 @@ export default function Aside(props: Props) {
                   <S.LinkBtn href={'/editor'}>글쓰기</S.LinkBtn>
                 )}
               </>
-            ) : isShrinkOrMobile ? (
+            ) : !isShrinkOrMobile ? (
               <AsideBtn href='/user/login' leftIcon={svgs.person} />
             ) : (
               <S.LinkBtn href='/user/login'>로그인</S.LinkBtn>

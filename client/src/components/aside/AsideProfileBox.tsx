@@ -12,6 +12,7 @@ type Props = {
 export default function AsideProfileBox(props: Props) {
   const isShrinkOrMobile = ['shrink', 'mobile'].includes(props.className || '');
   const { nickname, loginId, profileImgPath } = useUserGlobalValue();
+  console.log(profileImgPath);
 
   let hamburgerBtn = <></>;
 
@@ -28,7 +29,10 @@ export default function AsideProfileBox(props: Props) {
 
         <S.ProfileTexts>
           <S.Nickname>{nickname}</S.Nickname>
-          <span>{loginId}</span>
+          <S.UserId>
+            <div>@</div>
+            <div>{loginId}</div>
+          </S.UserId>
         </S.ProfileTexts>
       </S.ProfileLeftBtn>
       <S.ProfileRightDiv>{hamburgerBtn}</S.ProfileRightDiv>
@@ -80,6 +84,18 @@ const S = {
     > img {
       width: 100%;
       height: 100%;
+    }
+  `,
+  UserId: styled.div`
+    display: flex;
+    align-items: center;
+    margin-right: 0.2rem;
+    color: var(--color-point-light-blue);
+    font-size: 0.9rem;
+    font-weight: 400;
+    div:first-of-type {
+      font-weight: 600;
+      margin-right: 0.1rem;
     }
   `,
 };

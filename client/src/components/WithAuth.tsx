@@ -22,6 +22,7 @@ const withAuth = (Component: ComponentType) => (props: object) => {
     onSuccess: (data) => {
       const newAccessTokenWithBearer = data.headers.authorization;
       const newAccessToken = newAccessTokenWithBearer.split(' ')[1];
+      console.log(newAccessToken);
       dispatch(login({ accessToken: newAccessToken, isLoggedIn: true }));
     },
     onError: (err) => {
@@ -43,9 +44,9 @@ const withAuth = (Component: ComponentType) => (props: object) => {
     }
 
     if (myInfoData) {
-      const { userId, loginId, nickname } = myInfoData;
+      const { userId, loginId, nickname, profileImgPath } = myInfoData;
 
-      dispatch(login({ userId, loginId, nickname, isLoggedIn: true }));
+      dispatch(login({ userId, loginId, nickname, profileImgPath, isLoggedIn: true }));
     }
   }, [accessToken, myInfoData]);
 
