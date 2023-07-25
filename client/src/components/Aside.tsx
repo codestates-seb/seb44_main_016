@@ -11,6 +11,7 @@ import ProfileHamburgerBtn from '../components/home-header/ProfileHamburgerBtn';
 import svgs from '../constants/svg';
 import { ScreenEnum } from '../constants/enums';
 import useUserGlobalValue from './redux/getUserInfo';
+import withAuth from '../components/WithAuth';
 
 function getClsName(isTabClosed: boolean, windowType: ScreenEnum) {
   let asideClsName = '';
@@ -27,7 +28,7 @@ type Props = {
   windowType: ScreenEnum;
 };
 
-export default function Aside(props: Props) {
+function Aside(props: Props) {
   const { isLoggedIn } = useUserGlobalValue();
 
   const [isBookmarkedFaRecListOpened, setIsBookmarkedFaRecListOpened] = React.useState(true);
@@ -286,3 +287,5 @@ const S = {
   `,
   */
 };
+
+export default withAuth(Aside);
