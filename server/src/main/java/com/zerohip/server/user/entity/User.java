@@ -18,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "USERS")
+@JsonInclude(JsonInclude.Include.NON_NULL)  // test 후 기능 완료되면 삭제 예정 (mypage 조회용)
 public class User extends Auditable {
 
     @Id
