@@ -63,6 +63,15 @@ logging:
         orm:
           jpa: DEBUG
 server:
+  server:
+    port: 443
+    ssl:
+      key-store: /home/ubuntu/keystore.p12
+      key-store-password: key
+      key-store-type: PKCS12
+    servlet:
+      encoding:
+        force-response: true
   servlet:
     encoding:
       force-response: true
