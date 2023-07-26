@@ -34,9 +34,9 @@ instance.interceptors.response.use(
 
       if (!originalRequest.isRetryAttempted && response.data.status) {
         originalRequest.isRetryAttempted = true;
-
+        console.log('리프레쉬 받아와야 해!');
         const refreshToken = localStorage.getItem('refreshToken');
-        console.log(`tokenInstance ${refreshToken}`);
+        console.log(`refreshToken ${refreshToken}`);
 
         const res = await axios.post(`${BASE_URL}/auth/refresh`, null, {
           headers: {
@@ -49,7 +49,6 @@ instance.interceptors.response.use(
         return axios(originalRequest);
       }
     } catch (error) {
-      localStorage.removeItem('refreshToken');
       return false;
     }
     return Promise.reject(error);

@@ -77,7 +77,6 @@ const useMutateUser = {
         dispatch(logout());
         window.location.reload();
         router.push('/');
-        localStorage.removeItem('refreshToken');
         toast.success('로그아웃 되었습니다.');
       },
 
