@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
@@ -13,8 +14,14 @@ type Props = {
 
 export default function AsideProfileBox(props: Props) {
   const isShrinkOrMobile = ['shrink', 'mobile'].includes(props.className || '');
-  const { nickname, loginId, profileImgPath } = useUserGlobalValue();
+  const { nickname, loginId, profileImgPath } = useUserGlobalValue(); // profileImgPath가 계속 undefined로 찍히는 버그 발생
   const { data: myInfoData } = useQuery(['userInfo'], apiUser.getUserInfo);
+
+  const [profileImgSrc, setProfileImgSrc] = React.useState('');
+
+  React.useEffect(() => {
+    setProfileImgSrc(myInfoData?.profileImgPath);
+  }, [myInfoData]);
 
   const hamburgerBtn = isShrinkOrMobile ? <></> : <AsideHamburgerBtn />;
 
@@ -22,7 +29,7 @@ export default function AsideProfileBox(props: Props) {
     <S.ProfileBoxContainer>
       <S.ProfileLeftBtn href='/user/mypage'>
         <S.UserProfileImgBox>
-          <img src={profileImgPath ?? myInfoData.profileImgPath ?? ''} alt='프로필 사진' />
+          <img src={profileImgSrc} alt='프로필 사진' />
         </S.UserProfileImgBox>
 
         <S.ProfileTexts>
