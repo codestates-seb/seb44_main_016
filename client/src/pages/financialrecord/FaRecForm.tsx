@@ -105,8 +105,12 @@ export default function FaRecForm({
       },
     }
   );
-
-  const handleSubmit = (e: FormEvent) => {
+  const blobUrlToFile = async (blobUrl: string) => {
+    const response = await fetch(blobUrl);
+    const blob = await response.blob();
+    return new File([blob], 'faRecProfile.jpg', { type: 'image/jpeg' });
+  };
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     const newErrors = {
@@ -130,8 +134,16 @@ export default function FaRecForm({
       dataObject.financialRecordId = financialRecordId;
     }
     formData.append('data', JSON.stringify(dataObject));
-    const imgFile = croppedImage || initialImage || randomImg;
+    let imgFile: string | File = croppedImage || initialImage || randomImg;
+
+    if (typeof imgFile === 'string') {
+      imgFile = await blobUrlToFile(imgFile);
+    }
     formData.append('file', imgFile);
+    // 콘솔
+    formData.forEach((value, key) => {
+      console.log(`${key}: ${value}`);
+    });
 
     mutate(formData);
   };
