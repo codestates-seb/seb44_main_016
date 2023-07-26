@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import AsideHamburgerBtn from './AsideHamburgerBtn';
 import useUserGlobalValue from '../redux/getUserInfo';
+import { profile } from 'console';
 
 type Props = {
   href?: string;

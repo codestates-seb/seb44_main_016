@@ -21,5 +21,5 @@ export default function useUserGlobalValue(): LoginResData {
   const isLoggedIn = useSelector<RootState, boolean | undefined>(
     (state) => state.authnReducer.login.isLoggedIn
   );
-  return { userId, accessToken, loginId, nickname, isLoggedIn };
+  return { userId, accessToken, loginId, nickname, profileImgPath, isLoggedIn };
 }
