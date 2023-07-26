@@ -130,9 +130,7 @@ export default function FaRecForm({
       dataObject.financialRecordId = financialRecordId;
     }
     formData.append('data', JSON.stringify(dataObject));
-    const imgFile = new Blob([croppedImage || initialImage || randomImg], {
-      type: 'image/*',
-    });
+    const imgFile = croppedImage || initialImage || randomImg;
     formData.append('file', imgFile);
 
     mutate(formData);
