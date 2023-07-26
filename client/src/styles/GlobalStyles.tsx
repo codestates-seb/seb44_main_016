@@ -3,7 +3,14 @@ import { Global } from '@emotion/react';
 const GlobalStyles = () => (
   <Global
     styles={`
-      @import url('https://webfontworld.github.io/pretendard/Pretendard.css');
+     
+      @font-face {
+        font-family: 'Pretendard Variable';
+        font-weight: 45 920;
+        font-style: normal;
+        font-display: swap;
+        src: url('/font/PretendardVariable.woff2') format('woff2-variations');
+      }
 
       @media screen and (max-width: 1024px)  {
         :root {
@@ -23,7 +30,7 @@ const GlobalStyles = () => (
 
       :root {
         color: #333;
-        font-family: 'Pretendard';
+        font-family: 'Pretendard Variable';
         font-weight: 400;
         overflow: overlay;
         overflow-x: hidden;
