@@ -47,7 +47,6 @@ const useMutateUser = {
           const accessToken = accessTokenWithBearer.split(' ')[1];
 
           const refreshToken = data.headers.refresh;
-          console.log(`login ${refreshToken}`);
           localStorage.setItem('refreshToken', refreshToken);
 
           const { userId, loginId, nickname, profileImgPath } = data.data;

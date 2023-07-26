@@ -7,7 +7,6 @@ export const APIfinancialRecord = {
     const res = await instance.get(`${BASE_URL}/financialrecord`, {
       withCredentials: true,
     });
-    console.log(res);
     // const res = await axios.get('/data/recordList.json');
     return res.data;
   },

@@ -12,16 +12,13 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   const dispatch = useAppDispatch();
 
   const { accessToken } = useUserGlobalValue();
-  console.log(`accessToken ${accessToken}`);
   const [changedAccessToken, setChangedAccessToken] = useState(accessToken);
-  console.log(`changedAccessToken ${changedAccessToken}`);
 
   const { data: myInfoData } = useQuery(['userInfo'], apiUser.getUserInfo);
 
   /** refresh 토큰으로 새 access 토큰을 발급받는 api */
   const { mutate } = useMutation(apiUser.getNewAccess, {
     onSuccess: (data) => {
-      console.log(data);
       const newAccessTokenWithBearer = data.headers.authorization;
       const newAccessToken = newAccessTokenWithBearer.split(' ')[1];
       setChangedAccessToken(newAccessToken);
@@ -35,10 +32,8 @@ const withAuth = (Component: ComponentType) => (props: object) => {
 
   useEffect(() => {
     if (!changedAccessToken) {
-      console.log('체인지 어세스가 없음!!');
       mutate();
     } else if (changedAccessToken && myInfoData) {
-      console.log('둘다 있어!!');
       const { userId, loginId, nickname, profileImgPath } = myInfoData;
       dispatch(
         login({

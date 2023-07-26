@@ -17,8 +17,6 @@ instance.interceptors.request.use(
 
     const refreshToken = localStorage.getItem('refreshToken');
     if (refreshToken) {
-      console.log('리프레시 컨피그에 끼움');
-      console.log(refreshToken);
       config.headers['Refresh'] = `${refreshToken}`;
     }
 
