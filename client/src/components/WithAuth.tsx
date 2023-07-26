@@ -19,13 +19,19 @@ const withAuth = (Component: ComponentType) => (props: object) => {
   /** refresh 토큰으로 새 access 토큰을 발급받는 api */
   const { mutate } = useMutation(apiUser.getNewAccess, {
     onSuccess: (data) => {
+      console.log(data);
       const newAccessTokenWithBearer = data.headers.authorization;
       const newAccessToken = newAccessTokenWithBearer.split(' ')[1];
       setChangedAccessToken(newAccessToken);
+
+      const refreshToken = data.headers.refresh;
+      console.log(`withAuth ${refreshToken}`);
+      localStorage.setItem('refreshToken', refreshToken);
     },
     onError: (err) => {
       // dispatch(logout()); 배포 직후 주석 제거
       // router.push('/');
+      localStorage.removeItem('refreshToken');
       throw err;
     },
   });

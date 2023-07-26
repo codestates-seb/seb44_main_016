@@ -35,9 +35,13 @@ instance.interceptors.response.use(
       if (!originalRequest.isRetryAttempted && response.data.status) {
         originalRequest.isRetryAttempted = true;
 
+        const refreshToken = localStorage.getItem('refreshToken');
+        console.log(`tokenInstance ${refreshToken}`);
+
         const res = await axios.post(`${BASE_URL}/auth/refresh`, null, {
           headers: {
             'Content-Type': 'application/json',
+            Refresh: `${refreshToken}`,
           },
           withCredentials: true,
         });
@@ -45,6 +49,7 @@ instance.interceptors.response.use(
         return axios(originalRequest);
       }
     } catch (error) {
+      localStorage.removeItem('refreshToken');
       return false;
     }
     return Promise.reject(error);
