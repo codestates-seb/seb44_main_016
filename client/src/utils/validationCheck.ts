@@ -25,8 +25,11 @@ const validation = {
 
     if (!/\d/.test(password)) return (errorMessage += '비밀번호는 숫자를 포함해야 합니다.\n');
 
-    if (/[^a-zA-Z\d!@#$%^&*()]/.test(password))
-      return (errorMessage += '비밀번호는 !@#$%^&*() 특수문자만 허용합니다.\n');
+    if (/[^a-zA-Z\d!@#$%^&*()]/.test(password)) {
+      return (errorMessage += '비밀번호는 !@#$%^&*() 특수문자만 허용됩니다.\n');
+    } else if (!/[!@#$%^&*()]/.test(password)) {
+      errorMessage += '비밀번호는 !@#$%^&*() 특수문자를 포함해야 합니다.\n';
+    }
 
     return errorMessage;
   },
