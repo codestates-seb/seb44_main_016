@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import AsideHamburgerBtn from './AsideHamburgerBtn';
 import useUserGlobalValue from '../redux/getUserInfo';
+import { profile } from 'console';
 
 type Props = {
   href?: string;
@@ -12,7 +13,7 @@ type Props = {
 export default function AsideProfileBox(props: Props) {
   const isShrinkOrMobile = ['shrink', 'mobile'].includes(props.className || '');
   const { nickname, loginId, profileImgPath } = useUserGlobalValue();
-
+  console.log(nickname, profileImgPath);
   let hamburgerBtn = <></>;
 
   if (!isShrinkOrMobile) {
