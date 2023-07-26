@@ -25,10 +25,6 @@ const withAuth = (Component: ComponentType) => (props: object) => {
       const newAccessTokenWithBearer = data.headers.authorization;
       const newAccessToken = newAccessTokenWithBearer.split(' ')[1];
       setChangedAccessToken(newAccessToken);
-
-      const refreshToken = data.headers.refresh;
-      console.log(`withAuth ${refreshToken}`);
-      localStorage.setItem('refreshToken', refreshToken);
     },
     onError: (err) => {
       // dispatch(logout()); 배포 직후 주석 제거

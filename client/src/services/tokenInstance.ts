@@ -14,6 +14,14 @@ instance.interceptors.request.use(
     if (accessToken) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
+
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (refreshToken) {
+      console.log('리프레시 컨피그에 끼움');
+      console.log(refreshToken);
+      config.headers['Refresh'] = `${refreshToken}`;
+    }
+
     config.withCredentials = true;
     return config;
   },
@@ -34,9 +42,7 @@ instance.interceptors.response.use(
 
       if (!originalRequest.isRetryAttempted && response.data.status) {
         originalRequest.isRetryAttempted = true;
-        console.log('리프레쉬 받아와야 해!');
         const refreshToken = localStorage.getItem('refreshToken');
-        console.log(`refreshToken ${refreshToken}`);
 
         const res = await axios.post(`${BASE_URL}/auth/refresh`, null, {
           headers: {
