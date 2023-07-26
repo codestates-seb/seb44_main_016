@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from '@emotion/styled';
 
 import { numToStrWithSign } from '../../utils/numToStrWithSign';
@@ -25,12 +26,21 @@ type PropsTimeline = {
 };
 
 export default function ArticleHeaderComponent(props: PropsFeed | PropsTimeline) {
-  let date: string, PriceText;
+  const [dateStr, setDateStr] = React.useState('');
+
+  // Date 객체의 hydration 에러로 인한 useEffect 처리
+  React.useEffect(() => {
+    if (props.type === 'feed') {
+      setDateStr(convertToKoreanDate(new Date(props.createdAt)));
+    } else {
+      setDateStr(convertToKoreanDate(new Date(props.faDate)));
+    }
+  });
+
+  let PriceText;
   if (props.type === 'feed') {
-    date = props.createdAt;
     PriceText = styled(S.PriceTextBase)``;
   } else {
-    date = props.faDate;
     PriceText =
       props.price < 0
         ? styled(S.PriceTextBase)`
@@ -52,7 +62,7 @@ export default function ArticleHeaderComponent(props: PropsFeed | PropsTimeline)
         <S.Texts className={props.windowType}>
           <S.Nickname>{props.children}</S.Nickname>
           {props.type === 'timeline' || props.windowType === ScreenEnum.MOBILE ? (
-            <S.DateText>{convertToKoreanDate(new Date(date))}</S.DateText>
+            <S.DateText>{dateStr}</S.DateText>
           ) : (
             <></>
           )}
@@ -63,7 +73,7 @@ export default function ArticleHeaderComponent(props: PropsFeed | PropsTimeline)
           props.windowType === ScreenEnum.MOBILE ? (
             <></>
           ) : (
-            <S.DateText>{convertToKoreanDate(new Date(props.createdAt))}</S.DateText>
+            <S.DateText>{dateStr}</S.DateText>
           )
         ) : props.category !== '' ? (
           <>
