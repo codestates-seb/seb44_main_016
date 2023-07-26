@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
 
 import AsideHamburgerBtn from './AsideHamburgerBtn';
 import useUserGlobalValue from '../redux/getUserInfo';
+import apiUser from '../../services/apiUser';
 
 type Props = {
   href?: string;
@@ -12,18 +14,15 @@ type Props = {
 export default function AsideProfileBox(props: Props) {
   const isShrinkOrMobile = ['shrink', 'mobile'].includes(props.className || '');
   const { nickname, loginId, profileImgPath } = useUserGlobalValue();
+  const { data: myInfoData } = useQuery(['userInfo'], apiUser.getUserInfo);
 
-  let hamburgerBtn = <></>;
-
-  if (!isShrinkOrMobile) {
-    hamburgerBtn = <AsideHamburgerBtn />;
-  }
+  const hamburgerBtn = isShrinkOrMobile ? <></> : <AsideHamburgerBtn />;
 
   return (
     <S.ProfileBoxContainer>
       <S.ProfileLeftBtn href='/user/mypage'>
         <S.UserProfileImgBox>
-          <img src={profileImgPath ?? ''} alt='프로필 사진' />
+          <img src={profileImgPath ?? myInfoData.profileImgPath ?? ''} alt='프로필 사진' />
         </S.UserProfileImgBox>
 
         <S.ProfileTexts>

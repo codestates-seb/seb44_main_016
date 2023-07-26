@@ -2,10 +2,10 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useQuery } from '@tanstack/react-query';
 
 import useMutateUser from '../../services/useMutateUser';
 import apiUser from '../../services/apiUser';
-import { useQuery } from '@tanstack/react-query';
 
 type Props = {
   className: string;
