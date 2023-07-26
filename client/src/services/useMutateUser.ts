@@ -47,6 +47,7 @@ const useMutateUser = {
           const accessToken = accessTokenWithBearer.split(' ')[1];
 
           const { userId, loginId, nickname, profileImgPath } = data.data;
+          console.log(profileImgPath);
           dispatch(login({ accessToken, userId, loginId, nickname, profileImgPath, isLoggedIn: true }));
 
           toast(`${nickname}님, 환영합니다!`);
