@@ -116,6 +116,9 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         String accessToken = delegateAccessToken(loginId, authorities);
         String refreshToken = delegateRefreshToken(loginId);
 
+        response.setHeader("Authorization", "Bearer " + accessToken);
+        response.setHeader("Refresh", refreshToken);
+
         String uri = createURI(accessToken, refreshToken).toString();
         getRedirectStrategy().sendRedirect(request, response, uri);
     }
@@ -148,9 +151,9 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 //                .scheme("http")
                 .scheme("https")
 //                .host("localhost")
-                .host("zerohip.co.kr")
+                .host("www.zerohip.co.kr")
 //                .path(443)
-                .port(443)
+//                .port(443)
                 .queryParams(queryParams)
                 .build()
                 .toUri();

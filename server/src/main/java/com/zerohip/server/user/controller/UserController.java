@@ -112,8 +112,8 @@ public class UserController {
             throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
         }
 
-        userPatchDto.setLoginId(authorId);
-        userService.updateUser(mapper.userPatchDtoToUser(userPatchDto));
+        User user = mapper.userPatchDtoToUser(userPatchDto);
+        userService.updateUser(user);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

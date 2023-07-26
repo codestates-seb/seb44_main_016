@@ -68,9 +68,9 @@ public class UserDto {
         @Size(min = 4, max = 10, message = "닉네임은 4 ~ 10자 사이여야 합니다.")
         private String nickname;
 
-        public void setLoginId(String loginId) {
-            this.loginId = loginId;
-        }
+        private String profileImgPath;
+
+
 
         // private 이미지 userImage
 
@@ -147,6 +147,7 @@ public class UserDto {
         private String loginId;
         private String password;
         private String nickname;
+        private String profileImgPath;
         private LocalDateTime modifiedAt;
 
     }
