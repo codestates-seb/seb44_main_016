@@ -1,3 +1,5 @@
+'use client';
+
 import CommonStyles from '../../styles/CommonStyles';
 import styled from '@emotion/styled';
 import ListItem from './ListItem';
