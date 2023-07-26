@@ -46,8 +46,11 @@ const useMutateUser = {
           const accessTokenWithBearer = data.headers.authorization;
           const accessToken = accessTokenWithBearer.split(' ')[1];
 
+          const refreshToken = data.headers.refresh;
+          console.log(`login ${refreshToken}`);
+          localStorage.setItem('refreshToken', refreshToken);
+
           const { userId, loginId, nickname, profileImgPath } = data.data;
-          console.log(profileImgPath);
           dispatch(login({ accessToken, userId, loginId, nickname, profileImgPath, isLoggedIn: true }));
 
           toast(`${nickname}님, 환영합니다!`);
@@ -74,6 +77,7 @@ const useMutateUser = {
         dispatch(logout());
         window.location.reload();
         router.push('/');
+        localStorage.removeItem('refreshToken');
         toast.success('로그아웃 되었습니다.');
       },
 
