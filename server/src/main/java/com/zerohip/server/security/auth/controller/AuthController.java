@@ -18,7 +18,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/refresh")
-    public void sendToken(@CookieValue("Refresh") String refreshToken,
+    public void sendToken(@RequestHeader("Refresh") String refreshToken,
                           HttpServletResponse response) throws IOException {
 
         String newAccessToken = authService.createAccessToken(refreshToken);
@@ -30,7 +30,7 @@ public class AuthController {
     }
 
     @DeleteMapping("/logout")
-    public ResponseEntity<?> logout(@CookieValue("Refresh") String refreshToken) {
+    public ResponseEntity<?> logout(@RequestHeader("Refresh") String refreshToken) {
 
         authService.deleteRefreshToken(refreshToken);
 

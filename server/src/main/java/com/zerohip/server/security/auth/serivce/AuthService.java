@@ -42,7 +42,6 @@ public class AuthService {
         Optional<User> optionalUser = userRepository.findUserByLoginId(authentication.getName());
         User user = optionalUser.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
-        //
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("loginId", user.getLoginId());
