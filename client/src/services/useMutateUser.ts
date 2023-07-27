@@ -42,12 +42,15 @@ const useMutateUser = {
     const dispatch = useAppDispatch();
     const { mutate, data } = useMutation(['login'], mutateFunction, {
       onSuccess: (data) => {
+        console.log(data);
         if (data.status === 200) {
           const accessTokenWithBearer = data.headers.authorization;
           const accessToken = accessTokenWithBearer.split(' ')[1];
 
+          const refreshToken = data.headers.refresh;
+          localStorage.setItem('refreshToken', refreshToken);
+
           const { userId, loginId, nickname, profileImgPath } = data.data;
-          console.log(profileImgPath);
           dispatch(login({ accessToken, userId, loginId, nickname, profileImgPath, isLoggedIn: true }));
 
           toast(`${nickname}님, 환영합니다!`);

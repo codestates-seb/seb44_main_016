@@ -71,6 +71,7 @@ const apiUser = {
   /** 회원 정보 수정 */
   updateMyInfo: async (userUpdateData: UserUpdateReqData) => {
     const response = await instance.patch(`${BASE_URL}/user/update`, userUpdateData);
+    console.log(response);
     return response;
   },
 

@@ -14,6 +14,12 @@ instance.interceptors.request.use(
     if (accessToken) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
+
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (refreshToken) {
+      config.headers['Refresh'] = `${refreshToken}`;
+    }
+
     config.withCredentials = true;
     return config;
   },
@@ -34,10 +40,12 @@ instance.interceptors.response.use(
 
       if (!originalRequest.isRetryAttempted && response.data.status) {
         originalRequest.isRetryAttempted = true;
+        const refreshToken = localStorage.getItem('refreshToken');
 
         const res = await axios.post(`${BASE_URL}/auth/refresh`, null, {
           headers: {
             'Content-Type': 'application/json',
+            Refresh: `${refreshToken}`,
           },
           withCredentials: true,
         });

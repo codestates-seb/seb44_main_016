@@ -24,8 +24,8 @@ const withAuth = (Component: ComponentType) => (props: object) => {
       setChangedAccessToken(newAccessToken);
     },
     onError: (err) => {
-      // dispatch(logout()); 배포 직후 주석 제거
-      // router.push('/');
+      dispatch(logout());
+      router.push('/');
       throw err;
     },
   });
