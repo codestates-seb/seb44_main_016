@@ -31,7 +31,7 @@ export interface FaRecHeaderData {
   timeLineCount: number;
   filePath: string;
   isBookmark: boolean;
-  users: FaRecUser[];
+  user: FaRecUser[];
 }
 
 export type FeedArticleResType = {

@@ -16,7 +16,6 @@ interface FaRecHeaderProps {
 
 export default function FaRecHeader({ setActiveTab, isLoading, isError, error, data }: FaRecHeaderProps) {
   const { financialRecordName, memo, totalCount, timeLineCount, user, filePath } = data || {};
-  console.log(data);
   const router = useRouter();
   const faRecId = router.query.slug;
   const handleButtonClick = (tabName: string) => {
