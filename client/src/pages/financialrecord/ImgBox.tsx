@@ -6,7 +6,7 @@ interface ImgBoxProps {
   initialImage: string | undefined;
   faRecName: string | null;
   initialFaRecName: string | undefined;
-  randomImg: string;
+  initialImg: string;
   onFileChange: (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
 }
 
