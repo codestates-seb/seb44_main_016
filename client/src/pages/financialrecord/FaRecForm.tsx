@@ -141,7 +141,7 @@ export default function FaRecForm({
     }
     formData.append('data', new Blob([JSON.stringify(dataObject)], { type: 'application/json' }));
     formData.append('file', imgFile);
-    // 콘솔
+    // 콘솔daaㅇ
     formData.forEach((value, key) => {
       console.log(`${key}: ${value}`);
     });
@@ -157,7 +157,7 @@ export default function FaRecForm({
           initialImage={initialImage}
           faRecName={faRecName}
           initialFaRecName={initialFaRecName}
-          randomImg={randomImg}
+          randomImg={initialImage || randomImg}
           onFileChange={onFileChange}
         />
         {cropModal && (
