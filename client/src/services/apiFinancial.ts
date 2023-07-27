@@ -8,7 +8,7 @@ export const APIfinancialRecord = {
       withCredentials: true,
     });
     // const res = await axios.get('/data/recordList.json');
-    return res.data;
+    return res.data.data;
   },
   // 가계부 POST
   createFaRec: async (formData: FormData) => {
@@ -18,9 +18,6 @@ export const APIfinancialRecord = {
         'Content-Type': 'multipart/form-data',
       },
     });
-    if (!res.data.success) {
-      throw new Error(res.data.message || 'Error creating financial record');
-    }
     return res.data;
   },
   // 가계부 1개 조회 GET

@@ -130,15 +130,16 @@ export default function FaRecForm({
       financialRecordName: faRecName || '',
       memo: faRecDesc || '',
     };
-    if (pageType === 'edit') {
-      dataObject.financialRecordId = financialRecordId;
-    }
-    formData.append('data', JSON.stringify(dataObject));
     let imgFile: string | File = croppedImage || initialImage || randomImg;
 
     if (typeof imgFile === 'string') {
       imgFile = await blobUrlToFile(imgFile);
     }
+
+    if (pageType === 'edit') {
+      dataObject.financialRecordId = financialRecordId;
+    }
+    formData.append('data', new Blob([JSON.stringify(dataObject)], { type: 'application/json' }));
     formData.append('file', imgFile);
     // 콘솔
     formData.forEach((value, key) => {
