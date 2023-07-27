@@ -155,7 +155,7 @@ export const AboutStyles = {
     }
 
     div.textBox {
-      max-height: 300px;
+      max-height: 220px;
       overflow: scroll;
     }
     div.textBox > div {
