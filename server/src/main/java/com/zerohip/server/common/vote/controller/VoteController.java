@@ -41,11 +41,11 @@ public class VoteController {
     }
 
     @GetMapping("/{articleId}")
-    public ResponseEntity<List<VoteResponse>> getVotedByFeed(
+    public ResponseEntity<List<VoteResponse>> getVotedByFeedArticle(
             @PathVariable Long articleId,
             @AuthenticationPrincipal String authorId
     ) {
-        return ResponseEntity.ok(voteService.getVotedByFeed(
+        return ResponseEntity.ok(voteService.getVotedByFeedArticle(
                 articleId,
                 authorId
         ));

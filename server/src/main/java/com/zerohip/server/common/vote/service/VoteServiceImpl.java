@@ -73,7 +73,7 @@ public class VoteServiceImpl implements VoteService{
     }
 
     @Override
-    public List<VoteResponse> getVotedByFeed(Long articleId, String authorId) {
+    public List<VoteResponse> getVotedByFeedArticle(Long articleId, String authorId) {
         return getResponseList(
                 voteRepository.findAllByFeedArticle_ArticleId(articleId)
         );

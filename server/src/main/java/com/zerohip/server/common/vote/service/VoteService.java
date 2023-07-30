@@ -8,5 +8,5 @@ import java.util.List;
 public interface VoteService {
     void voteFeedArticle(Long articleId, VoteType voteType, String authorId);
 
-    List<VoteResponse> getVotedByFeed(Long articleId, String authorId);
+    List<VoteResponse> getVotedByFeedArticle(Long articleId, String authorId);
 }
