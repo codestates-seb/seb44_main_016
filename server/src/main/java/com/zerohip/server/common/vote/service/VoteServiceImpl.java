@@ -73,16 +73,10 @@ public class VoteServiceImpl implements VoteService{
     }
 
     @Override
-    public List<VoteResponse> getVotedByFeedArticle(Long articleId, String authorId) {
-        return getResponseList(
-                voteRepository.findAllByFeedArticle_ArticleId(articleId)
+    public VoteResponse getVotedByFeedArticle(Long articleId, String authorId) {
+        return toVoteResponse(
+                voteRepository.findByFeedArticle_ArticleId(articleId)
         );
-    }
-
-    private List<VoteResponse> getResponseList(List<Vote> votes) {
-        return votes.stream()
-                .map(vote -> toVoteResponse(vote))
-                .collect(Collectors.toList());
     }
 
     @Override

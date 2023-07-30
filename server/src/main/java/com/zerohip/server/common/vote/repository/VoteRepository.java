@@ -27,7 +27,7 @@ public interface VoteRepository extends JpaRepository<Vote, Long> {
     @Query(value = "SELECT COUNT(v.id) FROM Vote v WHERE v.feedArticle.articleId = :articleId AND v.voteType = 'FLEX'")
     int getFlexVoteCountByArticleId(@Param("articleId") Long articleId);
 
-    List<Vote> findAllByFeedArticle_ArticleId(Long articleId);
+    Vote findByFeedArticle_ArticleId(Long articleId);
 
     @Query("SELECT v.feedArticle.id, SUM(CASE WHEN v.voteType = 'FLEX' THEN -1 ELSE 1 END) FROM Vote v WHERE v.feedArticle.createdAt >= :oneMonthAgo GROUP BY v.feedArticle.id")
     List<Object[]> countVotesForArticlesFromLastMonth(@Param("oneMonthAgo") LocalDateTime oneMonthAgo);

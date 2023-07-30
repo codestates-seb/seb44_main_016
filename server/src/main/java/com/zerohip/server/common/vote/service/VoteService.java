@@ -9,7 +9,7 @@ import java.util.List;
 public interface VoteService {
     void voteFeedArticle(Long articleId, VoteType voteType, String authorId);
 
-    List<VoteResponse> getVotedByFeedArticle(Long articleId, String authorId);
+    VoteResponse getVotedByFeedArticle(Long articleId, String authorId);
 
     VoteResponse toVoteResponse(Vote vote);
 }

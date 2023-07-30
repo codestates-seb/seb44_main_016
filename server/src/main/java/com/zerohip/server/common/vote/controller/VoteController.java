@@ -41,7 +41,7 @@ public class VoteController {
     }
 
     @GetMapping("/{articleId}")
-    public ResponseEntity<List<VoteResponse>> getVotedByFeedArticle(
+    public ResponseEntity<VoteResponse> getVotedByFeedArticle(
             @PathVariable Long articleId,
             @AuthenticationPrincipal String authorId
     ) {
