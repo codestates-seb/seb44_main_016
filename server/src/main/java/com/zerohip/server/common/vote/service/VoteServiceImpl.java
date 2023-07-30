@@ -81,7 +81,22 @@ public class VoteServiceImpl implements VoteService{
 
     private List<VoteResponse> getResponseList(List<Vote> votes) {
         return votes.stream()
-                .map(VoteResponse::toResponse)
+                .map(vote -> toVoteResponse(vote))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public VoteResponse toVoteResponse(Vote vote) {
+        int savingCount = getSavingVoteCountByArticleId(vote.getFeedArticle().getArticleId());
+        int flexCount = getFlexVoteCountByArticleId(vote.getFeedArticle().getArticleId());
+        return VoteResponse.toResponse(vote, savingCount, flexCount);
+    }
+
+    private int getFlexVoteCountByArticleId(Long articleId) {
+        return voteRepository.getFlexVoteCountByArticleId(articleId);
+    }
+
+    private int getSavingVoteCountByArticleId(Long articleId) {
+        return voteRepository.getSavingVoteCountByArticleId(articleId);
     }
 }
