@@ -71,8 +71,7 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
   // 가계부 전체 조회(동적쿼리 사용 예정)
   @Override
   public List<FinancialRecord> findFaRecs(String authorId) {
-    User findUser = userService.findUserByLoginId(authorId);
-    List<FinancialRecord> financialRecords = findUser.getFinancialRecords();
+    List<FinancialRecord> financialRecords = repository.findAllByAuthorId(authorId);
     log.info("financialRecords : {}", financialRecords.toString());
     return financialRecords;
   }
@@ -103,11 +102,10 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
       Img img = saveImg(findFaRec, file);
       findFaRec.setProfileImg(img);
     }
-
-    return repository.save(findFaRec);
+    return findFaRec;
   }
 
-  private static void updateFaRecDetails(FinancialRecordDto.Patch patchParam, FinancialRecord findFaRec) {
+  private void updateFaRecDetails(FinancialRecordDto.Patch patchParam, FinancialRecord findFaRec) {
     findFaRec.setFinancialRecordName(patchParam.getFinancialRecordName());
     findFaRec.setMemo(patchParam.getMemo());
   }
