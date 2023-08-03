@@ -27,11 +27,11 @@ export interface FaRecHeaderData {
   financialRecordId: number;
   financialRecordName: string;
   memo: string;
-  articleCount: number;
+  totalCount: number;
   timeLineCount: number;
-  imgPath: string;
+  filePath: string;
   isBookmark: boolean;
-  users: FaRecUser[];
+  user: FaRecUser[];
 }
 
 export type FeedArticleResType = {

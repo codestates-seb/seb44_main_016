@@ -12,7 +12,7 @@ type FaRecArticleResType = {
   financialRecordId: number;
   financialRecordName: string;
   memo: string;
-  imgPath: string;
+  filePath: string;
 };
 
 function FaRecEditPage() {
@@ -24,11 +24,11 @@ function FaRecEditPage() {
     { staleTime: 1000 * 60 * 30 }
   );
 
-  let financialRecordName, memo, imgPath;
+  let financialRecordName, memo, filePath;
   if (data) {
     financialRecordName = data.financialRecordName;
     memo = data.memo;
-    imgPath = data.imgPath;
+    filePath = data.filePath;
   }
   if (isLoading) {
     return <Loading />;
@@ -50,7 +50,7 @@ function FaRecEditPage() {
           financialRecordId={financialRecordId}
           initialFaRecName={financialRecordName}
           initialFaRecDesc={memo}
-          initialImage={imgPath}
+          initialImage={filePath}
         />
       )}
     </>

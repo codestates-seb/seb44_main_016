@@ -15,8 +15,7 @@ interface FaRecHeaderProps {
 }
 
 export default function FaRecHeader({ setActiveTab, isLoading, isError, error, data }: FaRecHeaderProps) {
-  const { financialRecordName, memo, articleCount, timeLineCount, users, imgPath } = data || {};
-
+  const { financialRecordName, memo, totalCount, timeLineCount, user, filePath } = data || {};
   const router = useRouter();
   const faRecId = router.query.slug;
   const handleButtonClick = (tabName: string) => {
@@ -33,7 +32,7 @@ export default function FaRecHeader({ setActiveTab, isLoading, isError, error, d
         ) : (
           <>
             <S.ImgBox>
-              <img src={imgPath} alt={`${financialRecordName} 프로필 사진`} />
+              <img src={filePath} alt={`${financialRecordName} 프로필 사진`} />
             </S.ImgBox>
             <S.ContentBox>
               <div>
@@ -55,7 +54,7 @@ export default function FaRecHeader({ setActiveTab, isLoading, isError, error, d
               <S.ButtonWrap>
                 <S.aLink href='#article' onClick={() => handleButtonClick('가계부')}>
                   게시물
-                  <span>{articleCount}</span>
+                  <span>{totalCount}</span>
                 </S.aLink>
                 <S.aLink href='#timeline' onClick={() => handleButtonClick('타임라인')}>
                   타임라인
@@ -63,7 +62,7 @@ export default function FaRecHeader({ setActiveTab, isLoading, isError, error, d
                 </S.aLink>
                 <S.Button type='button'>
                   멤버
-                  <span>{users && users.length}</span>
+                  <span>{user && user.length}</span>
                 </S.Button>
               </S.ButtonWrap>
               <S.DescContainer>{memo}</S.DescContainer>

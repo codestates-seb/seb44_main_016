@@ -29,15 +29,13 @@ function FinancialPage() {
   const tabs = ['가계부', '타임라인'];
   const [page, setPage] = useState(1);
   const size = 10;
-  console.log(financialRecordId);
-  // 데이터 요청
+
   const {
     data: faRecData,
     error: faRecError,
     isError: isFaRecError,
     isLoading: isFaRecLoading,
   } = useQuery(['faRecHeader'], () => APIfinancialRecord.getFaRec(financialRecordId), {
-    staleTime: 1000 * 60 * 30,
     enabled: !!financialRecordId,
   });
   const {

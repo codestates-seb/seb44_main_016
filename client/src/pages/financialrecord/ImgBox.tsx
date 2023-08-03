@@ -6,7 +6,7 @@ interface ImgBoxProps {
   initialImage: string | undefined;
   faRecName: string | null;
   initialFaRecName: string | undefined;
-  randomImg: string;
+  initialImg: string;
   onFileChange: (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
 }
 
@@ -15,7 +15,7 @@ export default function ImgBox({
   initialImage,
   faRecName,
   initialFaRecName,
-  randomImg,
+  initialImg,
   onFileChange,
 }: ImgBoxProps) {
   return (
@@ -25,7 +25,7 @@ export default function ImgBox({
       ) : initialImage ? (
         <img src={initialImage} alt={`${initialFaRecName} 프로필 사진`} />
       ) : (
-        <img src={randomImg} alt={`${faRecName} 프로필 사진`} />
+        <img src={initialImg} alt={`${faRecName} 프로필 사진`} />
       )}
 
       <S.FileInput type='file' id='addFaRecImg' accept='image/*' onChange={onFileChange} />

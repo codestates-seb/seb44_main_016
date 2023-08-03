@@ -130,21 +130,17 @@ export default function FaRecForm({
       financialRecordName: faRecName || '',
       memo: faRecDesc || '',
     };
-    if (pageType === 'edit') {
-      dataObject.financialRecordId = financialRecordId;
-    }
-    formData.append('data', JSON.stringify(dataObject));
     let imgFile: string | File = croppedImage || initialImage || randomImg;
 
     if (typeof imgFile === 'string') {
       imgFile = await blobUrlToFile(imgFile);
     }
-    formData.append('file', imgFile);
-    // 콘솔
-    formData.forEach((value, key) => {
-      console.log(`${key}: ${value}`);
-    });
 
+    if (pageType === 'edit') {
+      dataObject.financialRecordId = financialRecordId;
+    }
+    formData.append('data', new Blob([JSON.stringify(dataObject)], { type: 'application/json' }));
+    formData.append('file', imgFile);
     mutate(formData);
   };
 
@@ -156,7 +152,7 @@ export default function FaRecForm({
           initialImage={initialImage}
           faRecName={faRecName}
           initialFaRecName={initialFaRecName}
-          randomImg={randomImg}
+          initialImg={initialImage || randomImg}
           onFileChange={onFileChange}
         />
         {cropModal && (
