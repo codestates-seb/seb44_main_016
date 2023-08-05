@@ -18,19 +18,29 @@ export const APISns = {
   deleteFeedArticle: async (feedArticleId: number) => {
     const res = await instance.delete(`${BASE_URL}/feedArticles/${feedArticleId}`);
   },
-  // [POST] SNS
-  postFeedArticle: async (formData: FormData, feedType: number, content: string) => {
+  // [POST] or [PATCH] SNS
+  editFeedArticle: async (feedArticleId: number, formData: FormData, feedType: number, content: string) => {
+    const isPost = isNaN(feedArticleId);
+
     const body: FeedArticleReqType = {
       feedType: feedType === 1 ? '절약팁' : '허락해줘', // 2: 허락해줘
       content,
     };
     formData.append('data', JSON.stringify(body));
 
-    await axios.post(`${BASE_URL}/feedArticles`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    if (isPost) {
+      await axios.post(`${BASE_URL}/feedArticles`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+    } else {
+      await axios.patch(`${BASE_URL}/feedArticles/${feedArticleId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+    }
   },
 };
 

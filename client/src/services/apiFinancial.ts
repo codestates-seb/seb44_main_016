@@ -44,6 +44,7 @@ export const APIfinancialRecord = {
     const res = await instance.get(`${BASE_URL}/financialrecord/${financialRecordId}`);
     return res.data;
   },
+
   // 가계부 게시글 GET
   getRecordArticle: async (financialRecordId: number, page: number, size: number) => {
     // const res = await axios.get(
@@ -62,10 +63,11 @@ export const APIfinancialRecord = {
       `${BASE_URL}/financialrecord/${financialRecordId}/article/${financialRecordArticleId}`
     );
   },
-  // 가계부 게시글 POST
-  postFeedArticle: async (
+  // 가계부 게시글 POST or PATCH
+  editRecordArticle: async (
     formData: FormData,
     faRecId: number,
+    faRecArticleId: number,
     category: string,
     faDate: Date,
     title: string,
@@ -73,6 +75,8 @@ export const APIfinancialRecord = {
     content: string,
     scope: number
   ) => {
+    const isPost = isNaN(faRecArticleId);
+
     const body: FaRecArticleReqType = {
       financialRecordId: faRecId,
       category,
@@ -84,10 +88,18 @@ export const APIfinancialRecord = {
     };
     formData.append('data', JSON.stringify(body));
 
-    await instance.post(`${BASE_URL}/financialrecord/${faRecId}/article'`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    if (isPost) {
+      await instance.post(`${BASE_URL}/financialrecord/${faRecId}/article`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+    } else {
+      await instance.patch(`${BASE_URL}/financialrecord/${faRecId}/article/${faRecArticleId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+    }
   },
 };

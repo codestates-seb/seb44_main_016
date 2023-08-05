@@ -20,6 +20,9 @@ function EditorPage() {
   const router = useRouter();
 
   const [isEdit, setIsEdit] = React.useState(false);
+  const [faRecArticleId, setFaRecArticleId] = React.useState(NaN);
+  const [feedArticleId, setFeedArticleId] = React.useState(NaN);
+
   const [articleType, setArticleType] = React.useState(0); // 가계부/절약팁/허락해줘 (라디오 버튼)
   /* ↓ 'articleType=가계부'일 경우에만 표시 ↓ */
   const [faRecId, setFaRecId] = React.useState(NaN); // 가계부의 고유번호
@@ -41,24 +44,15 @@ function EditorPage() {
 
     const params = new URLSearchParams(window.location.search);
 
-    const paramFaRecId = params.get('faRecId');
-    const paramFaRecArticleId = params.get('faRecArticleId');
-    const paramFeedArticleId = params.get('feedArticleId');
+    const paramFaRecId = Number(params.get('faRecId'));
+    const paramFaRecArticleId = Number(params.get('faRecArticleId'));
+    const paramFeedArticleId = Number(params.get('feedArticleId'));
+
+    setFaRecId(paramFaRecId || 0);
+    setFaRecArticleId(paramFaRecArticleId);
+    setFeedArticleId(paramFeedArticleId);
 
     setIsEdit(!!(paramFaRecId || paramFaRecArticleId || paramFeedArticleId));
-
-    if (paramFaRecId) {
-      if (paramFaRecArticleId) {
-        // const {} = getFaRecArticle(paramFaRecArticleId);
-      } else {
-        setFaRecId(Number(paramFaRecId));
-      }
-      if (paramFeedArticleId) {
-        // getFeedArticle(paramFeedArticleId);
-      }
-    } else {
-      setFaRecId(0);
-    }
   }, []);
 
   const handleChangeArticleType = (id: number) => {
@@ -104,10 +98,20 @@ function EditorPage() {
 
       if (articleType === 0) {
         // 가계부 (게시글/타임라인)
-        APIfinancialRecord.postFeedArticle(formData, faRecId, category, faDate, title, price, content, scope);
+        APIfinancialRecord.editRecordArticle(
+          formData,
+          faRecId,
+          faRecArticleId,
+          category,
+          faDate,
+          title,
+          price,
+          content,
+          scope
+        );
       } else {
         // SNS (절약팁/허락해줘)
-        APISns.postFeedArticle(formData, articleType, content);
+        APISns.editFeedArticle(feedArticleId, formData, articleType, content);
       }
     } catch (error) {
       console.error('Requset 에러 발생:', error);
