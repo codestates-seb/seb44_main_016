@@ -13,6 +13,8 @@ import { FeedArticleResType, FaRecArticleResType, VoteType } from '../types/arti
 import { useWindowType, useWindowSize } from '../hooks/useWindowSize';
 import { ScreenEnum } from '../constants/enums';
 import useUserGlobalValue from './redux/getUserInfo';
+import { APISns } from '../services/apiSns';
+import { APIfinancialRecord } from '../services/apiFinancial';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -91,11 +93,9 @@ export default function SnsArticle({ type, data }: PropsFeed | PropsTimeline) {
         // 예 (삭제하겠습니다)
         try {
           if (type === 'feed') {
-            const res = await axios.delete(`${BASE_URL}/feedArticles/${data.feedArticleId}`);
+            APISns.deleteFeedArticle(data.feedArticleId);
           } else {
-            const res = await axios.delete(
-              `${BASE_URL}/financialrecord/${data.financialRecordId}/article/${data.financialRecordArticleId}`
-            );
+            APIfinancialRecord.deleteRecordArticle(data.financialRecordId, data.financialRecordArticleId);
           }
         } catch (error) {}
       }

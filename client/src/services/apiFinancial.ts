@@ -54,4 +54,10 @@ export const APIfinancialRecord = {
 
     return { data, pageInfo };
   },
+  // 가계부 게시글 DELETE
+  deleteRecordArticle: async (financialRecordId: number, financialRecordArticleId: number) => {
+    const res = await instance.delete(
+      `${BASE_URL}/financialrecord/${financialRecordId}/article/${financialRecordArticleId}`
+    );
+  },
 };
