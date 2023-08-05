@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { instance } from './tokenInstance';
+import { VoteType } from '../types/article';
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const APISns = {
@@ -21,8 +23,8 @@ export const APIVote = {
   // [GET] Vote
   getVote: async (feedArticleId: number) => {
     const res = await axios.get(`${BASE_URL}/vote/${feedArticleId}`);
-    const { data, pageInfo } = res.data;
-    return { data, pageInfo };
+    const voteData: VoteType = res.data;
+    return voteData;
   },
   // [POST] 절약/Flex 버튼 눌렀을 시
   postVote: async (feedArticleId: number, voteType: 'SAVING' | 'FLEX') => {
