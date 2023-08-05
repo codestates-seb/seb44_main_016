@@ -13,8 +13,8 @@ import withAuth from '../../components/WithAuth';
 
 import { CATEGORY } from '../../constants/category';
 import { FaRecArticleReqType, FeedArticleReqType } from '../../types/article';
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+import { APISns } from '../../services/apiSns';
+import { APIfinancialRecord } from '../../services/apiFinancial';
 
 function EditorPage() {
   const [isEdit, setIsEdit] = React.useState(false);
@@ -96,36 +96,11 @@ function EditorPage() {
       });
 
       if (articleType === 0) {
-        // 가계부
-        const body: FaRecArticleReqType = {
-          financialRecordId: faRecId,
-          category,
-          faDate: faDate.toISOString(),
-          title,
-          price,
-          content,
-          scope: scope === 0 ? '가계부 게시글' : '가계부 타임라인',
-        };
-        formData.append('data', JSON.stringify(body));
-
-        await axios.post(`${BASE_URL}/financialrecord/${faRecId}/article'`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        // 가계부 (게시글/타임라인)
+        APIfinancialRecord.postFeedArticle(formData, faRecId, category, faDate, title, price, content, scope);
       } else {
-        // 절약팁/허락해줘
-        const body: FeedArticleReqType = {
-          feedType: articleType === 1 ? '절약팁' : '허락해줘',
-          content,
-        };
-        formData.append('data', JSON.stringify(body));
-
-        await axios.post(`${BASE_URL}/feedArticles`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        // SNS (절약팁/허락해줘)
+        APISns.postFeedArticle(formData, articleType, content);
       }
     } catch (error) {
       console.error('Requset 에러 발생:', error);
