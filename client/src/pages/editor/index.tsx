@@ -1,7 +1,6 @@
 import React from 'react';
-
 import styled from '@emotion/styled';
-import axios from 'axios';
+import { useRouter } from 'next/router';
 
 import CommonStyles from '../../styles/CommonStyles';
 import SelectOption from './SelectOption';
@@ -10,13 +9,16 @@ import InputNaturalNumber from './InputNaturalNumber';
 import RadioSet from './RadioSet';
 import ImgsUploader from './ImgsUploader';
 import withAuth from '../../components/WithAuth';
+import useUserGlobalValue from '../../components/redux/getUserInfo';
 
 import { CATEGORY } from '../../constants/category';
-import { FaRecArticleReqType, FeedArticleReqType } from '../../types/article';
 import { APISns } from '../../services/apiSns';
 import { APIfinancialRecord } from '../../services/apiFinancial';
 
 function EditorPage() {
+  const { isLoggedIn } = useUserGlobalValue();
+  const router = useRouter();
+
   const [isEdit, setIsEdit] = React.useState(false);
   const [articleType, setArticleType] = React.useState(0); // 가계부/절약팁/허락해줘 (라디오 버튼)
   /* ↓ 'articleType=가계부'일 경우에만 표시 ↓ */
@@ -32,6 +34,11 @@ function EditorPage() {
   const [scope, setScope] = React.useState(0); // 가계부에만/타임라인에도
 
   React.useEffect(() => {
+    if (!isLoggedIn) {
+      router.push('/user/login');
+      alert('로그인이 필요합니다.');
+    }
+
     const params = new URLSearchParams(window.location.search);
 
     const paramFaRecId = params.get('faRecId');
@@ -106,6 +113,10 @@ function EditorPage() {
       console.error('Requset 에러 발생:', error);
     }
   };
+
+  if (!isLoggedIn) {
+    return <></>;
+  }
 
   return (
     <S.EditorContainer onSubmit={handleSubmit}>
