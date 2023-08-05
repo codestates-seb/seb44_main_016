@@ -1,12 +1,9 @@
 import React from 'react'; // useState 사용
 import styled from '@emotion/styled';
-import axios from 'axios';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
-import { APISns, APIVote } from '../../services/apiSns';
+import { APIVote } from '../../services/apiSns';
 import { VoteType } from '../../types/article';
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 type Props = {
   feedArticleId: number;
