@@ -1,6 +1,5 @@
 import React from 'react'; // useState 사용
 import styled from '@emotion/styled';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 
 import CommonStyles from '../styles/CommonStyles';
@@ -13,10 +12,8 @@ import { FeedArticleResType, FaRecArticleResType, VoteType } from '../types/arti
 import { useWindowType, useWindowSize } from '../hooks/useWindowSize';
 import { ScreenEnum } from '../constants/enums';
 import useUserGlobalValue from './redux/getUserInfo';
-import { APISns, APIVote } from '../services/apiSns';
+import { APISns } from '../services/apiSns';
 import { APIfinancialRecord } from '../services/apiFinancial';
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 /* type은 추후 다른 파일로 분리하고 Import할 예정 */
 type PropsFeed = {
