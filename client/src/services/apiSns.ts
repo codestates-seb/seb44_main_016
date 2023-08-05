@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import { instance } from './tokenInstance';
+import { instance } from './tokenInstance';
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const APISns = {
@@ -13,6 +13,19 @@ export const APISns = {
   },
   // [DELETE] SNS
   deleteFeedArticle: async (feedArticleId: number) => {
-    const res = await axios.delete(`${BASE_URL}/feedArticles/${feedArticleId}`);
+    const res = await instance.delete(`${BASE_URL}/feedArticles/${feedArticleId}`);
+  },
+};
+
+export const APIVote = {
+  // [GET] Vote
+  getVote: async (feedArticleId: number) => {
+    const res = await axios.get(`${BASE_URL}/vote/${feedArticleId}`);
+    const { data, pageInfo } = res.data;
+    return { data, pageInfo };
+  },
+  // [POST] 절약/Flex 버튼 눌렀을 시
+  postVote: async (feedArticleId: number, voteType: 'SAVING' | 'FLEX') => {
+    const res = await axios.get(`${BASE_URL}/vote/${feedArticleId}?voteType=${voteType}`);
   },
 };
