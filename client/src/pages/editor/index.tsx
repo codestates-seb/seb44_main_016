@@ -16,11 +16,6 @@ import { FaRecArticleReqType, FeedArticleReqType } from '../../types/article';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-async function getFeedArticle(page: number, size: number) {
-  const res = await axios.get(`${BASE_URL}/feedArticles`);
-  return res.data;
-}
-
 function EditorPage() {
   const [isEdit, setIsEdit] = React.useState(false);
   const [articleType, setArticleType] = React.useState(0); // 가계부/절약팁/허락해줘 (라디오 버튼)
