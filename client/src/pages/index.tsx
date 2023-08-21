@@ -13,21 +13,12 @@ import {
   feedArticleDummyB,
 } from '../constants/articleDummyData';
 import { FeedArticleResType } from '../types/article';
+import { APISns } from '../services/apiSns';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const PAGE_SIZE = 10; // 한 번에 가져올 게시글 개수
 
-async function getFeedArticles(page: number, size: number) {
-  const paramsStr = new URLSearchParams(window.location.search).toString();
-  const newQueries = paramsStr === '' ? `page=${page}&size=${size}` : paramsStr; // 홈 | 랭킹(명예의 전당) 구분
-
-  const res = await axios.get(`${BASE_URL}/feedArticles?${newQueries}`);
-  const { data, pageInfo } = res.data;
-  return { data, pageInfo };
-}
-
 export default function HomePage() {
-  const fetchFeedArticles = ({ pageParam = 1 }) => getFeedArticles(pageParam, PAGE_SIZE);
+  const fetchFeedArticles = ({ pageParam = 1 }) => APISns.getFeedArticles(pageParam, PAGE_SIZE);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery(
     ['feedArticles'],
