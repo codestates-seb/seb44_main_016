@@ -113,7 +113,7 @@ public class UserController {
         }
 
         User user = mapper.userPatchDtoToUser(userPatchDto);
-        userService.updateUser(user);
+        userService.updateUser(authorId, user);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

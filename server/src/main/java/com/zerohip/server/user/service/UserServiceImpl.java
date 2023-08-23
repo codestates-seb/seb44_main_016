@@ -47,8 +47,9 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public User updateUser(User user) {
+    public User updateUser(String loginId, User user) {
 
+        findVerifyUserByLoginId(loginId);
         User findUser = findVerifyUserByLoginId(user.getLoginId());
 
 

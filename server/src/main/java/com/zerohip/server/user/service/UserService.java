@@ -21,7 +21,7 @@ public interface UserService {
     List<User> findUsers();
 
     // User 수정
-    User updateUser(User user);
+    User updateUser(String loginId, User user);
 
     // User 삭제
     void deleteUser(String loginId, String password);
