@@ -5,6 +5,7 @@ import com.zerohip.server.common.audit.Auditable;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
 import com.zerohip.server.financialRecord.entity.FinancialRecord;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
+import com.zerohip.server.follow.entity.Follow;
 import lombok.*;
 
 import javax.persistence.*;
@@ -94,6 +95,12 @@ public class User extends Auditable {
     @Builder.Default
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)   // 회원 탈퇴 시 리스트 삭제
+    private List<Follow> followerList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)   // 회원 탈퇴 시 리스트 삭제
+    private List<Follow> followingList = new ArrayList<>();
 
 
     // 트랜잭션 전략 설정 필요

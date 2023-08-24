@@ -67,7 +67,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User findUserByUserId(Long userId) {
-        return null;
+
+        return findVerifyUserByUserId(userId);
     }
 
     @Override
@@ -129,7 +130,7 @@ public class UserServiceImpl implements UserService{
 
         Optional<User> user = userRepository.findUserByLoginId(loginId);
         if (user.isPresent()) {
-            throw new BusinessLogicException(ExceptionCode.LoginId_EXISTS);
+            throw new BusinessLogicException(ExceptionCode.LOGINId_EXISTS);
         }
     }
 
