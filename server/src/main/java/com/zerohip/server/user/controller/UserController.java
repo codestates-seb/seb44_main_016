@@ -2,11 +2,13 @@ package com.zerohip.server.user.controller;
 
 import com.zerohip.server.common.exception.BusinessLogicException;
 import com.zerohip.server.common.exception.ExceptionCode;
+import com.zerohip.server.common.page.dto.MultiResponseDto;
 import com.zerohip.server.user.dto.UserDto;
 import com.zerohip.server.user.entity.User;
 import com.zerohip.server.user.mapper.UserMapper;
 import com.zerohip.server.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -73,33 +76,18 @@ public class UserController {
 
     // 마이페이지
     @GetMapping("/mypage")
-    public ResponseEntity<?> getMyPage(@AuthenticationPrincipal String authorId) {
+    public ResponseEntity<?> getMyPage(@AuthenticationPrincipal String authorId,
+                                       @RequestParam @Positive int page,
+                                       @RequestParam @Positive int size) {
 
         if (authorId == null) {
             throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
         }
 
-        User author = userService.findUserByLoginId(authorId);
+        Page<User> userPages = userService.findUserPage(authorId, page, size);
+        List<UserDto.MyPageResponse> responses = mapper.userToMyPageResponse(userPages.getContent());
 
-        User newAuthor = new User(author.getUserId(), author.getLoginId(), author.getNickname(), author.getProfileImgPath());
-
-        List<User> followingList = Arrays.asList(
-                new User(5L, "junp", "준프님", false, "https://source.boringavatars.com/beam/150/junp"),
-                new User(6L, "hahan", "선빵이", true, "https://source.boringavatars.com/beam/150/arthur5")
-        );
-
-        List<User> followerList = Arrays.asList(
-                new User(10L, "ogu", "햄구맘", true, "https://source.boringavatars.com/beam/150/waypil"),
-                new User(11L, "apple", "망고친구", false, "https://source.boringavatars.com/beam/150/yoonhee"),
-                new User(12L, "maximum123", "나그네입니다최대글자", false, "https://source.boringavatars.com/beam/150/hanstar")
-        );
-
-        Map<String, Object> response = new LinkedHashMap<>();
-        response.put("User", newAuthor);
-        response.put("followingList", followingList);
-        response.put("followerList", followerList);
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity(new MultiResponseDto<>(responses, userPages), HttpStatus.OK);
     }
 
 

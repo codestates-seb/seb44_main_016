@@ -2,10 +2,14 @@ package com.zerohip.server.user.service;
 
 import com.zerohip.server.common.exception.BusinessLogicException;
 import com.zerohip.server.common.exception.ExceptionCode;
+import com.zerohip.server.feedArticle.entity.FeedArticle;
 import com.zerohip.server.security.utils.CustomAuthorityUtils;
 import com.zerohip.server.user.entity.User;
 import com.zerohip.server.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,6 +65,14 @@ public class UserServiceImpl implements UserService{
                 .ifPresent(profileImgPath -> findUser.setProfileImgPath(profileImgPath));
 
         return userRepository.save(findUser);
+    }
+
+    @Override
+    public Page<User> findUserPage(String loginId, int page, int size) {
+
+        User user = findUserByLoginId(loginId);
+
+        return userRepository.findByUser(user, PageRequest.of(page - 1, size, Sort.by("createdAt").descending()));
     }
 
 

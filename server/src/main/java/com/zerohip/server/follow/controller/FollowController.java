@@ -46,10 +46,8 @@ public class FollowController {
     public ResponseEntity<?> deleteFollower(@AuthenticationPrincipal String authorLoginId,
                                              @PathVariable("follow-id") @Positive Long followId) {
 
-        followService.deleteFollowing(authorLoginId, followId);
+        followService.deleteFollower(authorLoginId, followId);
 
         return new ResponseEntity<>("삭제 완료", HttpStatus.OK);
     }
-
-    @GetMapping("/following-list/")
 }

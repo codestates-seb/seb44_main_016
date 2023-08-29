@@ -49,13 +49,6 @@ public class User extends Auditable {
     @Column
     private Boolean followed;
 
-    // 테스트 중
-    public User(Long userId, String loginId, String nickname, String profileImgPath) {
-        this.userId = userId;
-        this.loginId = loginId;
-        this.nickname = nickname;
-        this.profileImgPath = profileImgPath;
-    }
 
     // 테스트 중
     public User(Long userId, String loginId, String nickname, Boolean followed, String profileImgPath) {

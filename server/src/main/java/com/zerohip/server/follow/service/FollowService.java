@@ -69,7 +69,6 @@ public class FollowService {
 
 
 
-
 //    private Follow checkFollow(String authorLoginId, Long followId) {
 //
 //        Optional<Follow> optionalFollow = followRepository.findById(followId);
