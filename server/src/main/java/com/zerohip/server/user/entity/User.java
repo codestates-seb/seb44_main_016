@@ -89,10 +89,10 @@ public class User extends Auditable {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)   // 회원 탈퇴 시 리스트 삭제
+    @OneToMany(mappedBy = "followerId", cascade = CascadeType.REMOVE)   // 회원 탈퇴 시 리스트 삭제
     private List<Follow> followerList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)   // 회원 탈퇴 시 리스트 삭제
+    @OneToMany(mappedBy = "followingId", cascade = CascadeType.REMOVE)   // 회원 탈퇴 시 리스트 삭제
     private List<Follow> followingList = new ArrayList<>();
 
 
