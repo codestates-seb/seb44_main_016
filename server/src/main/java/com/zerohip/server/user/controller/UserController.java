@@ -81,8 +81,7 @@ public class UserController {
             throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
         }
 
-        User user = userService.findUserByLoginId(authorId);
-        return new ResponseEntity<>(mapper.userToMyPageResponse(user), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.userToMyPageResponse(userService.getMypage(authorId)), HttpStatus.OK);
     }
 
 

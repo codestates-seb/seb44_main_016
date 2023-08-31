@@ -3,6 +3,7 @@ package com.zerohip.server.user.service;
 import com.zerohip.server.common.exception.BusinessLogicException;
 import com.zerohip.server.common.exception.ExceptionCode;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
+import com.zerohip.server.follow.repository.FollowRepository;
 import com.zerohip.server.security.utils.CustomAuthorityUtils;
 import com.zerohip.server.user.entity.User;
 import com.zerohip.server.user.repository.UserRepository;
@@ -23,6 +24,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
+    private final FollowRepository followRepository;
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
 
@@ -68,6 +70,16 @@ public class UserServiceImpl implements UserService{
     }
 
 
+    @Override
+    public User getMypage(String loginId) {
+
+        User user = findUserByLoginId(loginId);
+        user.setFollowerCount(followRepository.followerCount(user.getUserId()));
+        user.setFollowingCount(followRepository.followingCount(user.getUserId()));
+
+        userRepository.save(user);
+        return user;
+    }
 
 
     @Override

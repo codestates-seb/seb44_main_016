@@ -19,6 +19,7 @@ public class FollowDto {
 
     }
 
+
     @Getter
     @Setter
     @AllArgsConstructor

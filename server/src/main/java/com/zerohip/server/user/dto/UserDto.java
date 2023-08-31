@@ -165,6 +165,8 @@ public class UserDto {
         private String loginId;
         private String nickname;
         private String profileImgPath;
+        private int followerCount;
+        private int followingCount;
         private List<FollowDto.FollowingResponseDto> followingList;
         private List<FollowDto.FollowerResponseDto> followerList;
 

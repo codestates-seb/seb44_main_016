@@ -17,8 +17,7 @@ public interface UserService {
 
     User findUserByEmail(String email);
 
-//    Page<User> findUserPage(String loginId, int page, int size);
-
+    User getMypage(String loginId);
 
     // User 조회(전체)
     List<User> findUsers();

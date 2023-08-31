@@ -45,6 +45,12 @@ public class User extends Auditable {
     @Column
     private String profileImgPath;
 
+    @Column
+    private int followerCount;
+
+    @Column
+    private int followingCount;
+
 //    // 테스트 중
 //    @Column
 //    private Boolean followed;
