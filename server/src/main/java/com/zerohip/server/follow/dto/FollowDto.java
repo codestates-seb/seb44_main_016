@@ -27,10 +27,10 @@ public class FollowDto {
 
         private Long followId;
         private Long followerId;
+        private String email;
         private String loginId;
         private String nickname;
         private String profileImgPath;
-        private Boolean followed;
 
         // private boolean followed 추가 예정
     }
@@ -43,10 +43,10 @@ public class FollowDto {
 
         private Long followId;
         private Long followingId;
+        private String email;
         private String loginId;
         private String nickname;
         private String profileImgPath;
-        private Boolean followed;
 
     }
 }

@@ -7,8 +7,8 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Getter
 @Setter
+@Getter
 public class Follow {
 
     @Id
@@ -24,5 +24,13 @@ public class Follow {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "following_user_id")
     private User followingId;
+
+    public long getFollowingUserId() {
+        return followingId.getUserId();
+    }
+
+    public long getFollowerUserId() {
+        return followerId.getUserId();
+    }
 }
 

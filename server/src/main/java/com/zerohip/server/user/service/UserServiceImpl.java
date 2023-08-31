@@ -67,13 +67,6 @@ public class UserServiceImpl implements UserService{
         return userRepository.save(findUser);
     }
 
-//    @Override
-//    public Page<User> findUserPage(String loginId, int page, int size) {
-//
-//        User user = findUserByLoginId(loginId);
-//
-//        return userRepository.findByUser(user, PageRequest.of(page - 1, size, Sort.by("createdAt").descending()));
-//    }
 
 
 

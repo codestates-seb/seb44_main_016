@@ -29,8 +29,8 @@ public class FollowService {
 
         verifiedFollowing(authUserId, followingUserId);
         Follow follow = new Follow();
-        follow.setFollowerId(findFollowUser(authUserId));
-        follow.setFollowingId(findFollowUser(followingUserId));
+        follow.setFollowerId(findFollowUser(followingUserId));
+        follow.setFollowingId(findFollowUser(authUserId));
 
         return followRepository.save(follow);
     }
@@ -42,7 +42,7 @@ public class FollowService {
         Optional<Follow> optionalFollow = followRepository.findById(followId);
         Follow follow = optionalFollow.orElseThrow(() -> new BusinessLogicException(ExceptionCode.FOLLOWING_NOT_FOUND));
 
-        if (authUserId != follow.getFollowingId().getUserId()) {
+        if (authUserId != follow.getFollowingUserId()) {
 
             throw new BusinessLogicException(ExceptionCode.USER_FOLLOW_MISMATCH);
         }
@@ -57,7 +57,7 @@ public class FollowService {
         Optional<Follow> optionalFollow = followRepository.findById(followId);
         Follow follow = optionalFollow.orElseThrow(() -> new BusinessLogicException(ExceptionCode.FOLLOWER_NOT_FOUND));
 
-        if (authUserId != follow.getFollowerId().getUserId()) {
+        if (authUserId != follow.getFollowerUserId()) {
 
             throw new BusinessLogicException(ExceptionCode.USER_FOLLOW_MISMATCH);
         }

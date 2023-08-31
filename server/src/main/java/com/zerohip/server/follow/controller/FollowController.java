@@ -17,7 +17,7 @@ import javax.validation.constraints.Positive;
 @RestController
 @RequiredArgsConstructor
 @Validated
-@RequestMapping("/fiend")
+@RequestMapping("/friend")
 public class FollowController {
 
     private final FollowMapper followMapper;
@@ -39,7 +39,7 @@ public class FollowController {
 
         followService.deleteFollowing(authorLoginId, followId);
 
-        return new ResponseEntity<>("삭제 완료", HttpStatus.OK);
+        return new ResponseEntity<>("팔로잉 취소 완료", HttpStatus.OK);
     }
 
     @DeleteMapping("/follower/{follow-id}")
@@ -48,6 +48,6 @@ public class FollowController {
 
         followService.deleteFollower(authorLoginId, followId);
 
-        return new ResponseEntity<>("삭제 완료", HttpStatus.OK);
+        return new ResponseEntity<>("팔로워 삭제 완료", HttpStatus.OK);
     }
 }

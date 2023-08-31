@@ -163,7 +163,6 @@ public class UserDto {
         private Long userId;
         private String email;
         private String loginId;
-        private String password;
         private String nickname;
         private String profileImgPath;
         private List<FollowDto.FollowingResponseDto> followingList;

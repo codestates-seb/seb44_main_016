@@ -74,21 +74,16 @@ public class UserController {
     }
 
 
-    // 마이페이지
-//    @GetMapping("/mypage")
-//    public ResponseEntity<?> getMyPage(@AuthenticationPrincipal String authorId,
-//                                       @RequestParam @Positive int page,
-//                                       @RequestParam @Positive int size) {
-//
-//        if (authorId == null) {
-//            throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
-//        }
-//
-//        Page<User> userPages = userService.findUserPage(authorId, page, size);
-//        List<UserDto.MyPageResponse> responses = mapper.userToMyPageResponse(userPages.getContent());
-//
-//        return new ResponseEntity(new MultiResponseDto<>(responses, userPages), HttpStatus.OK);
-//    }
+    @GetMapping("/mypage")
+    public ResponseEntity<?> getMyPage(@AuthenticationPrincipal String authorId) {
+
+        if (authorId == null) {
+            throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
+        }
+
+        User user = userService.findUserByLoginId(authorId);
+        return new ResponseEntity<>(mapper.userToMyPageResponse(user), HttpStatus.OK);
+    }
 
 
     // 회원 정보 수정
