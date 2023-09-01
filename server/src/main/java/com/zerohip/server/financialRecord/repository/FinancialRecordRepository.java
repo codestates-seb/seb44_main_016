@@ -10,6 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FinancialRecordRepository extends JpaRepository<FinancialRecord, Long> {
-  @Query("SELECT fr FROM FinancialRecord fr WHERE fr.user.loginId = :authorId")
+  @Query("SELECT fr FROM FinancialRecord fr JOIN FETCH fr.user WHERE fr.user.loginId = :authorId")
   List<FinancialRecord> findAllByAuthorId(@Param("authorId") String authorId);
 }
