@@ -92,7 +92,7 @@ const useMutateUser = {
     const queryClient = useQueryClient();
 
     const { mutate, data } = useMutation(['update'], mutateFunction, {
-      onSuccess: () => {
+      onSuccess: (data) => {
         toast.success('회원 정보가 수정되었습니다.');
         dispatch(changeImgSrc({ currentImgSrc: '', isAvatar: false }));
         queryClient.invalidateQueries(['myInfo']);

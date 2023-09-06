@@ -12,8 +12,10 @@ import BackBtn from '../../../components/BackBtn';
 import useMutateUser from '../../../services/useMutateUser';
 import HeadMeta from '../../../components/HeadMeta';
 import { USER_META_DATA } from '../../../constants/seo/userMetaData';
+import useUserGlobalValue from '../../../components/redux/getUserInfo';
 
 export default function UserDelete() {
+  const { nickname } = useUserGlobalValue();
   const [PwInput, pwValue] = useInput('password', '비밀번호', 'pw', 'current-password');
   const [PwConfirmInput, password] = useInput('password', '비밀번호 확인', 'pwConfirm', 'current-password');
   const [error, setError] = useState({
@@ -74,7 +76,7 @@ export default function UserDelete() {
       <BackBtn />
       <S.FormContainer>
         <S.WarningMessage>
-          <S.ReactiveBox>회원 탈퇴를 하실 경우, {`${'마마망'}님의 `}</S.ReactiveBox> 회원 정보, 가계부, 구독
+          <S.ReactiveBox>회원 탈퇴를 하실 경우, {`${nickname}님의 `}</S.ReactiveBox> 회원 정보, 가계부, 구독
           목록 등
           <br />
           모든 데이터가 삭제되며 <S.ReactiveBox>되돌릴 수 없습니다.</S.ReactiveBox>
