@@ -3,6 +3,7 @@ package com.zerohip.server.follow.entity;
 import com.zerohip.server.user.entity.User;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -25,11 +26,14 @@ public class Follow {
     @JoinColumn(name = "following_user_id")
     private User followingId;
 
-    public long getFollowingUserId() {
+    @ColumnDefault("false")
+    private Boolean isFollow;
+
+    public Long getFollowingUserId() {
         return followingId.getUserId();
     }
 
-    public long getFollowerUserId() {
+    public Long getFollowerUserId() {
         return followerId.getUserId();
     }
 }

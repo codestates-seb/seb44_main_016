@@ -33,7 +33,6 @@ public class FollowDto {
         private String nickname;
         private String profileImgPath;
 
-        // private boolean followed 추가 예정
     }
 
     @Getter
@@ -48,6 +47,7 @@ public class FollowDto {
         private String loginId;
         private String nickname;
         private String profileImgPath;
+        private Boolean isFollow;
 
     }
 }

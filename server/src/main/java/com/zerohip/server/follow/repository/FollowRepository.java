@@ -9,14 +9,18 @@ import java.util.Optional;
 public interface FollowRepository extends JpaRepository<Follow, Long> {
 
     @Query("select f from Follow f where f.followingId.userId = :followingId and f.followerId.userId = :followerId ")
-    Optional<Follow> findFollowId(Long followingId, Long followerId);
+    Optional<Follow> findFollow(Long followingId, Long followerId);
 
-//    @Query("select count(f) > 0 from Follow f where f.followingId.userId = :checkUserId and f.followerId.userId = :authUserId")
-//    Boolean checkFollowingId(Long authUserId, Long checkUserId);
+
+//    @Query("select f.followId from Follow f where f.followingId.userId = :authUserId and f.followerId.userId = :followingUserId")
+//    Optional<Follow> findFollowId(Long authUserId, Long followingUserId);
 
     @Query("select count(*) from Follow f where f.followerId.userId = :userId")
     int followerCount(Long userId);
 
     @Query("select count(*) from Follow f where f.followingId.userId = :userId")
     int followingCount(Long userId);
+
+    @Query("select case when count(f) > 0 then true else false end from Follow f where f.followerId.userId = :followingId and f.followingId.userId = :followerId ")
+    Boolean checkFollowed(Long followingId, Long followerId);
 }

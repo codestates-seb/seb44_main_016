@@ -51,19 +51,7 @@ public class User extends Auditable {
     @Column
     private int followingCount;
 
-//    // 테스트 중
-//    @Column
-//    private Boolean followed;
-//
-//
-    // 테스트 중
-    public User(Long userId, String email, String loginId, String nickname, String profileImgPath) {
-        this.userId = userId;
-        this.email = email;
-        this.loginId = loginId;
-        this.nickname = nickname;
-        this.profileImgPath = profileImgPath;
-    }
+
 
     public User(String email, String loginId, String password, String nickname, String provider) {
         this.email = email;
@@ -112,10 +100,5 @@ public class User extends Auditable {
     @OneToMany(mappedBy = "user")
     private List<FinancialRecordArticle> financialRecordArticles = new ArrayList<>();
 
-    /** 연관관계 매핑
-     *  userImage
 
-     *  friend
-
-     */
 }

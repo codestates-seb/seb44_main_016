@@ -28,9 +28,11 @@ public class FollowService {
         }
 
         verifiedFollowing(authUserId, followingUserId);
+
         Follow follow = new Follow();
         follow.setFollowerId(findFollowUser(followingUserId));
         follow.setFollowingId(findFollowUser(authUserId));
+        follow.setIsFollow(followRepository.checkFollowed(authUserId, followingUserId));
 
         return followRepository.save(follow);
     }
@@ -79,9 +81,9 @@ public class FollowService {
 
 
 //  ---
-    private void verifiedFollowing(Long authUserId, Long followId) {
+    private void verifiedFollowing(Long authUserId, Long followingUserId) {
 
-        Follow findFollow = followRepository.findFollowId(authUserId, followId).orElse(null);
+        Follow findFollow = followRepository.findFollow(authUserId, followingUserId).orElse(null);
         if (findFollow != null) {
             throw new BusinessLogicException(ExceptionCode.FOLLOW_ALREADY_EXIST);
         }
@@ -91,4 +93,5 @@ public class FollowService {
 
         return userService.findUserByUserId(userId);
     }
+
 }
