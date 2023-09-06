@@ -63,15 +63,14 @@ const apiUser = {
 
   /** 내가 쓴 글 불러오기 */
   getMyFeeds: async (userId: number, page: number, size: number) => {
-    const res = await instance.get(`${BASE_URL}/user/${userId}/feedArticles?page=${page}&size=${size}`);
-    const { data, pageData } = res.data;
+    const response = await instance.get(`${BASE_URL}/user/${userId}/feedArticles?page=${page}&size=${size}`);
+    const { data, pageData } = response.data;
     return { data, pageData };
   },
 
   /** 회원 정보 수정 */
   updateMyInfo: async (userUpdateData: UserUpdateReqData) => {
-    const response = await instance.patch(`${BASE_URL}/user/update`, userUpdateData);
-    console.log(response);
+    const response = await instance.patch(`${BASE_URL}/user/mypage/update`, userUpdateData);
     return response;
   },
 
