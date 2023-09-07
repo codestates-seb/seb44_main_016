@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 import { useInView } from 'react-intersection-observer';
 import CommonStyles from '../../../styles/CommonStyles';
 import SnsArticle from '../../../components/SnsArticle';
-import withAuth from '../../../components/WithAuth';
 import apiUser from '../../../services/apiUser';
 import Loading from '../../../components/Loading';
 import { FeedArticleResType } from '../../../types/article';
@@ -15,7 +14,7 @@ import { useEffect } from 'react';
 import MyPageUserInfo from './MyPageUserInfo';
 import useUserGlobalValue from '../../../components/redux/getUserInfo';
 
-function MyPage() {
+export default function MyPage() {
   const { ref, inView } = useInView();
 
   const {
@@ -155,5 +154,3 @@ const S = {
     color: var(--color-primary);
   `,
 };
-
-export default withAuth(MyPage);

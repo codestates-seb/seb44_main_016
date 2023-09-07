@@ -8,14 +8,13 @@ import StyledDatePicker from './StyledDatePicker';
 import InputNaturalNumber from './InputNaturalNumber';
 import RadioSet from './RadioSet';
 import ImgsUploader from './ImgsUploader';
-import withAuth from '../../components/WithAuth';
 import useUserGlobalValue from '../../components/redux/getUserInfo';
 
 import { CATEGORY } from '../../constants/category';
 import { APISns } from '../../services/apiSns';
 import { APIfinancialRecord } from '../../services/apiFinancial';
 
-function EditorPage() {
+export default function EditorPage() {
   const { isLoggedIn } = useUserGlobalValue();
   const router = useRouter();
 
@@ -268,5 +267,3 @@ const S = {
     font-weight: bold;
   `,
 };
-
-export default withAuth(EditorPage);

@@ -11,7 +11,6 @@ import Loading from '../../components/Loading';
 import { useState } from 'react';
 import ErrorComponent from '../../components/ErrorComponent';
 import { FAREC_MESSAGES } from '../../constants/messages/faRec';
-import withAuth from '../../components/WithAuth';
 import HeadMeta from '../../components/HeadMeta';
 import { FAREC_META_DATA } from '../../constants/seo/faRecMetaData';
 
@@ -28,7 +27,7 @@ export type RecordData = {
   users: UserData[] | undefined;
 };
 
-function FinancialListPage() {
+export default function FinancialListPage() {
   const { data, error, isError, isLoading } = useQuery(['recordList'], APIfinancialRecord.getRecordList, {
     staleTime: 1000 * 60 * 10,
   });
@@ -111,5 +110,3 @@ const S = {
     transform: translateY(-50%);
   `,
 };
-
-export default withAuth(FinancialListPage);

@@ -16,10 +16,10 @@ const validation = {
   password: (password: string) => {
     let errorMessage = '';
 
+    if (/[A-Z]/.test(password)) return (errorMessage += '대문자는 칠 수 없습니다.\n');
+
     if (password.length < 8 || password.length > 16)
       return (errorMessage += '비밀번호는 8~16자리여야 합니다.\n');
-
-    if (/[A-Z]/.test(password)) return (errorMessage += '대문자는 칠 수 없습니다.\n');
 
     if (!/[a-z]/.test(password)) return (errorMessage += '비밀번호는 소문자를 포함해야 합니다.\n');
 

@@ -9,12 +9,12 @@ import deleteAnimation from '../../../../animation/delete.json';
 import Loading from '../../../../components/Loading';
 import HeadMeta from '../../../../components/HeadMeta';
 import { USER_META_DATA } from '../../../../constants/seo/userMetaData';
+import useUserGlobalValue from '../../../../components/redux/getUserInfo';
 
 export default function GoodBye() {
   const router = useRouter();
   const [showMessage, setShowMessage] = useState(false);
-  // const nickname = useSelector<RootState>((state) => state.authnReducer.login.nickname); 서버 연결 후
-  const nickname = '마마망'; // temp
+  const { nickname } = useUserGlobalValue();
 
   useEffect(() => {
     const previousUrl = localStorage.getItem('deletePageURL');

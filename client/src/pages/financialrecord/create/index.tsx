@@ -1,9 +1,8 @@
 import FaRecForm from '../FaRecForm';
-import withAuth from '../../../components/WithAuth';
 import { FAREC_META_DATA } from '../../../constants/seo/faRecMetaData';
 import HeadMeta from '../../../components/HeadMeta';
 
-function FaRecCreatePage() {
+export default function FaRecCreatePage() {
   return (
     <>
       <HeadMeta
@@ -14,5 +13,3 @@ function FaRecCreatePage() {
     </>
   );
 }
-
-export default withAuth(FaRecCreatePage);

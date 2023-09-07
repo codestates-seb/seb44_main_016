@@ -17,6 +17,7 @@ const S = {
   OauthBox: styled.div`
     width: 70%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    margin-top: 10px;
   `,
 };

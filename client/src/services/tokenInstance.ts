@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { store } from '../components/redux/store';
-import { toast } from 'react-toastify';
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+import { getAccessByRefresh } from '../components/auth/getAccessByRefresh';
 
 /** INSTANCE WITH TOKEN */
-export const instance = axios.create({});
+export const instance = axios.create({
+  withCredentials: true,
+});
 
 /** REQUEST INTERCEPTORS */
 instance.interceptors.request.use(
@@ -20,7 +20,6 @@ instance.interceptors.request.use(
       config.headers['Refresh'] = `${refreshToken}`;
     }
 
-    config.withCredentials = true;
     return config;
   },
   (error) => {
@@ -37,19 +36,9 @@ instance.interceptors.response.use(
     try {
       const { response, config } = error;
       const originalRequest = config;
-
-      if (!originalRequest.isRetryAttempted && response.data.status) {
-        originalRequest.isRetryAttempted = true;
-        const refreshToken = localStorage.getItem('refreshToken');
-
-        const res = await axios.post(`${BASE_URL}/auth/refresh`, null, {
-          headers: {
-            'Content-Type': 'application/json',
-            Refresh: `${refreshToken}`,
-          },
-          withCredentials: true,
-        });
-        originalRequest.headers['Authorization'] = res.headers.authorization;
+      if (response.data.status === 404) {
+        const newAccessToken = await getAccessByRefresh();
+        originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
         return axios(originalRequest);
       }
     } catch (error) {

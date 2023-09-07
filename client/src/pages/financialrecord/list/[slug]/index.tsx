@@ -14,11 +14,10 @@ import Pagination from '../../../../components/Pagination';
 import CommonStyles from '../../../../styles/CommonStyles';
 import ErrorComponent from '../../../../components/ErrorComponent';
 import { FAREC_MESSAGES } from '../../../../constants/messages/faRec';
-import withAuth from '../../../../components/WithAuth';
 import HeadMeta from '../../../../components/HeadMeta';
 import { FAREC_META_DATA } from '../../../../constants/seo/faRecMetaData';
 
-function FinancialPage() {
+export default function FinancialPage() {
   const router = useRouter();
   const { ref, inView } = useInView();
   const financialRecordId = router.query.slug ? Number(router.query.slug) : 0;
@@ -191,5 +190,3 @@ const S = {
     align-items: center;
   `,
 };
-
-export default withAuth(FinancialPage);

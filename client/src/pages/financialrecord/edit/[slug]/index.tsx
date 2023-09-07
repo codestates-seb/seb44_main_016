@@ -4,7 +4,6 @@ import { APIfinancialRecord } from '../../../../services/apiFinancial';
 import Loading from '../../../../components/Loading';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import withAuth from '../../../../components/WithAuth';
 import HeadMeta from '../../../../components/HeadMeta';
 import { FAREC_META_DATA } from '../../../../constants/seo/faRecMetaData';
 
@@ -15,7 +14,7 @@ type FaRecArticleResType = {
   filePath: string;
 };
 
-function FaRecEditPage() {
+export default function FaRecEditPage() {
   const router = useRouter();
   const financialRecordId = router.query.slug ? Number(router.query.slug) : 0;
   const { isLoading, isError, error, data, isSuccess } = useQuery<FaRecArticleResType>(
@@ -56,5 +55,3 @@ function FaRecEditPage() {
     </>
   );
 }
-
-export default withAuth(FaRecEditPage);
