@@ -1,7 +1,6 @@
 import React from 'react';
-
 import styled from '@emotion/styled';
-import axios from 'axios';
+import { useRouter } from 'next/router';
 
 import CommonStyles from '../../styles/CommonStyles';
 import SelectOption from './SelectOption';
@@ -9,19 +8,20 @@ import StyledDatePicker from './StyledDatePicker';
 import InputNaturalNumber from './InputNaturalNumber';
 import RadioSet from './RadioSet';
 import ImgsUploader from './ImgsUploader';
+import useUserGlobalValue from '../../components/redux/getUserInfo';
 
 import { CATEGORY } from '../../constants/category';
-import { FaRecArticleReqType, FeedArticleReqType } from '../../types/article';
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-
-async function getFeedArticle(page: number, size: number) {
-  const res = await axios.get(`${BASE_URL}/feedArticles`);
-  return res.data;
-}
+import { APISns } from '../../services/apiSns';
+import { APIfinancialRecord } from '../../services/apiFinancial';
 
 export default function EditorPage() {
+  const { isLoggedIn } = useUserGlobalValue();
+  const router = useRouter();
+
   const [isEdit, setIsEdit] = React.useState(false);
+  const [faRecArticleId, setFaRecArticleId] = React.useState(NaN);
+  const [feedArticleId, setFeedArticleId] = React.useState(NaN);
+
   const [articleType, setArticleType] = React.useState(0); // 가계부/절약팁/허락해줘 (라디오 버튼)
   /* ↓ 'articleType=가계부'일 경우에만 표시 ↓ */
   const [faRecId, setFaRecId] = React.useState(NaN); // 가계부의 고유번호
@@ -36,26 +36,22 @@ export default function EditorPage() {
   const [scope, setScope] = React.useState(0); // 가계부에만/타임라인에도
 
   React.useEffect(() => {
+    if (!isLoggedIn) {
+      router.push('/user/login');
+      alert('로그인이 필요합니다.');
+    }
+
     const params = new URLSearchParams(window.location.search);
 
-    const paramFaRecId = params.get('faRecId');
-    const paramFaRecArticleId = params.get('faRecArticleId');
-    const paramFeedArticleId = params.get('feedArticleId');
+    const paramFaRecId = Number(params.get('faRecId'));
+    const paramFaRecArticleId = Number(params.get('faRecArticleId'));
+    const paramFeedArticleId = Number(params.get('feedArticleId'));
+
+    setFaRecId(paramFaRecId || 0);
+    setFaRecArticleId(paramFaRecArticleId);
+    setFeedArticleId(paramFeedArticleId);
 
     setIsEdit(!!(paramFaRecId || paramFaRecArticleId || paramFeedArticleId));
-
-    if (paramFaRecId) {
-      if (paramFaRecArticleId) {
-        // const {} = getFaRecArticle(paramFaRecArticleId);
-      } else {
-        setFaRecId(Number(paramFaRecId));
-      }
-      if (paramFeedArticleId) {
-        // getFeedArticle(paramFeedArticleId);
-      }
-    } else {
-      setFaRecId(0);
-    }
   }, []);
 
   const handleChangeArticleType = (id: number) => {
@@ -100,41 +96,30 @@ export default function EditorPage() {
       });
 
       if (articleType === 0) {
-        // 가계부
-        const body: FaRecArticleReqType = {
-          financialRecordId: faRecId,
+        // 가계부 (게시글/타임라인)
+        APIfinancialRecord.editRecordArticle(
+          formData,
+          faRecId,
+          faRecArticleId,
           category,
-          faDate: faDate.toISOString(),
+          faDate,
           title,
           price,
           content,
-          scope: scope === 0 ? '가계부 게시글' : '가계부 타임라인',
-        };
-        formData.append('data', JSON.stringify(body));
-
-        await axios.post(`${BASE_URL}/financialrecord/${faRecId}/article'`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+          scope
+        );
       } else {
-        // 절약팁/허락해줘
-        const body: FeedArticleReqType = {
-          feedType: articleType === 1 ? '절약팁' : '허락해줘',
-          content,
-        };
-        formData.append('data', JSON.stringify(body));
-
-        await axios.post(`${BASE_URL}/feedArticles`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        // SNS (절약팁/허락해줘)
+        APISns.editFeedArticle(feedArticleId, formData, articleType, content);
       }
     } catch (error) {
       console.error('Requset 에러 발생:', error);
     }
   };
+
+  if (!isLoggedIn) {
+    return <></>;
+  }
 
   return (
     <S.EditorContainer onSubmit={handleSubmit}>

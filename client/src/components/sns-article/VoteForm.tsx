@@ -1,24 +1,17 @@
 import React from 'react'; // useState 사용
 import styled from '@emotion/styled';
-import axios from 'axios';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
+import { APIVote } from '../../services/apiSns';
 import { VoteType } from '../../types/article';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-
-async function getVote(feedArticleId: number) {
-  const res = await axios.get(`${BASE_URL}/feedArticles/${feedArticleId}/vote`);
-  const voteData: VoteType = res.data;
-  return voteData;
-}
 type Props = {
   feedArticleId: number;
 };
 
 export default function VoteFormComponent(props: Props) {
   const { data, isLoading, isError } = useQuery<VoteType, Error>(['vote', props.feedArticleId], () =>
-    getVote(props.feedArticleId)
+    APIVote.getVote(props.feedArticleId)
   );
 
   const [savingCount, setSavingCount] = React.useState(0);
@@ -32,20 +25,21 @@ export default function VoteFormComponent(props: Props) {
     }
   }, [data]);
 
-  const handleBtnClick = async (e: React.MouseEvent<HTMLButtonElement>, pushed: 'saving' | 'flex') => {
+  const handleBtnClick = async (e: React.MouseEvent<HTMLButtonElement>, voteType: 'SAVING' | 'FLEX') => {
     e.preventDefault();
     try {
-      const res = await axios.get(`${BASE_URL}/feedArticles/${props.feedArticleId}/vote?pushed=${pushed}`);
-      setSavingCount(res.data.savingCount);
-      setFlexCount(res.data.flexCount);
+      APIVote.postVote(props.feedArticleId, voteType);
+      const voteData = await APIVote.getVote(props.feedArticleId);
+      setSavingCount(voteData.savingCount);
+      setFlexCount(voteData.flexCount);
     } catch (error) {}
   };
 
   return (
     <S.VoteForm>
       <S.SavingCount>{savingCount}</S.SavingCount>
-      <S.SavingBtn onClick={(e) => handleBtnClick(e, 'saving')}>👍 절약</S.SavingBtn>
-      <S.FlexBtn onClick={(e) => handleBtnClick(e, 'flex')}>💸 Flex</S.FlexBtn>
+      <S.SavingBtn onClick={(e) => handleBtnClick(e, 'SAVING')}>👍 절약</S.SavingBtn>
+      <S.FlexBtn onClick={(e) => handleBtnClick(e, 'FLEX')}>💸 Flex</S.FlexBtn>
       <S.FlexCount>{flexCount}</S.FlexCount>
     </S.VoteForm>
   );

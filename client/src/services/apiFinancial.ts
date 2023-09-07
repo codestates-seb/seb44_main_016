@@ -1,4 +1,6 @@
 import { instance } from './tokenInstance';
+import { FaRecArticleReqType } from '../types/article';
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const APIfinancialRecord = {
@@ -42,6 +44,7 @@ export const APIfinancialRecord = {
     const res = await instance.get(`${BASE_URL}/financialrecord/${financialRecordId}`);
     return res.data;
   },
+
   // 가계부 게시글 GET
   getRecordArticle: async (financialRecordId: number, page: number, size: number) => {
     // const res = await axios.get(
@@ -53,5 +56,50 @@ export const APIfinancialRecord = {
     const { data, pageInfo } = res.data;
 
     return { data, pageInfo };
+  },
+  // 가계부 게시글 DELETE
+  deleteRecordArticle: async (financialRecordId: number, financialRecordArticleId: number) => {
+    const res = await instance.delete(
+      `${BASE_URL}/financialrecord/${financialRecordId}/article/${financialRecordArticleId}`
+    );
+  },
+  // 가계부 게시글 POST or PATCH
+  editRecordArticle: async (
+    formData: FormData,
+    faRecId: number,
+    faRecArticleId: number,
+    category: string,
+    faDate: Date,
+    title: string,
+    price: number,
+    content: string,
+    scope: number
+  ) => {
+    const isPost = isNaN(faRecArticleId);
+
+    const body: FaRecArticleReqType = {
+      financialRecordId: faRecId,
+      category,
+      faDate: faDate.toISOString(),
+      title,
+      price,
+      content,
+      scope: scope === 0 ? '가계부 게시글' : '가계부 타임라인',
+    };
+    formData.append('data', JSON.stringify(body));
+
+    if (isPost) {
+      await instance.post(`${BASE_URL}/financialrecord/${faRecId}/article`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+    } else {
+      await instance.patch(`${BASE_URL}/financialrecord/${faRecId}/article/${faRecArticleId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+    }
   },
 };
