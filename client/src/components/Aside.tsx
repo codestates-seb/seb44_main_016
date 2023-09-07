@@ -11,7 +11,7 @@ import ProfileHamburgerBtn from '../components/home-header/ProfileHamburgerBtn';
 import svgs from '../constants/svg';
 import { ScreenEnum } from '../constants/enums';
 import useUserGlobalValue from './redux/getUserInfo';
-import withAuth from '../components/WithAuth';
+import withAuth from './auth/WithAuth';
 import { useWindowType } from '../hooks/useWindowSize';
 
 function getClsName(isTabClosed: boolean, windowType: ScreenEnum) {
@@ -25,7 +25,8 @@ function getClsName(isTabClosed: boolean, windowType: ScreenEnum) {
   return asideClsName;
 }
 
-function Aside() {
+export default function Aside() {
+  withAuth();
   const { isLoggedIn } = useUserGlobalValue();
   const windowType = useWindowType();
 
@@ -287,5 +288,3 @@ const S = {
   `,
   */
 };
-
-export default withAuth(Aside);

@@ -9,7 +9,6 @@ import StyledDatePicker from './StyledDatePicker';
 import InputNaturalNumber from './InputNaturalNumber';
 import RadioSet from './RadioSet';
 import ImgsUploader from './ImgsUploader';
-import withAuth from '../../components/WithAuth';
 
 import { CATEGORY } from '../../constants/category';
 import { FaRecArticleReqType, FeedArticleReqType } from '../../types/article';
@@ -21,7 +20,7 @@ async function getFeedArticle(page: number, size: number) {
   return res.data;
 }
 
-function EditorPage() {
+export default function EditorPage() {
   const [isEdit, setIsEdit] = React.useState(false);
   const [articleType, setArticleType] = React.useState(0); // 가계부/절약팁/허락해줘 (라디오 버튼)
   /* ↓ 'articleType=가계부'일 경우에만 표시 ↓ */
@@ -283,5 +282,3 @@ const S = {
     font-weight: bold;
   `,
 };
-
-export default withAuth(EditorPage);
