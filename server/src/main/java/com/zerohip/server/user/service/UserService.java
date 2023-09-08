@@ -1,6 +1,7 @@
 package com.zerohip.server.user.service;
 
 import com.zerohip.server.user.entity.User;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public interface UserService {
 
     User findUserByEmail(String email);
 
+    User getMypage(String loginId);
 
     // User 조회(전체)
     List<User> findUsers();

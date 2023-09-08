@@ -2,10 +2,15 @@ package com.zerohip.server.user.service;
 
 import com.zerohip.server.common.exception.BusinessLogicException;
 import com.zerohip.server.common.exception.ExceptionCode;
+import com.zerohip.server.feedArticle.entity.FeedArticle;
+import com.zerohip.server.follow.repository.FollowRepository;
 import com.zerohip.server.security.utils.CustomAuthorityUtils;
 import com.zerohip.server.user.entity.User;
 import com.zerohip.server.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +24,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
+    private final FollowRepository followRepository;
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
 
@@ -64,10 +70,22 @@ public class UserServiceImpl implements UserService{
     }
 
 
+    @Override
+    public User getMypage(String loginId) {
+
+        User user = findUserByLoginId(loginId);
+        user.setFollowerCount(followRepository.followerCount(user.getUserId()));
+        user.setFollowingCount(followRepository.followingCount(user.getUserId()));
+
+        userRepository.save(user);
+        return user;
+    }
+
 
     @Override
     public User findUserByUserId(Long userId) {
-        return null;
+
+        return findVerifyUserByUserId(userId);
     }
 
     @Override
@@ -129,7 +147,7 @@ public class UserServiceImpl implements UserService{
 
         Optional<User> user = userRepository.findUserByLoginId(loginId);
         if (user.isPresent()) {
-            throw new BusinessLogicException(ExceptionCode.LoginId_EXISTS);
+            throw new BusinessLogicException(ExceptionCode.LOGINId_EXISTS);
         }
     }
 

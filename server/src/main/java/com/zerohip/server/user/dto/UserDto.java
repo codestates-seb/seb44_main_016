@@ -1,5 +1,6 @@
 package com.zerohip.server.user.dto;
 
+import com.zerohip.server.follow.dto.FollowDto;
 import lombok.*;
 
 import javax.validation.constraints.Email;
@@ -7,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class UserDto {
 
@@ -149,6 +151,24 @@ public class UserDto {
         private String nickname;
         private String profileImgPath;
         private LocalDateTime modifiedAt;
+
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MyPageResponse {
+
+        private Long userId;
+        private String email;
+        private String loginId;
+        private String nickname;
+        private String profileImgPath;
+        private int followerCount;
+        private int followingCount;
+        private List<FollowDto.FollowingResponseDto> followingList;
+        private List<FollowDto.FollowerResponseDto> followerList;
 
     }
 
