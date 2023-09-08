@@ -70,10 +70,24 @@ public class UserServiceImpl implements UserService{
     }
 
 
+    // 조회될 때 마다 팔로잉/팔로워 수 업데이트 -> 추후 개선 예정
     @Override
     public User getMypage(String loginId) {
 
         User user = findUserByLoginId(loginId);
+        user.setFollowerCount(followRepository.followerCount(user.getUserId()));
+        user.setFollowingCount(followRepository.followingCount(user.getUserId()));
+
+        userRepository.save(user);
+        return user;
+    }
+
+
+    // 조회될 때 마다 팔로잉/팔로워 수 업데이트 -> 추후 개선 예정
+    @Override
+    public User findUser(Long userId) {
+
+        User user = findUserByUserId(userId);
         user.setFollowerCount(followRepository.followerCount(user.getUserId()));
         user.setFollowingCount(followRepository.followingCount(user.getUserId()));
 

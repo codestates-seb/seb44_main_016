@@ -1,6 +1,8 @@
 package com.zerohip.server.follow.controller;
 
 import com.zerohip.server.common.dto.ResponseDto;
+import com.zerohip.server.common.exception.BusinessLogicException;
+import com.zerohip.server.common.exception.ExceptionCode;
 import com.zerohip.server.follow.entity.Follow;
 import com.zerohip.server.follow.mapper.FollowMapper;
 import com.zerohip.server.follow.repository.FollowRepository;
@@ -24,30 +26,41 @@ public class FollowController {
     private final FollowService followService;
 
     @PostMapping("/following/{user-id}")
-    public ResponseEntity<?> postFollow(@AuthenticationPrincipal String authorLoginId,
+    public ResponseEntity<?> postFollow(@AuthenticationPrincipal String authorId,
                                         @PathVariable("user-id") @Positive Long followingUserId) {
 
-        Follow follow = followService.addFollowing(authorLoginId, followingUserId);
-
+        checkNull(authorId);
+        Follow follow = followService.addFollowing(authorId, followingUserId);
         return new ResponseEntity<>(followMapper.followToFollowResponseDto(follow), HttpStatus.CREATED);
+
     }
 
 
     @DeleteMapping("/following/{follow-id}")
-    public ResponseEntity<?> deleteFollowing(@AuthenticationPrincipal String authorLoginId,
+    public ResponseEntity<?> deleteFollowing(@AuthenticationPrincipal String authorId,
                                           @PathVariable("follow-id") @Positive Long followId) {
 
-        followService.deleteFollowing(authorLoginId, followId);
-
+        checkNull(authorId);
+        followService.deleteFollowing(authorId, followId);
         return new ResponseEntity<>("팔로잉 취소 완료", HttpStatus.OK);
+
     }
 
+
     @DeleteMapping("/follower/{follow-id}")
-    public ResponseEntity<?> deleteFollower(@AuthenticationPrincipal String authorLoginId,
+    public ResponseEntity<?> deleteFollower(@AuthenticationPrincipal String authorId,
                                              @PathVariable("follow-id") @Positive Long followId) {
 
-        followService.deleteFollower(authorLoginId, followId);
-
+        checkNull(authorId);
+        followService.deleteFollower(authorId, followId);
         return new ResponseEntity<>("팔로워 삭제 완료", HttpStatus.OK);
+
+    }
+
+
+    private static void checkNull(String authorId) {
+        if (authorId == null) {
+            throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
+        }
     }
 }

@@ -19,7 +19,9 @@ public interface UserService {
 
     User getMypage(String loginId);
 
-    // User 조회(전체)
+    User findUser(Long userId);
+
+    // User 조회
     List<User> findUsers();
 
     // User 수정

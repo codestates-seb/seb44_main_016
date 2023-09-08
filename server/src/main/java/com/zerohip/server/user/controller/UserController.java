@@ -36,6 +36,7 @@ public class UserController {
     private final UserService userService;
     private final UserMapper mapper;
 
+
     // 회원 가입
     @PostMapping("/signup")
     public ResponseEntity postUser(@RequestBody @Valid UserDto.Post userPostDto) {
@@ -52,10 +53,7 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@AuthenticationPrincipal String authorId,
                                         @RequestBody UserDto.CheckPassword checkPasswordDto) {
 
-        if (authorId == null) {
-            throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
-        }
-
+        checkNull(authorId);
         userService.deleteUser(authorId, checkPasswordDto.getPassword());
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -65,22 +63,25 @@ public class UserController {
     @GetMapping("/info")
     public ResponseEntity<?> userInfoForClient(@AuthenticationPrincipal String authorId) {
 
-        if (authorId == null) {
-            throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
-        }
-
+        checkNull(authorId);
         User findUserInfo = userService.findUserByLoginId(authorId);
         return new ResponseEntity<>(mapper.userToUserResponseDto(findUserInfo), HttpStatus.OK);
     }
 
 
+    // 회원 조회 (for user)
+    @GetMapping("/profile/{user-id}")
+    public ResponseEntity<?> findUserProfile(@PathVariable("user-id") @Positive Long userId) {
+
+        return new ResponseEntity<>(mapper.userToMyPageResponse(userService.findUser(userId)), HttpStatus.OK);
+    }
+
+
+    // 마이페이지 조회
     @GetMapping("/mypage")
     public ResponseEntity<?> getMyPage(@AuthenticationPrincipal String authorId) {
 
-        if (authorId == null) {
-            throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
-        }
-
+        checkNull(authorId);
         return new ResponseEntity<>(mapper.userToMyPageResponse(userService.getMypage(authorId)), HttpStatus.OK);
     }
 
@@ -90,47 +91,19 @@ public class UserController {
     public ResponseEntity<?> patchUser(@AuthenticationPrincipal String authorId,
                                        @RequestBody @Valid UserDto.Patch userPatchDto) {
 
-        if (authorId == null) {
-            throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
-        }
-
+        checkNull(authorId);
         User user = mapper.userPatchDtoToUser(userPatchDto);
         userService.updateUser(authorId, user);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
+    private static void checkNull(String authorId) {
+        if (authorId == null) {
+            throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
+        }
+    }
 }
 
 
-
-
-    // (deleteUser 내부로 이동)
-//    @PostMapping("/checkpw")
-//    public ResponseEntity<?> checkPassword(@AuthenticationPrincipal User author,
-//                                           @RequestBody UserDto.CheckPassword checkPasswordDto) {
-//
-//        User originUser = userService.findUserByLoginId(author.getLoginId());
-//        User checkPasswordUser = mapper.checkPasswordToUser(checkPasswordDto);
-//        Boolean checkedPassword = userService.checkedPassword(originUser.getLoginId(), checkPasswordUser.getPassword());
-//        UserDto.CheckPasswordResponse response = mapper.userToCheckPasswordResponse(checkPasswordUser);
-//        if(checkedPassword == true){response.setCheck(true);
-//        } else {response.setCheck(false);}
-//        return new ResponseEntity<>(response,HttpStatus.OK);
-//    }
-
-
-
-
-
-//    @GetMapping("/gegege")
-//    public ResponseEntity checkPassword(@AuthenticationPrincipal User author) {
-//
-//        User user = new User();
-//        user.setUserId(author.getUserId());
-//        user.setEmail(author.getEmail());
-//        user.setLoginId(author.getLoginId());
-//        user.setPassword(author.getPassword());
-//        user.setNickname(author.getNickname());
-//
-//        return new ResponseEntity<>(mapper.userToUserResponseDto(user),HttpStatus.OK);
-//    }

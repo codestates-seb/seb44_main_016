@@ -21,7 +21,7 @@ public interface UserMapper {
     User checkUserByLoginId(UserDto.CheckLoginId checkLoginIdDto);
 
     User checkUserByEmail(UserDto.CheckEmail checkEmailDto);
-    User checkPasswordToUser(UserDto.CheckPassword checkPasswordDto);
+//    User checkPasswordToUser(UserDto.CheckPassword checkPasswordDto);
 
 
 
