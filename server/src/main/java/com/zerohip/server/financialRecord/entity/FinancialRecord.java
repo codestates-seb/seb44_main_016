@@ -51,7 +51,7 @@ public class FinancialRecord extends Auditable {
   private List<FinancialRecordArticle> financialRecordArticles; // 글 매핑(List 형식)
 
   // 유저 매핑(List 형식)
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
 

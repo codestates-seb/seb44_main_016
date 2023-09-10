@@ -68,11 +68,10 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
   }
 
   @Transactional(readOnly = true)
-  // 가계부 전체 조회(동적쿼리 사용 예정)
   @Override
   public List<FinancialRecord> findFaRecs(String authorId) {
     List<FinancialRecord> financialRecords = repository.findAllByAuthorId(authorId);
-    log.info("financialRecords : {}", financialRecords.toString());
+    log.info("Number of financial records fetched: {}", financialRecords.size());
     return financialRecords;
   }
 
