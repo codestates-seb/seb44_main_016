@@ -9,7 +9,7 @@ import apiUser from '../../../services/apiUser';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 import getNewError from '../../../utils/inputValidationError';
 import BackBtn from '../../../components/BackBtn';
-import useMutateUser from '../../../services/useMutateUser';
+import useMutateUser from '../../../services/mutate/useMutateUser';
 import HeadMeta from '../../../components/HeadMeta';
 import { USER_META_DATA } from '../../../constants/seo/userMetaData';
 import useUserGlobalValue from '../../../components/redux/getUserInfo';

@@ -1,4 +1,4 @@
-import { instance } from './tokenInstance';
+import { instance } from './axios-instance/tokenInstance';
 import { FaRecArticleReqType } from '../types/article';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;

@@ -74,11 +74,13 @@ export interface UserUpdateReqData {
 }
 
 export interface FollowUsersInfoData {
-  userId: number;
-  profileImgPath: string;
-  isAlsoFollowed: boolean;
+  followId: number;
+  followingId: number;
+  email: string;
   loginId: string;
   nickname: string;
+  profileImgPath: string;
+  isFollow: boolean;
 }
 
 export interface UserFeedData {
@@ -95,15 +97,14 @@ export interface UserFeedData {
   imgPath: string;
 }
 
-export interface User {
+export interface UserInfoResData {
   userId: string;
+  email: string;
   loginId: string;
   nickname: string;
   profileImgPath: string;
-}
-
-export interface UserInfoResData {
-  User: User;
+  followerCount: number;
+  followingCount: number;
   followingList: FollowUsersInfoData[];
   followerList: FollowUsersInfoData[];
 }

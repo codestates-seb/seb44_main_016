@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import svgs from '../../constants/svg';
-import useMutateUser from '../../services/useMutateUser';
+import useMutateUser from '../../services/mutate/useMutateUser';
 import apiUser from '../../services/apiUser';
 
 export default function AsideHamburgerBtn() {

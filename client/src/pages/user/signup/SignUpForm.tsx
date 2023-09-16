@@ -8,7 +8,7 @@ import apiUser from '../../../services/apiUser';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 import PolicyAgreement from './PolicyAgreement';
 import getSignUpNewError from '../../../utils/inputValidationError';
-import useMutateUser from '../../../services/useMutateUser';
+import useMutateUser from '../../../services/mutate/useMutateUser';
 import SignUpInputField from './SignUpInputField';
 
 export default function SignUpForm() {

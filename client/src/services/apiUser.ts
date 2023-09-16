@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { PostSignUp, LoginReqData, OAuthReqData, UserUpdateReqData } from '../types/user';
-import { instance } from './tokenInstance';
+import { instance } from './axios-instance/tokenInstance';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -53,9 +53,17 @@ const apiUser = {
     return response.data;
   },
 
-  /** 회원정보 불러오기 */
+  /** 나의 기본정보 불러오기 */
   getUserInfo: async () => {
     const response = await instance.get(`${BASE_URL}/user/info`, {
+      withCredentials: true,
+    });
+    return response.data;
+  },
+
+  /** 회원 기본정보 불러오기 */
+  getUserPage: async (userId: string | string[] | undefined) => {
+    const response = await instance.get(`${BASE_URL}/user/profile/${userId}`, {
       withCredentials: true,
     });
     return response.data;
@@ -77,6 +85,17 @@ const apiUser = {
   /** Access Token 갱신 */
   getNewAccess: async () => {
     const response = await instance.post(`${BASE_URL}/auth/refresh`);
+    return response;
+  },
+
+  /** 구독하기 */
+  startFollowing: async (userId: string | undefined) => {
+    const response = await instance.post(`${BASE_URL}/friend/following/${userId}`);
+    return response;
+  },
+
+  cancelFollowing: async (userId: string | undefined) => {
+    const response = await instance.post(`${BASE_URL}/friend/following/${userId}`);
     return response;
   },
 };
