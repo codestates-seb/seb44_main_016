@@ -76,4 +76,20 @@ public class FinancialRecordController {
 
     return ResponseEntity.noContent().build();
   }
+
+  // 북마크 생성
+  @PostMapping("/{financial-record-id}/bookmark")
+  public ResponseEntity createBookmark(@PathVariable("financial-record-id") Long financialRecordId,
+                                       @AuthenticationPrincipal String authorId) {
+    FinancialRecord findFaRec = faRecService.addBookmark(authorId, financialRecordId);
+    return ResponseEntity.ok(mapper.financialRecordToFinancialRecordResponse(findFaRec));
+  }
+
+  // 북마크 삭제
+  @DeleteMapping("/{financial-record-id}/bookmark")
+  public ResponseEntity deleteBookmark(@PathVariable("financial-record-id") Long financialRecordId,
+                                       @AuthenticationPrincipal String authorId) {
+    FinancialRecord findFaRec = faRecService.removeBookmark(authorId, financialRecordId);
+    return ResponseEntity.ok(mapper.financialRecordToFinancialRecordResponse(findFaRec));
+  }
 }

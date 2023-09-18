@@ -24,6 +24,10 @@ public interface FinancialRecordService {
   // 가계부 삭제
   void deleteFaRec(String authorId, Long faRecId);
 
+  FinancialRecord addBookmark(String authorId, Long faRecId);
+
+  FinancialRecord removeBookmark(String authorId, Long faRecId);
+
   // 가계부 조회확인
   FinancialRecord findVerifiedFaRec(Long faRecId);
 
