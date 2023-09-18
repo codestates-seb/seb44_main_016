@@ -8,6 +8,7 @@ import com.zerohip.server.common.img.repository.ImgRepository;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
 import com.zerohip.server.financialRecord.entity.FinancialRecord;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
+import com.zerohip.server.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -150,5 +151,9 @@ public class ImgServiceImpl implements ImgService {
 
   static void setProfileImg(FinancialRecord faRec, Img img) {
     img.setFinancialRecord(faRec);
+  }
+
+  static void setProfileImg(User user, Img img) {
+    img.setUser(user);
   }
 }

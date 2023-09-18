@@ -5,6 +5,7 @@ import com.zerohip.server.common.article.Article;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
 import com.zerohip.server.financialRecord.entity.FinancialRecord;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
+import com.zerohip.server.user.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,6 +44,10 @@ public class Img {
   @OneToOne
   @JoinColumn(name = "financial_record_id")
   private FinancialRecord financialRecord;
+
+  @OneToOne
+  @JoinColumn(name = "user_id")
+  private User user;
 
   public Img(String fileName, String filePath) {
     this.fileName = fileName;
