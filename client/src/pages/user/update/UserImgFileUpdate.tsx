@@ -8,6 +8,7 @@ import { handleFileChange } from '../../../components/img-crop/imgCropUtils';
 import { store } from '../../../components/redux/store';
 import { UserInfoResData } from '../../../types/user';
 import { useEffect, useRef } from 'react';
+import currentImageRender from '../../../utils/userpage/currentImageRender';
 
 interface RandomAvatarUpdateProps {
   myInfoData: UserInfoResData;
@@ -18,7 +19,7 @@ interface RandomAvatarUpdateProps {
 export default function UserImgFileUpdate({ myInfoData, setIsOpen, isOpen }: RandomAvatarUpdateProps) {
   const dispatch = useAppDispatch();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const decideBtnRef = useRef<HTMLButtonElement>(null); // Ref for the DecideBtn
+  const decideBtnRef = useRef<HTMLButtonElement>(null);
 
   const currentImgSrc = store.getState().currentImgReducer.currentImgSrc;
   const { imgSrc, setImgSrc, croppedImage, setCroppedImage, cropModal, setCropModal } = useImgCrop();
@@ -57,13 +58,7 @@ export default function UserImgFileUpdate({ myInfoData, setIsOpen, isOpen }: Ran
   return (
     <>
       <S.UserImgBox>
-        {croppedImage ? (
-          <img src={croppedImage} />
-        ) : currentImgSrc ? (
-          <img src={currentImgSrc} alt={`프로필 사진`} />
-        ) : (
-          <img src={myInfoData?.User.profileImgPath} alt={`프로필 사진`} />
-        )}
+        {currentImageRender(croppedImage, currentImgSrc, myInfoData?.profileImgPath)}
         <S.FileInput
           type='file'
           id='addUserProfileImg'
