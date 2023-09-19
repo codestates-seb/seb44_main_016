@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export interface ValidationValues {
   loginId?: string | null;
   pwValue?: string | null;
@@ -22,13 +24,17 @@ export interface UserInputLabel {
   required?: boolean;
 }
 
-export interface UserInputData {
-  label: UserInputLabel;
-  component: React.ReactNode;
-  error: string;
+export interface InputData {
+  label: {
+    htmlFor: string;
+    text: string;
+    required?: boolean;
+  };
+  guide?: string;
+  component: ReactNode;
+  subComponent?: ReactNode;
+  error: string | undefined;
 }
-
-export type UserInputDataArray = UserInputData[];
 
 export interface PostSignUp {
   email: string | null;
@@ -53,12 +59,12 @@ export interface LoginResData {
 }
 
 export interface OAuthData {
-  grantType: string;
+  grantType?: string;
   code: string;
   state?: string;
-  redirectURI: string;
-  clientId: string;
-  clientSecret: string;
+  redirectURI?: string;
+  clientId?: string;
+  clientSecret?: string;
 }
 
 export interface OAuthReqData {
