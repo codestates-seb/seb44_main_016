@@ -9,7 +9,7 @@ interface SignUpInputFieldProps {
   label: UserInputLabel;
   component: React.ReactNode;
   subComponent: React.ReactNode;
-  error: string;
+  error: string | undefined;
   inputData: InputData[];
   domainValue: string;
   setDomainValue: React.Dispatch<React.SetStateAction<string>>;
