@@ -1,6 +1,6 @@
 import validation from './validationCheck';
-import { SIGN_UP_MESSAGES, USER_DELETE_MESSAGES } from '../constants/messages/user';
-import { ValidationValues } from '../types/user';
+import { ValidationValues } from '../../../types/user';
+import { SIGN_UP_MESSAGES, USER_DELETE_MESSAGES } from '../../../constants/messages/user';
 
 const getNewError = {
   signUp: ({
