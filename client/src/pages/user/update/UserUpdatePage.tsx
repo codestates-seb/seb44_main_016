@@ -2,21 +2,21 @@ import { useRouter } from 'next/router';
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { toast } from 'react-toastify';
 import CommonStyles from '../../../styles/CommonStyles';
 import useInput from '../../../hooks/useComponents';
-import { USER_UPDATE_MESSAGES } from '../../../constants/messages/user';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 import BackBtn from '../../../components/BackBtn';
-import getNewError from '../../../utils/inputValidationError';
+import getNewError from '../../../utils/common/validation/inputValidationError';
 import apiUser from '../../../services/apiUser';
 import ProfileImgUpdate from './ProfileImgUpdate';
 import { RootState } from '../../../components/redux/store';
 import { useSelector } from 'react-redux';
 import UserInputField from './UserInputField';
 import { UserInfoResData } from '../../../types/user';
-import useMutateUser from '../../../services/useMutateUser';
+import useMutateUser from '../../../services/mutate/useMutateUser';
 import useUserGlobalValue from '../../../components/redux/getUserInfo';
+import generateInputData from '../../../utils/common/getInputData';
+import isValidForm from '../../../utils/common/validation/isValidForm';
 
 interface UserUpdatePageProps {
   myInfoData: UserInfoResData;
@@ -27,7 +27,7 @@ export default function UserUpdatePage({ myInfoData }: UserUpdatePageProps) {
 
   const currentImgSrc = useSelector<RootState>((state) => state.currentImgReducer.currentImgSrc);
   const { loginId } = useUserGlobalValue();
-  const originalNickname = myInfoData ? myInfoData.User.nickname : '';
+  const originalNickname = myInfoData ? myInfoData.nickname : '';
 
   const [nicknameInput, nickname] = useInput('text', originalNickname, 'nickname', 'nickname');
   const [PwInput, pwValue] = useInput('password', '비밀번호', 'pw', 'current-password');
@@ -46,35 +46,7 @@ export default function UserUpdatePage({ myInfoData }: UserUpdatePageProps) {
     setError(newError);
   }, [nickname, pwValue, password]);
 
-  const inputData = [
-    {
-      label: {
-        htmlFor: 'nickname',
-        text: '닉네임',
-      },
-      guide: USER_UPDATE_MESSAGES.NICKNAME_GUIDE,
-      component: nicknameInput,
-      error: error.nickname,
-    },
-    {
-      label: {
-        htmlFor: 'pw',
-        text: '비밀번호',
-      },
-      guide: USER_UPDATE_MESSAGES.PASSWORD_GUIDE,
-      component: PwInput,
-      error: error.password,
-    },
-    {
-      label: {
-        htmlFor: 'pwConfirm',
-        text: '비밀번호 확인',
-      },
-      guide: USER_UPDATE_MESSAGES.PASSWORD_CONFIRM_GUIDE,
-      component: PwConfirmInput,
-      error: error.passwordConfirm,
-    },
-  ];
+  const inputData = generateInputData({ type: '회원수정', nicknameInput, PwInput, PwConfirmInput, error });
 
   const { updateUserMutate } = useMutateUser.update(apiUser.updateMyInfo);
   const requestBody = {
@@ -86,21 +58,8 @@ export default function UserUpdatePage({ myInfoData }: UserUpdatePageProps) {
   const handleUpdateUserSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (
-      (nickname && error.nickname) ||
-      (pwValue && !password) ||
-      (password && !pwValue) ||
-      (pwValue && error.password) ||
-      (password && error.passwordConfirm)
-    ) {
+    if (!isValidForm.update({ nickname, password, pwValue, currentImgSrc, error })) {
       RefusalAnimation();
-      toast.error('에러 메시지를 확인해주세요.');
-      return;
-    }
-
-    if (!currentImgSrc && !nickname && !password && !pwValue) {
-      RefusalAnimation();
-      toast.error('수정할 정보가 없습니다.');
       return;
     }
 

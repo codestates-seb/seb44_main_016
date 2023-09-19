@@ -7,9 +7,11 @@ import { SIGN_UP_MESSAGES } from '../../../constants/messages/user';
 import apiUser from '../../../services/apiUser';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
 import PolicyAgreement from './PolicyAgreement';
-import getSignUpNewError from '../../../utils/inputValidationError';
 import useMutateUser from '../../../services/mutate/useMutateUser';
 import SignUpInputField from './SignUpInputField';
+import generateInputData from '../../../utils/common/getInputData';
+import isValidForm from '../../../utils/common/validation/isValidForm';
+import getNewError from '../../../utils/common/validation/inputValidationError';
 
 export default function SignUpForm() {
   const [IdInput, loginId] = useInput('text', '아이디', 'loginId', 'username');
@@ -26,7 +28,9 @@ export default function SignUpForm() {
     email: '',
     policy: '',
   });
+
   const [isClickedProps, RefusalAnimation] = useRefusalAni();
+
   const { CheckboxComponent, isChecked } = useCheckboxError({
     labelTitle: '전체동의',
     checkboxAgreement: SIGN_UP_MESSAGES.POLICY_EXPLAIN,
@@ -34,8 +38,18 @@ export default function SignUpForm() {
     isBackgroundWhite: true,
   });
 
+  const inputData = generateInputData({
+    type: '회원가입',
+    IdInput,
+    PwInput,
+    PwConfirmInput,
+    nicknameInput,
+    emailInput,
+    error,
+  });
+
   useEffect(() => {
-    const newError = getSignUpNewError.signUp({
+    const newError = getNewError.signUp({
       loginId,
       pwValue,
       password,
@@ -46,55 +60,6 @@ export default function SignUpForm() {
     });
     setError(newError);
   }, [loginId, pwValue, password, nickname, domainValue, isChecked]);
-
-  const inputData = [
-    {
-      label: {
-        htmlFor: 'loginId',
-        text: '아이디',
-        required: true,
-      },
-      component: IdInput,
-      error: error.loginId,
-    },
-    {
-      label: {
-        htmlFor: 'pw',
-        text: '비밀번호',
-        required: true,
-      },
-      component: PwInput,
-      error: error.password,
-    },
-    {
-      label: {
-        htmlFor: 'pwConfirm',
-        text: '비밀번호 확인',
-        required: true,
-      },
-      component: PwConfirmInput,
-      error: error.passwordConfirm,
-    },
-    {
-      label: {
-        htmlFor: 'nickname',
-        text: '닉네임',
-        required: true,
-      },
-      component: nicknameInput,
-      error: error.nickname,
-    },
-    {
-      label: {
-        htmlFor: 'email',
-        text: '이메일',
-        required: true,
-      },
-      component: emailInput,
-      subComponent: true,
-      error: error.email,
-    },
-  ];
 
   const requestBody = {
     email: emailValue + '@' + domainValue,
@@ -109,7 +74,7 @@ export default function SignUpForm() {
   const handleSignUpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (error.loginId || error.passwordConfirm || error.nickname || error.email || error.policy) {
+    if (!isValidForm.signUp(error)) {
       RefusalAnimation();
       return;
     }

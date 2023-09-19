@@ -1,18 +1,19 @@
 import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useState } from 'react';
-import { toast } from 'react-toastify';
 import CommonStyles from '../../../styles/CommonStyles';
 import useInput from '../../../hooks/useComponents';
 import useCheckboxError from '../../../hooks/useCheckoutError';
 import apiUser from '../../../services/apiUser';
 import { useRefusalAni, isClickedStyled, SubmitBoxProps } from '../../../hooks/useRefusalAni';
-import getNewError from '../../../utils/inputValidationError';
+import getNewError from '../../../utils/common/validation/inputValidationError';
 import BackBtn from '../../../components/BackBtn';
 import useMutateUser from '../../../services/mutate/useMutateUser';
 import HeadMeta from '../../../components/HeadMeta';
 import { USER_META_DATA } from '../../../constants/seo/userMetaData';
 import useUserGlobalValue from '../../../components/redux/getUserInfo';
+import isValidForm from '../../../utils/common/validation/isValidForm';
+import generateInputData from '../../../utils/common/getInputData';
 
 export default function UserDelete() {
   const { nickname } = useUserGlobalValue();
@@ -29,24 +30,7 @@ export default function UserDelete() {
   });
   const [isClickedProps, RefusalAnimation] = useRefusalAni();
 
-  const inputData = [
-    {
-      label: {
-        htmlFor: 'pw',
-        text: '비밀번호',
-      },
-      component: PwInput,
-      error: error.password,
-    },
-    {
-      label: {
-        htmlFor: 'pwConfirm',
-        text: '비밀번호 확인',
-      },
-      component: PwConfirmInput,
-      error: error.passwordConfirm,
-    },
-  ];
+  const inputData = generateInputData({ type: '회원탈퇴', PwInput, PwConfirmInput, error });
 
   const { deleteUserMutate } = useMutateUser.delete(apiUser.deleteMyInfo);
 
@@ -58,9 +42,8 @@ export default function UserDelete() {
   const handleDeleteSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (error.password || error.passwordConfirm || error.policy) {
+    if (!isValidForm.delete(error)) {
       RefusalAnimation();
-      toast.error('에러 메시지를 확인해주세요.');
       return;
     }
 
