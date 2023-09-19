@@ -1,39 +1,26 @@
 import React, { useEffect } from 'react';
 import Loading from '../../../components/Loading';
-import useMutateUser from '../../../services/useMutateUser';
+import useMutateUser from '../../../services/mutate/useMutateUser';
 import apiUser from '../../../services/apiUser';
+import { handleOAuthLogin } from '../../../utils/oauth/handleOAuthLogin';
+import { OAUTH } from '../../../constants/oauth/oauth';
 
 const KakaoOauthRedirection = () => {
   let code: string | null = null;
-  const clientId = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
-  const clientSecret = process.env.NEXT_PUBLIC_KAKAO_CLIENT_SECRET;
+  const clientId = OAUTH.KAKAO_API_KEY;
 
   const { LoginMutate } = useMutateUser.login(apiUser.postOAuthCode);
 
   useEffect(() => {
     const codeValue = new URLSearchParams(window.location.search).get('code');
     if (codeValue) {
+      console.log(codeValue);
       code = codeValue;
     }
   }, []);
 
-  const handleOAuthLogin = () => {
-    if (code && clientId && clientSecret) {
-      const oAuthData = {
-        grantType: 'authorization_code',
-        code: code,
-        redirectURI: 'https://zerohip.co.kr/oauth/kakao',
-        clientId,
-        clientSecret,
-      };
-      const targetOAuth = 'kakao';
-      const oAuthReqBody = { oAuthData, targetOAuth };
-      LoginMutate(oAuthReqBody);
-    }
-  };
-
   useEffect(() => {
-    handleOAuthLogin();
+    handleOAuthLogin({ name: 'kakao', code, clientId, LoginMutate });
   }, [code]);
 
   return <Loading />;

@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import Loading from '../../../components/Loading';
-import useMutateUser from '../../../services/useMutateUser';
+import useMutateUser from '../../../services/mutate/useMutateUser';
 import apiUser from '../../../services/apiUser';
+import { handleOAuthLogin } from '../../../utils/oauth/handleOAuthLogin';
 
 const NaverOauthRedirection = () => {
   let code: string | null = null;
@@ -20,24 +21,8 @@ const NaverOauthRedirection = () => {
     }
   }, []);
 
-  const handleOAuthLogin = () => {
-    if (code && state && clientId && clientSecret) {
-      const oAuthData = {
-        grantType: 'authorization_code',
-        code: code,
-        state: state,
-        redirectURI: 'https://zerohip.co.kr/oauth/naver',
-        clientId,
-        clientSecret,
-      };
-      const targetOAuth = 'naver';
-      const oAuthReqBody = { oAuthData, targetOAuth };
-      LoginMutate(oAuthReqBody);
-    }
-  };
-
   useEffect(() => {
-    handleOAuthLogin();
+    handleOAuthLogin({ name: 'naver', code, clientId, clientSecret, state, LoginMutate });
   }, [code]);
 
   return <Loading />;

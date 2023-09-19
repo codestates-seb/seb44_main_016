@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export interface ValidationValues {
   loginId?: string | null;
   pwValue?: string | null;
@@ -22,13 +24,17 @@ export interface UserInputLabel {
   required?: boolean;
 }
 
-export interface UserInputData {
-  label: UserInputLabel;
-  component: React.ReactNode;
-  error: string;
+export interface InputData {
+  label: {
+    htmlFor: string;
+    text: string;
+    required?: boolean;
+  };
+  guide?: string;
+  component: ReactNode;
+  subComponent?: ReactNode;
+  error: string | undefined;
 }
-
-export type UserInputDataArray = UserInputData[];
 
 export interface PostSignUp {
   email: string | null;
@@ -53,12 +59,12 @@ export interface LoginResData {
 }
 
 export interface OAuthData {
-  grantType: string;
+  grantType?: string;
   code: string;
   state?: string;
-  redirectURI: string;
-  clientId: string;
-  clientSecret: string;
+  redirectURI?: string;
+  clientId?: string;
+  clientSecret?: string;
 }
 
 export interface OAuthReqData {
@@ -74,11 +80,13 @@ export interface UserUpdateReqData {
 }
 
 export interface FollowUsersInfoData {
-  userId: number;
-  profileImgPath: string;
-  isAlsoFollowed: boolean;
+  followId: number;
+  followingId: number;
+  email: string;
   loginId: string;
   nickname: string;
+  profileImgPath: string;
+  isFollow: boolean;
 }
 
 export interface UserFeedData {
@@ -95,15 +103,14 @@ export interface UserFeedData {
   imgPath: string;
 }
 
-export interface User {
+export interface UserInfoResData {
   userId: string;
+  email: string;
   loginId: string;
   nickname: string;
   profileImgPath: string;
-}
-
-export interface UserInfoResData {
-  User: User;
+  followerCount: number;
+  followingCount: number;
   followingList: FollowUsersInfoData[];
   followerList: FollowUsersInfoData[];
 }

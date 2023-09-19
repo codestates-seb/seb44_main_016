@@ -17,7 +17,7 @@ export default function ProfileImgUpdate({ myInfoData }: ImageUploadProps) {
 
   return (
     <S.UserImg>
-      <img src={currentImgSrc ? currentImgSrc : myInfoData?.User.profileImgPath} alt='유저 프로필 사진' />
+      <img src={currentImgSrc ? currentImgSrc : myInfoData?.profileImgPath} alt='유저 프로필 사진' />
       <S.ImageUploadBtn
         onClick={handleOpenModal}
         aria-haspopup='dialog'

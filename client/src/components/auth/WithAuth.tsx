@@ -15,7 +15,9 @@ const withAuth = () => {
   const { accessToken } = useUserGlobalValue();
   const [changedAccessToken, setChangedAccessToken] = useState(accessToken);
 
-  const { data: myInfoData } = useQuery(['userInfo'], apiUser.getUserInfo);
+  const { data: myInfoData } = useQuery(['userInfo'], apiUser.getUserInfo, {
+    enabled: !!changedAccessToken,
+  });
 
   const getAccessTokenAndUserInfo = async () => {
     if (!changedAccessToken) {
@@ -35,7 +37,7 @@ const withAuth = () => {
 
   useEffect(() => {
     getAccessTokenAndUserInfo();
-  }, [myInfoData, accessToken]);
+  }, [myInfoData, changedAccessToken]);
 
   return;
 };

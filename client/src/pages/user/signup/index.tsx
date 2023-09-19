@@ -2,25 +2,14 @@ import styled from '@emotion/styled';
 import Logo from '../../../../public/images/logo.svg';
 import SignUpForm from './SignUpForm';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
 import HeadMeta from '../../../components/HeadMeta';
 import { USER_META_DATA } from '../../../constants/seo/userMetaData';
+import Loading from '../../../components/Loading';
+import { useWindowSizeWithMount } from '../../../hooks/useScreenSizeWithMount';
 
 export default function SignUp() {
   const router = useRouter();
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth <= 480);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  const { isSmallScreen, isMounted } = useWindowSizeWithMount();
 
   return (
     <S.Container>
@@ -28,11 +17,17 @@ export default function SignUp() {
         title={USER_META_DATA.SIGN_UP_PAGE.TITLE}
         description={USER_META_DATA.SIGN_UP_PAGE.DESCRIPTION}
       />
-      <S.HomeBtnBox type='button' onClick={() => router.push('/')}>
-        <h1 className='blind'>회원가입</h1>
-        <Logo width={isSmallScreen ? '260' : '337'} />
-      </S.HomeBtnBox>
-      <SignUpForm />
+      {!isMounted ? (
+        <Loading />
+      ) : (
+        <>
+          <S.HomeBtnBox type='button' onClick={() => router.push('/')}>
+            <h1 className='blind'>회원가입</h1>
+            <Logo width={isSmallScreen ? '260' : '337'} />
+          </S.HomeBtnBox>
+          <SignUpForm />
+        </>
+      )}
     </S.Container>
   );
 }

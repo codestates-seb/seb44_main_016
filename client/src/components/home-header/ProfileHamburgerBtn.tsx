@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import useMutateUser from '../../services/useMutateUser';
+import useMutateUser from '../../services/mutate/useMutateUser';
 import apiUser from '../../services/apiUser';
 import { useQuery } from '@tanstack/react-query';
 import useUserGlobalValue from '../redux/getUserInfo';

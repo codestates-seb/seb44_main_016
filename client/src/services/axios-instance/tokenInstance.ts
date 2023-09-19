@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { store } from '../components/redux/store';
-import { getAccessByRefresh } from '../components/auth/getAccessByRefresh';
+import { store } from '../../components/redux/store';
+import { getAccessByRefresh } from '../../components/auth/getAccessByRefresh';
 
 /** INSTANCE WITH TOKEN */
 export const instance = axios.create({
@@ -19,7 +19,6 @@ instance.interceptors.request.use(
     if (refreshToken) {
       config.headers['Refresh'] = `${refreshToken}`;
     }
-
     return config;
   },
   (error) => {
@@ -36,7 +35,7 @@ instance.interceptors.response.use(
     try {
       const { response, config } = error;
       const originalRequest = config;
-      if (response.data.status === 404) {
+      if (response.data.customCode === 1001 || response.data.customCode === 5000) {
         const newAccessToken = await getAccessByRefresh();
         originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
         return axios(originalRequest);

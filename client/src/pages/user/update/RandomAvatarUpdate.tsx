@@ -17,10 +17,10 @@ export default function RandomAvatarUpdate({ myInfoData, setIsOpen, isOpen }: Ra
   const currentImgSrc = store.getState().currentImgReducer.currentImgSrc;
 
   const [avatarImgURL, setAvatarImgURL] = useState(
-    currentImgSrc ? currentImgSrc : myInfoData?.User.profileImgPath
+    currentImgSrc ? currentImgSrc : myInfoData?.profileImgPath
   );
   const [changeAvatarNumber, setChangeAvatarNumber] = useState(
-    myInfoData ? Number(extractValueFromUrl(myInfoData.User.profileImgPath, myInfoData.User.loginId)) : null
+    myInfoData ? Number(extractValueFromUrl(myInfoData.profileImgPath, myInfoData.loginId)) : null
   );
 
   const handleChooseAvatarProfileImg = () => {
@@ -31,9 +31,7 @@ export default function RandomAvatarUpdate({ myInfoData, setIsOpen, isOpen }: Ra
   const handleChangeAvatarImg = (e: React.MouseEvent) => {
     e.preventDefault();
     setChangeAvatarNumber((prev: number) => prev + 1);
-    setAvatarImgURL(
-      `https://source.boringavatars.com/beam/150/${myInfoData?.User.loginId}${changeAvatarNumber}`
-    );
+    setAvatarImgURL(`https://source.boringavatars.com/beam/150/${myInfoData?.loginId}${changeAvatarNumber}`);
   };
 
   return (

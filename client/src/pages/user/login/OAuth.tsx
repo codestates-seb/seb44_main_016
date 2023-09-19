@@ -1,14 +1,17 @@
 import styled from '@emotion/styled';
-import Naver from './Naver';
-import Google from './Google';
-import Kakao from './Kakao';
+import OAuthBtn from './OAuthBtn';
+import { googleRedirectURL, kakaoRedirectURL, naverRedirectURL } from '../../../constants/oauth/oauth';
 
 export default function Oauth() {
+  const handleOAuthLogin = (redirectURL: string) => () => {
+    window.location.href = redirectURL;
+  };
+
   return (
     <S.OauthBox>
-      <Naver />
-      <Kakao />
-      <Google />
+      <OAuthBtn name='네이버' handleLogin={handleOAuthLogin(naverRedirectURL)} />
+      <OAuthBtn name='카카오' handleLogin={handleOAuthLogin(kakaoRedirectURL)} />
+      <OAuthBtn name='구글' handleLogin={handleOAuthLogin(googleRedirectURL)} />
     </S.OauthBox>
   );
 }

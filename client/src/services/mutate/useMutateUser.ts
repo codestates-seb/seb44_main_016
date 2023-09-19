@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
-import { useAppDispatch } from '../components/redux/hooks';
-import { login, logout } from '../components/redux/authnReducer';
+import { useAppDispatch } from '../../components/redux/hooks';
+import { login, logout } from '../../components/redux/authnReducer';
 import { AxiosResponse } from 'axios';
-import { LoginReqData, OAuthReqData, PostSignUp, UserUpdateReqData } from '../types/user';
-import { changeImgSrc } from '../components/redux/currentImgReducer';
+import { LoginReqData, OAuthReqData, PostSignUp, UserUpdateReqData } from '../../types/user';
+import { changeImgSrc } from '../../components/redux/currentImgReducer';
 
-interface LoginErrorResponse {
+interface ErrorResponse {
   response: {
     data: {
       message: string;
@@ -27,7 +27,7 @@ const useMutateUser = {
         }
       },
 
-      onError: (error: LoginErrorResponse) => {
+      onError: (error: ErrorResponse) => {
         if (error.response.data.message) {
           toast.error(error.response.data.message);
           return;
@@ -57,7 +57,7 @@ const useMutateUser = {
         }
       },
 
-      onError: (error: LoginErrorResponse) => {
+      onError: (error: ErrorResponse) => {
         if (error.response.data.message) {
           toast.error(error.response.data.message);
           return;
@@ -92,7 +92,7 @@ const useMutateUser = {
     const queryClient = useQueryClient();
 
     const { mutate, data } = useMutation(['update'], mutateFunction, {
-      onSuccess: (data) => {
+      onSuccess: () => {
         toast.success('회원 정보가 수정되었습니다.');
         dispatch(changeImgSrc({ currentImgSrc: '', isAvatar: false }));
         queryClient.invalidateQueries(['myInfo']);

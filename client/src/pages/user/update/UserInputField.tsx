@@ -3,9 +3,9 @@ import { UserInputLabel } from '../../../types/user';
 
 interface InputFieldProps {
   label: UserInputLabel;
-  guide: string;
+  guide: string | undefined;
   component: React.ReactNode;
-  error: string;
+  error: string | undefined;
 }
 
 export default function UserInputField({ label, guide, component, error }: InputFieldProps) {

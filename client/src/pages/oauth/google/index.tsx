@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import Loading from '../../../components/Loading';
-import useMutateUser from '../../../services/useMutateUser';
+import useMutateUser from '../../../services/mutate/useMutateUser';
 import apiUser from '../../../services/apiUser';
+import { handleOAuthLogin } from '../../../utils/oauth/handleOAuthLogin';
 
 const GoogleOauthRedirection = () => {
   let code: string | null = null;
@@ -17,23 +18,8 @@ const GoogleOauthRedirection = () => {
     }
   }, []);
 
-  const handleOAuthLogin = () => {
-    if (code && clientId && clientSecret) {
-      const oAuthData = {
-        grantType: 'authorization_code',
-        code: code,
-        redirectURI: 'https://zerohip.co.kr/oauth/google',
-        clientId,
-        clientSecret,
-      };
-      const targetOAuth = 'google';
-      const oAuthReqBody = { oAuthData, targetOAuth };
-      LoginMutate(oAuthReqBody);
-    }
-  };
-
   useEffect(() => {
-    handleOAuthLogin();
+    handleOAuthLogin({ name: 'google', code, clientId, clientSecret, LoginMutate });
   }, [code]);
 
   return <Loading />;
