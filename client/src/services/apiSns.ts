@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { instance } from './tokenInstance';
+import { instance } from './axios-instance/tokenInstance';
 import { VoteType } from '../types/article';
 import { FeedArticleReqType } from '../types/article';
 

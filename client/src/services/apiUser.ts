@@ -13,9 +13,7 @@ const apiUser = {
 
   /** 로그인 */
   postLogin: async (loginData: LoginReqData): Promise<AxiosResponse> => {
-    const response = await axios.post(`${BASE_URL}/user/login`, loginData, {
-      withCredentials: true,
-    });
+    const response = await axios.post(`${BASE_URL}/user/login`, loginData);
     return response;
   },
 
@@ -23,49 +21,38 @@ const apiUser = {
   postOAuthCode: async (OAuthReqData: OAuthReqData) => {
     const response = await axios.post(
       `${BASE_URL}/login/oauth2/code/${OAuthReqData.targetOAuth}`,
-      OAuthReqData.oAuthData,
-      {
-        withCredentials: true,
-      }
+      OAuthReqData.oAuthData
     );
     return response;
   },
 
   /** 로그아웃 */
   deleteLogout: async () => {
-    const response = await instance.delete(`${BASE_URL}/auth/logout`, {
-      withCredentials: true,
-    });
+    const response = await instance.delete(`${BASE_URL}/auth/logout`);
     return response;
   },
 
   /** 회원 탈퇴 */
   deleteMyInfo: async (password: string) => {
-    const response = await instance.delete(`${BASE_URL}/user/delete`, { data: { password: password } });
+    const response = await instance.delete(`${BASE_URL}/user/delete`, { data: { password } });
     return response;
   },
 
   /** 마이 페이지 불러오기 */
   getMyInfo: async () => {
-    const response = await instance.get(`${BASE_URL}/user/mypage`, {
-      withCredentials: true,
-    });
+    const response = await instance.get(`${BASE_URL}/user/mypage`);
     return response.data;
   },
 
   /** 나의 기본정보 불러오기 */
   getUserInfo: async () => {
-    const response = await instance.get(`${BASE_URL}/user/info`, {
-      withCredentials: true,
-    });
+    const response = await instance.get(`${BASE_URL}/user/info`);
     return response.data;
   },
 
   /** 회원 기본정보 불러오기 */
   getUserPage: async (userId: string | string[] | undefined) => {
-    const response = await instance.get(`${BASE_URL}/user/profile/${userId}`, {
-      withCredentials: true,
-    });
+    const response = await instance.get(`${BASE_URL}/user/profile/${userId}`);
     return response.data;
   },
 
@@ -85,17 +72,6 @@ const apiUser = {
   /** Access Token 갱신 */
   getNewAccess: async () => {
     const response = await instance.post(`${BASE_URL}/auth/refresh`);
-    return response;
-  },
-
-  /** 구독하기 */
-  startFollowing: async (userId: string | undefined) => {
-    const response = await instance.post(`${BASE_URL}/friend/following/${userId}`);
-    return response;
-  },
-
-  cancelFollowing: async (userId: string | undefined) => {
-    const response = await instance.post(`${BASE_URL}/friend/following/${userId}`);
     return response;
   },
 };
