@@ -40,7 +40,11 @@ export default function useInput(
       return (
         <S.InputBox>
           <S.InputText {...inputProps} />
-          <S.IconBtn type='button' onClick={handlePasswordIcon}>
+          <S.IconBtn
+            type='button'
+            onClick={handlePasswordIcon}
+            aria-label={showPassword ? 'hide password button' : 'show password button'}
+          >
             {showPassword ? <HideIcon /> : <ShowIcon />}
           </S.IconBtn>
         </S.InputBox>

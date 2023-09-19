@@ -1,12 +1,14 @@
 import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
-import CloseBtnIcon from '../../../../public/images/icon/closeBtn.svg';
+import CloseBtnIcon from '../../../public/images/icon/closeBtn.svg';
 import FollowList from './FollowList';
-import { FollowUsersInfoData } from '../../../types/user';
+import { FollowUsersInfoData } from '../../types/user';
 
 interface FollowModalProps {
   title: string;
   followList: FollowUsersInfoData[];
+  isFollowed?: boolean;
+  isFollowing?: boolean;
 }
 
 export default function FollowModal({ title, followList }: FollowModalProps) {

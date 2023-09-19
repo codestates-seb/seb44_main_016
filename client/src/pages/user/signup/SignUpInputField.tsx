@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import CommonStyles from '../../../styles/CommonStyles';
 import SelectBox from '../../../components/SelectBox';
 import { EMAIL_DOMAIN } from '../../../constants/selectItems';
-import { UserInputLabel, UserInputDataArray } from '../../../types/user';
+import { UserInputLabel, InputData } from '../../../types/user';
 
 interface SignUpInputFieldProps {
   i: number;
@@ -10,7 +10,7 @@ interface SignUpInputFieldProps {
   component: React.ReactNode;
   subComponent: React.ReactNode;
   error: string;
-  inputData: UserInputDataArray;
+  inputData: InputData[];
   domainValue: string;
   setDomainValue: React.Dispatch<React.SetStateAction<string>>;
 }
