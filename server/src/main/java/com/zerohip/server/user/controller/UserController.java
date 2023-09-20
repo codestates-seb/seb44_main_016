@@ -70,10 +70,23 @@ public class UserController {
 
 
     // 회원 조회 (for user)
-    @GetMapping("/profile/{user-id}")
-    public ResponseEntity<?> findUserProfile(@PathVariable("user-id") @Positive Long userId) {
+//    @GetMapping("/profile/{user-id}")
+//    public ResponseEntity<?> findUserProfile(@PathVariable("user-id") @Positive Long userId) {
+//
+//        return new ResponseEntity<>(mapper.userToMyPageResponse(userService.findUser(userId)), HttpStatus.OK);
+//    }
 
-        return new ResponseEntity<>(mapper.userToMyPageResponse(userService.findUser(userId)), HttpStatus.OK);
+
+    // other user-page 진입 시 로그인 상태 확인
+    @GetMapping("/profile/check-user/{login-id}")
+    public ResponseEntity<?> checkAuthor(@AuthenticationPrincipal String authorId,
+                                         @PathVariable ("login-id") String otherUserLoginId) {
+
+        if (authorId == null) {
+            return new ResponseEntity<>("Guest User",HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(mapper.userToCheckOtherUserResponse(userService.checkAuthor(authorId, otherUserLoginId)), HttpStatus.OK);
     }
 
 

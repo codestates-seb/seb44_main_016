@@ -30,8 +30,10 @@ public interface UserMapper {
     UserDto.CheckPasswordResponse userToCheckPasswordResponse(User user);
 
     UserDto.MyPageResponse userToMyPageResponse(User user);
+    UserDto.CheckOtherUserResponse userToCheckOtherUserResponse(User user);
 
 
+    // follow
     @Mapping(source = "followerId.userId", target = "followingId")
     @Mapping(source = "followerId.email", target = "email")
     @Mapping(source = "followerId.loginId", target = "loginId")
@@ -45,4 +47,8 @@ public interface UserMapper {
     @Mapping(source = "followingId.nickname", target = "nickname")
     @Mapping(source = "followingId.profileImgPath", target = "profileImgPath")
     FollowDto.FollowerResponseDto followToFollowerResponseDto(Follow follow);
+
+    @Mapping(source = "followingId.userId", target = "followerId")
+    @Mapping(source = "followerId.userId", target = "followingId")
+    FollowDto.FollowResponseDto followToFollowResponseDto(Follow follow);
 }

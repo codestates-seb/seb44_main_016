@@ -7,6 +7,7 @@ import com.zerohip.server.financialRecord.entity.FinancialRecord;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import com.zerohip.server.follow.entity.Follow;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -50,6 +51,9 @@ public class User extends Auditable {
 
     @Column
     private int followingCount;
+
+    @ColumnDefault("false")
+    private Boolean isFollowing; // 팔로잉 여부
 
 
 

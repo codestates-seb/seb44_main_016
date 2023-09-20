@@ -3,7 +3,9 @@ package com.zerohip.server.user.service;
 import com.zerohip.server.common.exception.BusinessLogicException;
 import com.zerohip.server.common.exception.ExceptionCode;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
+import com.zerohip.server.follow.entity.Follow;
 import com.zerohip.server.follow.repository.FollowRepository;
+import com.zerohip.server.follow.service.FollowService;
 import com.zerohip.server.security.utils.CustomAuthorityUtils;
 import com.zerohip.server.user.entity.User;
 import com.zerohip.server.user.repository.UserRepository;
@@ -28,6 +30,7 @@ public class UserServiceImpl implements UserService{
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
 
+
     @Override
     public User createUser(User user) {
 
@@ -49,7 +52,6 @@ public class UserServiceImpl implements UserService{
          * 유저 정보 등록/수정 등의 이벤트가 일어날 경우 알림 메일 전송하는 로직 구현 가능
          */
     }
-
 
 
     @Override
@@ -92,6 +94,21 @@ public class UserServiceImpl implements UserService{
         user.setFollowingCount(followRepository.followingCount(user.getUserId()));
 
         userRepository.save(user);
+        return user;
+    }
+
+
+    @Override
+    public User checkAuthor(String loginId, String otherUserLoginId) {
+
+        User user = findUserByLoginId(loginId);
+        User otherUser = findUserByLoginId(otherUserLoginId);
+
+        Follow findFollow = followRepository.findFollow(user.getUserId(), otherUser.getUserId()).orElse(null);
+        if (findFollow != null) {
+            user.setIsFollowing(true);
+        }
+
         return user;
     }
 

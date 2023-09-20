@@ -11,4 +11,8 @@ public interface FollowMapper {
     @Mapping(source = "followerId.userId", target = "followerId")
     @Mapping(source = "followingId.userId", target = "followingId")
     FollowDto.FollowResponseDto followToFollowResponseDto(Follow follow);
+
+    @Mapping(source = "followerId.userId", target = "followerId")
+    @Mapping(source = "followingId.userId", target = "followingId")
+    FollowDto.CheckFollowResponseDto followToCheckFollowResponseDto(Follow follow);
 }

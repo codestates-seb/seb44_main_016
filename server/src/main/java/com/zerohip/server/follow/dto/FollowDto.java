@@ -16,6 +16,8 @@ public class FollowDto {
         private Long followId;
         private Long followerId;
         private Long followingId;
+//        private Boolean isFollowing; // 해당 유저가 다른 사용자 팔로잉
+
 
     }
 
@@ -48,6 +50,22 @@ public class FollowDto {
         private String nickname;
         private String profileImgPath;
         private Boolean isFollow;
+
+    }
+
+
+    // 추후 맞팔 여부로 변경
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class CheckFollowResponseDto {
+
+        private Long followId;
+        private Long followerId;
+        private Long followingId;
+        private Boolean isFollow;
+
 
     }
 }

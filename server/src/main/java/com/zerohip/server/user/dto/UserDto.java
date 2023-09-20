@@ -173,6 +173,19 @@ public class UserDto {
     }
 
     @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class CheckOtherUserResponse {
+
+        private Long userId;
+        private String loginId;
+        private String nickname;
+        private Boolean isFollowing;
+
+    }
+
+    @Getter
     @Builder
     @AllArgsConstructor
     public static class CheckPasswordResponse {

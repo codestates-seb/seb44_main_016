@@ -33,6 +33,7 @@ public class FollowService {
         follow.setFollowerId(findFollowUser(followingUserId));
         follow.setFollowingId(findFollowUser(authUserId));
         follow.setIsFollow(followRepository.checkFollowed(authUserId, followingUserId));
+//        follow.setIsFollowing(followRepository.checkFollowing(authUserId, followingUserId));
 
         return followRepository.save(follow);
     }
@@ -68,19 +69,24 @@ public class FollowService {
     }
 
 
+    public Follow findFollow(Long authUserId, Long otherUserId) {
 
+        Optional<Follow> findFollow = followRepository.findFollow(authUserId, otherUserId);
 
+        if (findFollow.isPresent()) {
 
-//    private Follow checkFollow(String authorLoginId, Long followId) {
-//
-//        Optional<Follow> optionalFollow = followRepository.findById(followId);
-//        Follow follow = optionalFollow.orElseThrow(() -> new BusinessLogicException(ExceptionCode.FOLLOWER_NOT_FOUND));
-//
-//        return follow;
-//    }
+            Follow follow = findFollow.get();
+            follow.setIsFollow(followRepository.checkFollowed(authUserId, otherUserId));
+            return followRepository.save(follow);
+
+        }
+        else return null;
+    }
 
 
 //  ---
+
+
     private void verifiedFollowing(Long authUserId, Long followingUserId) {
 
         Follow findFollow = followRepository.findFollow(authUserId, followingUserId).orElse(null);
@@ -88,6 +94,7 @@ public class FollowService {
             throw new BusinessLogicException(ExceptionCode.FOLLOW_ALREADY_EXIST);
         }
     }
+
 
     private User findFollowUser(Long userId) {
 
