@@ -12,6 +12,7 @@ import java.util.List;
 
 public class UserDto {
 
+
     @Getter
     @Builder
     @AllArgsConstructor
@@ -54,6 +55,7 @@ public class UserDto {
 
     }
 
+
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
@@ -88,6 +90,7 @@ public class UserDto {
         private String loginId;
     }
 
+
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
@@ -97,6 +100,7 @@ public class UserDto {
         private String email;
     }
 
+
     @Getter
     @Builder
     @AllArgsConstructor
@@ -105,17 +109,6 @@ public class UserDto {
 
         private String password;
     }
-
-
-//    @Getter
-//    @AllArgsConstructor
-//    @NoArgsConstructor
-//    @Builder
-//    public static class CheckLoginIdResponse {
-//
-//        private String
-//    }
-
 
 
     @Getter
@@ -138,6 +131,7 @@ public class UserDto {
 
     }
 
+
     @Getter
     @Setter
     @NoArgsConstructor
@@ -153,6 +147,7 @@ public class UserDto {
         private LocalDateTime modifiedAt;
 
     }
+
 
     @Getter
     @Setter
@@ -172,6 +167,7 @@ public class UserDto {
 
     }
 
+
     @Getter
     @Setter
     @NoArgsConstructor
@@ -181,9 +177,10 @@ public class UserDto {
         private Long userId;
         private String loginId;
         private String nickname;
-        private Boolean isFollowing;
+        private List<FollowDto.FollowResponseDto> followInfo;
 
     }
+
 
     @Getter
     @Builder

@@ -8,11 +8,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface FollowMapper {
 
-    @Mapping(source = "followerId.userId", target = "followerId")
-    @Mapping(source = "followingId.userId", target = "followingId")
+    @Mapping(source = "followerId.loginId", target = "followerId")
+    @Mapping(source = "followingId.loginId", target = "followingId")
     FollowDto.FollowResponseDto followToFollowResponseDto(Follow follow);
 
-    @Mapping(source = "followerId.userId", target = "followerId")
-    @Mapping(source = "followingId.userId", target = "followingId")
-    FollowDto.CheckFollowResponseDto followToCheckFollowResponseDto(Follow follow);
 }

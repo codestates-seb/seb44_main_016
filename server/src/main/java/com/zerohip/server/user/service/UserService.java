@@ -19,12 +19,10 @@ public interface UserService {
 
     User getMypage(String loginId);
 
-    User findUser(Long userId);
+    User findUser(String loginId);
 
     // User 조회
     List<User> findUsers();
-
-    User checkAuthor(String loginId, String otherUser);
 
     // User 수정
     User updateUser(String loginId, User user);

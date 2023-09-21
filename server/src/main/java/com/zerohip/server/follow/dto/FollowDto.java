@@ -7,6 +7,7 @@ import lombok.Setter;
 
 public class FollowDto {
 
+
     @Getter
     @Setter
     @AllArgsConstructor
@@ -14,10 +15,9 @@ public class FollowDto {
     public static class FollowResponseDto {
 
         private Long followId;
-        private Long followerId;
-        private Long followingId;
-//        private Boolean isFollowing; // 해당 유저가 다른 사용자 팔로잉
-
+        private String followerId;
+        private String followingId;
+        private Boolean isFollowing; // 해당 유저가 다른 사용자 팔로잉
 
     }
 
@@ -29,13 +29,13 @@ public class FollowDto {
     public static class FollowerResponseDto {
 
         private Long followId;
-        private Long followerId;
+        private String followerId;
         private String email;
-        private String loginId;
         private String nickname;
         private String profileImgPath;
 
     }
+
 
     @Getter
     @Setter
@@ -44,9 +44,8 @@ public class FollowDto {
     public static class FollowingResponseDto {
 
         private Long followId;
-        private Long followingId;
+        private String followingId;
         private String email;
-        private String loginId;
         private String nickname;
         private String profileImgPath;
         private Boolean isFollow;
@@ -54,7 +53,7 @@ public class FollowDto {
     }
 
 
-    // 추후 맞팔 여부로 변경
+    // 추후 맞팔 여부 확인에 사용
     @Getter
     @Setter
     @AllArgsConstructor
@@ -62,10 +61,9 @@ public class FollowDto {
     public static class CheckFollowResponseDto {
 
         private Long followId;
-        private Long followerId;
-        private Long followingId;
-        private Boolean isFollow;
-
+        private String followerId;
+        private String followingId;
+        private Boolean friend;
 
     }
 }

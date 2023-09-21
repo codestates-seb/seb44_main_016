@@ -16,13 +16,10 @@ public interface UserMapper {
     User userPatchDtoToUser(UserDto.Patch userPatchDto);
 
 
-
-
     User checkUserByLoginId(UserDto.CheckLoginId checkLoginIdDto);
 
     User checkUserByEmail(UserDto.CheckEmail checkEmailDto);
 //    User checkPasswordToUser(UserDto.CheckPassword checkPasswordDto);
-
 
 
     UserDto.Response userToUserResponseDto(User user);
@@ -33,22 +30,19 @@ public interface UserMapper {
     UserDto.CheckOtherUserResponse userToCheckOtherUserResponse(User user);
 
 
+
     // follow
-    @Mapping(source = "followerId.userId", target = "followingId")
+    @Mapping(source = "followerId.loginId", target = "followingId")
     @Mapping(source = "followerId.email", target = "email")
-    @Mapping(source = "followerId.loginId", target = "loginId")
     @Mapping(source = "followerId.nickname", target = "nickname")
     @Mapping(source = "followerId.profileImgPath", target = "profileImgPath")
     FollowDto.FollowingResponseDto followToFollowingResponseDto(Follow follow);
 
-    @Mapping(source = "followingId.userId", target = "followerId")
+
+    @Mapping(source = "followingId.loginId", target = "followerId")
     @Mapping(source = "followingId.email", target = "email")
-    @Mapping(source = "followingId.loginId", target = "loginId")
     @Mapping(source = "followingId.nickname", target = "nickname")
     @Mapping(source = "followingId.profileImgPath", target = "profileImgPath")
     FollowDto.FollowerResponseDto followToFollowerResponseDto(Follow follow);
 
-    @Mapping(source = "followingId.userId", target = "followerId")
-    @Mapping(source = "followerId.userId", target = "followingId")
-    FollowDto.FollowResponseDto followToFollowResponseDto(Follow follow);
 }

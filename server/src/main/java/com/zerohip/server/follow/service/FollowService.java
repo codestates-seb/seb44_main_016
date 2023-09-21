@@ -20,19 +20,20 @@ public class FollowService {
     private final FollowRepository followRepository;
     private final UserService userService;
 
-    public Follow addFollowing(String authorLoginId, Long followingUserId) {
+    public Follow addFollowing(String authorLoginId, String followingUserId) {
 
-        Long authUserId = userService.findUserByLoginId(authorLoginId).getUserId();
-        if (authUserId == followingUserId) {
+//        Long authUserId = userService.findUserByLoginId(authorLoginId).getUserId();
+        if (authorLoginId.equals(followingUserId)) {
             throw new BusinessLogicException(ExceptionCode.SAME_USER);
         }
 
-        verifiedFollowing(authUserId, followingUserId);
+        verifiedFollowing(authorLoginId, followingUserId);
 
         Follow follow = new Follow();
-        follow.setFollowerId(findFollowUser(followingUserId));
-        follow.setFollowingId(findFollowUser(authUserId));
-        follow.setIsFollow(followRepository.checkFollowed(authUserId, followingUserId));
+        follow.setFollowerId(findFollowUserByLoginId(followingUserId));
+        follow.setFollowingId(findFollowUserByLoginId(authorLoginId));
+        follow.setIsFollowing(true);
+        follow.setIsFollow(followRepository.checkFollowed(authorLoginId, followingUserId));
 //        follow.setIsFollowing(followRepository.checkFollowing(authUserId, followingUserId));
 
         return followRepository.save(follow);
@@ -69,7 +70,7 @@ public class FollowService {
     }
 
 
-    public Follow findFollow(Long authUserId, Long otherUserId) {
+    public Follow findFollow(String authUserId, String otherUserId) {
 
         Optional<Follow> findFollow = followRepository.findFollow(authUserId, otherUserId);
 
@@ -84,10 +85,22 @@ public class FollowService {
     }
 
 
+    public Follow checkAuthor(String loginId, String otherUserLoginId) {
+
+        User user = userService.findUserByLoginId(loginId);
+        User otherUser = userService.findUserByLoginId(otherUserLoginId);
+
+        Follow findFollow = followRepository.findFollow(user.getLoginId(), otherUser.getLoginId()).orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.FOLLOW_NOT_FOUND));
+
+        return findFollow;
+    }
+
+
 //  ---
 
 
-    private void verifiedFollowing(Long authUserId, Long followingUserId) {
+    private void verifiedFollowing(String authUserId, String followingUserId) {
 
         Follow findFollow = followRepository.findFollow(authUserId, followingUserId).orElse(null);
         if (findFollow != null) {
@@ -99,6 +112,11 @@ public class FollowService {
     private User findFollowUser(Long userId) {
 
         return userService.findUserByUserId(userId);
+    }
+
+    private User findFollowUserByLoginId(String loginId) {
+
+        return userService.findUserByLoginId(loginId);
     }
 
 }

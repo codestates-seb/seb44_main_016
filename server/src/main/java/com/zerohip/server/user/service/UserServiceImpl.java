@@ -3,7 +3,9 @@ package com.zerohip.server.user.service;
 import com.zerohip.server.common.exception.BusinessLogicException;
 import com.zerohip.server.common.exception.ExceptionCode;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
+import com.zerohip.server.follow.dto.FollowDto;
 import com.zerohip.server.follow.entity.Follow;
+import com.zerohip.server.follow.mapper.FollowMapper;
 import com.zerohip.server.follow.repository.FollowRepository;
 import com.zerohip.server.follow.service.FollowService;
 import com.zerohip.server.security.utils.CustomAuthorityUtils;
@@ -77,8 +79,8 @@ public class UserServiceImpl implements UserService{
     public User getMypage(String loginId) {
 
         User user = findUserByLoginId(loginId);
-        user.setFollowerCount(followRepository.followerCount(user.getUserId()));
-        user.setFollowingCount(followRepository.followingCount(user.getUserId()));
+        user.setFollowerCount(followRepository.followerCount(user.getLoginId()));
+        user.setFollowingCount(followRepository.followingCount(user.getLoginId()));
 
         userRepository.save(user);
         return user;
@@ -87,32 +89,18 @@ public class UserServiceImpl implements UserService{
 
     // 조회될 때 마다 팔로잉/팔로워 수 업데이트 -> 추후 개선 예정
     @Override
-    public User findUser(Long userId) {
+    public User findUser(String loginId) {
 
-        User user = findUserByUserId(userId);
-        user.setFollowerCount(followRepository.followerCount(user.getUserId()));
-        user.setFollowingCount(followRepository.followingCount(user.getUserId()));
+        User user = findUserByLoginId(loginId);
+        user.setFollowerCount(followRepository.followerCount(user.getLoginId()));
+        user.setFollowingCount(followRepository.followingCount(user.getLoginId()));
 
         userRepository.save(user);
         return user;
     }
 
 
-    @Override
-    public User checkAuthor(String loginId, String otherUserLoginId) {
-
-        User user = findUserByLoginId(loginId);
-        User otherUser = findUserByLoginId(otherUserLoginId);
-
-        Follow findFollow = followRepository.findFollow(user.getUserId(), otherUser.getUserId()).orElse(null);
-        if (findFollow != null) {
-            user.setIsFollowing(true);
-        }
-
-        return user;
-    }
-
-
+    // ---- 검증 후 유저 객체 반환 (used other service)
     @Override
     public User findUserByUserId(Long userId) {
 
@@ -131,13 +119,10 @@ public class UserServiceImpl implements UserService{
         return findVerifyUserByEmail(email);
     }
 
-
     @Override
     public List<User> findUsers() {
         return null;
     }
-
-
 
 
     @Override
@@ -146,7 +131,6 @@ public class UserServiceImpl implements UserService{
         User findUser = findVerifyUserByLoginId(authorId);
         if (checkedPassword(findUser, password)) userRepository.delete(findUser);
     }
-
 
 
 

@@ -22,12 +22,14 @@ import javax.validation.constraints.Positive;
 @RequestMapping("/friend")
 public class FollowController {
 
+
     private final FollowMapper followMapper;
     private final FollowService followService;
 
-    @PostMapping("/following/{user-id}")
+
+    @PostMapping("/following/{login-id}")
     public ResponseEntity<?> postFollow(@AuthenticationPrincipal String authorId,
-                                        @PathVariable("user-id") @Positive Long followingUserId) {
+                                        @PathVariable("login-id") String followingUserId) {
 
         checkNull(authorId);
         Follow follow = followService.addFollowing(authorId, followingUserId);
@@ -55,6 +57,18 @@ public class FollowController {
         followService.deleteFollower(authorId, followId);
         return new ResponseEntity<>("팔로워 삭제 완료", HttpStatus.OK);
 
+    }
+
+
+    @GetMapping("/profile/check-user/{login-id}")
+    public ResponseEntity<?> checkAuthor(@AuthenticationPrincipal String authorId,
+                                         @PathVariable ("login-id") String otherUserLoginId) {
+
+        if ("anonymousUser".equals(authorId)) {
+            return new ResponseEntity<>("Guest User",HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(followMapper.followToFollowResponseDto(followService.checkAuthor(authorId, otherUserLoginId)), HttpStatus.OK);
     }
 
 

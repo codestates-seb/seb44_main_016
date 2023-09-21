@@ -2,13 +2,12 @@ package com.zerohip.server.user.controller;
 
 import com.zerohip.server.common.exception.BusinessLogicException;
 import com.zerohip.server.common.exception.ExceptionCode;
-import com.zerohip.server.common.page.dto.MultiResponseDto;
+import com.zerohip.server.follow.mapper.FollowMapper;
 import com.zerohip.server.user.dto.UserDto;
 import com.zerohip.server.user.entity.User;
 import com.zerohip.server.user.mapper.UserMapper;
 import com.zerohip.server.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,11 +15,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Positive;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @AuthenticationPrincipal : 필터에서 검증된 jwt 사용자 정보를 스프링 시큐리티가 User author 에게 주입해주는 에너테이션
@@ -34,14 +28,14 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
-    private final UserMapper mapper;
+    private final UserMapper userMapper;
 
 
     // 회원 가입
     @PostMapping("/signup")
     public ResponseEntity postUser(@RequestBody @Valid UserDto.Post userPostDto) {
 
-        User user = mapper.userPostDtoToUser(userPostDto);
+        User user = userMapper.userPostDtoToUser(userPostDto);
         userService.createUser(user);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -65,28 +59,15 @@ public class UserController {
 
         checkNull(authorId);
         User findUserInfo = userService.findUserByLoginId(authorId);
-        return new ResponseEntity<>(mapper.userToUserResponseDto(findUserInfo), HttpStatus.OK);
+        return new ResponseEntity<>(userMapper.userToUserResponseDto(findUserInfo), HttpStatus.OK);
     }
 
 
-    // 회원 조회 (for user)
-//    @GetMapping("/profile/{user-id}")
-//    public ResponseEntity<?> findUserProfile(@PathVariable("user-id") @Positive Long userId) {
-//
-//        return new ResponseEntity<>(mapper.userToMyPageResponse(userService.findUser(userId)), HttpStatus.OK);
-//    }
+    // 회원 조회 (for user) -> 추후 수정 예정
+    @GetMapping("/profile/{login-id}")
+    public ResponseEntity<?> findUserProfile(@PathVariable("login-id") String loginId) {
 
-
-    // other user-page 진입 시 로그인 상태 확인
-    @GetMapping("/profile/check-user/{login-id}")
-    public ResponseEntity<?> checkAuthor(@AuthenticationPrincipal String authorId,
-                                         @PathVariable ("login-id") String otherUserLoginId) {
-
-        if (authorId == null) {
-            return new ResponseEntity<>("Guest User",HttpStatus.NO_CONTENT);
-        }
-
-        return new ResponseEntity<>(mapper.userToCheckOtherUserResponse(userService.checkAuthor(authorId, otherUserLoginId)), HttpStatus.OK);
+        return new ResponseEntity<>(userMapper.userToMyPageResponse(userService.findUser(loginId)), HttpStatus.OK);
     }
 
 
@@ -95,7 +76,7 @@ public class UserController {
     public ResponseEntity<?> getMyPage(@AuthenticationPrincipal String authorId) {
 
         checkNull(authorId);
-        return new ResponseEntity<>(mapper.userToMyPageResponse(userService.getMypage(authorId)), HttpStatus.OK);
+        return new ResponseEntity<>(userMapper.userToMyPageResponse(userService.getMypage(authorId)), HttpStatus.OK);
     }
 
 
@@ -105,7 +86,7 @@ public class UserController {
                                        @RequestBody @Valid UserDto.Patch userPatchDto) {
 
         checkNull(authorId);
-        User user = mapper.userPatchDtoToUser(userPatchDto);
+        User user = userMapper.userPatchDtoToUser(userPatchDto);
         userService.updateUser(authorId, user);
 
         return new ResponseEntity<>(HttpStatus.OK);

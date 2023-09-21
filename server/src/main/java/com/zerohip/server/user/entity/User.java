@@ -52,10 +52,6 @@ public class User extends Auditable {
     @Column
     private int followingCount;
 
-    @ColumnDefault("false")
-    private Boolean isFollowing; // 팔로잉 여부
-
-
 
     public User(String email, String loginId, String password, String nickname, String provider) {
         this.email = email;
@@ -83,9 +79,11 @@ public class User extends Auditable {
         GOOGLE, NAVER, KAKAO;
     }
 
+
     @Builder.Default
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "followerId", cascade = CascadeType.REMOVE)   // 회원 탈퇴 시 리스트 삭제
     private List<Follow> followerList = new ArrayList<>();
