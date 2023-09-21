@@ -8,6 +8,7 @@ import com.zerohip.server.common.img.repository.ImgRepository;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
 import com.zerohip.server.financialRecord.entity.FinancialRecord;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
+import com.zerohip.server.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
@@ -57,6 +58,7 @@ public class S3ImgServiceImpl implements ImgService {
     return imgRepository.saveAll(imgList);
   }
 
+  @Override
   public Img createImg(FinancialRecord financialRecord, MultipartFile files) throws IOException {
     String dirName = "zerohip"; // 해당 이미지를 저장할 S3 bucket의 디렉토리 이름을 지정하세요.
 
@@ -69,6 +71,24 @@ public class S3ImgServiceImpl implements ImgService {
 
     // 게시판 글과 이미지 연결
     setProfileImg(financialRecord, img);
+
+    // 파일 경로를 리스트에 저장
+    return imgRepository.save(img);
+  }
+
+  @Override
+  public Img createImg(User user, MultipartFile files) throws IOException {
+    String dirName = "zerohip"; // 해당 이미지를 저장할 S3 bucket의 디렉토리 이름을 지정하세요.
+
+    // S3에 파일들을 업로드하고, 그 URL 리스트를 저장
+    String imgKey = s3ServiceImpl.uploadFile(files, dirName);
+    String imageUrl = s3ServiceImpl.generatePresignedUrl(imgKey);
+
+    // 이미지 생성자로 파일명, 파일경로 넘겨줌
+    Img img = setImg(imageUrl);
+
+    // 게시판 글과 이미지 연결
+    setProfileImg(user, img);
 
     // 파일 경로를 리스트에 저장
     return imgRepository.save(img);
@@ -111,7 +131,17 @@ public class S3ImgServiceImpl implements ImgService {
     }
   }
 
-
+  @Override
+  public void deleteImgs(User user, String deleteImgPath) {
+    Img findImg = imgRepository.findByFilePath(deleteImgPath);
+    if (findImg == null) {
+      throw new IllegalArgumentException("해당 이미지가 없습니다.");
+    }
+    deleteImg(findImg);
+    s3ServiceImpl.deleteFileFromS3(findImg.getFilePath());
+    String profileImgPath = "https://source.boringavatars.com/beam/150/" + user.getLoginId() + (user.getRandomAvatarNum() + 1);
+    user.setProfileImgPath(profileImgPath);
+  }
 
   @Override
   public Img findVerifiedImg(Long imgId) {

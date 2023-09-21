@@ -8,6 +8,7 @@ import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +48,10 @@ public class User extends Auditable {
     // 테스트 중
     @Column
     private Boolean followed;
+
+    @Min(1)
+    @Column(nullable = false, unique = false, updatable = false, columnDefinition = "integer default 1")
+    private int RandomAvatarNum;
 
     // 테스트 중
     public User(Long userId, String loginId, String nickname, String profileImgPath) {
