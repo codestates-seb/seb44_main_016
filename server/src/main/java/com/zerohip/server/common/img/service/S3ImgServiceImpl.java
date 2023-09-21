@@ -58,6 +58,7 @@ public class S3ImgServiceImpl implements ImgService {
     return imgRepository.saveAll(imgList);
   }
 
+  @Override
   public Img createImg(FinancialRecord financialRecord, MultipartFile files) throws IOException {
     String dirName = "zerohip"; // 해당 이미지를 저장할 S3 bucket의 디렉토리 이름을 지정하세요.
 
@@ -75,6 +76,7 @@ public class S3ImgServiceImpl implements ImgService {
     return imgRepository.save(img);
   }
 
+  @Override
   public Img createImg(User user, MultipartFile files) throws IOException {
     String dirName = "zerohip"; // 해당 이미지를 저장할 S3 bucket의 디렉토리 이름을 지정하세요.
 
@@ -127,6 +129,18 @@ public class S3ImgServiceImpl implements ImgService {
       deleteImg(findImg);
       s3ServiceImpl.deleteFileFromS3(findImg.getFilePath());
     }
+  }
+
+  @Override
+  public void deleteImgs(User user, String deleteImgPath) {
+    Img findImg = imgRepository.findByFilePath(deleteImgPath);
+    if (findImg == null) {
+      throw new IllegalArgumentException("해당 이미지가 없습니다.");
+    }
+    deleteImg(findImg);
+    s3ServiceImpl.deleteFileFromS3(findImg.getFilePath());
+    String profileImgPath = "https://source.boringavatars.com/beam/150/" + user.getLoginId() + (user.getRandomAvatarNum() + 1);
+    user.setProfileImgPath(profileImgPath);
   }
 
   @Override
