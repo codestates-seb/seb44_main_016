@@ -132,7 +132,7 @@ public class S3ImgServiceImpl implements ImgService {
   }
 
   @Override
-  public void deleteImgs(User user, String deleteImgPath) {
+  public void deleteImg(User user, String deleteImgPath) {
     Img findImg = imgRepository.findByFilePath(deleteImgPath);
     if (findImg == null) {
       throw new IllegalArgumentException("해당 이미지가 없습니다.");

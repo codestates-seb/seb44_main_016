@@ -51,7 +51,7 @@ public class User extends Auditable {
 
     @Min(1)
     @Column(nullable = false, unique = false, updatable = false, columnDefinition = "integer default 1")
-    private int RandomAvatarNum;
+    private int randomAvatarNum;
 
     // 테스트 중
     public User(Long userId, String loginId, String nickname, String profileImgPath) {

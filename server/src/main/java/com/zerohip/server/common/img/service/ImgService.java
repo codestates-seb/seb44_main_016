@@ -12,15 +12,14 @@ import java.util.List;
 public interface ImgService {
 
   List<Img> createImg(Article article, List<MultipartFile> files) throws IOException;
-
   Img createImg(FinancialRecord faRec, MultipartFile file) throws IOException;
   Img createImg(User user, MultipartFile files) throws IOException;
   Img findImg(Long imgId);
   List<Img> findImgs();
 //  void updateImg(Long imgId, ImgDto.Patch patchParam);
   void deleteImg(Img img);
+  void deleteImg(User user, String deleteImgPath);
   void deleteImgs(Article article, List<String> deleteImgPaths);
-  void deleteImgs(User user, String deleteImgPath);
   Img findVerifiedImg(Long imgId);
   Img findVerifiedImg(String filePath);
 }
