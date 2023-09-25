@@ -32,9 +32,10 @@ public class FollowService {
         Follow follow = new Follow();
         follow.setFollowerId(findFollowUserByLoginId(followingUserId));
         follow.setFollowingId(findFollowUserByLoginId(authorLoginId));
-        follow.setIsFollowing(true);
-        follow.setIsFollow(followRepository.checkFollowed(authorLoginId, followingUserId));
-//        follow.setIsFollowing(followRepository.checkFollowing(authUserId, followingUserId));
+        followRepository.save(follow);
+
+        follow.setIsFollowed(followRepository.checkFollowed(authorLoginId, followingUserId));
+        follow.setIsFollowing(followRepository.checkFollowed(followingUserId, authorLoginId));
 
         return followRepository.save(follow);
     }
@@ -70,18 +71,15 @@ public class FollowService {
     }
 
 
-    public Follow findFollow(String authUserId, String otherUserId) {
+    public Boolean checkFriend(String authUserId, String otherUserId) {
 
-        Optional<Follow> findFollow = followRepository.findFollow(authUserId, otherUserId);
+        Optional<Follow> findFollowing = followRepository.findFollow(otherUserId, authUserId);
+        Optional<Follow> findFollower = followRepository.findFollow(authUserId, otherUserId);
 
-        if (findFollow.isPresent()) {
-
-            Follow follow = findFollow.get();
-            follow.setIsFollow(followRepository.checkFollowed(authUserId, otherUserId));
-            return followRepository.save(follow);
-
+        if (findFollowing.isPresent() && findFollower.isPresent()) {
+            return true;
         }
-        else return null;
+        return false;
     }
 
 
@@ -92,6 +90,11 @@ public class FollowService {
 
         Follow findFollow = followRepository.findFollow(user.getLoginId(), otherUser.getLoginId()).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.FOLLOW_NOT_FOUND));
+
+        if (checkFriend(loginId, otherUserLoginId)) {
+            findFollow.setIsFriend(true);
+        }
+        else findFollow.setIsFriend(false);
 
         return findFollow;
     }

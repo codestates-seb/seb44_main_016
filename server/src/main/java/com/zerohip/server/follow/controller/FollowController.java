@@ -68,7 +68,7 @@ public class FollowController {
             return new ResponseEntity<>("Guest User",HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(followMapper.followToFollowResponseDto(followService.checkAuthor(authorId, otherUserLoginId)), HttpStatus.OK);
+        return new ResponseEntity<>(followMapper.followToFriendResponseDto(followService.checkAuthor(authorId, otherUserLoginId)), HttpStatus.OK);
     }
 
 

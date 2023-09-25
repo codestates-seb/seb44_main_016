@@ -26,11 +26,14 @@ public class Follow {
     @JoinColumn(name = "following_login_id")
     private User followingId; // 구독 버튼 누를 때 기본키 생성 = 기준
 
-    @ColumnDefault("true")
+    @ColumnDefault("false")
     private Boolean isFollowing;
 
     @ColumnDefault("false")
-    private Boolean isFollow; // 다른 사용자가 나를
+    private Boolean isFollowed; // 다른 사용자가 나를
+
+    @ColumnDefault("false")
+    private Boolean isFriend;
 
     public Long getFollowingUserId() {
         return followingId.getUserId();

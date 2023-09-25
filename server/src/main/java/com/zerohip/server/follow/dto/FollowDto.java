@@ -33,6 +33,7 @@ public class FollowDto {
         private String email;
         private String nickname;
         private String profileImgPath;
+        private Boolean isFollowing;
 
     }
 
@@ -48,7 +49,7 @@ public class FollowDto {
         private String email;
         private String nickname;
         private String profileImgPath;
-        private Boolean isFollow;
+        private Boolean isFollowed;
 
     }
 
@@ -58,12 +59,13 @@ public class FollowDto {
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class CheckFollowResponseDto {
+    public static class CheckFriendResponseDto {
 
         private Long followId;
         private String followerId;
         private String followingId;
-        private Boolean friend;
+        private Boolean isFollowing;
+        private Boolean isFriend;
 
     }
 }

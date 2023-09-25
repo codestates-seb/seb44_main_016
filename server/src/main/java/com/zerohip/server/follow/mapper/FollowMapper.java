@@ -12,4 +12,7 @@ public interface FollowMapper {
     @Mapping(source = "followingId.loginId", target = "followingId")
     FollowDto.FollowResponseDto followToFollowResponseDto(Follow follow);
 
+    @Mapping(source = "followerId.loginId", target = "followerId")
+    @Mapping(source = "followingId.loginId", target = "followingId")
+    FollowDto.CheckFriendResponseDto followToFriendResponseDto(Follow follow);
 }
