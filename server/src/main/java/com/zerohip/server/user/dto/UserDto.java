@@ -10,7 +10,8 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class UserDto {
+public class
+UserDto {
 
 
     @Getter

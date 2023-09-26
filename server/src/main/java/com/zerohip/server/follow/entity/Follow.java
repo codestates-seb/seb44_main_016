@@ -1,5 +1,6 @@
 package com.zerohip.server.follow.entity;
 
+import com.zerohip.server.follow.service.FollowService;
 import com.zerohip.server.user.entity.User;
 import lombok.Getter;
 import lombok.Setter;

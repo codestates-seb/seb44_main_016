@@ -53,6 +53,29 @@ public class User extends Auditable {
     private int followingCount;
 
 
+    @Builder.Default
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "followerId", cascade = CascadeType.REMOVE)   // 회원 탈퇴 시 리스트 삭제
+    private List<Follow> followerList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "followingId", cascade = CascadeType.REMOVE)   // 회원 탈퇴 시 리스트 삭제
+    private List<Follow> followingList = new ArrayList<>();
+
+
+    // 트랜잭션 전략 설정 필요
+    @OneToMany(mappedBy = "user")
+    private List<FeedArticle> feedArticles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<FinancialRecord> financialRecords = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<FinancialRecordArticle> financialRecordArticles = new ArrayList<>();
+
+
     public User(String email, String loginId, String password, String nickname, String provider) {
         this.email = email;
         this.loginId = loginId;
@@ -80,27 +103,6 @@ public class User extends Auditable {
     }
 
 
-    @Builder.Default
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles = new ArrayList<>();
-
-
-    @OneToMany(mappedBy = "followerId", cascade = CascadeType.REMOVE)   // 회원 탈퇴 시 리스트 삭제
-    private List<Follow> followerList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "followingId", cascade = CascadeType.REMOVE)   // 회원 탈퇴 시 리스트 삭제
-    private List<Follow> followingList = new ArrayList<>();
-
-
-    // 트랜잭션 전략 설정 필요
-    @OneToMany(mappedBy = "user")
-    private List<FeedArticle> feedArticles = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
-    private List<FinancialRecord> financialRecords = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
-    private List<FinancialRecordArticle> financialRecordArticles = new ArrayList<>();
 
 
 }

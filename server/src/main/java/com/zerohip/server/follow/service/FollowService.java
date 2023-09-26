@@ -35,7 +35,7 @@ public class FollowService {
         followRepository.save(follow);
 
         follow.setIsFollowed(followRepository.checkFollowed(authorLoginId, followingUserId));
-        follow.setIsFollowing(followRepository.checkFollowed(followingUserId, authorLoginId));
+        follow.setIsFollowing(followRepository.checkFollowing(authorLoginId, followingUserId));
 
         return followRepository.save(follow);
     }
