@@ -18,6 +18,7 @@ public class FollowDto {
         private String followerId;
         private String followingId;
         private Boolean isFollowing; // 해당 유저가 다른 사용자 팔로잉
+        private Boolean isFollowed; //
 
     }
 

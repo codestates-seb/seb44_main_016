@@ -19,12 +19,12 @@ public class Follow {
 
     // 사용될 때 로딩
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "follower_login_id")
+    @JoinColumn(name = "follower_user_id")
     private User followerId;
 
     // 사용될 때 로딩
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "following_login_id")
+    @JoinColumn(name = "following_user_id")
     private User followingId; // 구독 버튼 누를 때 기본키 생성 = 기준
 
     @ColumnDefault("false")
@@ -33,6 +33,7 @@ public class Follow {
     @ColumnDefault("false")
     private Boolean isFollowed; // 다른 사용자가 나를
 
+    // follow 테이블이 업데이트 될 때, 리스너 이용하여 값 업뎃 필요
     @ColumnDefault("false")
     private Boolean isFriend;
 

@@ -22,7 +22,6 @@ public class FollowService {
 
     public Follow addFollowing(String authorLoginId, String followingUserId) {
 
-//        Long authUserId = userService.findUserByLoginId(authorLoginId).getUserId();
         if (authorLoginId.equals(followingUserId)) {
             throw new BusinessLogicException(ExceptionCode.SAME_USER);
         }
@@ -34,8 +33,13 @@ public class FollowService {
         follow.setFollowingId(findFollowUserByLoginId(authorLoginId));
         followRepository.save(follow);
 
-        follow.setIsFollowed(followRepository.checkFollowed(authorLoginId, followingUserId));
+        follow.setIsFollowed(followRepository.checkFollowed(followingUserId, authorLoginId));
         follow.setIsFollowing(followRepository.checkFollowing(authorLoginId, followingUserId));
+
+        if (follow.getIsFollowing() && follow.getIsFollowed()) {
+            followRepository.findFollow(followingUserId, authorLoginId)
+                    .ifPresent(f -> f.setIsFollowed(true));
+        }
 
         return followRepository.save(follow);
     }
@@ -50,6 +54,15 @@ public class FollowService {
         if (authUserId != follow.getFollowingUserId()) {
 
             throw new BusinessLogicException(ExceptionCode.USER_FOLLOW_MISMATCH);
+        }
+
+        String followingId = follow.getFollowerId().getLoginId();
+        Optional<Follow> optionalFollower = followRepository.findFollow(followingId, authorLoginId);
+
+        if (optionalFollower.isPresent() && optionalFollower.get().getIsFollowed()) {
+            Follow follower = optionalFollower.get();
+            follower.setIsFollowed(false);
+            followRepository.save(follower);
         }
 
         followRepository.delete(follow);

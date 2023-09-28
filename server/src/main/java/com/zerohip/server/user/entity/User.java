@@ -46,6 +46,7 @@ public class User extends Auditable {
     @Column
     private String profileImgPath;
 
+    // follow 테이블이 업데이트 될 때, 리스너 이용하여 값 업뎃 필요
     @Column
     private int followerCount;
 

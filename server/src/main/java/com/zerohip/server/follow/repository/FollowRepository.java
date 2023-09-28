@@ -21,10 +21,12 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
     @Query("select count(*) from Follow f where f.followingId.loginId = :loginId")
     int followingCount(String loginId);
 
-    @Query("select case when count(f) > 0 then true else false end from Follow f where f.followerId.loginId = :followingId and f.followingId.loginId = :followerId ")
-    Boolean checkFollowed(String followingId, String followerId);
+//    @Query("select case when count(f) > 0 then true else false end from Follow f where f.followerId.loginId = :followingId and f.followingId.loginId = :followerId ")
+//    Boolean checkFollowed(String followingId, String followerId);
+    @Query("SELECT CASE WHEN COUNT(f) > 0 THEN true ELSE false END FROM Follow f WHERE f.followerId.loginId = :followerId AND f.followingId.loginId = :followingId")
+    boolean checkFollowed(String followingId, String followerId);
 
-    @Query("select case when count(f) > 0 then true else false end from Follow f where f.followerId.loginId = :followerId and f.followingId.loginId = :followingId ")
-    Boolean checkFollowing(String followingId, String followerId);
+    @Query("select case when count(f) > 0 then true else false end from Follow f where f.followerId.loginId = :followingId and f.followingId.loginId = :followerId ")
+    boolean checkFollowing(String followerId, String followingId);
 
 }
