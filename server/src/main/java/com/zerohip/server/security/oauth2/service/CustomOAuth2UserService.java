@@ -31,14 +31,16 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         // userRequest를 통해 사용자의 정보 추출
         String registrationId = userRequest.getClientRegistration().getRegistrationId(); // OAuth2 이름( : google, naver, kakao)
 
-        String userNameAttributeName = userRequest.getClientRegistration() // OAuth2 로그인 시, 키 값 ex) sub(google), id(kakao), id(naver)
+        String userNameAttributeName = userRequest.getClientRegistration() // 각각의 Oauth2 키 값 ex) sub(google), id(kakao), id(naver)
                 .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
 
         OAuth2Attribute oAuth2Attribute =
                 OAuth2Attribute.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
         var userAttribute = oAuth2Attribute.convertToMap();
+
         log.info("provider = {}", userAttribute.get("provider")); // OAuth2 명
+        System.out.println("provider :" + userAttribute.get("provider"));
 
         // Spring Seucirty의 OAuth2User 구현체 생성하여 반환(OAuth2UserSuccessHandler 사용)
         return new DefaultOAuth2User(
