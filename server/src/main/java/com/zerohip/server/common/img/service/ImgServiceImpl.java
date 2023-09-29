@@ -21,13 +21,13 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class ImgServiceImpl implements ImgService {
+public class ImgServiceImpl {
 
   private final ImgRepository imgRepository;
   private final S3ServiceImpl s3ServiceImpl;
 
   // 이미지 저장
-  @Override
+
   public List<Img> createImg(Article article, List<MultipartFile> files) {
     ArrayList<Img> imgList = new ArrayList<>();
     // 파일 저장 경로 지정 - 현재 우리의 프로젝트 경로에 images 폴더를 생성하고 그 안에 저장
@@ -52,25 +52,21 @@ public class ImgServiceImpl implements ImgService {
     return imgRepository.saveAll(imgList);
   }
 
-  @Override
   public Img createImg(FinancialRecord faRec, MultipartFile file) throws IOException {
     return null;
   }
 
   // 이미지 조회
-  @Override
   public Img findImg(Long imgId) {
     return findVerifiedImg(imgId);
   }
 
   // 이미지 전체 조회(쓸일 있을까 싶어서,,)
-  @Override
   public List<Img> findImgs() {
     return imgRepository.findAll();
   }
 
   // 이미지 삭제
-  @Override
   public void deleteImg(Img img) {
     // S3에서 이미지를 삭제
     s3ServiceImpl.deleteFileFromS3(img.getFilePath());
@@ -78,7 +74,6 @@ public class ImgServiceImpl implements ImgService {
     imgRepository.delete(img);
   }
 
-  @Override
   public void deleteImgs(Article article, List<String> deleteImgPaths) {
     for (String path : deleteImgPaths) {
       Img findImg = imgRepository.findByFilePath(path);
@@ -91,13 +86,11 @@ public class ImgServiceImpl implements ImgService {
 
 
   // 이미지 검증
-  @Override
   public Img findVerifiedImg(Long imgId) {
     return imgRepository.findById(imgId).orElseThrow(
         () -> new RuntimeException("존재하지 않는 이미지입니다.")
     );
   }
-  @Override
   public Img findVerifiedImg(String filePath) {
     Img findImg = imgRepository.findByFilePath(filePath);
     findVerifiedImg(findImg.getId());
