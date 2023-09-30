@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useWindowType } from '../hooks/useWindowSize';
 import { ScreenEnum } from '../constants/enums';
 import React from 'react';
+import Head from 'next/head';
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
@@ -49,6 +50,9 @@ const App = ({ Component, pageProps }: AppProps) => {
             <GlobalStyles />
             <S.RootScreen>
               <S.AppContainer maxWidth={maxWidth}>
+                <Head>
+                  <link rel='icon' href='/favicon.ico' sizes='any' />
+                </Head>
                 <S.FlexPage bgColor={bgColor}>
                   {isShowNav && <Aside />}
                   <S.SubPage>
