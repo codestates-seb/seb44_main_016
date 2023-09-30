@@ -1,17 +1,17 @@
 import styled from '@emotion/styled';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import CloseBtnIcon from '../../../public/images/icon/closeBtn.svg';
 import FollowList from './FollowList';
-import { FollowUsersInfoData } from '../../types/user';
+import { FollowerUsersInfoData, FollowingUsersInfoData } from '../../types/user';
+import { useBetterUXWithEscapeBtn } from '../../hooks/interface/useBetterUXWithEscapeBtn';
 
 interface FollowModalProps {
   title: string;
-  followList: FollowUsersInfoData[];
-  isFollowed?: boolean;
-  isFollowing?: boolean;
+  followList: FollowerUsersInfoData[] | FollowingUsersInfoData[];
+  isMyPage: boolean;
 }
 
-export default function FollowModal({ title, followList }: FollowModalProps) {
+export default function FollowModal({ title, followList, isMyPage }: FollowModalProps) {
   const [isOpen, setIsOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -20,24 +20,7 @@ export default function FollowModal({ title, followList }: FollowModalProps) {
     setIsOpen(!isOpen);
   };
 
-  useEffect(() => {
-    const handleFocusCloseButton = (e: KeyboardEvent) => {
-      if (isOpen && e.key === 'Escape') {
-        e.preventDefault();
-        if (closeButtonRef.current) {
-          closeButtonRef.current.focus();
-        }
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener('keydown', handleFocusCloseButton);
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleFocusCloseButton);
-    };
-  }, [isOpen]);
+  useBetterUXWithEscapeBtn(isOpen, closeButtonRef);
 
   return (
     <S.FollowerContainer onClick={handleOpenModal}>
@@ -55,7 +38,7 @@ export default function FollowModal({ title, followList }: FollowModalProps) {
             </S.ModalTop>
             <S.ModalFollowListBox>
               {followList?.map((el) => (
-                <FollowList key={el.loginId} title={title} userInfo={el} />
+                <FollowList key={el.followId} title={title} userInfo={el} isMyPage={isMyPage} />
               ))}
             </S.ModalFollowListBox>
           </S.ModalView>
@@ -109,7 +92,7 @@ const S = {
     color: var(--color-gray05);
     cursor: pointer;
     :nth-of-type(2) {
-      margin: 0 1.7rem 0 1rem;
+      margin-left: 1rem;
     }
   `,
   FollowTotalNum: styled.div`
