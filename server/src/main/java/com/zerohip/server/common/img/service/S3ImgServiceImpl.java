@@ -2,7 +2,6 @@ package com.zerohip.server.common.img.service;
 
 import com.zerohip.server.aws.config.S3ServiceImpl;
 import com.zerohip.server.common.article.Article;
-import com.zerohip.server.common.img.dto.ImgDto;
 import com.zerohip.server.common.img.entity.Img;
 import com.zerohip.server.common.img.repository.ImgRepository;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
@@ -20,9 +19,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static com.zerohip.server.common.img.service.ImgServiceImpl.setArticle;
-import static com.zerohip.server.common.img.service.ImgServiceImpl.setProfileImg;
 
 @Slf4j
 @Service
@@ -155,5 +151,23 @@ public class S3ImgServiceImpl implements ImgService {
     Img findImg = imgRepository.findByFilePath(filePath);
     findVerifiedImg(findImg.getId());
     return findImg;
+  }
+
+  static void setArticle(Article article, Img img) {
+    if (article instanceof FinancialRecordArticle financialRecordArticle) {
+      img.setFinancialRecordArticle(financialRecordArticle);
+    } else if (article instanceof FeedArticle feedArticle) {
+      img.setFeedArticle(feedArticle);
+    } else {
+      throw new RuntimeException("존재하지 않는 게시글입니다.");
+    }
+  }
+
+  static void setProfileImg(FinancialRecord faRec, Img img) {
+    img.setFinancialRecord(faRec);
+  }
+
+  static void setProfileImg(User user, Img img) {
+    img.setUser(user);
   }
 }
