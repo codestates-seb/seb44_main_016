@@ -1,54 +1,39 @@
 import styled from '@emotion/styled';
-import { useQuery } from '@tanstack/react-query';
+import { QueryClient, dehydrate } from '@tanstack/react-query';
 import CommonStyles from '../../../../styles/CommonStyles';
 import apiUser from '../../../../services/apiUser';
 import Loading from '../../../../components/Loading';
-import HeadMeta from '../../../../components/HeadMeta';
-import { USER_META_DATA } from '../../../../constants/seo/userMetaData';
 import ErrorComponent from '../../../../components/ErrorComponent';
 import UserPageInfo from '../../../../components/userpage/UserPageInfo';
-import { useRouter } from 'next/router';
 import useUserGlobalValue from '../../../../components/redux/getUserInfo';
-import { useCheckIsMyPageFirst, useFollowStatus } from '../../../../hooks/userpage';
+import { useCheckIsMyPageFirst } from '../../../../hooks/userpage';
+import type { GetServerSideProps } from 'next';
+import { ParsedUrlQuery } from 'querystring';
 
-export default function UserPage() {
-  const router = useRouter();
-  const { loginId } = router.query;
+export default function UserPage({ userId: userIdParam }: { userId: string }) {
   const { isLoggedIn, loginId: globalLoginId } = useUserGlobalValue();
 
-  useCheckIsMyPageFirst({ loginId, globalLoginId });
+  useCheckIsMyPageFirst({ userIdParam, globalLoginId });
 
   const {
     isLoading: isUserPageLoading,
     error: isUserPageError,
     data: userPageData,
-  } = useQuery(['userPage'], () => apiUser.getUserPage(loginId), {
-    enabled: !!loginId,
-  });
-
-  const { isFollowing, isFollowed, followingFollowId, followerFollowId } = useFollowStatus({
-    userPageData,
-    globalLoginId,
-  });
+  } = apiUser.useGetUserPage(userIdParam);
 
   if (isUserPageError) return <ErrorComponent />;
   if (isUserPageLoading) return <Loading />;
 
   return (
     <>
-      <HeadMeta title={USER_META_DATA.MY_PAGE.TITLE} description={USER_META_DATA.MY_PAGE.DESCRIPTION} />
-      {userPageData && globalLoginId && (
+      {userPageData?.data && globalLoginId && (
         <S.Container>
           <UserPageInfo
-            infoData={userPageData}
-            isMyPage={loginId === globalLoginId}
-            isFollowing={isFollowing}
-            isFollowed={isFollowed}
+            infoData={userPageData.data}
+            isMyPage={userIdParam === globalLoginId}
             isLoggedIn={isLoggedIn}
-            loginId={loginId}
+            userId={userIdParam}
             globalLoginId={globalLoginId}
-            followingFollowId={followingFollowId}
-            followerFollowId={followerFollowId}
           />
         </S.Container>
       )}
@@ -109,4 +94,21 @@ const S = {
     text-align: center;
     color: var(--color-primary);
   `,
+};
+
+interface Params extends ParsedUrlQuery {
+  userId?: string | string[];
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const { userId }: Params = params || { userId: undefined };
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(['userPage'], () => apiUser.getUserPage(userId));
+
+  return {
+    props: {
+      userId,
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
 };
