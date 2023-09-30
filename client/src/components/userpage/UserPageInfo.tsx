@@ -5,16 +5,16 @@ import FollowModal from './FollowModal';
 import { UserPageInfoProps } from '../../types/user';
 import { getFollowStatusUserPage } from '../../utils/userpage/getFollowStatus';
 import { useFollowMutations } from '../../hooks/userpage/useFollowMutation';
+import { useFollowStatus } from '../../hooks/userpage';
+import HeadMeta from '../HeadMeta';
+import { USER_META_DATA } from '../../constants/seo/userMetaData';
 
 export default function UserPageInfo({
-  infoData,
-  loginId,
+  userPageData,
+  userId,
   isMyPage,
-  isFollowing,
-  isFollowed,
   isLoggedIn,
-  followingFollowId,
-  followerFollowId,
+  globalLoginId,
 }: UserPageInfoProps) {
   const router = useRouter();
 
@@ -22,15 +22,20 @@ export default function UserPageInfo({
     router.push('/user/update');
   };
 
+  const { isFollowing, isFollowed, followingFollowId, followerFollowId } = useFollowStatus({
+    userPageData,
+    globalLoginId,
+  });
+
   const { cancelFollowingMutate, startFollowingMutate, deleteFollowingMutate } = useFollowMutations(
-    infoData?.nickname
+    userPageData?.nickname
   );
 
   const handleFollowing = () => {
     if (isFollowing && followingFollowId) {
       cancelFollowingMutate(followingFollowId);
-    } else if (loginId) {
-      startFollowingMutate(loginId);
+    } else if (userId) {
+      startFollowingMutate(userId);
     }
   };
 
@@ -42,16 +47,24 @@ export default function UserPageInfo({
 
   return (
     <S.UserProfileContainer>
+      {isMyPage ? (
+        <HeadMeta title={USER_META_DATA.MY_PAGE.TITLE} description={USER_META_DATA.MY_PAGE.DESCRIPTION} />
+      ) : (
+        <HeadMeta
+          title={USER_META_DATA.USER_PAGE.TITLE}
+          description={`제로힙 ${userPageData?.nickname}님의 페이지입니다`}
+        />
+      )}
       <h1 className='blind'>{isMyPage ? '마이페이지' : '유저페이지'}</h1>
       <S.UserProfileImgBox>
-        <img src={infoData?.profileImgPath} alt='프로필 사진' />
+        <img src={userPageData?.profileImgPath} alt='프로필 사진' />
       </S.UserProfileImgBox>
       <S.UserName>
-        <S.Nickname>{infoData?.nickname}</S.Nickname>
+        <S.Nickname>{userPageData?.nickname}</S.Nickname>
       </S.UserName>
       <S.UserSubInfoBox>
-        <FollowModal title='구독함' followList={infoData?.followingList} isMyPage={isMyPage} />
-        <FollowModal title='구독됨' followList={infoData?.followerList} isMyPage={isMyPage} />
+        <FollowModal title='구독함' followList={userPageData?.followingList} isMyPage={isMyPage} />
+        <FollowModal title='구독됨' followList={userPageData?.followerList} isMyPage={isMyPage} />
         {isLoggedIn && (
           <S.UserInfoModifyBtn type='button' onClick={isMyPage ? handleMoveSettingPage : handleFollowing}>
             {followStatusBtnName}
