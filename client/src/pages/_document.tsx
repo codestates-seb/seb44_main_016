@@ -4,7 +4,9 @@ import { Head, Html, Main, NextScript } from 'next/document';
 const Document = () => {
   return (
     <Html lang='ko'>
-      <Head />
+      <Head>
+        <link rel='icon' href='/images/favicon.ico' />
+      </Head>
       <body>
         <Main />
         <NextScript />

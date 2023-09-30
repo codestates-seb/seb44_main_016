@@ -26,7 +26,7 @@ export default function MyPage() {
       <HeadMeta title={USER_META_DATA.MY_PAGE.TITLE} description={USER_META_DATA.MY_PAGE.DESCRIPTION} />
       {myInfoData && (
         <S.Container>
-          <UserPageInfo infoData={myInfoData} isMyPage={true} isLoggedIn={isLoggedIn} />
+          <UserPageInfo userPageData={myInfoData} isMyPage={true} isLoggedIn={isLoggedIn} />
         </S.Container>
       )}
     </>

@@ -50,9 +50,6 @@ const App = ({ Component, pageProps }: AppProps) => {
             <GlobalStyles />
             <S.RootScreen>
               <S.AppContainer maxWidth={maxWidth}>
-                <Head>
-                  <link rel='icon' href='/favicon.ico' sizes='any' />
-                </Head>
                 <S.FlexPage bgColor={bgColor}>
                   {isShowNav && <Aside />}
                   <S.SubPage>
