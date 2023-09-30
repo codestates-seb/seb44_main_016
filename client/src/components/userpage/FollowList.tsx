@@ -13,7 +13,7 @@ interface FollowListProps {
 
 export default function FollowList({ title, userInfo, isMyPage }: FollowListProps) {
   const router = useRouter();
-  const { loginId } = useUserGlobalValue();
+
   const { cancelFollowingMutate, deleteFollowingMutate } = useFollowMutations(userInfo?.nickname);
 
   const { followerId, isFollowing } = userInfo as FollowerUsersInfoData;
@@ -21,11 +21,7 @@ export default function FollowList({ title, userInfo, isMyPage }: FollowListProp
 
   const followStatusBtnName = getFollowStatusFollowList({ title, isFollowing, isFollowed });
 
-  const handleMoveToUserPage = (myId: string | undefined | null, userId: string) => () => {
-    if (myId === userId) {
-      router.push(`/user/mypage`);
-      return;
-    }
+  const handleMoveToUserPage = (userId: string) => () => {
     router.push(`/user/profile/${userId}`);
   };
 
@@ -47,7 +43,7 @@ export default function FollowList({ title, userInfo, isMyPage }: FollowListProp
             <S.UserImg src={userInfo?.profileImgPath} alt='유저 프로필 사진' />
           </S.UserImgBox>
           <S.UserNickNameIdBox>
-            <S.UserNickname tabIndex={0} onClick={handleMoveToUserPage(loginId, followingId || followerId)}>
+            <S.UserNickname tabIndex={0} onClick={handleMoveToUserPage(followingId || followerId)}>
               <div>{userInfo?.nickname}</div>
             </S.UserNickname>
             <S.UserId>
