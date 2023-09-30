@@ -29,7 +29,7 @@ export default function UserPage({ userId: userIdParam }: { userId: string }) {
       {userPageData?.data && globalLoginId && (
         <S.Container>
           <UserPageInfo
-            infoData={userPageData.data}
+            userPageData={userPageData.data}
             isMyPage={userIdParam === globalLoginId}
             isLoggedIn={isLoggedIn}
             userId={userIdParam}

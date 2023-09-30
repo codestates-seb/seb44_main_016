@@ -126,13 +126,9 @@ export interface UserInfoResData {
 }
 
 export interface UserPageInfoProps {
-  infoData: UserInfoResData;
-  loginId?: string | string[];
+  userPageData: UserInfoResData;
+  userId?: string | string[];
   isMyPage: boolean;
-  isFollowing?: boolean;
-  isFollowed?: boolean;
   isLoggedIn?: boolean;
   globalLoginId?: string;
-  followingFollowId?: number;
-  followerFollowId?: number;
 }

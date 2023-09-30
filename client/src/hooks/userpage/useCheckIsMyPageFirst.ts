@@ -3,15 +3,19 @@ import { useEffect } from 'react';
 
 interface useCheckIsMyPageFirstParams {
   globalLoginId: string | undefined | null;
-  loginId: string | string[] | undefined;
+  userIdParam: string | string[] | undefined;
 }
 
-export const useCheckIsMyPageFirst = ({ loginId, globalLoginId }: useCheckIsMyPageFirstParams) => {
+export const useCheckIsMyPageFirst = ({ userIdParam, globalLoginId }: useCheckIsMyPageFirstParams) => {
   const router = useRouter();
+  const isMyPage = userIdParam === globalLoginId;
+
   useEffect(() => {
-    if (loginId === globalLoginId) {
+    if (isMyPage) {
       router.push('/user/mypage');
       return;
     }
-  }, [loginId, globalLoginId]);
+  }, [userIdParam, globalLoginId]);
+
+  return { isMyPage };
 };
