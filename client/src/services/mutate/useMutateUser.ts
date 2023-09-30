@@ -15,6 +15,12 @@ interface ErrorResponse {
   };
 }
 
+interface FollowReq {
+  mutateFunctionFollowId?: (followId: number) => Promise<AxiosResponse>;
+  mutateFunctionUserId?: (loginId: string | string[]) => Promise<AxiosResponse>;
+  nickname: string;
+}
+
 const useMutateUser = {
   signUp: (mutateFunction: (signUpData: PostSignUp) => Promise<AxiosResponse>) => {
     const router = useRouter();
@@ -120,6 +126,63 @@ const useMutateUser = {
       },
     });
     return { deleteUserMutate: mutate, data };
+  },
+
+  startFollowing: ({ mutateFunctionUserId, nickname }: FollowReq) => {
+    const queryClient = useQueryClient();
+    const { mutate } = useMutation(['startFollowing'], mutateFunctionUserId, {
+      onSuccess: () => {
+        toast.success(`${nickname}님을 구독합니다.`);
+        queryClient.invalidateQueries(['myInfo']);
+        queryClient.invalidateQueries(['userPage']);
+      },
+      onError: (error: ErrorResponse) => {
+        if (error.response.data.message) {
+          toast.error(error.response.data.message);
+          return;
+        }
+        toast.error('구독 요청에 실패했습니다.');
+      },
+    });
+    return { startFollowingMutate: mutate };
+  },
+
+  cancelFollowing: ({ mutateFunctionFollowId, nickname }: FollowReq) => {
+    const queryClient = useQueryClient();
+    const { mutate } = useMutation(['cancelFollowing'], mutateFunctionFollowId, {
+      onSuccess: () => {
+        toast.success(`${nickname}님 구독을 취소합니다.`);
+        queryClient.invalidateQueries(['myInfo']);
+        queryClient.invalidateQueries(['userPage']);
+      },
+      onError: (error: ErrorResponse) => {
+        if (error.response.data.message) {
+          toast.error(error.response.data.message);
+          return;
+        }
+        toast.error('구독 취소 요청에 실패했습니다.');
+      },
+    });
+    return { cancelFollowingMutate: mutate };
+  },
+
+  deleteMyFollower: ({ mutateFunctionFollowId, nickname }: FollowReq) => {
+    const queryClient = useQueryClient();
+    const { mutate } = useMutation(['deleteFollowing'], mutateFunctionFollowId, {
+      onSuccess: () => {
+        toast.success(`${nickname} 구독자님을 삭제했습니다.`);
+        queryClient.invalidateQueries(['myInfo']);
+        queryClient.invalidateQueries(['userPage']);
+      },
+      onError: (error: ErrorResponse) => {
+        if (error.response.data.message) {
+          toast.error(error.response.data.message);
+          return;
+        }
+        toast.error('구독자 삭제 요청에 실패했습니다.');
+      },
+    });
+    return { deleteFollowingMutate: mutate };
   },
 };
 
