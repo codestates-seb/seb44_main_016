@@ -51,16 +51,15 @@ const apiUser = {
   },
 
   /** 회원 기본정보 불러오기 */
-  getUserPage: async (userId: string | string[] | undefined) => {
-    const response = await instance.get(`${BASE_URL}/user/profile/${userId}`);
+  getUserPage: async (loginId: string | string[] | undefined) => {
+    const response = await instance.get(`${BASE_URL}/user/profile/${loginId}`);
     return response.data;
   },
 
   /** 내가 쓴 글 불러오기 */
   getMyFeeds: async (userId: number, page: number, size: number) => {
     const response = await instance.get(`${BASE_URL}/user/${userId}/feedArticles?page=${page}&size=${size}`);
-    const { data, pageData } = response.data;
-    return { data, pageData };
+    return response;
   },
 
   /** 회원 정보 수정 */
@@ -72,6 +71,26 @@ const apiUser = {
   /** Access Token 갱신 */
   getNewAccess: async () => {
     const response = await instance.post(`${BASE_URL}/auth/refresh`);
+    return response;
+  },
+
+  /** 구독하기 */
+  startFollowing: async (loginId: string) => {
+    const response = await instance.post(`${BASE_URL}/friend/following/${loginId}`);
+    return response;
+  },
+
+  /** 구독 취소하기 */
+  cancelFollowing: async (followId: number) => {
+    const response = await instance.delete(`${BASE_URL}/friend/following/${followId}`, {
+      data: { followId },
+    });
+    return response;
+  },
+
+  /** 구독자 삭제하기 */
+  deleteMyFollower: async (followId: number) => {
+    const response = await instance.delete(`${BASE_URL}/friend/follower/${followId}`, { data: { followId } });
     return response;
   },
 };

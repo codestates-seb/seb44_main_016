@@ -79,14 +79,24 @@ export interface UserUpdateReqData {
   password?: string | null;
 }
 
-export interface FollowUsersInfoData {
-  followId: number;
-  followingId: number;
+export interface FollowingUsersInfoData {
   email: string;
-  loginId: string;
+  followId: number;
+  followingId: string;
+  isFollow: boolean;
   nickname: string;
   profileImgPath: string;
-  isFollow: boolean;
+  isFollowed: boolean;
+}
+
+export interface FollowerUsersInfoData {
+  email: string;
+  followId: number;
+  followerId: string;
+  followingId: string;
+  nickname: string;
+  profileImgPath: string;
+  isFollowing: boolean;
 }
 
 export interface UserFeedData {
@@ -111,6 +121,18 @@ export interface UserInfoResData {
   profileImgPath: string;
   followerCount: number;
   followingCount: number;
-  followingList: FollowUsersInfoData[];
-  followerList: FollowUsersInfoData[];
+  followingList: FollowingUsersInfoData[];
+  followerList: FollowerUsersInfoData[];
+}
+
+export interface UserPageInfoProps {
+  infoData: UserInfoResData;
+  loginId?: string | string[];
+  isMyPage: boolean;
+  isFollowing?: boolean;
+  isFollowed?: boolean;
+  isLoggedIn?: boolean;
+  globalLoginId?: string;
+  followingFollowId?: number;
+  followerFollowId?: number;
 }
