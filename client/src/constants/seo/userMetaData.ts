@@ -14,6 +14,9 @@ export const USER_META_DATA = {
     DESCRIPTION:
       '내 정보를 확인하고 관리하는 제로힙 마이 페이지입니다. 프로필 사진, 닉네임, 비밀번호 변경 등 다양한 개인 정보 관리가 가능하며, 이때까지 쓴 글을 관리할 수 있습니다.',
   },
+  USER_PAGE: {
+    TITLE: '제로힙 유저 페이지',
+  },
   USER_UPDATE_PAGE: {
     TITLE: '제로힙 회원 정보 수정 페이지',
     DESCRIPTION:

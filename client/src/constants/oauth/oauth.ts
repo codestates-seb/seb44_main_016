@@ -12,7 +12,6 @@ const RedirectURL = (name: string) => {
 export const naverRedirectURL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${
   OAUTH.NAVER_CLIENT_ID
 }&state=${OAUTH.NAVER_CLIENT_SECRET}&redirect_uri=${RedirectURL('naver')}`;
-console.log(naverRedirectURL);
 
 export const kakaoRedirectURL = `https://kauth.kakao.com/oauth/authorize?client_id=${
   OAUTH.KAKAO_API_KEY

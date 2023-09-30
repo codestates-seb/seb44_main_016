@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { PostSignUp, LoginReqData, OAuthReqData, UserUpdateReqData } from '../types/user';
 import { instance } from './axios-instance/tokenInstance';
+import { useQuery } from '@tanstack/react-query';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -50,10 +51,16 @@ const apiUser = {
     return response.data;
   },
 
-  /** 회원 기본정보 불러오기 */
+  /** 회원정보 불러오기 */
   getUserPage: async (loginId: string | string[] | undefined) => {
     const response = await instance.get(`${BASE_URL}/user/profile/${loginId}`);
-    return response.data;
+    return response;
+  },
+
+  /** (SSR) 회원정보 불러오기 */
+  useGetUserPage: (loginId: string | string[] | undefined) => {
+    const queryFn = () => apiUser.getUserPage(loginId);
+    return useQuery(['userPage', loginId], queryFn);
   },
 
   /** 내가 쓴 글 불러오기 */

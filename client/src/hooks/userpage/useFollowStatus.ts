@@ -13,6 +13,8 @@ export const useFollowStatus = ({ userPageData, globalLoginId }: useFollowStatus
   const [followerFollowId, setFollowerFollowId] = useState<number | undefined>(undefined);
 
   useEffect(() => {
+    if (!userPageData) return;
+
     const newIsFollowing = userPageData?.followerList.some(
       (follower: FollowerUsersInfoData) => follower.followerId === globalLoginId
     );

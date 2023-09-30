@@ -5,7 +5,6 @@ const Document = () => {
   return (
     <Html lang='ko'>
       <Head>
-        <meta charSet='UTF-8' />
         <link rel='icon' href='/images/favicon.ico' />
       </Head>
       <body>

@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useWindowType } from '../hooks/useWindowSize';
 import { ScreenEnum } from '../constants/enums';
 import React from 'react';
+import Head from 'next/head';
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
