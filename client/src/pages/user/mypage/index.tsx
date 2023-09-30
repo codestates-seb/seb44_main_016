@@ -8,7 +8,6 @@ import { USER_META_DATA } from '../../../constants/seo/userMetaData';
 import ErrorComponent from '../../../components/ErrorComponent';
 import UserPageInfo from '../../../components/userpage/UserPageInfo';
 import useUserGlobalValue from '../../../components/redux/getUserInfo';
-import UserFeed from '../../../components/userpage/UserFeed';
 
 export default function MyPage() {
   const {
@@ -17,7 +16,7 @@ export default function MyPage() {
     data: myInfoData,
   } = useQuery(['myInfo'], apiUser.getMyInfo);
 
-  const { userId, isLoggedIn } = useUserGlobalValue();
+  const { isLoggedIn } = useUserGlobalValue();
 
   if (isMyInfoError) return <ErrorComponent />;
   if (isMyInfoLoading) return <Loading />;
@@ -28,7 +27,6 @@ export default function MyPage() {
       {myInfoData && (
         <S.Container>
           <UserPageInfo infoData={myInfoData} isMyPage={true} isLoggedIn={isLoggedIn} />
-          <UserFeed userId={userId} />
         </S.Container>
       )}
     </>

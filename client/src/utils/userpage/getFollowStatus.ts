@@ -18,3 +18,13 @@ export const getFollowStatusUserPage = ({ isMyPage, isFollowing, isFollowed }: F
   }
   return btnName;
 };
+
+export const getFollowStatusFollowList = ({ title }: FollowStatus) => {
+  let btnName;
+  if (title === '구독됨') {
+    btnName = '삭제하기';
+  } else {
+    btnName = '구독 취소';
+  }
+  return btnName;
+};
