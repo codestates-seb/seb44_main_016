@@ -2,12 +2,12 @@ package com.zerohip.server.common.img.service;
 
 import com.zerohip.server.aws.config.S3ServiceImpl;
 import com.zerohip.server.common.article.Article;
-import com.zerohip.server.common.img.dto.ImgDto;
 import com.zerohip.server.common.img.entity.Img;
 import com.zerohip.server.common.img.repository.ImgRepository;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
 import com.zerohip.server.financialRecord.entity.FinancialRecord;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
+import com.zerohip.server.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
@@ -19,9 +19,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static com.zerohip.server.common.img.service.ImgServiceImpl.setArticle;
-import static com.zerohip.server.common.img.service.ImgServiceImpl.setProfileImg;
 
 @Slf4j
 @Service
@@ -57,6 +54,7 @@ public class S3ImgServiceImpl implements ImgService {
     return imgRepository.saveAll(imgList);
   }
 
+  @Override
   public Img createImg(FinancialRecord financialRecord, MultipartFile files) throws IOException {
     String dirName = "zerohip"; // 해당 이미지를 저장할 S3 bucket의 디렉토리 이름을 지정하세요.
 
@@ -69,6 +67,24 @@ public class S3ImgServiceImpl implements ImgService {
 
     // 게시판 글과 이미지 연결
     setProfileImg(financialRecord, img);
+
+    // 파일 경로를 리스트에 저장
+    return imgRepository.save(img);
+  }
+
+  @Override
+  public Img createImg(User user, MultipartFile files) throws IOException {
+    String dirName = "zerohip"; // 해당 이미지를 저장할 S3 bucket의 디렉토리 이름을 지정하세요.
+
+    // S3에 파일들을 업로드하고, 그 URL 리스트를 저장
+    String imgKey = s3ServiceImpl.uploadFile(files, dirName);
+    String imageUrl = s3ServiceImpl.generatePresignedUrl(imgKey);
+
+    // 이미지 생성자로 파일명, 파일경로 넘겨줌
+    Img img = setImg(imageUrl);
+
+    // 게시판 글과 이미지 연결
+    setProfileImg(user, img);
 
     // 파일 경로를 리스트에 저장
     return imgRepository.save(img);
@@ -111,7 +127,17 @@ public class S3ImgServiceImpl implements ImgService {
     }
   }
 
-
+  @Override
+  public void deleteImg(User user, String deleteImgPath) {
+    Img findImg = imgRepository.findByFilePath(deleteImgPath);
+    if (findImg == null) {
+      throw new IllegalArgumentException("해당 이미지가 없습니다.");
+    }
+    deleteImg(findImg);
+    s3ServiceImpl.deleteFileFromS3(findImg.getFilePath());
+    String profileImgPath = "https://source.boringavatars.com/beam/150/" + user.getLoginId() + (user.getRandomAvatarNum() + 1);
+    user.setProfileImgPath(profileImgPath);
+  }
 
   @Override
   public Img findVerifiedImg(Long imgId) {
@@ -125,5 +151,23 @@ public class S3ImgServiceImpl implements ImgService {
     Img findImg = imgRepository.findByFilePath(filePath);
     findVerifiedImg(findImg.getId());
     return findImg;
+  }
+
+  static void setArticle(Article article, Img img) {
+    if (article instanceof FinancialRecordArticle financialRecordArticle) {
+      img.setFinancialRecordArticle(financialRecordArticle);
+    } else if (article instanceof FeedArticle feedArticle) {
+      img.setFeedArticle(feedArticle);
+    } else {
+      throw new RuntimeException("존재하지 않는 게시글입니다.");
+    }
+  }
+
+  static void setProfileImg(FinancialRecord faRec, Img img) {
+    img.setFinancialRecord(faRec);
+  }
+
+  static void setProfileImg(User user, Img img) {
+    img.setUser(user);
   }
 }

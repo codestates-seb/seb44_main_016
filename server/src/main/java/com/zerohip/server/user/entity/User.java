@@ -10,6 +10,7 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +51,7 @@ public class User extends Auditable {
     @Column
     private int followerCount;
 
+
     @Column
     private int followingCount;
 
@@ -75,6 +77,16 @@ public class User extends Auditable {
 
     @OneToMany(mappedBy = "user")
     private List<FinancialRecordArticle> financialRecordArticles = new ArrayList<>();
+
+  
+  
+  
+  
+    @Min(1)
+    @Column(nullable = false, unique = false, updatable = false, columnDefinition = "integer default 1")
+    private int randomAvatarNum;
+
+    
 
 
     public User(String email, String loginId, String password, String nickname, String provider) {

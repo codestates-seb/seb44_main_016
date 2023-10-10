@@ -39,7 +39,7 @@ public class FeedArticleController {
     }
 
     // 단일 피드 게시글 조회
-    @GetMapping("/{ariticleId}")
+    @GetMapping("/{articleId}")
     public ResponseEntity getFeedArticle(@PathVariable("articleId") Long articleId) {
         FeedArticle feedArticle = feedArticleService.findFeedArticle(articleId);
         if (feedArticle != null) {
@@ -74,7 +74,7 @@ public class FeedArticleController {
     }
 
     // 피드 게시글 삭제
-    @DeleteMapping("/feedArticles/{articleId}")
+    @DeleteMapping("/{articleId}")
     public ResponseEntity<Void> deleteFeedArticle(@PathVariable("articleId") Long articleId,
                                                   @AuthenticationPrincipal String authorId) {
         feedArticleService.deleteFeedArticle(authorId, articleId);

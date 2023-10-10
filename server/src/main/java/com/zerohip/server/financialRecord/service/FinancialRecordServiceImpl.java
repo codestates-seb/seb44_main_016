@@ -21,9 +21,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * User 추가하기
- */
 @Slf4j
 @Service
 @Transactional
@@ -68,11 +65,11 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
   }
 
   @Transactional(readOnly = true)
-  // 가계부 전체 조회(동적쿼리 사용 예정)
   @Override
   public List<FinancialRecord> findFaRecs(String authorId) {
+    CheckNull(authorId);
     List<FinancialRecord> financialRecords = repository.findAllByAuthorId(authorId);
-    log.info("financialRecords : {}", financialRecords.toString());
+    log.info("Number of financial records fetched: {}", financialRecords.size());
     return financialRecords;
   }
 
@@ -129,6 +126,22 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
     return findFaRec;
   }
 
+  @Override
+  public FinancialRecord addBookmark(String authorId, Long faRecId) {
+    FinancialRecord findFaRec = findVerifiedFaRec(faRecId);
+    VerifiedAuthor(authorId, findFaRec);
+    findFaRec.setBookmark(true);
+    return findFaRec;
+  }
+
+  @Override
+  public FinancialRecord removeBookmark(String authorId, Long faRecId) {
+    FinancialRecord findFaRec = findVerifiedFaRec(faRecId);
+    VerifiedAuthor(authorId, findFaRec);
+    findFaRec.setBookmark(false);
+    return findFaRec;
+  }
+
   private int countTotal(FinancialRecord faRec) {
     return faRec.getFinancialRecordArticles().size();
   }
@@ -145,11 +158,15 @@ public class FinancialRecordServiceImpl implements FinancialRecordService {
   // 로그인한 사용자와 가계부 소유자가 같은지 확인
   private void VerifiedAuthor(String authorId, FinancialRecord faRec) {
     // 사용자 인증 실패
-    if(authorId == null) {
-      throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
-    }
+    CheckNull(authorId);
 
     if(!authorId.equals(faRec.getUser().getLoginId())) {
+      throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
+    }
+  }
+
+  private void CheckNull(String authorId) {
+    if(authorId == null) {
       throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
     }
   }
