@@ -2,6 +2,7 @@ package com.zerohip.server.user.controller;
 
 import com.zerohip.server.common.exception.BusinessLogicException;
 import com.zerohip.server.common.exception.ExceptionCode;
+import com.zerohip.server.follow.mapper.FollowMapper;
 import com.zerohip.server.user.dto.UserDto;
 import com.zerohip.server.user.entity.User;
 import com.zerohip.server.user.mapper.UserMapper;
@@ -14,10 +15,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @AuthenticationPrincipal : 필터에서 검증된 jwt 사용자 정보를 스프링 시큐리티가 User author 에게 주입해주는 에너테이션
@@ -31,13 +28,14 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
-    private final UserMapper mapper;
+    private final UserMapper userMapper;
+
 
     // 회원 가입
     @PostMapping("/signup")
     public ResponseEntity postUser(@RequestBody @Valid UserDto.Post userPostDto) {
 
-        User user = mapper.userPostDtoToUser(userPostDto);
+        User user = userMapper.userPostDtoToUser(userPostDto);
         userService.createUser(user);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -49,10 +47,7 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@AuthenticationPrincipal String authorId,
                                         @RequestBody UserDto.CheckPassword checkPasswordDto) {
 
-        if (authorId == null) {
-            throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
-        }
-
+        checkNull(authorId);
         userService.deleteUser(authorId, checkPasswordDto.getPassword());
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -62,44 +57,26 @@ public class UserController {
     @GetMapping("/info")
     public ResponseEntity<?> userInfoForClient(@AuthenticationPrincipal String authorId) {
 
-        if (authorId == null) {
-            throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
-        }
-
+        checkNull(authorId);
         User findUserInfo = userService.findUserByLoginId(authorId);
-        return new ResponseEntity<>(mapper.userToUserResponseDto(findUserInfo), HttpStatus.OK);
+        return new ResponseEntity<>(userMapper.userToUserResponseDto(findUserInfo), HttpStatus.OK);
     }
 
 
-    // 마이페이지
+    // 회원 조회 (for user) -> 추후 수정 예정
+    @GetMapping("/profile/{login-id}")
+    public ResponseEntity<?> findUserProfile(@PathVariable("login-id") String loginId) {
+
+        return new ResponseEntity<>(userMapper.userToMyPageResponse(userService.findUser(loginId)), HttpStatus.OK);
+    }
+
+
+    // 마이페이지 조회
     @GetMapping("/mypage")
     public ResponseEntity<?> getMyPage(@AuthenticationPrincipal String authorId) {
 
-        if (authorId == null) {
-            throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
-        }
-
-        User author = userService.findUserByLoginId(authorId);
-
-        User newAuthor = new User(author.getUserId(), author.getLoginId(), author.getNickname(), author.getProfileImgPath());
-
-        List<User> followingList = Arrays.asList(
-                new User(5L, "junp", "준프님", false, "https://source.boringavatars.com/beam/150/junp"),
-                new User(6L, "hahan", "선빵이", true, "https://source.boringavatars.com/beam/150/arthur5")
-        );
-
-        List<User> followerList = Arrays.asList(
-                new User(10L, "ogu", "햄구맘", true, "https://source.boringavatars.com/beam/150/waypil"),
-                new User(11L, "apple", "망고친구", false, "https://source.boringavatars.com/beam/150/yoonhee"),
-                new User(12L, "maximum123", "나그네입니다최대글자", false, "https://source.boringavatars.com/beam/150/hanstar")
-        );
-
-        Map<String, Object> response = new LinkedHashMap<>();
-        response.put("User", newAuthor);
-        response.put("followingList", followingList);
-        response.put("followerList", followerList);
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        checkNull(authorId);
+        return new ResponseEntity<>(userMapper.userToMyPageResponse(userService.getMypage(authorId)), HttpStatus.OK);
     }
 
 
@@ -108,47 +85,19 @@ public class UserController {
     public ResponseEntity<?> patchUser(@AuthenticationPrincipal String authorId,
                                        @RequestBody @Valid UserDto.Patch userPatchDto) {
 
+        checkNull(authorId);
+        User user = userMapper.userPatchDtoToUser(userPatchDto);
+        userService.updateUser(authorId, user);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    private static void checkNull(String authorId) {
         if (authorId == null) {
             throw new BusinessLogicException(ExceptionCode.AUTHOR_UNAUTHORIZED);
         }
-
-        User user = mapper.userPatchDtoToUser(userPatchDto);
-        userService.updateUser(user);
-
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 
 
-
-
-    // (deleteUser 내부로 이동)
-//    @PostMapping("/checkpw")
-//    public ResponseEntity<?> checkPassword(@AuthenticationPrincipal User author,
-//                                           @RequestBody UserDto.CheckPassword checkPasswordDto) {
-//
-//        User originUser = userService.findUserByLoginId(author.getLoginId());
-//        User checkPasswordUser = mapper.checkPasswordToUser(checkPasswordDto);
-//        Boolean checkedPassword = userService.checkedPassword(originUser.getLoginId(), checkPasswordUser.getPassword());
-//        UserDto.CheckPasswordResponse response = mapper.userToCheckPasswordResponse(checkPasswordUser);
-//        if(checkedPassword == true){response.setCheck(true);
-//        } else {response.setCheck(false);}
-//        return new ResponseEntity<>(response,HttpStatus.OK);
-//    }
-
-
-
-
-
-//    @GetMapping("/gegege")
-//    public ResponseEntity checkPassword(@AuthenticationPrincipal User author) {
-//
-//        User user = new User();
-//        user.setUserId(author.getUserId());
-//        user.setEmail(author.getEmail());
-//        user.setLoginId(author.getLoginId());
-//        user.setPassword(author.getPassword());
-//        user.setNickname(author.getNickname());
-//
-//        return new ResponseEntity<>(mapper.userToUserResponseDto(user),HttpStatus.OK);
-//    }

@@ -1,5 +1,6 @@
 package com.zerohip.server.user.dto;
 
+import com.zerohip.server.follow.dto.FollowDto;
 import lombok.*;
 
 import javax.validation.constraints.Email;
@@ -7,8 +8,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 
-public class UserDto {
+public class
+UserDto {
+
 
     @Getter
     @Builder
@@ -52,6 +56,7 @@ public class UserDto {
 
     }
 
+
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
@@ -86,6 +91,7 @@ public class UserDto {
         private String loginId;
     }
 
+
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
@@ -95,6 +101,7 @@ public class UserDto {
         private String email;
     }
 
+
     @Getter
     @Builder
     @AllArgsConstructor
@@ -103,17 +110,6 @@ public class UserDto {
 
         private String password;
     }
-
-
-//    @Getter
-//    @AllArgsConstructor
-//    @NoArgsConstructor
-//    @Builder
-//    public static class CheckLoginIdResponse {
-//
-//        private String
-//    }
-
 
 
     @Getter
@@ -136,6 +132,7 @@ public class UserDto {
 
     }
 
+
     @Getter
     @Setter
     @NoArgsConstructor
@@ -151,6 +148,40 @@ public class UserDto {
         private LocalDateTime modifiedAt;
 
     }
+
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MyPageResponse {
+
+        private Long userId;
+        private String email;
+        private String loginId;
+        private String nickname;
+        private String profileImgPath;
+        private int followerCount;
+        private int followingCount;
+        private List<FollowDto.FollowingResponseDto> followingList;
+        private List<FollowDto.FollowerResponseDto> followerList;
+
+    }
+
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class CheckOtherUserResponse {
+
+        private Long userId;
+        private String loginId;
+        private String nickname;
+        private List<FollowDto.FollowResponseDto> followInfo;
+
+    }
+
 
     @Getter
     @Builder

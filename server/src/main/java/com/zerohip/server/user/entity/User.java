@@ -5,7 +5,9 @@ import com.zerohip.server.common.audit.Auditable;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
 import com.zerohip.server.financialRecord.entity.FinancialRecord;
 import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
+import com.zerohip.server.follow.entity.Follow;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -45,30 +47,47 @@ public class User extends Auditable {
     @Column
     private String profileImgPath;
 
-    // 테스트 중
+    // follow 테이블이 업데이트 될 때, 리스너 이용하여 값 업뎃 필요
     @Column
-    private Boolean followed;
+    private int followerCount;
 
+
+    @Column
+    private int followingCount;
+
+
+    @Builder.Default
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "followerId", cascade = CascadeType.REMOVE)   // 회원 탈퇴 시 리스트 삭제
+    private List<Follow> followerList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "followingId", cascade = CascadeType.REMOVE)   // 회원 탈퇴 시 리스트 삭제
+    private List<Follow> followingList = new ArrayList<>();
+
+
+    // 트랜잭션 전략 설정 필요
+    @OneToMany(mappedBy = "user")
+    private List<FeedArticle> feedArticles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<FinancialRecord> financialRecords = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<FinancialRecordArticle> financialRecordArticles = new ArrayList<>();
+
+  
+  
+  
+  
     @Min(1)
     @Column(nullable = false, unique = false, updatable = false, columnDefinition = "integer default 1")
     private int randomAvatarNum;
 
-    // 테스트 중
-    public User(Long userId, String loginId, String nickname, String profileImgPath) {
-        this.userId = userId;
-        this.loginId = loginId;
-        this.nickname = nickname;
-        this.profileImgPath = profileImgPath;
-    }
+    
 
-    // 테스트 중
-    public User(Long userId, String loginId, String nickname, Boolean followed, String profileImgPath) {
-        this.userId = userId;
-        this.loginId = loginId;
-        this.nickname = nickname;
-        this.followed = followed;
-        this.profileImgPath = profileImgPath;
-    }
 
     public User(String email, String loginId, String password, String nickname, String provider) {
         this.email = email;
@@ -96,25 +115,7 @@ public class User extends Auditable {
         GOOGLE, NAVER, KAKAO;
     }
 
-    @Builder.Default
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles = new ArrayList<>();
 
 
-    // 트랜잭션 전략 설정 필요
-    @OneToMany(mappedBy = "user")
-    private List<FeedArticle> feedArticles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<FinancialRecord> financialRecords = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
-    private List<FinancialRecordArticle> financialRecordArticles = new ArrayList<>();
-
-    /** 연관관계 매핑
-     *  userImage
-
-     *  friend
-
-     */
 }
