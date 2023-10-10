@@ -35,6 +35,8 @@ public class FollowDto {
         private String nickname;
         private String profileImgPath;
         private Boolean isFollowing;
+        private Boolean isFollowed;
+
 
     }
 
@@ -50,6 +52,7 @@ public class FollowDto {
         private String email;
         private String nickname;
         private String profileImgPath;
+        private Boolean isFollowing;
         private Boolean isFollowed;
 
     }
