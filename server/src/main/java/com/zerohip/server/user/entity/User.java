@@ -21,7 +21,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "USERS")
-@JsonInclude(JsonInclude.Include.NON_NULL)  // test 후 기능 완료되면 삭제 예정 (mypage 조회용)
 public class User extends Auditable {
 
     @Id
@@ -47,13 +46,15 @@ public class User extends Auditable {
     @Column
     private String profileImgPath;
 
-    // follow 테이블이 업데이트 될 때, 리스너 이용하여 값 업뎃 필요
     @Column
     private int followerCount;
 
-
     @Column
     private int followingCount;
+
+    @Min(1)
+    @Column(nullable = false, unique = false, updatable = false, columnDefinition = "integer default 1")
+    private int randomAvatarNum;
 
 
     @Builder.Default
@@ -77,16 +78,6 @@ public class User extends Auditable {
 
     @OneToMany(mappedBy = "user")
     private List<FinancialRecordArticle> financialRecordArticles = new ArrayList<>();
-
-  
-  
-  
-  
-    @Min(1)
-    @Column(nullable = false, unique = false, updatable = false, columnDefinition = "integer default 1")
-    private int randomAvatarNum;
-
-    
 
 
     public User(String email, String loginId, String password, String nickname, String provider) {
@@ -114,8 +105,4 @@ public class User extends Auditable {
     public enum Provider {
         GOOGLE, NAVER, KAKAO;
     }
-
-
-
-
 }
