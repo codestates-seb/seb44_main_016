@@ -1,4 +1,3 @@
-<img width="755" alt="image" src="https://github.com/codestates-seb/seb44_main_016/assets/125176463/ba741418-a5a1-4dcf-8ff6-d7bad0670543">![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=제로힙&fontSize=70&animation=fadeIn&fontAlignY=38&desc=절약유도%20가계부형%20SNS&descAlignY=57&descAlign=65)
 <p align='center'> 당신의 과소비가 0에 수렴할 때까지, 제로힙. </p>
 
 <br>
