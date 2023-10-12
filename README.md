@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=제로힙&fontSize=70&animation=fadeIn&fontAlignY=38&desc=절약유도%20가계부형%20SNS&descAlignY=57&descAlign=65)
+<img width="755" alt="image" src="https://github.com/codestates-seb/seb44_main_016/assets/125176463/ba741418-a5a1-4dcf-8ff6-d7bad0670543">![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=제로힙&fontSize=70&animation=fadeIn&fontAlignY=38&desc=절약유도%20가계부형%20SNS&descAlignY=57&descAlign=65)
 <p align='center'> 당신의 과소비가 0에 수렴할 때까지, 제로힙. </p>
 
 <br>
@@ -7,7 +7,7 @@
 
 > **프로젝트명** : 제로힙(ZEROHIP)
 <br> **v1 개발기간** : 2023.06.28 ~ 2023.7.27
-<br> **v2 개발기간** : 2023.07.28 ~ 
+<br> **v2 개발기간** : _그외 추가 기능들은 마음에 맞는 팀원들끼리 자유롭게 개발 중입니다._
 
 <br>
 
@@ -99,73 +99,71 @@
 
 <br>
 
-<br>
-
-## 💖 서비스 시연
-
+## 📸 서비스 페이지
 
 <details>
-  <summary> 페이지 </summary>
-  
-|회원가입|로그인 (일반,소셜)|사업자등록|
-|------|---|---|
-|<img src="" width="300px" height="300px">|<img src="" width="300px" height="300px">|<img src="" width="300px" height="300px">|
-|펫플레이스 (리스트)|펫플레이스 (검색)|펫플레이스 (상세)|
-|<img src="" width="300px" height="300px">|<img src="" width="300px" height="300px">|<img src="" width="300px" height="300px">|
-|펫플레이스 (등록, 수정)|댕댕이숲 (리스트)|댕댕이숲 (상세)|
-|<img src="" width="300px" height="300px">|<img src="" width="300px" height="300px">|<img src="" width="300px" height="300px">|
-|댕댕이숲 (등록, 수정)|마이페이지|
-|<img src="" width="300px" height="300px">|<img src="" width="300px" height="300px">|
+   <summary> 각 페이지 별 스크린샷 </summary>
+<br />
 
-  
+|시작 페이지(로그인 전)|시작 페이지(로그인 후)|
+|------|---|
+|<img width="400px" alt="시작 페이지(로그인 전)" src="https://github.com/codestates-seb/seb44_main_016/assets/125176463/b03bff60-76be-4977-b7f6-351781416ba4">|<img width="400px" alt="시작 페이지(로그인 후)" src="https://github.com/codestates-seb/seb44_main_016/assets/125176463/fc6b05aa-2f79-4f79-a4f9-9433e09f4fe0">|
+
+
+|시작 페이지(태블릿)|시작 페이지(모바일)|
+|------|----|
+| <img width="400px" alt="시작 페이지(태블릿)" src="https://github.com/codestates-seb/seb44_main_016/assets/125176463/83b370e4-79a1-4a0e-b423-aaa6317e89a2"> | <img width="400px" alt="시작 페이지(모바일)" src="https://github.com/codestates-seb/seb44_main_016/assets/125176463/eb0fb1d0-af1a-4248-9538-8840421bdf48"> |
+
+
+|회원가입 페이지|로그인 페이지|
+|------|---|
+|<img width="400px" alt="회원가입 페이지" src="https://github.com/codestates-seb/seb44_main_016/assets/125176463/f68f90c0-0684-4093-bf95-732be8ebc83b">|<img width="400px" alt="로그인 페이지" src="https://github.com/codestates-seb/seb44_main_016/assets/125176463/8d2e60d5-6944-412c-8a3b-5877b939cb8a">|
+
+|마이 페이지| 구독 리스트 |
+|------|---|
+|<img width="400px" alt="마이 페이지" src="https://github.com/codestates-seb/seb44_main_016/assets/125176463/df4e2d49-bd91-4713-8ded-e4edaf18b23a">|<img width="400px" alt="구독 리스트" src="https://github.com/codestates-seb/seb44_main_016/assets/125176463/e35eccd1-76af-4ea4-bb1d-a8fa2bd3f026">|
+
+|유저 페이지| 구독 리스트|
+|------|---|
+|<img width="400px" alt="유저 페이지" src="https://github.com/codestates-seb/seb44_main_016/assets/125176463/26d0177d-6f80-4694-a957-035fe5f901d9">|<img width="400px" alt="구독 리스트" src="https://github.com/codestates-seb/seb44_main_016/assets/125176463/585ebc50-f371-4e1b-b9dd-a4a7709b2715">|
+
+|회원정보 수정 페이지 | 이미지 수정 모달 |
+|------|---|
+|<img width="400px" alt="회원정보 수정 페이지" src="https://github.com/codestates-seb/seb44_main_016/assets/125176463/e058504b-80c0-451f-bfe2-1e5fa4b96793">|<img width="400px" alt="이미지 수정 모달" src="https://github.com/codestates-seb/seb44_main_016/assets/125176463/40193cfb-1190-449e-bd7d-4684896ce3eb">|
+
+|회원 탈퇴 페이지| 탈퇴 성공 페이지|
+|------|---|
+| <img width="400px" alt="회원 탈퇴 페이지" src="https://github.com/codestates-seb/seb44_main_016/assets/125176463/3cd19870-9e07-48ae-b4cf-40b385d57d42"> | <img alt="탈퇴 성공 페이지" src="https://github.com/codestates-seb/seb44_main_016/assets/125176463/122d8b36-595d-481e-8cd8-db0aa92cafe8" width="400px"> |
+
+|가계부 생성 페이지| 가계부 목록 페이지|
+|------|---|
+| <img width="400px" alt="가계부 생성 페이지" src="https://github.com/codestates-seb/seb44_main_016/assets/125176463/70f2e34d-071f-4129-8c06-113f257ca59e"> | <img width="400px" alt="가계부 목록 페이지" src="https://github.com/codestates-seb/seb44_main_016/assets/125176463/a93c4f7c-5931-448c-a936-f069b886bc56"> |
+
+
+|가계부 작성 페이지|
+|------|
+| <img width="400px" alt="가계부 작성 페이지" src="https://github.com/codestates-seb/seb44_main_016/assets/125176463/468acaa2-c80e-4374-ba04-97f94e73608e"> | 
+
+
+
 </details>
 
 <br>
+
 
 ## ❗️ 기획
 
+- [ <제로힙> 기획서](https://valuable-trawler-3af.notion.site/b00b1a9985714bce8409e35b5119e530?pvs=4)
+- [Figma 디자인 목업](https://www.figma.com/file/sdzWtE9uQQKCuij5Jclrk0/ZEROHIP?type=design&node-id=1202%3A688&mode=design&t=McLJaOYw9Bfg6lZt-1)
+- [Figma 화면 정의서](https://www.figma.com/file/sdzWtE9uQQKCuij5Jclrk0/ZEROHIP?type=design&node-id=1202%3A688&mode=design&t=McLJaOYw9Bfg6lZt-1)
 
-<details>
-  <summary> <제로힙> 기획서 </summary>
-
-- [ <제로힙> 기획서 - 링크](https://www.notion.so/b00b1a9985714bce8409e35b5119e530)
-
-</details>
-
-<details>
-  <summary> Figma 디자인 목업 </summary>
-
-- [Figma 디자인 목업 - 링크](https://www.figma.com/file/sdzWtE9uQQKCuij5Jclrk0/ZEROHIP?type=design&node-id=1202%3A688&mode=design&t=McLJaOYw9Bfg6lZt-1)
-
-
-</details>
-
-<details>
-  <summary> Figma 화면 정의서 </summary>
-
-- [Figma 화면 정의서 - 링크](https://www.figma.com/file/sdzWtE9uQQKCuij5Jclrk0/ZEROHIP?type=design&node-id=1202%3A688&mode=design&t=McLJaOYw9Bfg6lZt-1)
-
-
-</details>
 
 <br>
 
 ## ⚡️ 기술 문서
 
-
-<details>
-  <summary> 사용자 요구사항 정의서 </summary>
-
-- [사용자 요구사항 정의서 - 링크](https://docs.google.com/spreadsheets/d/1e8pn8s0n09KRMwWzdX84FUiZ9hj2ncbnB9sBrImGdbY/edit?usp=sharing)
-
-</details>
-
-<details>
-  <summary> API 명세서 </summary>
-
-- [ API 명세서 - 링크 ](https://docs.google.com/spreadsheets/d/1e8pn8s0n09KRMwWzdX84FUiZ9hj2ncbnB9sBrImGdbY/edit#gid=562356072)
-
-</details>
+- [사용자 요구사항 정의서](https://docs.google.com/spreadsheets/d/1e8pn8s0n09KRMwWzdX84FUiZ9hj2ncbnB9sBrImGdbY/edit?usp=sharing)
+- [ API 명세서 (추후 POSTMAN으로 정리 예정) ](https://docs.google.com/spreadsheets/d/1e8pn8s0n09KRMwWzdX84FUiZ9hj2ncbnB9sBrImGdbY/edit#gid=562356072)
 
 <details>
   <summary> DB ERD</summary>
@@ -178,13 +176,10 @@
 
 </details>
 
-
-
-
 <br>
 
 
 ## 🗂 팀 문서
 
-- [팀 컨벤션 - 링크 ](https://valuable-trawler-3af.notion.site/adbf58de29ae4e72a6440b503eca393c)
-- [주차별 회고 - 링크](https://docs.google.com/spreadsheets/d/1l6ei2woahjQa9vhu7PVF4UweVAJmt1R6bvugwV5ATOM/edit#gid=0)
+- [팀 컨벤션](https://valuable-trawler-3af.notion.site/adbf58de29ae4e72a6440b503eca393c)
+- [주차별 회고](https://valuable-trawler-3af.notion.site/KPT-a4d94024fb7b411d8b3000a3c17b5755)
