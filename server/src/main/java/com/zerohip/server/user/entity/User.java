@@ -52,9 +52,9 @@ public class User extends Auditable {
     @Column
     private int followingCount;
 
-    @Min(1)
-    @Column(nullable = false, unique = false, updatable = false, columnDefinition = "integer default 1")
-    private int randomAvatarNum;
+//    @Min(1)
+//    @Column(nullable = false, unique = false, updatable = false, columnDefinition = "integer default 1")
+//    private int randomAvatarNum;
 
 
     @Builder.Default

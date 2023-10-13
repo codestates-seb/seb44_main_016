@@ -134,9 +134,9 @@ public class S3ImgServiceImpl implements ImgService {
       throw new IllegalArgumentException("해당 이미지가 없습니다.");
     }
     deleteImg(findImg);
-    s3ServiceImpl.deleteFileFromS3(findImg.getFilePath());
-    String profileImgPath = "https://source.boringavatars.com/beam/150/" + user.getLoginId() + (user.getRandomAvatarNum() + 1);
-    user.setProfileImgPath(profileImgPath);
+//    s3ServiceImpl.deleteFileFromS3(findImg.getFilePath());
+//    String profileImgPath = "https://source.boringavatars.com/beam/150/" + user.getLoginId() + (user.getRandomAvatarNum() + 1);
+//    user.setProfileImgPath(profileImgPath);
   }
 
   @Override
