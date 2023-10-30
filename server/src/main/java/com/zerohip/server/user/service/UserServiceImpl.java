@@ -2,10 +2,19 @@ package com.zerohip.server.user.service;
 
 import com.zerohip.server.common.exception.BusinessLogicException;
 import com.zerohip.server.common.exception.ExceptionCode;
+import com.zerohip.server.feedArticle.entity.FeedArticle;
+import com.zerohip.server.follow.dto.FollowDto;
+import com.zerohip.server.follow.entity.Follow;
+import com.zerohip.server.follow.mapper.FollowMapper;
+import com.zerohip.server.follow.repository.FollowRepository;
+import com.zerohip.server.follow.service.FollowService;
 import com.zerohip.server.security.utils.CustomAuthorityUtils;
 import com.zerohip.server.user.entity.User;
 import com.zerohip.server.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +28,10 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
+    private final FollowRepository followRepository;
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
+
 
     @Override
     public User createUser(User user) {
@@ -46,8 +57,54 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
+    public User updateUser(String loginId, User user) {
+
+        findVerifyUserByLoginId(loginId);
+        User findUser = findVerifyUserByLoginId(user.getLoginId());
+
+
+        Optional.ofNullable(user.getNickname())
+                .ifPresent(nickname -> findUser.setNickname(nickname));
+        Optional.ofNullable(user.getPassword())
+                .ifPresent(password -> findUser.setPassword(passwordEncoder.encode(password)));
+        Optional.ofNullable(user.getProfileImgPath())
+                .ifPresent(profileImgPath -> findUser.setProfileImgPath(profileImgPath));
+
+        return userRepository.save(findUser);
+    }
+
+
+    // 조회될 때 마다 팔로잉/팔로워 수 업데이트 -> 추후 개선 예정
+    @Override
+    public User getMypage(String loginId) {
+
+        User user = findUserByLoginId(loginId);
+        user.setFollowerCount(followRepository.followerCount(user.getLoginId()));
+        user.setFollowingCount(followRepository.followingCount(user.getLoginId()));
+
+        userRepository.save(user);
+        return user;
+    }
+
+
+    // 조회될 때 마다 팔로잉/팔로워 수 업데이트 -> 추후 개선 예정
+    @Override
+    public User findUser(String loginId) {
+
+        User user = findUserByLoginId(loginId);
+        user.setFollowerCount(followRepository.followerCount(user.getLoginId()));
+        user.setFollowingCount(followRepository.followingCount(user.getLoginId()));
+
+        userRepository.save(user);
+        return user;
+    }
+
+
+    // ---- 검증 후 유저 객체 반환 (used other service)
+    @Override
     public User findUserByUserId(Long userId) {
-        return null;
+
+        return findVerifyUserByUserId(userId);
     }
 
     @Override
@@ -56,6 +113,11 @@ public class UserServiceImpl implements UserService{
         return findVerifyUserByLoginId(loginId);
     }
 
+    @Override
+    public User findUserByEmail(String email) {
+
+        return findVerifyUserByEmail(email);
+    }
 
     @Override
     public List<User> findUsers() {
@@ -64,18 +126,11 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public User updateUser(User user) {
-        return null;
-    }
+    public void deleteUser(String authorId, String password) {
 
-
-    @Override
-    public void deleteUser(User user, String password) {
-
-        User findUser = findVerifyUserByLoginId(user.getLoginId());
+        User findUser = findVerifyUserByLoginId(authorId);
         if (checkedPassword(findUser, password)) userRepository.delete(findUser);
     }
-
 
 
 
@@ -102,13 +157,26 @@ public class UserServiceImpl implements UserService{
         return foundUser;
     }
 
+
     private void verifyExistsLoginId(String loginId) {
 
         Optional<User> user = userRepository.findUserByLoginId(loginId);
         if (user.isPresent()) {
-            throw new BusinessLogicException(ExceptionCode.LoginId_EXISTS);
+            throw new BusinessLogicException(ExceptionCode.LOGINId_EXISTS);
         }
     }
+
+
+    private User findVerifyUserByEmail(String email) {
+
+        Optional<User> optionalUser = userRepository.findUserByEmail(email);
+        User foundUser = optionalUser.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+
+        return foundUser;
+    }
+
+
 
     private void verifyExistsEmail(String email) {
 

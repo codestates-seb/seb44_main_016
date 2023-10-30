@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolationException;
 
-@RestControllerAdvice
 @Slf4j
+@RestControllerAdvice
 public class GlobalExceptionAdvice {
 
     // RequestBody 의 유효성 검증 (dto 클래스 검증)
@@ -37,10 +37,9 @@ public class GlobalExceptionAdvice {
         return ErrorResponse.of(e.getConstraintViolations());
     }
 
-
     // BusinessLogicException (서비스 계층)
     @ExceptionHandler
-    public ResponseEntity handleBusinessLogicException(BusinessLogicException e) {
+    public ResponseEntity<?> handleBusinessLogicException(BusinessLogicException e) {
 
         log.error("error : ", e);
         return new ResponseEntity<>(ErrorResponse.of(e.getExceptionCode()),
@@ -69,3 +68,4 @@ public class GlobalExceptionAdvice {
         return ErrorResponse.of(HttpStatus.BAD_REQUEST, "Required request parameter is missing");
     }
 }
+

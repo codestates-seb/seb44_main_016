@@ -26,9 +26,9 @@ public class UserAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
         // 토큰 만료 response 추가
         if (request.getAttribute("exception") instanceof ExpiredJwtException) {
-            ErrorResponder.sendExpiredJwtExceptionError(response, HttpStatus.UNAUTHORIZED);
+            ErrorResponder.sendExpiredJwtExceptionError(response, HttpStatus.FORBIDDEN); // 403
         }
-        else ErrorResponder.sendErrorResponse(response, HttpStatus.UNAUTHORIZED);
+        else ErrorResponder.sendErrorResponse(response, HttpStatus.UNAUTHORIZED); // 401
 
         logExceptionMessage(authException, exception);
     }

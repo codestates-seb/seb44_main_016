@@ -2,25 +2,27 @@ package com.zerohip.server.feedArticle.service;
 
 import com.zerohip.server.feedArticle.dto.FeedArticleDto;
 import com.zerohip.server.feedArticle.entity.FeedArticle;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface FeedArticleService {
 
   // 피드 게시글 생성
-  FeedArticle createFeedArticle(FeedArticle feedArticle);
+  FeedArticle createFeedArticle(String author, FeedArticle feedArticle);
 
-    FeedArticle findVerifiedFeedArticle(Long feedArticleId);
+  FeedArticle findVerifiedFeedArticle(Long articleId);
 
-    // 피드 게시글 조회(단건)
-  FeedArticle findFeedArticle(Long feedArticleId);
+  // 피드 게시글 조회(단건)
+  FeedArticle findFeedArticle(Long articleId);
 
   // 피드 게시글 조회(전체)
-  List<FeedArticle> findFeedArticles();
+  Page<FeedArticle> findFeedArticles(int page, int size);
+
+  // 특정 사용자의 피드 게시글 조회
+  Page<FeedArticle> findUserFeedArticles(Long userId, int page, int size);
   
   // 피드 게시글 수정
-  FeedArticle updateFeedArticle(Long feedArticleId, FeedArticleDto.Patch patchParam);
+  FeedArticle updateFeedArticle(String author, Long articleId, FeedArticleDto.Patch patchParam);
 
   // 피드 게시글 삭제
-  void deleteFeedArticle(Long feedArticleId);
+  void deleteFeedArticle(String author, Long articleId);
 }

@@ -1,5 +1,6 @@
 package com.zerohip.server.financialRecord.dto;
 
+import com.zerohip.server.user.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -17,7 +18,8 @@ public class FinancialRecordDto {
     @Size(min = 1, max = 30)
     private String financialRecordName;
     private String memo;
-    // User
+
+    private String filePath;
   }
 
   @Getter
@@ -27,7 +29,9 @@ public class FinancialRecordDto {
     @Size(min = 1, max = 30)
     private String financialRecordName;
     private String memo;
-    // User
+
+    private String filePath;
+    private String deleteFilePath;
   }
 
   @Getter
@@ -36,9 +40,18 @@ public class FinancialRecordDto {
     private Long financialRecordId;
     private String financialRecordName;
     private String memo;
+    private int totalCount;
+    private int timeLineCount;
+    private boolean isBookmark;
 
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
-    // User
+
+    private UserDto.Response user;
+    private String filePath;
+
+    public void setFilePath(String filePath) {
+      this.filePath = filePath;
+    }
   }
 }

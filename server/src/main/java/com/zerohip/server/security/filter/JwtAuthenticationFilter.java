@@ -65,19 +65,19 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String refreshToken = delegateRefreshToken(user); // refreshToken 생성
 
         response.setHeader("Authorization", "Bearer " + accessToken);
-//        response.setHeader("Refresh", refreshToken);
+        response.setHeader("Refresh", refreshToken);
 
         // 리프레쉬 토큰 쿠키화
-        ResponseCookie cookie = ResponseCookie.from("Refresh", refreshToken)
-                .domain("zerohip.co.kr")
-                .maxAge(24 * 60 * 60)
-                .path("/")
-                .secure(true)
-                .sameSite("None")
-                .httpOnly(true)
-                .build();
+//        ResponseCookie cookie = ResponseCookie.from("Refresh", refreshToken)
+//                .domain("zerohip.co.kr")
+//                .maxAge(24 * 60 * 60)
+//                .path("/")
+//                .secure(true)
+//                .sameSite("None")
+//                .httpOnly(true)
+//                .build();
 
-        response.setHeader("Set-Cookie", cookie.toString());
+//        response.setHeader("Set-Cookie", cookie.toString());
 
 
         //onAuthenticationSuccess() : UserAuthenticationSuccessHandler 호출

@@ -1,11 +1,14 @@
 //package com.zerohip.server.common.img.service;
 //
+//import com.zerohip.server.aws.config.S3ServiceImpl;
 //import com.zerohip.server.common.article.Article;
 //import com.zerohip.server.common.img.dto.ImgDto;
 //import com.zerohip.server.common.img.entity.Img;
 //import com.zerohip.server.common.img.repository.ImgRepository;
 //import com.zerohip.server.feedArticle.entity.FeedArticle;
+//import com.zerohip.server.financialRecord.entity.FinancialRecord;
 //import com.zerohip.server.financialRecordArticle.entity.FinancialRecordArticle;
+//import com.zerohip.server.user.entity.User;
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.stereotype.Service;
 //import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +24,7 @@
 //public class ImgServiceImpl implements ImgService {
 //
 //  private final ImgRepository imgRepository;
+//  private final S3ServiceImpl s3ServiceImpl;
 //
 //  // 이미지 저장
 //  @Override
@@ -48,6 +52,16 @@
 //    return imgRepository.saveAll(imgList);
 //  }
 //
+//  @Override
+//  public Img createImg(FinancialRecord faRec, MultipartFile file) throws IOException {
+//    return null;
+//  }
+//
+//  @Override
+//  public Img createImg(User user, MultipartFile files) throws IOException {
+//    return null;
+//  }
+//
 //  // 이미지 조회
 //  @Override
 //  public Img findImg(Long imgId) {
@@ -60,22 +74,31 @@
 //    return imgRepository.findAll();
 //  }
 //
-//  // 이미지 수정
-//  @Override
-//  public void updateImg(Long imgId, ImgDto.Patch patchParam) {
-//    Img verifiedImg = findVerifiedImg(imgId);
-//    verifiedImg.setFileName(patchParam.getFileName());
-//    verifiedImg.setFilePath(patchParam.getFilePath());
-//
-//    imgRepository.save(verifiedImg);
-//  }
-//
 //  // 이미지 삭제
 //  @Override
-//  public void deleteImg(Long imgId) {
-//    Img verifiedImg = findVerifiedImg(imgId);
-//    imgRepository.delete(verifiedImg);
+//  public void deleteImg(Img img) {
+//    // S3에서 이미지를 삭제
+//    s3ServiceImpl.deleteFileFromS3(img.getFilePath());
+//    // DB에서 이미지 정보를 삭제
+//    imgRepository.delete(img);
 //  }
+//
+//  @Override
+//  public void deleteImg(User user, String deleteImgPath) {
+//
+//  }
+//
+//  @Override
+//  public void deleteImgs(Article article, List<String> deleteImgPaths) {
+//    for (String path : deleteImgPaths) {
+//      Img findImg = imgRepository.findByFilePath(path);
+//      if (findImg == null) {
+//        throw new IllegalArgumentException("해당 이미지가 없습니다.");
+//      }
+//      deleteImg(findImg);
+//    }
+//  }
+//
 //
 //  // 이미지 검증
 //  @Override
@@ -83,6 +106,12 @@
 //    return imgRepository.findById(imgId).orElseThrow(
 //        () -> new RuntimeException("존재하지 않는 이미지입니다.")
 //    );
+//  }
+//  @Override
+//  public Img findVerifiedImg(String filePath) {
+//    Img findImg = imgRepository.findByFilePath(filePath);
+//    findVerifiedImg(findImg.getId());
+//    return findImg;
 //  }
 //
 //  // 파일명 지정(중복 방지)
@@ -112,7 +141,7 @@
 //  }
 //
 //  // 이미지 생성자
-//  private static Img setImg(String filename) {
+//  static Img setImg(String filename) {
 //    Img img = new Img();
 //    img.setFileName(filename);
 //    img.setFilePath("/images/" + filename);
@@ -120,14 +149,21 @@
 //  }
 //
 //  // 게시판글과 이미지 연결
-//  private static void setArticle(Article article, Img img) {
+//  static void setArticle(Article article, Img img) {
 //    if (article instanceof FinancialRecordArticle financialRecordArticle) {
 //      img.setFinancialRecordArticle(financialRecordArticle);
 //    } else if (article instanceof FeedArticle feedArticle) {
-//img.setFeedArticle(feedArticle);
-//
+//      img.setFeedArticle(feedArticle);
 //    } else {
 //      throw new RuntimeException("존재하지 않는 게시글입니다.");
 //    }
+//  }
+//
+//  static void setProfileImg(FinancialRecord faRec, Img img) {
+//    img.setFinancialRecord(faRec);
+//  }
+//
+//  static void setProfileImg(User user, Img img) {
+//    img.setUser(user);
 //  }
 //}

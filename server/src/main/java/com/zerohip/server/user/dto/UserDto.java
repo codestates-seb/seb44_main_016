@@ -1,5 +1,6 @@
 package com.zerohip.server.user.dto;
 
+import com.zerohip.server.follow.dto.FollowDto;
 import lombok.*;
 
 import javax.validation.constraints.Email;
@@ -7,8 +8,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.List;
 
-public class UserDto {
+public class
+UserDto {
+
 
     @Getter
     @Builder
@@ -43,11 +47,15 @@ public class UserDto {
         private String password;
 
         @NotBlank(message = "닉네임은 공백이 아니어야 합니다.")
-        @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "닉네임은 영문 대소문자와 숫자만 가능합니다.")
+        @Pattern(regexp = "^[\\uAC00-\\uD7AF\\u1100-\\u11FF\\u3130-\\u318F\\uA960-\\uA97F\\uAC00-\\uD7A3a-zA-Z0-9]*$", message = "닉네임은 영문 대소문자와 한글, 숫자만 가능합니다.")
         @Size(min = 4, max = 10, message = "닉네임은 4 ~ 10자 사이여야 합니다.")
         private String nickname;
 
+        @NotBlank
+        private String profileImgPath;
+
     }
+
 
     @Getter
     @AllArgsConstructor
@@ -55,23 +63,19 @@ public class UserDto {
     @Builder
     public static class Patch {
 
-//        private Long UserId;
-//        private String email;
         private String loginId;
 
-        @NotBlank(message = "패스워드는 공백이 아니여야 합니다.")
         @Pattern(regexp = "^[a-zA-Z0-9!@#$%^&*()]*$", message = "비밀번호는 영문 대소문자와 키패드 1~0까지의 특수문자만 가능합니다.")
         @Size(min = 8, max = 16, message = "비밀번호는 8~16자 사이여야 합니다.")
         private String password;
 
-        @NotBlank(message = "닉네임은 공백이 아니어야 합니다.")
-        @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "닉네임은 영문 대소문자와 숫자만 가능합니다.")
+        @Pattern(regexp = "^[\\uAC00-\\uD7AF\\u1100-\\u11FF\\u3130-\\u318F\\uA960-\\uA97F\\uAC00-\\uD7A3a-zA-Z0-9]*$", message = "닉네임은 영문 대소문자와 한글, 숫자만 가능합니다.")
         @Size(min = 4, max = 10, message = "닉네임은 4 ~ 10자 사이여야 합니다.")
         private String nickname;
 
-        public void setLoginId(String loginId) {
-            this.loginId = loginId;
-        }
+        private String profileImgPath;
+
+
 
         // private 이미지 userImage
 
@@ -87,6 +91,7 @@ public class UserDto {
         private String loginId;
     }
 
+
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
@@ -95,6 +100,7 @@ public class UserDto {
 
         private String email;
     }
+
 
     @Getter
     @Builder
@@ -106,17 +112,6 @@ public class UserDto {
     }
 
 
-//    @Getter
-//    @AllArgsConstructor
-//    @NoArgsConstructor
-//    @Builder
-//    public static class CheckLoginIdResponse {
-//
-//        private String
-//    }
-
-
-
     @Getter
     @Setter
     @NoArgsConstructor
@@ -126,8 +121,9 @@ public class UserDto {
         private Long userId;
         private String email;
         private String loginId;
-        private String password;
         private String nickname;
+        private String profileImgPath;
+        private String provider;
         private LocalDateTime createdAt;
 
         // 매핑 후 추가
@@ -135,6 +131,7 @@ public class UserDto {
         // flex, 절약버튼 총 수량도 ?
 
     }
+
 
     @Getter
     @Setter
@@ -147,9 +144,44 @@ public class UserDto {
         private String loginId;
         private String password;
         private String nickname;
+        private String profileImgPath;
         private LocalDateTime modifiedAt;
 
     }
+
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MyPageResponse {
+
+        private Long userId;
+        private String email;
+        private String loginId;
+        private String nickname;
+        private String profileImgPath;
+        private int followerCount;
+        private int followingCount;
+        private List<FollowDto.FollowingResponseDto> followingList;
+        private List<FollowDto.FollowerResponseDto> followerList;
+
+    }
+
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class CheckOtherUserResponse {
+
+        private Long userId;
+        private String loginId;
+        private String nickname;
+        private List<FollowDto.FollowResponseDto> followInfo;
+
+    }
+
 
     @Getter
     @Builder

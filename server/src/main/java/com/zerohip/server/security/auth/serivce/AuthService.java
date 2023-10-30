@@ -1,11 +1,13 @@
 package com.zerohip.server.security.auth.serivce;
 
+import com.zerohip.server.common.exception.BusinessLogicException;
+import com.zerohip.server.common.exception.ExceptionCode;
 import com.zerohip.server.security.auth.entity.RefreshToken;
 import com.zerohip.server.security.auth.repository.RefreshTokenRepository;
 import com.zerohip.server.security.provider.JwtStatus;
 import com.zerohip.server.security.provider.JwtTokenizer;
 import com.zerohip.server.user.entity.User;
-import com.zerohip.server.user.service.UserService;
+import com.zerohip.server.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -24,18 +26,22 @@ public class AuthService {
 
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtTokenizer jwtTokenizer;
-    private final UserService userService;
+//    private final UserServiceImpl userService;
+    private final UserRepository userRepository;
 
     public String createAccessToken(String refreshToken) {
 
 
-        if (!verifiedJwtStatus(refreshToken)) {
+        if (verifiedJwtStatus(refreshToken)) {
             log.info("# Refresh Token has Expired");
             return null;
         }
 
         Authentication authentication = jwtTokenizer.getAuthentication(refreshToken);
-        User user = userService.findUserByLoginId(authentication.getName());
+//        User user = userService.findUserByLoginId(authentication.getName());
+        Optional<User> optionalUser = userRepository.findUserByLoginId(authentication.getName());
+        User user = optionalUser.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("loginId", user.getLoginId());
@@ -56,7 +62,11 @@ public class AuthService {
     public void deleteRefreshToken(String refreshToken) {
 
         Authentication authentication = jwtTokenizer.getAuthentication(refreshToken);
-        User user = userService.findUserByLoginId(authentication.getName());
+//        User user = userService.findUserByLoginId(authentication.getName());
+        Optional<User> optionalUser = userRepository.findUserByLoginId(authentication.getName());
+        User user = optionalUser.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+        //
 
         RefreshToken findRefreshToken = findVerifiedJwtToken(user.getLoginId());
 
@@ -73,9 +83,9 @@ public class AuthService {
         JwtStatus jwtStatus = jwtTokenizer.validateToken(refreshToken);
 
         if (jwtStatus == JwtStatus.EXPIRED || refreshTokenRepository.findByToken(refreshToken).isEmpty()) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
 
